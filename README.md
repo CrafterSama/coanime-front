@@ -1,4 +1,4 @@
-# Laravel Breeze - Next.js Edition 🏝️
+# Coanime.net - Next.js Edition
 
 ## Introduction
 
