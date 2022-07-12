@@ -45,6 +45,8 @@ export const useAuth = ({
   const login = async ({ setErrors, setStatus, ...props }) => {
     await csrf();
 
+    console.log(csrf());
+
     setErrors([]);
     setStatus(null);
 

@@ -1,12 +1,12 @@
-import ApplicationLogo from '../../../src/components/ApplicationLogo';
-import Dropdown from '../../../src/components/Dropdown';
+import ApplicationLogo from '@/components/ApplicationLogo';
+import Dropdown from '@/components/Dropdown';
 import Link from 'next/link';
-import NavLink from '../../../src/components/NavLink';
+import NavLink from '@/components/NavLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
-} from '../../../src/components/ResponsiveNavLink';
-import { DropdownButton } from '../../../src/components/DropdownLink';
-import { useAuth } from '../../../src/hooks/auth';
+} from '@/components/ResponsiveNavLink';
+import { DropdownButton } from '@/components/DropdownLink';
+import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
