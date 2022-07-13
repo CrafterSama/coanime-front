@@ -29,7 +29,7 @@ const ForgotPassword = () => {
         logo={
           <Link href="/">
             <a>
-              <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+              <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
         }>
