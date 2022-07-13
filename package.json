@@ -10,9 +10,18 @@
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "axios": "^0.21.1",
+<<<<<<< HEAD
     "next": "^12.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+=======
+    "camelcase-keys": "^8.0.1",
+    "next": "^12.0.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-query": "^3.39.1",
+    "snakecase-keys": "^5.4.2",
+>>>>>>> 5983306f84c7c29f19e76b4b63c613617fc33e14
     "swr": "^1.2.2"
   },
   "devDependencies": {

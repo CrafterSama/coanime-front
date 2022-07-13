@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import axios from '../../src/lib/axios';
+import axios from '@/lib/axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -29,7 +29,7 @@ export const useAuth = ({
 
   const register = async ({ setErrors, ...props }) => {
     await csrf();
-
+    
     setErrors([]);
 
     axios
@@ -43,10 +43,8 @@ export const useAuth = ({
   };
 
   const login = async ({ setErrors, setStatus, ...props }) => {
+
     await csrf();
-
-    console.log(csrf());
-
     setErrors([]);
     setStatus(null);
 
@@ -85,7 +83,7 @@ export const useAuth = ({
     axios
       .post('/reset-password', { token: router.query.token, ...props })
       .then(response =>
-        router.push('/login?reset=' + btoa(response.data.status)),
+        router.push('/login?reset=' + Buffer.from(response.data.status, 'base64')),
       )
       .catch(error => {
         if (error.response.status !== 422) throw error;
