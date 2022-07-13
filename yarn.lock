@@ -289,12 +289,26 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tailwindcss/forms@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.4.1.tgz#5a47ccd60490cbba84e662f2b9cf3d71a5126d17"
-  integrity sha512-gS9xjCmJjUBz/eP12QlENPLnf0tCx68oYE3mri0GMP5jdtVwLbGUNSRpjsp6NzLAZzZy3ueOwrcqB78Ax6Z84A==
+"@tailwindcss/forms@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.5.2.tgz#4ef45f9916dcb37838cbe7fecdcc4ba7a7c2ab59"
+  integrity sha512-pSrFeJB6Bg1Mrg9CdQW3+hqZXAKsBrSG9MAfFLKy1pVA4Mb4W7C0k7mEhlmS2Dfo/otxrQOET7NJiJ9RrS563w==
   dependencies:
     mini-svg-data-uri "^1.2.3"
+
+"@tailwindcss/line-clamp@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.3.1.tgz#4d8441b509b87ece84e94f28a4aa9998413ab849"
+  integrity sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==
+
+"@tailwindcss/typography@^0.5.2":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.3.tgz#80c3419db470cc34b0d1442d05d82a1984bc66b7"
+  integrity sha512-Cn4MufL/xiTh2Npw26xiL7gP3GFkJH+zWM8DAm/NNEr4gF5N9D6gY9zMNNQUu27m8g0IIk665BUuoU92wVUBkA==
+  dependencies:
+    lodash.castarray "^4.4.0"
+    lodash.isplainobject "^4.0.6"
+    lodash.merge "^4.6.2"
 
 "@types/node@^18.0.1":
   version "18.0.1"
@@ -1356,6 +1370,16 @@ lilconfig@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.0.5.tgz#19e57fd06ccc3848fd1891655b5a447092225b25"
   integrity sha512-xaYmXZtTHPAw5m+xLN8ab9C+3a8YmV3asNSPOATITbtwrfbwaLJj8h66H1WMIpALCkqsIzK3h7oQ+PdX+LQ9Eg==
+
+lodash.castarray@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.castarray/-/lodash.castarray-4.4.0.tgz#c02513515e309daddd4c24c60cfddcf5976d9115"
+  integrity sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==
+
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
