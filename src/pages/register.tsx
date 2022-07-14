@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
+import { ApplicationLogo } from '@/components/ApplicationLogo';
 import AuthCard from '@/components/AuthCard';
 import AuthValidationErrors from '@/components/AuthValidationErrors';
 import Button from '@/components/Button';
@@ -8,6 +8,7 @@ import Label from '@/components/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
 import { useState } from 'react';
+import Head from 'next/head';
 
 const Register = () => {
   const { register } = useAuth({
@@ -35,6 +36,9 @@ const Register = () => {
 
   return (
     <GuestLayout>
+      <Head>
+        <title>Coanime.net - register</title>
+      </Head>
       <AuthCard
         logo={
           <Link href="/">

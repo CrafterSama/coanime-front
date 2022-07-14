@@ -1,4 +1,6 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
+import { useEffect, useState } from 'react';
+import Head from 'next/head';
+import { ApplicationLogo } from '@/components/ApplicationLogo';
 import AuthCard from '@/components/AuthCard';
 import AuthSessionStatus from '@/components/AuthSessionStatus';
 import AuthValidationErrors from '@/components/AuthValidationErrors';
@@ -8,8 +10,8 @@ import Input from '@/components/Input';
 import Label from '@/components/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useRandomImageByTitle } from '@/hooks/useRandomImageByTitle';
 
 const Login = () => {
   const router = useRouter();
@@ -18,6 +20,10 @@ const Login = () => {
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   });
+
+  const { data, isLoading, isError } = useRandomImageByTitle('kimetsu-no-yaiba');
+
+  console.log(data);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,6 +46,9 @@ const Login = () => {
 
   return (
     <GuestLayout>
+      <Head>
+        <title>Coanime.net - Login</title>
+      </Head>
       <AuthCard
         logo={
           <Link href="/">

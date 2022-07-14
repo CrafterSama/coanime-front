@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
+import { ApplicationLogo } from '@/components/ApplicationLogo';
 import AuthCard from '@/components/AuthCard';
 import AuthSessionStatus from '@/components/AuthSessionStatus';
 import AuthValidationErrors from '@/components/AuthValidationErrors';

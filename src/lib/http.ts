@@ -17,8 +17,14 @@ const getApiUrl = () => {
 
 const getAuthApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  return `${url}`;
+}
+
+const getApiCookieUrl = () => {
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}/sanctum/csrf-cookie`;
 }
+
 
 const getInstance = (config?: AxiosRequestConfig) => {
   const transformRequest = [].concat(function (data) {
