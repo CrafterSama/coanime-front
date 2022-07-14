@@ -9,12 +9,9 @@ import { DropdownButton } from '@/components/DropdownLink';
 import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Image from 'next/image';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
-
-  const userImage = user?.image?.url;
 
   const { logout } = useAuth();
 
@@ -25,7 +22,26 @@ const Navigation = ({ user }) => {
       {/* Primary Navigation Menu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex"></div>
+          <div className="flex">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/dashboard">
+                <a>
+                  <ApplicationLogo className="block h-10 w-auto fill-current text-orange-500" />
+                </a>
+              </Link>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <NavLink
+                href="/dashboard"
+                active={router.pathname === '/dashboard'}>
+                Dashboard
+              </NavLink>
+            </div>
+          </div>
+
           {/* Settings Dropdown */}
           <div className="hidden sm:flex sm:items-center sm:ml-6">
             <Dropdown
@@ -33,14 +49,7 @@ const Navigation = ({ user }) => {
               width={48}
               trigger={
                 <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                  <div className="flex flex-row justify-start items-center gap-4">
-                    <img
-                      src={user?.profile_photo_path}
-                      alt={user?.name}
-                      className="rounded-full w-8 h-8"
-                    />
-                    <span>{user?.name}</span>
-                  </div>
+                  <div>{user?.name}</div>
 
                   <div className="ml-1">
                     <svg
