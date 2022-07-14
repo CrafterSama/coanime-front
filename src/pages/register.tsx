@@ -109,14 +109,15 @@ const Register = () => {
             />
           </div>
 
-          <div className="flex items-center justify-end mt-4">
-            <Link href="/login">
-              <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                Already registered?
-              </a>
-            </Link>
-
-            <Button className="ml-4">Register</Button>
+          <div className="flex flex-col items-center justify-end mt-4 gap-4">
+            <Button>Register</Button>
+            <div className="flex w-full justify-center">
+              <Link href="/login">
+                <a className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
+                  Already registered?
+                </a>
+              </Link>
+            </div>
           </div>
         </form>
       </AuthCard>

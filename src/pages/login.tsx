@@ -11,7 +11,7 @@ import Label from '@/components/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'next/router';
-import { useRandomImageByTitle } from '@/hooks/useRandomImageByTitle';
+import Checkbox from '@/components/Checkbox';
 
 const Login = () => {
   const router = useRouter();
@@ -20,10 +20,6 @@ const Login = () => {
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   });
-
-  const { data, isLoading, isError } = useRandomImageByTitle('kimetsu-no-yaiba');
-
-  console.log(data);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -96,26 +92,24 @@ const Login = () => {
 
           {/* Remember Me */}
           <div className="block mt-4">
-            <label htmlFor="remember_me" className="inline-flex items-center">
-              <input
-                id="remember_me"
-                type="checkbox"
-                name="remember"
-                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              />
-
-              <span className="ml-2 text-sm text-gray-600">Remember me</span>
-            </label>
+            <Checkbox id="remember_me" name="remember" text="Remember me" />
           </div>
 
-          <div className="flex items-center justify-end mt-4">
-            <Link href="/forgot-password">
-              <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                Forgot your password?
-              </a>
-            </Link>
-
+          <div className="flex flex-col items-center justify-end mt-4 gap-4">
             <Button className="ml-3">Login</Button>
+
+            <div className="flex flex-row justify-around content-center w-full">
+              <Link href="/forgot-password">
+                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                  Forgot your password?
+                </a>
+              </Link>
+              <Link href="/register">
+                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                  Don't have an account
+                </a>
+              </Link>
+            </div>
           </div>
         </form>
       </AuthCard>

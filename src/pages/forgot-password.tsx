@@ -33,7 +33,7 @@ const ForgotPassword = () => {
             </a>
           </Link>
         }>
-        <div className="mb-4 text-sm text-gray-600">
+        <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
           Forgot your password? No problem. Just let us know your email address
           and we will email you a password reset link that will allow you to
           choose a new one.
@@ -61,8 +61,15 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className="flex items-center justify-end mt-4">
+          <div className="flex flex-col items-center justify-center mt-4 gap-4">
             <Button>Email Password Reset Link</Button>
+            <div className="flex flex-row justify-around content-center w-full">
+              <Link href="/login">
+                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                  Return to login
+                </a>
+              </Link>
+            </div>
           </div>
         </form>
       </AuthCard>

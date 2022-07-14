@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.image-side {
+  clip-path: polygon(0px 0px, 100% 0px, 90% 100%, 0px 100%);
+}
