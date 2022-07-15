@@ -1,0 +1,9 @@
+export { default as ChipIcon } from './ChipIcon';
+export { default as LocationMarkerIcon } from './LocationMarkerIcon';
+export { default as NewspaperIcon } from './NewspaperIcon';
+export { default as UsersIcon } from './UsersIcon';
+export { default as PhotographIcon } from './PhotographIcon';
+export { default as MenuIcon } from './MenuIcon';
+export { default as BookOpenIcon } from './BookOpenIcon';
+export { default as OfficeBuildingIcon } from './OfficeBuildingIcon';
+export { default as LogoutIcon } from './LogoutIcon';

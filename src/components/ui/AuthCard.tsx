@@ -1,5 +1,5 @@
 import { useRandomImageByTitle } from '@/hooks/useRandomImageByTitle';
-import { Logotype } from '@/components/ApplicationLogo';
+import { Logotype } from '@/components/ui/ApplicationLogo';
 
 const AuthCard = ({ logo, children }) => {
   const { data, isLoading, isError } = useRandomImageByTitle(

@@ -1,20 +1,16 @@
-import { ApplicationLogo } from '@/components/ApplicationLogo';
-import Dropdown from '@/components/Dropdown';
-import Link from 'next/link';
-import NavLink from '@/components/NavLink';
+import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
+import Dropdown from '@/components/ui/Dropdown';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
-} from '@/components/ResponsiveNavLink';
-import { DropdownButton } from '@/components/DropdownLink';
+} from '@/components/ui/ResponsiveNavLink';
+import { DropdownButton } from '@/components/ui/DropdownLink';
 import { useAuth } from '@/hooks/auth';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Image from 'next/image';
+import { MenuIcon, LogoutIcon } from '@/components/icons';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
-
-  const userImage = user?.image?.url;
 
   const { logout } = useAuth();
 
@@ -23,9 +19,11 @@ const Navigation = ({ user }) => {
   return (
     <nav className="bg-white border-b border-gray-100">
       {/* Primary Navigation Menu */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex"></div>
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex">
+            <MenuIcon className="h-6 w-6 text-gray-400" />
+          </div>
           {/* Settings Dropdown */}
           <div className="hidden sm:flex sm:items-center sm:ml-6">
             <Dropdown
@@ -57,7 +55,11 @@ const Navigation = ({ user }) => {
                 </button>
               }>
               {/* Authentication */}
-              <DropdownButton onClick={logout}>Logout</DropdownButton>
+              <DropdownButton
+                icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
+                onClick={logout}>
+                Logout
+              </DropdownButton>
             </Dropdown>
           </div>
 
