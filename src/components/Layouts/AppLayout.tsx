@@ -1,7 +1,6 @@
 import Navigation from '@/components/Layouts/Navigation';
-import { useAuth } from '@/hooks/auth';
 import Aside from '@/components/ui/Aside';
-import { useRouter } from 'next/router';
+import { useAuth } from '@/hooks/auth';
 
 const AppLayout = ({ header, children }) => {
   const { user } = useAuth({ middleware: 'auth' });
@@ -11,11 +10,11 @@ const AppLayout = ({ header, children }) => {
       <Aside />
       <main className="flex flex-col flex-1 w-auto">
         <Navigation user={user} />
-        {/*<header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {header}
-          </div>
-        </header>*/}
+        {
+          <header className="bg-white">
+            <div className="p-4">{header}</div>
+          </header>
+        }
         <section>{children}</section>
       </main>
     </div>

@@ -13,18 +13,17 @@ export const HTTP_METHODS = {
 const getApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}/api/v1`;
-}
+};
 
 const getAuthApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
-}
+};
 
 const getApiCookieUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}/sanctum/csrf-cookie`;
-}
-
+};
 
 const getInstance = (config?: AxiosRequestConfig) => {
   const transformRequest = [].concat(function (data) {
@@ -48,10 +47,14 @@ const getInstance = (config?: AxiosRequestConfig) => {
     return { meta, ...camelcaseKeys(rest, { deep: true }) };
   });
 
+  axios.defaults.withCredentials = true;
+
   return axios.create({
     baseURL: '/',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
     },
     transformRequest,
     transformResponse,
@@ -72,14 +75,16 @@ export const setFormDataHeader = () => {
     async (config) => {
       config.headers = {
         ...config.headers,
+        Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
+        'X-Requested-With': 'XMLHttpRequest',
       };
 
       return config;
     },
     (error: any) => {
       Promise.reject(error);
-    }
+    },
   );
 };
 

@@ -7,3 +7,7 @@ export { default as MenuIcon } from './MenuIcon';
 export { default as BookOpenIcon } from './BookOpenIcon';
 export { default as OfficeBuildingIcon } from './OfficeBuildingIcon';
 export { default as LogoutIcon } from './LogoutIcon';
+export { default as ChevronUpIcon } from './ChevronUpIcon';
+export { default as ChevronDownIcon } from './ChevronDownIcon';
+export { default as SwitchVerticalIcon } from './SwitchVerticalIcon';
+export { default as SpinerIcon } from './SpinerIcon';

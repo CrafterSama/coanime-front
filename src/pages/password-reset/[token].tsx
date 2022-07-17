@@ -1,11 +1,11 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
-import AuthCard from '@/components/AuthCard';
-import AuthSessionStatus from '@/components/AuthSessionStatus';
-import AuthValidationErrors from '@/components/AuthValidationErrors';
-import Button from '@/components/Button';
+import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
+import AuthCard from '@/components/ui/AuthCard';
+import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
+import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
+import Button from '@/components/ui/Button';
 import GuestLayout from '@/components/Layouts/GuestLayout';
-import Input from '@/components/Input';
-import Label from '@/components/Label';
+import { InputWithoutContext } from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ const PasswordReset = () => {
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
 
-  const submitForm = event => {
+  const submitForm = (event) => {
     event.preventDefault();
 
     resetPassword({
@@ -47,7 +47,8 @@ const PasswordReset = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         {/* Session Status */}
         <AuthSessionStatus className="mb-4" status={status} />
 
@@ -59,12 +60,13 @@ const PasswordReset = () => {
           <div>
             <Label htmlFor="email">Email</Label>
 
-            <Input
+            <InputWithoutContext
               id="email"
               type="email"
+              name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
               autoFocus
             />
@@ -73,12 +75,13 @@ const PasswordReset = () => {
           {/* Password */}
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
-            <Input
+            <InputWithoutContext
               id="password"
               type="password"
+              name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
               required
             />
           </div>
@@ -87,12 +90,13 @@ const PasswordReset = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="passwordConfirmation"
               type="password"
+              name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={event => setPasswordConfirmation(event.target.value)}
+              onChange={(event) => setPasswordConfirmation(event.target.value)}
               required
             />
           </div>
