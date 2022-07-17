@@ -16,6 +16,7 @@ import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import Button from '@/components/ui/Button';
 import Errors from '@/components/ui/Errors';
+import PencilIcon from '@/components/icons/PencilIcon';
 
 const UpdatePost = () => {
   const editorRef = useRef(null);
@@ -104,10 +105,18 @@ const UpdatePost = () => {
                   {post?.title}
                 </h4>
                 <div className="action-buttons w-1/2 flex flex-row gap-4 justify-end">
-                  <Button type="button" variant="text">
-                    Cancel
-                  </Button>
-                  <Button type="submit">Guardar Post</Button>
+                  {editMode ? (
+                    <>
+                      <Button type="button" variant="text" onClick={() => setEditMode(false)}>
+                        Cancel
+                      </Button>
+                      <Button type="submit">Guardar Post</Button>
+                    </>
+                  ) : (
+                    <button className="flex justify-center content-center p-2 rounded-full text-orange-500 border-2 border-orange-500 bg-orange-200 hover:bg-orange-300 transition-all">
+                      <PencilIcon className="w-6 h-6" onClick={() => setEditMode(true)} />
+                    </button>
+                  )}
                 </div>
               </header>
               <div className="p-4 flex flex-row gap-4 rounded-b-lg">
@@ -148,6 +157,7 @@ const UpdatePost = () => {
                           initialValue={post?.content}
                           apiKey={'uv4awo44pqxuyzdzr1e0v8tsvkri1foum7hcm06x6mub8c49'}
                           onEditorChange={() => setValue('content', editorRef?.current?.getContent())}
+                          disabled={!editMode}
                           init={{
                             height: 500,
                             menubar: false,
