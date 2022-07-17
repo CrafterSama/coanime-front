@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
-import { Logotype } from '@/components/ApplicationLogo';
+import { Logotype } from '@/components/ui/ApplicationLogo';
 
 export default function Home() {
   const { user } = useAuth({ middleware: 'guest' });

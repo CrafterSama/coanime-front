@@ -13,18 +13,17 @@ export const HTTP_METHODS = {
 const getApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}/api/v1`;
-}
+};
 
 const getAuthApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
-}
+};
 
 const getApiCookieUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}/sanctum/csrf-cookie`;
-}
-
+};
 
 const getInstance = (config?: AxiosRequestConfig) => {
   const transformRequest = [].concat(function (data) {
@@ -36,22 +35,29 @@ const getInstance = (config?: AxiosRequestConfig) => {
       exclude: ['_destroy'],
     });
   }, axios.defaults.transformRequest);
-  const transformResponse = [].concat(axios.defaults.transformResponse, function (data) {
-    if (!data) {
-      return;
-    }
+  const transformResponse = [].concat(
+    axios.defaults.transformResponse,
+    function (data) {
+      if (!data) {
+        return;
+      }
 
-    const { meta, ...rest } = data;
+      const { meta, ...rest } = data;
 
-    if (!meta) return camelcaseKeys(rest, { deep: true });
+      if (!meta) return camelcaseKeys(rest, { deep: true });
 
-    return { meta, ...camelcaseKeys(rest, { deep: true }) };
-  });
+      return { meta, ...camelcaseKeys(rest, { deep: true }) };
+    },
+  );
+
+  axios.defaults.withCredentials = true;
 
   return axios.create({
     baseURL: '/',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
     },
     transformRequest,
     transformResponse,
@@ -69,17 +75,19 @@ export const httpClientAuth = getInstance({
 
 export const setFormDataHeader = () => {
   httpClient.interceptors.request.use(
-    async (config) => {
+    async config => {
       config.headers = {
         ...config.headers,
+        Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
+        'X-Requested-With': 'XMLHttpRequest',
       };
 
       return config;
     },
     (error: any) => {
       Promise.reject(error);
-    }
+    },
   );
 };
 

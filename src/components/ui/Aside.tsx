@@ -29,7 +29,7 @@ const Aside = () => {
             <MenuLink
               key={item.href}
               href={item.href}
-              active={router.pathname === item.href}
+              active={router.pathname.includes(item.href)}
               icon={item.icon}>
               {item.text}
             </MenuLink>

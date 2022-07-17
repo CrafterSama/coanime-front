@@ -11,11 +11,11 @@ const AppLayout = ({ header, children }) => {
       <Aside />
       <main className="flex flex-col flex-1 w-auto">
         <Navigation user={user} />
-        {/*<header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {header}
-          </div>
-        </header>*/}
+        {
+          <header className="bg-white">
+            <div className="p-4">{header}</div>
+          </header>
+        }
         <section>{children}</section>
       </main>
     </div>
