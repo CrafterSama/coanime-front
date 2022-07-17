@@ -1,34 +1,23 @@
+import { extractText, strLimit } from '@/utils/string';
+import dayjs from 'dayjs';
 import Image from 'next/future/image';
 import Link from 'next/link';
-import dayjs from 'dayjs';
-import { strLimit, extractText } from '@/utils/string';
 
 export const headers = [
   {
     name: 'Imagen y Titulo',
     accessor: (row: any) => row,
-    cell: row => (
+    cell: (row) => (
       <div className="w-96 flex flex-col gap-2">
         <Link href={`/posts/${row.slug}`}>
           <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm">
             <div className="w-3/12">
-              <Image
-                className="rounded-lg"
-                src={row.image}
-                alt={row.title}
-                loading="lazy"
-                width="100%"
-                height="100%"
-              />
+              <Image className="rounded-lg" src={row.image} alt={row.title} loading="lazy" width="100%" height="100%" />
             </div>
-            <div className="w-9/12 text-orange-500 underline underline-offset-2 font-semibold">
-              {row.title}
-            </div>
+            <div className="w-9/12 text-orange-500 underline underline-offset-2 font-semibold">{row.title}</div>
           </a>
         </Link>
-        <p className="text-gray-600 text-xs">
-          {strLimit(extractText(row?.content), 150)}
-        </p>
+        <p className="text-gray-600 text-xs">{strLimit(extractText(row?.content), 150)}</p>
       </div>
     ),
     firstItem: true,
@@ -37,11 +26,9 @@ export const headers = [
   {
     name: 'Visible en',
     accessor: (row: any) => row,
-    cell: row => (
+    cell: (row) => (
       <div className="w-40">
-        <span className="text-sm text-gray-700 mr-2">
-          {dayjs(row.postponed_to).format('DD/MM/YYYY HH:mm a')}
-        </span>
+        <span className="text-sm text-gray-700 mr-2">{dayjs(row.postponed_to).format('DD/MM/YYYY HH:mm a')}</span>
       </div>
     ),
   },
@@ -51,9 +38,7 @@ export const headers = [
     cell: ({ categories }) => (
       <div className="w-40">
         <Link href={`/categories/${categories.id}`}>
-          <a className="text-sm font-semibold text-gray-500 underline underline-offset-1">
-            {categories.name}
-          </a>
+          <a className="text-sm font-semibold text-gray-500 underline underline-offset-1">{categories.name}</a>
         </Link>
       </div>
     ),
@@ -82,7 +67,8 @@ export const headers = [
         <Link href={`/users/${users.id}`}>
           <a
             className="whitespace-nowrap text-sm font-semibold text-gray-500 underline underline-offset-1"
-            target="_blank">
+            target="_blank"
+          >
             {users.name}
           </a>
         </Link>

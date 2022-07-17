@@ -1,8 +1,4 @@
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  SwitchVerticalIcon,
-} from '@/components/icons';
+import { ChevronDownIcon, ChevronUpIcon, SwitchVerticalIcon } from '@/components/icons';
 import { SORTING_TYPES } from '@/constants/common';
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import cn from 'classnames';
@@ -24,7 +20,7 @@ export const Rows: FC<RowsProps> = ({
   rowExpandable = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const tdStyles = column =>
+  const tdStyles = (column) =>
     cn(`p-2 ${column.cellClass}`, {
       'sticky bg-gray-50': column.fixed,
       'bg-white': !column.fixed,
@@ -50,22 +46,21 @@ export const Rows: FC<RowsProps> = ({
               {column.firstItem ? (
                 <div className="flex flex-row items-center justify-between py-2 space-x-3 bg-gray-50">
                   <div className="ml-2">{renderCell(row, column)}</div>
-                  {column.firstItem &&
-                    (innerRowItems.length >= 1 || rowExpandable) && (
-                      <div className="flex justify-end">
-                        <CollapsiblePrimitive.Trigger asChild>
-                          {innerRowItems.length > 0 && (
-                            <div>
-                              {isOpen ? (
-                                <ChevronUpIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
-                              ) : (
-                                <ChevronDownIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
-                              )}
-                            </div>
-                          )}
-                        </CollapsiblePrimitive.Trigger>
-                      </div>
-                    )}
+                  {column.firstItem && (innerRowItems.length >= 1 || rowExpandable) && (
+                    <div className="flex justify-end">
+                      <CollapsiblePrimitive.Trigger asChild>
+                        {innerRowItems.length > 0 && (
+                          <div>
+                            {isOpen ? (
+                              <ChevronUpIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
+                            ) : (
+                              <ChevronDownIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
+                            )}
+                          </div>
+                        )}
+                      </CollapsiblePrimitive.Trigger>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="ml-2">{renderCell(row, column)}</div>
@@ -99,23 +94,16 @@ type TableProps = {
   fixedHeader?: boolean;
 };
 
-export const Table: FC<TableProps> = ({
-  children,
-  columns,
-  fixedHeader = true,
-}) => {
+export const Table: FC<TableProps> = ({ children, columns, fixedHeader = true }) => {
   const thStyles = (column, fixedHeader) =>
-    cn(
-      'z-10 bg-gray-200 font-regular uppercase text-gray-600 text-md pt-3 px-2 pb-2 text-left align-center',
-      {
-        sticky: fixedHeader || column.fixed,
-        'top-0': fixedHeader,
-        'bg-gray-200': fixedHeader && !column.fixed,
-        'bg-gray-200 z-20 ': column.fixed,
-        'left-checkbox': column.fixed && column?.withFixedCheckbox,
-        'left-0': column.fixed && !column?.withFixedCheckbox,
-      },
-    );
+    cn('z-10 bg-gray-200 font-regular uppercase text-gray-600 text-md pt-3 px-2 pb-2 text-left align-center', {
+      sticky: fixedHeader || column.fixed,
+      'top-0': fixedHeader,
+      'bg-gray-200': fixedHeader && !column.fixed,
+      'bg-gray-200 z-20 ': column.fixed,
+      'left-checkbox': column.fixed && column?.withFixedCheckbox,
+      'left-0': column.fixed && !column?.withFixedCheckbox,
+    });
   const handleSortChange = (index, currentSort) => {
     const column = columns[index];
     let sort = SORTING_TYPES.none;
@@ -132,9 +120,7 @@ export const Table: FC<TableProps> = ({
   };
 
   const WrapperSorting = ({ index, sort, children }) => (
-    <span
-      className="flex items-center ml-2 cursor-pointer"
-      onClick={() => handleSortChange(index, sort)}>
+    <span className="flex items-center ml-2 cursor-pointer" onClick={() => handleSortChange(index, sort)}>
       {children}
     </span>
   );
@@ -173,16 +159,12 @@ export const Table: FC<TableProps> = ({
         <thead>
           <tr className="p-2">
             {columns.map((column, i) => (
-              <th
-                key={`${column.name}-${i}`}
-                className={thStyles(column, fixedHeader)}>
+              <th key={`${column.name}-${i}`} className={thStyles(column, fixedHeader)}>
                 <div className="ml-2 flex flex-row items-center">
                   {column?.sorting ? (
                     renderSorting(i, column)
                   ) : (
-                    <span className="text-sm whitespace-nowrap">
-                      {column.name}
-                    </span>
+                    <span className="text-sm whitespace-nowrap">{column.name}</span>
                   )}
                 </div>
               </th>

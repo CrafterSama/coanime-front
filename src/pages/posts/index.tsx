@@ -10,12 +10,7 @@ const Posts = () => {
   const { data: posts = [] } = data;
 
   return (
-    <AppLayout
-      header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Posts
-        </h2>
-      }>
+    <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Posts</h2>}>
       <Head>
         <title>Coanime.net - Posts</title>
       </Head>
@@ -30,7 +25,7 @@ const Posts = () => {
             )}
             {posts && (
               <Table columns={headers}>
-                {posts?.map(row => (
+                {posts?.map((row) => (
                   <Rows key={row.id} columns={headers} row={row} />
                 ))}
               </Table>

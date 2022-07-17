@@ -2,9 +2,7 @@ import { useRandomImageByTitle } from '@/hooks/useRandomImageByTitle';
 import { Logotype } from '@/components/ui/ApplicationLogo';
 
 const AuthCard = ({ logo, children }) => {
-  const { data, isLoading, isError } = useRandomImageByTitle(
-    'kimetsu-no-yaiba',
-  );
+  const { data, isLoading, isError } = useRandomImageByTitle('kimetsu-no-yaiba');
 
   const image = isLoading ? '' : data?.image;
 
@@ -17,9 +15,7 @@ const AuthCard = ({ logo, children }) => {
 
   return (
     <div className="min-h-screen flex flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-white relative">
-      <div
-        className="image-side flex w-1/2 min-h-screen relative"
-        style={bgStyle}>
+      <div className="image-side flex w-1/2 min-h-screen relative" style={bgStyle}>
         <div className="absolute inset-0 flex flex-col w-full h-full items-end justify-end bg-indigo-600 bg-opacity-50">
           <Logotype
             logoColor="#ffffff"

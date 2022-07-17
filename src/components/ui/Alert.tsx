@@ -11,3 +11,5 @@ const Alert = ({ info }: AlertProps) => {
     </div>
   );
 };
+
+export default Alert;

@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import Head from 'next/head';
+import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
-import GuestLayout from '@/components/Layouts/GuestLayout';
-import Input from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
-import Link from 'next/link';
-import { useAuth } from '@/hooks/auth';
-import { useRouter } from 'next/router';
 import Checkbox from '@/components/ui/Checkbox';
+import { InputWithoutContext } from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
+import { useAuth } from '@/hooks/auth';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Login = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const Login = () => {
     }
   });
 
-  const submitForm = async event => {
+  const submitForm = async (event) => {
     event.preventDefault();
 
     login({ email, password, setErrors, setStatus });
@@ -52,7 +52,8 @@ const Login = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         {/* Session Status */}
         <AuthSessionStatus className="mb-4" status={status} />
 
@@ -64,12 +65,12 @@ const Login = () => {
           <div>
             <Label htmlFor="email">Email</Label>
 
-            <Input
+            <InputWithoutContext
               id="email"
               type="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
               autoFocus
             />
@@ -79,12 +80,12 @@ const Login = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="password"
               type="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
               required
               autoComplete="current-password"
             />
@@ -106,7 +107,7 @@ const Login = () => {
               </Link>
               <Link href="/register">
                 <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                  Don't have an account
+                  {`Don't have an account?`}
                 </a>
               </Link>
             </div>

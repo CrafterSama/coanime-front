@@ -35,20 +35,17 @@ const getInstance = (config?: AxiosRequestConfig) => {
       exclude: ['_destroy'],
     });
   }, axios.defaults.transformRequest);
-  const transformResponse = [].concat(
-    axios.defaults.transformResponse,
-    function (data) {
-      if (!data) {
-        return;
-      }
+  const transformResponse = [].concat(axios.defaults.transformResponse, function (data) {
+    if (!data) {
+      return;
+    }
 
-      const { meta, ...rest } = data;
+    const { meta, ...rest } = data;
 
-      if (!meta) return camelcaseKeys(rest, { deep: true });
+    if (!meta) return camelcaseKeys(rest, { deep: true });
 
-      return { meta, ...camelcaseKeys(rest, { deep: true }) };
-    },
-  );
+    return { meta, ...camelcaseKeys(rest, { deep: true }) };
+  });
 
   axios.defaults.withCredentials = true;
 
@@ -75,7 +72,7 @@ export const httpClientAuth = getInstance({
 
 export const setFormDataHeader = () => {
   httpClient.interceptors.request.use(
-    async config => {
+    async (config) => {
       config.headers = {
         ...config.headers,
         Accept: 'application/json',

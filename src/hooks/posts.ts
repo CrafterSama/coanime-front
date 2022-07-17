@@ -1,7 +1,6 @@
-import { httpClientAuth } from './../lib/http';
-import axios from '@/lib/axios';
+import { useQuery } from 'react-query';
+
 import httpClient from '@/lib/http';
-import { useMutation, useQuery } from 'react-query';
 
 export const usePosts = () => {
   return useQuery(['posts'], async () => {
@@ -17,8 +16,6 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const useUpdatePost = (id: string | string[], params: any) =>
-  httpClient.put(`posts/${id}`, params);
+export const postUpdate = (id: string | string[], params: any) => httpClient.put(`posts/${id}`, params);
 
-export const usePostImageUpload = (id: string | string[], params: any) =>
-  httpClient.put(`posts/${id}`, params);
+export const usePostImageUpload = (id: string | string[], params: any) => httpClient.put(`posts/${id}`, params);

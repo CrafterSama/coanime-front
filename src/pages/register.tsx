@@ -4,7 +4,7 @@ import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
+import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
@@ -22,7 +22,7 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const submitForm = event => {
+  const submitForm = (event) => {
     event.preventDefault();
 
     register({
@@ -46,7 +46,8 @@ const Register = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         {/* Validation Errors */}
         <AuthValidationErrors className="mb-4" errors={errors} />
 
@@ -55,12 +56,13 @@ const Register = () => {
           <div>
             <Label htmlFor="name">Name</Label>
 
-            <Input
+            <InputWithoutContext
               id="name"
               type="text"
+              name="name"
               value={name}
               className="block mt-1 w-full"
-              onChange={event => setName(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               required
               autoFocus
             />
@@ -70,12 +72,13 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="email">Email</Label>
 
-            <Input
+            <InputWithoutContext
               id="email"
               type="email"
+              name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
             />
           </div>
@@ -84,12 +87,13 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="password"
               type="password"
+              name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
               required
               autoComplete="new-password"
             />
@@ -99,12 +103,13 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="passwordConfirmation"
               type="password"
+              name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={event => setPasswordConfirmation(event.target.value)}
+              onChange={(event) => setPasswordConfirmation(event.target.value)}
               required
             />
           </div>

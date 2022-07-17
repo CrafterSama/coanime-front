@@ -1,21 +1,21 @@
 import { useRef, useState } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
+import { Editor } from '@tinymce/tinymce-react';
+import axios from '@/lib/axios';
+import { postUpdate, usePost } from '@/hooks/posts';
+import Input from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
+import Loading from '@/components/ui/Loading';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Head from 'next/head';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
-import { usePost, useUpdatePost } from '@/hooks/posts';
-import { yupResolver } from '@hookform/resolvers/yup';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
-import { Editor } from '@tinymce/tinymce-react';
 import Errors from '@/components/ui/Errors';
-import Loading from '@/components/ui/Loading';
-import axios from '@/lib/axios';
 
 const UpdatePost = () => {
   const editorRef = useRef(null);
@@ -42,7 +42,7 @@ const UpdatePost = () => {
     toast.success('Post saved successfully');
   };
 
-  const uploadPostImages = async blobInfo => {
+  const uploadPostImages = async (blobInfo) => {
     const formData = new FormData();
     formData.append('file', blobInfo.blob(), blobInfo.filename());
 
@@ -58,16 +58,13 @@ const UpdatePost = () => {
     }
   };
 
-  const { mutate: updatePost } = useMutation(
-    ({ id, params }: { id: string; params: any }) => useUpdatePost(id, params),
-    {
-      onSettled: () => {
-        queryClient.invalidateQueries(['post']);
-      },
+  const { mutate: updatePost } = useMutation(({ id, params }: { id: string; params: any }) => postUpdate(id, params), {
+    onSettled: () => {
+      queryClient.invalidateQueries(['post']);
     },
-  );
+  });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     console.log(data);
 
     /*updatePost(
@@ -84,13 +81,12 @@ const UpdatePost = () => {
     <AppLayout
       header={
         <>
-          <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-            Update Post
-          </h2>
+          <h2 className="font-semibold text-2xl text-gray-800 leading-tight">Update Post</h2>
           {/* Validation Errors */}
           <Errors errors={Object.values(errors)} />
         </>
-      }>
+      }
+    >
       <Head>
         <title>Coanime.net - Update Post: {post?.title}</title>
       </Head>
@@ -102,9 +98,7 @@ const UpdatePost = () => {
         )}
         {post && (
           <FormProvider {...methods}>
-            <form
-              className="flex flex-col rounded-lg shadow-lg"
-              onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col rounded-lg shadow-lg" onSubmit={handleSubmit(onSubmit)}>
               <header className="flex flex-row justify-between content-center p-4 bg-gray-100 rounded-t-lg">
                 <h4 className="w-1/2 text-xl font-semibold text-gray-400 leading-tight m-0 flex justify-start items-center">
                   {post?.title}
@@ -144,9 +138,7 @@ const UpdatePost = () => {
                   </div>
                   <div className="mb-4 flex flex-col gap-2">
                     <Label htmlFor="content">Contenido</Label>
-                    {errors?.['content']?.message && (
-                      <span>{errors?.['content']?.message}</span>
-                    )}
+                    {errors?.['content']?.message && <span>{errors?.['content']?.message}</span>}
                     <Controller
                       control={control}
                       name="content"
@@ -154,15 +146,8 @@ const UpdatePost = () => {
                         <Editor
                           onInit={(evt, editor) => (editorRef.current = editor)}
                           initialValue={post?.content}
-                          apiKey={
-                            'uv4awo44pqxuyzdzr1e0v8tsvkri1foum7hcm06x6mub8c49'
-                          }
-                          onEditorChange={() =>
-                            setValue(
-                              'content',
-                              editorRef?.current?.getContent(),
-                            )
-                          }
+                          apiKey={'uv4awo44pqxuyzdzr1e0v8tsvkri1foum7hcm06x6mub8c49'}
+                          onEditorChange={() => setValue('content', editorRef?.current?.getContent())}
                           init={{
                             height: 500,
                             menubar: false,
@@ -188,11 +173,10 @@ const UpdatePost = () => {
                             ],
                             toolbar:
                               'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat',
-                            iframe_template_callback: data =>
+                            iframe_template_callback: (data) =>
                               `<iframe title="${data.title}" width="${data.width}" height="${data.height}" src="${data.source}"></iframe>`,
                             images_upload_handler: uploadPostImages,
-                            content_style:
-                              'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                           }}
                         />
                       )}

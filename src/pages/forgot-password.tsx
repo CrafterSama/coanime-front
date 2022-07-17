@@ -4,7 +4,7 @@ import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
 import GuestLayout from '@/components/Layouts/GuestLayout';
-import Input from '@/components/ui/Input';
+import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
 
-  const submitForm = event => {
+  const submitForm = (event) => {
     event.preventDefault();
 
     forgotPassword({ email, setErrors, setStatus });
@@ -32,11 +32,11 @@ const ForgotPassword = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
-          Forgot your password? No problem. Just let us know your email address
-          and we will email you a password reset link that will allow you to
-          choose a new one.
+          Forgot your password? No problem. Just let us know your email address and we will email you a password reset
+          link that will allow you to choose a new one.
         </div>
 
         {/* Session Status */}
@@ -49,13 +49,13 @@ const ForgotPassword = () => {
           {/* Email Address */}
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input
+            <InputWithoutContext
               id="email"
               type="email"
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
               autoFocus
             />

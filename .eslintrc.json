@@ -29,14 +29,7 @@
       "version": "detect"
     }
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "@typescript-eslint",
-    "prettier",
-    "eslint-plugin-import-helpers",
-    "import"
-  ],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import", "eslint-plugin-import-helpers"],
   "rules": {
     "comma-dangle": [
       "error",
@@ -45,7 +38,7 @@
         "objects": "always-multiline",
         "imports": "always-multiline",
         "exports": "always-multiline",
-        "functions": "never"
+        "functions": "always-multiline"
       }
     ],
     "semi": "error",
@@ -61,6 +54,7 @@
     "react/react-in-jsx-scope": 0,
     "react/display-name": 0,
     "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-empty-interface": "off",
@@ -93,12 +87,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          ["/^react/"],
-          ["module"],
-          ["/^@/"],
-          ["parent", "sibling", "index"]
-        ],
+        "groups": [["/^react/"], ["module"], ["/^@/"], ["parent", "sibling", "index"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true

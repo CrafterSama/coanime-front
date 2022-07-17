@@ -9,13 +9,12 @@ type TextEditorProps = {
   onChange: (value: string) => void;
 };
 
-const TextEditor = forwardRef(
-  ({ id, name, errors, defaultValue, onChange }: TextEditorProps, ref) => {
-    console.log('refs', ref);
-    return (
-      <div className="w-full">
-        {errors && <p className="text-red-500 text-xs">{errors}</p>}
-        <Editor
+const TextEditor = forwardRef(({ id, name, errors, defaultValue, onChange }: TextEditorProps, ref) => {
+  console.log('refs', ref);
+  return (
+    <div className="w-full">
+      {errors && <p className="text-red-500 text-xs">{errors}</p>}
+      {/*<Editor
           onInit={(evt, editor) => (ref.current = editor)}
           initialValue={defaultValue}
           apiKey={'uv4awo44pqxuyzdzr1e0v8tsvkri1foum7hcm06x6mub8c49'}
@@ -36,10 +35,9 @@ const TextEditor = forwardRef(
             content_style:
               'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           }}
-        />
-      </div>
-    );
-  },
-);
+        />*/}
+    </div>
+  );
+});
 
 export default TextEditor;
