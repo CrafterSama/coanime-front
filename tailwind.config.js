@@ -11,7 +11,7 @@ module.exports = {
     typography: {
       extend: {
         fontFamily: {
-          sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+          sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
         },
       },
     },
