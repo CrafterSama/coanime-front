@@ -11,3 +11,7 @@ export { default as ChevronUpIcon } from './ChevronUpIcon';
 export { default as ChevronDownIcon } from './ChevronDownIcon';
 export { default as SwitchVerticalIcon } from './SwitchVerticalIcon';
 export { default as SpinerIcon } from './SpinerIcon';
+export { default as PencilIcon } from './PencilIcon';
+export { default as CloudUploadIcon } from './CloudUploadIcon';
+export { default as CalendarIcon } from './CalendarIcon';
+export { default as XIcon } from './XIcon';

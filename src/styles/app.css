@@ -5,3 +5,85 @@
 .image-side {
   clip-path: polygon(0px 0px, 100% 0px, 90% 100%, 0px 100%);
 }
+
+/* Tags Input Styles */
+.tags-box .rti--container,
+.tags-box .rti--container:focus-within {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 1rem;
+  border: 2px solid #ff9900;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #fff;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.tags-box.disabled .rti--container,
+.tags-box.disabled .rti--container input {
+  background-color: #f4f4f4;
+}
+
+.tags-box .rti--container input {
+  padding: 0.5rem 0.5rem;
+}
+
+.tags-box .rti--container .rti--tag {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.375rem;
+  background-color: rgba(255, 153, 0, 0.3);
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.tags-box.disabled .rti--container .rti--tag {
+  opacity: 0.7;
+}
+
+.tags-box .rti--container button:hover {
+  color: red;
+}
+
+/* DatePicker Styles */
+.datepicker-box .react-datetime-picker__wrapper {
+  @apply w-full block border-2 border-orange-300 rounded-lg px-4 py-1 flex flex-row justify-center content-center;
+}
+
+.datepicker-box .react-calendar {
+  @apply max-w-[240px] border-2 border-orange-300 rounded-lg shadow-md;
+}
+
+.datepicker-box .react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.datepicker-box .react-calendar__century-view .react-calendar__tile {
+  padding: 1rem 0.5rem;
+}
+
+.datepicker-box .react-calendar__navigation {
+  @apply justify-between w-full;
+}
+
+.datepicker-box .react-calendar__navigation button.react-calendar__navigation__arrow {
+  @apply max-w-[28px];
+}
+
+.datepicker-box .react-calendar__month-view__weekdays__weekday {
+  @apply text-[10px];
+}
+
+.datepicker-box .react-calendar__tile {
+  @apply px-[4px] py-[7px] text-sm rounded-full;
+}
+.datepicker-box .react-calendar__tile.react-calendar__tile--active,
+.datepicker-box .react-calendar__tile--active:enabled:hover {
+  @apply bg-orange-300 rounded-full;
+}
+
+.datepicker-box .react-datetime-picker__clock {
+  @apply rounded-lg border-2 border-orange-300;
+}

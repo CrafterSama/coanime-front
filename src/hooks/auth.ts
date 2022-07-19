@@ -90,17 +90,31 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
     axios.post('/email/verification-notification').then((response) => setStatus(response.data.status));
   };
 
-  const logout = async () => {
+  const logout = async (redirect = null) => {
     if (!error) {
       await axios.post('/logout').then(() => mutate());
     }
 
-    window.location.pathname = '/login';
+    if (redirect) {
+      return router.push(`/login?redirect=${redirect}`);
+    }
+
+    return router.push('/login');
+  };
+
+  const onLogout = () => {
+    const securePaths = ['dashboard', 'posts', 'titles', 'events', 'companies', 'users', 'people'];
+    const pathname = router.pathname.split('/')[1];
+    if (securePaths.includes(pathname)) {
+      const redirectWhenAuthenticated = router.asPath;
+      return logout(redirectWhenAuthenticated);
+    }
+    return logout();
   };
 
   useEffect(() => {
     if (middleware === 'guest' && redirectIfAuthenticated && user) router.push(redirectIfAuthenticated);
-    if (middleware === 'auth' && error) logout();
+    if (middleware === 'auth' && error) onLogout();
   }, [user, error]);
 
   return {

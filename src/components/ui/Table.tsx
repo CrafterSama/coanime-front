@@ -22,7 +22,7 @@ export const Rows: FC<RowsProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const tdStyles = (column) =>
     cn(`p-2 ${column.cellClass}`, {
-      'sticky bg-gray-50': column.fixed,
+      'sticky bg-white': column.fixed,
       'bg-white': !column.fixed,
     });
 
@@ -44,7 +44,7 @@ export const Rows: FC<RowsProps> = ({
           {columns.map((column, i) => (
             <td key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (
-                <div className="flex flex-row items-center justify-between py-2 space-x-3 bg-gray-50">
+                <div className="flex flex-row items-center justify-between py-2 space-x-3 bg-white">
                   <div className="ml-2">{renderCell(row, column)}</div>
                   {column.firstItem && (innerRowItems.length >= 1 || rowExpandable) && (
                     <div className="flex justify-end">
@@ -96,7 +96,7 @@ type TableProps = {
 
 export const Table: FC<TableProps> = ({ children, columns, fixedHeader = true }) => {
   const thStyles = (column, fixedHeader) =>
-    cn('z-10 bg-gray-200 font-regular uppercase text-gray-600 text-md pt-3 px-2 pb-2 text-left align-center', {
+    cn('z-10 bg-gray-200 font-regular uppercase text-gray-600 text-md pt-2 px-2 pb-2 text-left align-center', {
       sticky: fixedHeader || column.fixed,
       'top-0': fixedHeader,
       'bg-gray-200': fixedHeader && !column.fixed,
@@ -154,25 +154,31 @@ export const Table: FC<TableProps> = ({ children, columns, fixedHeader = true })
   };
 
   return (
-    <div className="rounded-lg">
-      <table className="min-w-full bg-white text-left">
-        <thead>
-          <tr className="p-2">
-            {columns.map((column, i) => (
-              <th key={`${column.name}-${i}`} className={thStyles(column, fixedHeader)}>
-                <div className="ml-2 flex flex-row items-center">
-                  {column?.sorting ? (
-                    renderSorting(i, column)
-                  ) : (
-                    <span className="text-sm whitespace-nowrap">{column.name}</span>
-                  )}
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="text-base">{children}</tbody>
-      </table>
+    <div className="rounded-lg flex flex-col">
+      <div className="rounded-lg overflow-hidden">
+        <table className="min-w-full bg-white text-left">
+          <thead>
+            <tr className="p-2">
+              {columns.map((column, i) => (
+                <th key={`${column.name}-${i}`} className={thStyles(column, fixedHeader)}>
+                  <div className="ml-2 flex flex-row items-center">
+                    {column?.sorting ? (
+                      renderSorting(i, column)
+                    ) : (
+                      <span className="text-sm whitespace-nowrap">{column.name}</span>
+                    )}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div className="rounded-lg overflow-auto max-h-screen">
+        <table className="min-w-full bg-white text-left">
+          <tbody className="text-base">{children}</tbody>
+        </table>
+      </div>
     </div>
   );
 };
