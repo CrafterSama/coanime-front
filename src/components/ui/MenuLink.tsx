@@ -10,7 +10,14 @@ type MenuLinkProps = {
   className?: string;
 };
 
-const MenuLink: FC<MenuLinkProps> = ({ icon, active = false, children, href, className, ...props }) => (
+const MenuLink: FC<MenuLinkProps> = ({
+  icon,
+  active = false,
+  children,
+  href,
+  className,
+  ...props
+}) => (
   <li
     className={`flex flex-row justify-start w-ful;l items-center pl-2 pr-7 py-2 border-r-4 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out ${
       active

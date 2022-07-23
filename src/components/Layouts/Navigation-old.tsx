@@ -7,7 +7,9 @@ import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import Dropdown from '@/components/ui/Dropdown';
 import { DropdownButton } from '@/components/ui/DropdownLink';
 import NavLink from '@/components/ui/NavLink';
-import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ui/ResponsiveNavLink';
+import ResponsiveNavLink, {
+  ResponsiveNavButton,
+} from '@/components/ui/ResponsiveNavLink';
 import { useAuth } from '@/hooks/auth';
 
 const Navigation = ({ user }) => {
@@ -34,7 +36,10 @@ const Navigation = ({ user }) => {
 
             {/* Navigation Links */}
             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-              <NavLink href="/dashboard" active={router.pathname === '/dashboard'}>
+              <NavLink
+                href="/dashboard"
+                active={router.pathname === '/dashboard'}
+              >
                 Dashboard
               </NavLink>
             </div>
@@ -50,7 +55,11 @@ const Navigation = ({ user }) => {
                   <div>{user?.name}</div>
 
                   <div className="ml-1">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
                       <path
                         fillRule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -72,7 +81,12 @@ const Navigation = ({ user }) => {
               onClick={() => setOpen((open) => !open)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
             >
-              <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+              <svg
+                className="h-6 w-6"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
                 {open ? (
                   <path
                     className="inline-flex"
@@ -100,7 +114,10 @@ const Navigation = ({ user }) => {
       {open && (
         <div className="block sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink href="/dashboard" active={router.pathname === '/dashboard'}>
+            <ResponsiveNavLink
+              href="/dashboard"
+              active={router.pathname === '/dashboard'}
+            >
               Dashboard
             </ResponsiveNavLink>
           </div>
@@ -126,8 +143,12 @@ const Navigation = ({ user }) => {
               </div>
 
               <div className="ml-3">
-                <div className="font-medium text-base text-gray-800">{user?.name}</div>
-                <div className="font-medium text-sm text-gray-500">{user?.email}</div>
+                <div className="font-medium text-base text-gray-800">
+                  {user?.name}
+                </div>
+                <div className="font-medium text-sm text-gray-500">
+                  {user?.email}
+                </div>
               </div>
             </div>
 

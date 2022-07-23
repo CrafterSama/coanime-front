@@ -4,7 +4,13 @@ import AppLayout from '@/components/Layouts/AppLayout';
 
 const Titles = () => {
   return (
-    <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Titles</h2>}>
+    <AppLayout
+      header={
+        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+          Titles
+        </h2>
+      }
+    >
       <Head>
         <title>Coanime.net - Titles</title>
       </Head>
