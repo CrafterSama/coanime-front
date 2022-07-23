@@ -1,25 +1,31 @@
-import useSWR from 'swr';
-import axios from '@/lib/axios';
 import { useEffect } from 'react';
+
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
+
+import axios from '@/lib/axios';
+import { httpClientAuth } from '@/lib/http';
 
 type useAuthProps = {
   middleware?: string;
   redirectIfAuthenticated?: string;
 };
 
-export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = {}) => {
+export const useAuth = ({
+  middleware,
+  redirectIfAuthenticated,
+}: useAuthProps = {}) => {
   const router = useRouter();
 
   const { data: user, error, mutate } = useSWR('/api/user', () =>
-    axios
+    httpClientAuth
       .get('/api/user')
       .then((res) => res.data)
       .catch((error) => {
         if (error.response.status !== 409) throw error;
 
         router.push('/verify-email');
-      }),
+      })
   );
 
   const csrf = () => axios.get('/sanctum/csrf-cookie');
@@ -78,7 +84,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 
     axios
       .post('/reset-password', { token: router.query.token, ...props })
-      .then((response) => router.push('/login?reset=' + Buffer.from(response.data.status, 'base64')))
+      .then((response) =>
+        router.push(
+          '/login?reset=' + Buffer.from(response.data.status, 'base64')
+        )
+      )
       .catch((error) => {
         if (error.response.status !== 422) throw error;
 
@@ -87,7 +97,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
   };
 
   const resendEmailVerification = ({ setStatus }) => {
-    axios.post('/email/verification-notification').then((response) => setStatus(response.data.status));
+    axios
+      .post('/email/verification-notification')
+      .then((response) => setStatus(response.data.status));
   };
 
   const logout = async (redirect = null) => {
@@ -96,14 +108,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
     }
 
     if (redirect) {
-      return router.push(`/login?redirect=${redirect}`);
+      window.location.pathname = redirect;
     }
 
-    return router.push('/login');
+    return (window.location.pathname = '/login');
   };
 
   const onLogout = () => {
-    const securePaths = ['dashboard', 'posts', 'titles', 'events', 'companies', 'users', 'people'];
+    const securePaths = [
+      'dashboard',
+      'posts',
+      'titles',
+      'events',
+      'companies',
+      'users',
+      'people',
+    ];
     const pathname = router.pathname.split('/')[1];
     if (securePaths.includes(pathname)) {
       const redirectWhenAuthenticated = router.asPath;
@@ -113,7 +133,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
   };
 
   useEffect(() => {
-    if (middleware === 'guest' && redirectIfAuthenticated && user) router.push(redirectIfAuthenticated);
+    if (middleware === 'guest' && redirectIfAuthenticated && user)
+      router.push(redirectIfAuthenticated);
     if (middleware === 'auth' && error) onLogout();
   }, [user, error]);
 

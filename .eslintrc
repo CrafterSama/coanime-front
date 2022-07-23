@@ -29,7 +29,14 @@
       "version": "detect"
     }
   },
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import", "eslint-plugin-import-helpers"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "prettier",
+    "import",
+    "eslint-plugin-import-helpers"
+  ],
   "rules": {
     "comma-dangle": [
       "error",
@@ -38,9 +45,15 @@
         "objects": "always-multiline",
         "imports": "always-multiline",
         "exports": "always-multiline",
-        "functions": "always-multiline"
+        "functions": "never"
       }
     ],
+    "quotes": [
+      "error",
+      "single",
+      { "allowTemplateLiterals": true, "avoidEscape": true }
+    ],
+    "arrow-parens": ["error", "always"],
     "semi": "error",
     //"prettier/prettier": "error",
     "prettier/prettier": [
@@ -87,7 +100,12 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [["/^react/"], ["module"], ["/^@/"], ["parent", "sibling", "index"]],
+        "groups": [
+          ["/^react/"],
+          ["module"],
+          ["/^@/"],
+          ["parent", "sibling", "index"]
+        ],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true

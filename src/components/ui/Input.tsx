@@ -1,11 +1,21 @@
 import { useFormContext } from 'react-hook-form';
+import Label from '@/components/ui/Label';
 
-const Input = ({ name, errors, disabled = false, className = '', ...props }) => {
+const Input = ({
+  label,
+  name,
+  errors,
+  disabled = false,
+  className = '',
+  ...props
+}) => {
   const { register } = useFormContext();
   return (
     <>
+      {label && <Label htmlFor={name}>{label}</Label>}
       <input
         {...register(name)}
+        id={name}
         name={name}
         disabled={disabled}
         className={`rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 p-2 ${className} ${
@@ -22,7 +32,11 @@ const Input = ({ name, errors, disabled = false, className = '', ...props }) => 
   );
 };
 
-export const InputWithoutContext = ({ disabled = false, className = '', ...props }) => {
+export const InputWithoutContext = ({
+  disabled = false,
+  className = '',
+  ...props
+}) => {
   return (
     <input
       disabled={disabled}

@@ -1,14 +1,16 @@
+import { useState } from 'react';
+
+import Link from 'next/link';
+
+import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
-import GuestLayout from '@/components/Layouts/GuestLayout';
 import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
-import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
-import { useState } from 'react';
 
 const ForgotPassword = () => {
   const { forgotPassword } = useAuth({ middleware: 'guest' });
@@ -35,8 +37,9 @@ const ForgotPassword = () => {
         }
       >
         <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
-          Forgot your password? No problem. Just let us know your email address and we will email you a password reset
-          link that will allow you to choose a new one.
+          Forgot your password? No problem. Just let us know your email address
+          and we will email you a password reset link that will allow you to
+          choose a new one.
         </div>
 
         {/* Session Status */}
