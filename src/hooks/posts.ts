@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import httpClient from '@/lib/http';
+import httpClient, { httpClientAuth } from '@/lib/http';
 
 export const usePosts = () => {
   return useQuery(['posts'], async () => {
@@ -16,6 +16,11 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const postUpdate = (id: string | string[], params: any) => httpClient.put(`posts/${id}`, params);
+export const postUpdate = async (id: string | string[], params: any) =>
+  await httpClient.put(`posts/${id}`, params);
 
-export const usePostImageUpload = (id: string | string[], params: any) => httpClient.put(`posts/${id}`, params);
+export const imageUpload = async (params: any | FormData) => {
+  const csrf = () => httpClientAuth.get('sanctum/csrf-cookie');
+  await csrf();
+  return await httpClient.put(`upload-images`, params);
+};

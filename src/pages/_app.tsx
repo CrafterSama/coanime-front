@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import NextNProgress from 'nextjs-progressbar';
@@ -13,6 +14,17 @@ const App = ({ Component, pageProps }) => {
     <QueryClientProvider client={queryClient}>
       <>
         <NextNProgress color="#f90" />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className:
+              'bg-white rounded-md border border-gray-300 shadow-xl text-sm',
+            duration: 5000,
+            style: {
+              marginTop: '50px',
+            },
+          }}
+        />
         <Component {...pageProps} />
       </>
     </QueryClientProvider>

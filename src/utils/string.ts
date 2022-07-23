@@ -5,7 +5,6 @@ export const strLimit = (str, limit) => {
   return str;
 };
 
-export const extractText = html => {
-  return new DOMParser().parseFromString(html, 'text/html').documentElement
-    .textContent;
+export const extractText = (html) => {
+  return new DOMParser().parseFromString(html, 'text/html').documentElement.textContent;
 };

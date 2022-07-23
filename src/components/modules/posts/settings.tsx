@@ -1,7 +1,8 @@
-import { extractText, strLimit } from '@/utils/string';
 import dayjs from 'dayjs';
 import Image from 'next/future/image';
 import Link from 'next/link';
+
+import { extractText, strLimit } from '@/utils/string';
 
 export const headers = [
   {

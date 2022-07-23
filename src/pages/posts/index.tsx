@@ -1,16 +1,23 @@
-import AppLayout from '@/components/Layouts/AppLayout';
-import { Rows, Table } from '@/components/ui/Table';
 import Head from 'next/head';
+
+import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/posts/settings';
-import { usePosts } from '@/hooks/posts';
 import Loading from '@/components/ui/Loading';
+import { Rows, Table } from '@/components/ui/Table';
+import { usePosts } from '@/hooks/posts';
 
 const Posts = () => {
   const { data = {}, isLoading, isError } = usePosts();
   const { data: posts = [] } = data;
 
   return (
-    <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Posts</h2>}>
+    <AppLayout
+      header={
+        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+          Posts
+        </h2>
+      }
+    >
       <Head>
         <title>Coanime.net - Posts</title>
       </Head>

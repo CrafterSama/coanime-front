@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 import { Logotype } from '@/components/ui/ApplicationLogo';
 import MenuLink from '@/components/ui/MenuLink';
 import { menu } from '@/constants/menu';

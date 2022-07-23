@@ -1,3 +1,9 @@
+import { useEffect, useState } from 'react';
+
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
@@ -8,23 +14,28 @@ import Checkbox from '@/components/ui/Checkbox';
 import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import { useAuth } from '@/hooks/auth';
-import Head from 'next/head';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 const Login = () => {
   const router = useRouter();
-
-  const { login } = useAuth({
-    middleware: 'guest',
-    redirectIfAuthenticated: '/dashboard',
-  });
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
+  const [redirect, setRedirect] = useState<string | string[]>('');
+
+  const redirectionIfLoggedIn = () => {
+    if (router.query.redirect) setRedirect(router.query.redirect as string);
+    setRedirect('/dashboard');
+  };
+
+  const { login } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: redirect as string,
+  });
+
+  useEffect(() => {
+    redirectionIfLoggedIn();
+  });
 
   useEffect(() => {
     if (router.query.reset?.length > 0 && errors.length === 0) {
@@ -32,7 +43,7 @@ const Login = () => {
     } else {
       setStatus(null);
     }
-  });
+  }, []);
 
   const submitForm = async (event) => {
     event.preventDefault();

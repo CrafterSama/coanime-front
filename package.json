@@ -3,9 +3,16 @@
   "version": "1.0.0-beta.1",
   "private": true,
   "scripts": {
+    "devHttps": "node server.js",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ./**/*.{js,ts,tsx,css,md,json} --config ./.prettierrc",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "eslint": "eslint src --ext .ts,.tsx",
+    "eslint:fix": "npm run eslint -- --fix"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
@@ -16,6 +23,7 @@
     "axios": "^0.21.1",
     "camelcase-keys": "^8.0.1",
     "classnames": "^2.3.1",
+    "date-fns": "^2.28.0",
     "dayjs": "^1.11.3",
     "next": "^12.0.4",
     "nextjs-progressbar": "^0.0.14",
@@ -28,6 +36,8 @@
     "react-select": "^5.4.0",
     "react-tag-input-component": "^1.0.9",
     "snakecase-keys": "^5.4.2",
+    "suneditor": "^2.43.14",
+    "suneditor-react": "^3.4.1",
     "swr": "^1.2.2",
     "yup": "^0.32.11"
   },

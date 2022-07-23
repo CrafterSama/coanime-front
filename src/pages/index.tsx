@@ -1,7 +1,8 @@
-import { Logotype } from '@/components/ui/ApplicationLogo';
-import { useAuth } from '@/hooks/auth';
 import Head from 'next/head';
 import Link from 'next/link';
+
+import { Logotype } from '@/components/ui/ApplicationLogo';
+import { useAuth } from '@/hooks/auth';
 
 export default function Home() {
   const { user } = useAuth({ middleware: 'guest' });
@@ -33,7 +34,11 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
           <div className="flex justify-center pt-8 sm:justify-start sm:pt-0">
-            <Logotype logoColor="#FE6A00" lettersColor="#333333" className="h-15" />
+            <Logotype
+              logoColor="#FE6A00"
+              lettersColor="#333333"
+              className="h-15"
+            />
           </div>
 
           <div className="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
@@ -53,7 +58,10 @@ export default function Home() {
                   </svg>
 
                   <div className="ml-4 text-lg leading-7 font-semibold">
-                    <a href="https://laravel.com/docs" className="underline text-gray-900 dark:text-white">
+                    <a
+                      href="https://laravel.com/docs"
+                      className="underline text-gray-900 dark:text-white"
+                    >
                       Documentation
                     </a>
                   </div>
@@ -61,9 +69,11 @@ export default function Home() {
 
                 <div className="ml-12">
                   <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you
-                    are new to the framework or have previous experience with Laravel, we recommend reading all of the
-                    documentation from beginning to end.
+                    Laravel has wonderful, thorough documentation covering every
+                    aspect of the framework. Whether you are new to the
+                    framework or have previous experience with Laravel, we
+                    recommend reading all of the documentation from beginning to
+                    end.
                   </div>
                 </div>
               </div>
@@ -84,7 +94,10 @@ export default function Home() {
                   </svg>
 
                   <div className="ml-4 text-lg leading-7 font-semibold">
-                    <a href="https://laracasts.com" className="underline text-gray-900 dark:text-white">
+                    <a
+                      href="https://laracasts.com"
+                      className="underline text-gray-900 dark:text-white"
+                    >
                       Laracasts
                     </a>
                   </div>
@@ -92,8 +105,10 @@ export default function Home() {
 
                 <div className="ml-12">
                   <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check
-                    them out, see for yourself, and massively level up your development skills in the process.
+                    Laracasts offers thousands of video tutorials on Laravel,
+                    PHP, and JavaScript development. Check them out, see for
+                    yourself, and massively level up your development skills in
+                    the process.
                   </div>
                 </div>
               </div>
@@ -113,7 +128,10 @@ export default function Home() {
                   </svg>
 
                   <div className="ml-4 text-lg leading-7 font-semibold">
-                    <a href="https://laravel-news.com/" className="underline text-gray-900 dark:text-white">
+                    <a
+                      href="https://laravel-news.com/"
+                      className="underline text-gray-900 dark:text-white"
+                    >
                       Laravel News
                     </a>
                   </div>
@@ -121,8 +139,10 @@ export default function Home() {
 
                 <div className="ml-12">
                   <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most
-                    important news in the Laravel ecosystem, including new package releases and tutorials.
+                    Laravel News is a community driven portal and newsletter
+                    aggregating all of the latest and most important news in the
+                    Laravel ecosystem, including new package releases and
+                    tutorials.
                   </div>
                 </div>
               </div>
@@ -165,28 +185,47 @@ export default function Home() {
                     <a href="https://envoyer.io" className="underline">
                       Envoyer
                     </a>{' '}
-                    help you take your projects to the next level. Pair them with powerful open source libraries like{' '}
-                    <a href="https://laravel.com/docs/billing" className="underline">
+                    help you take your projects to the next level. Pair them
+                    with powerful open source libraries like{' '}
+                    <a
+                      href="https://laravel.com/docs/billing"
+                      className="underline"
+                    >
                       Cashier
                     </a>
                     ,{' '}
-                    <a href="https://laravel.com/docs/dusk" className="underline">
+                    <a
+                      href="https://laravel.com/docs/dusk"
+                      className="underline"
+                    >
                       Dusk
                     </a>
                     ,{' '}
-                    <a href="https://laravel.com/docs/broadcasting" className="underline">
+                    <a
+                      href="https://laravel.com/docs/broadcasting"
+                      className="underline"
+                    >
                       Echo
                     </a>
                     ,{' '}
-                    <a href="https://laravel.com/docs/horizon" className="underline">
+                    <a
+                      href="https://laravel.com/docs/horizon"
+                      className="underline"
+                    >
                       Horizon
                     </a>
                     ,{' '}
-                    <a href="https://laravel.com/docs/sanctum" className="underline">
+                    <a
+                      href="https://laravel.com/docs/sanctum"
+                      className="underline"
+                    >
                       Sanctum
                     </a>
                     ,{' '}
-                    <a href="https://laravel.com/docs/telescope" className="underline">
+                    <a
+                      href="https://laravel.com/docs/telescope"
+                      className="underline"
+                    >
                       Telescope
                     </a>
                     , and more.
@@ -211,7 +250,10 @@ export default function Home() {
                   <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
 
-                <a href="https://laravel.bigcartel.com" className="ml-1 underline">
+                <a
+                  href="https://laravel.bigcartel.com"
+                  className="ml-1 underline"
+                >
                   Shop
                 </a>
 
@@ -227,7 +269,10 @@ export default function Home() {
                   <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
 
-                <a href="https://github.com/sponsors/taylorotwell" className="ml-1 underline">
+                <a
+                  href="https://github.com/sponsors/taylorotwell"
+                  className="ml-1 underline"
+                >
                   Sponsor
                 </a>
               </div>

@@ -1,8 +1,10 @@
+import { FC, useState } from 'react';
+
+import cn from 'classnames';
+
 import { ChevronDownIcon, ChevronUpIcon, SwitchVerticalIcon } from '@/components/icons';
 import { SORTING_TYPES } from '@/constants/common';
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
-import cn from 'classnames';
-import { FC, useState } from 'react';
 
 type RowsProps = {
   columns: any[];

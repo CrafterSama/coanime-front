@@ -1,26 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
-import { Editor } from '@tinymce/tinymce-react';
-import axios from '@/lib/axios';
-import { postUpdate, usePost } from '@/hooks/posts';
-import Input from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
-import Loading from '@/components/ui/Loading';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { TagsInput } from 'react-tag-input-component';
+
+import format from 'date-fns/format';
+import Image from 'next/future/image';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import {
+  PencilIcon,
+  CloudUploadIcon,
+  CalendarIcon,
+  XIcon,
+} from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import Button from '@/components/ui/Button';
 import Errors from '@/components/ui/Errors';
-import { PencilIcon, CloudUploadIcon, CalendarIcon, XIcon } from '@/components/icons';
+import Input from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
+import Loading from '@/components/ui/Loading';
+import { RoundedButton } from '@/components/ui/RoundedButton';
 import FormSelect from '@/components/ui/Select';
-import Image from 'next/future/image';
-import { TagsInput } from 'react-tag-input-component';
-import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
+import { postUpdate, usePost } from '@/hooks/posts';
+import axios from '@/lib/axios';
+import { httpClientAuth } from '@/lib/http';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Editor } from '@tinymce/tinymce-react';
+import TextEditor from '@/components/ui/TextEditor';
+import UploadImage from '@/components/ui/UploadImage';
+import FormHeader from '@/components/ui/FormHeader';
 
 const UpdatePost = () => {
   const editorRef = useRef(null);
@@ -28,8 +41,7 @@ const UpdatePost = () => {
   const queryClient = useQueryClient();
   const [editMode, setEditMode] = useState<boolean>(false);
   const id = router?.query?.id;
-  const { data = {}, isLoading, isError } = usePost(id as string);
-  console.log('data', data);
+  const { data = {}, isLoading, isError, refetch } = usePost(id as string);
 
   const { post, categories: categoriesData } = data;
 
@@ -43,6 +55,7 @@ const UpdatePost = () => {
     control,
     setValue,
     watch,
+    register,
     formState: { errors },
   } = methods;
 
@@ -51,64 +64,69 @@ const UpdatePost = () => {
       setValue('title', post?.title);
       setValue('content', post?.content);
       setValue('excerpt', post?.excerpt);
+      setValue('image', post?.image);
       setValue(
         'tags',
-        post?.tags?.map((tag) => tag.name),
+        post?.tags?.map((tag) => tag.name)
       );
-      setValue('categoryId', { value: post?.categories?.id, label: post.categories.name });
+      setValue('categoryId', {
+        value: post?.categories?.id,
+        label: post.categories.name,
+      });
       setValue('postponedTo', new Date(post?.postponedTo));
     }
   }, [post, setValue]);
 
-  const categories = categoriesData?.map((category) => ({ value: category.id, label: category.name }));
+  const categories = categoriesData?.map((category) => ({
+    value: category.id,
+    label: category.name,
+  }));
 
-  const InputTagStyles = {};
-  console.log(watch('image'));
-
-  const onSavedSuccess = () => {
-    toast.success('Post saved successfully');
+  const onSavedSuccess = (response) => {
+    setEditMode(false);
+    refetch();
+    toast.success(response.data.message.text);
   };
 
-  const uploadPostImages = async (blobInfo) => {
-    const formData = new FormData();
-    formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-    try {
-      const csrf = () => axios.get('/sanctum/csrf-cookie');
-      await csrf();
-      const { data } = await axios.put('/api/v1/post-image-upload', formData);
-      toast.success('Image uploaded successfully');
-      return data;
-    } catch (error) {
-      toast.error(`Image upload failed, Error: ${error.message}`);
-      return error;
-    }
-  };
-
-  const { mutate: updatePost } = useMutation(({ id, params }: { id: string; params: any }) => postUpdate(id, params), {
-    onSettled: () => {
-      queryClient.invalidateQueries(['post']);
-    },
-  });
+  const {
+    mutate: updatePost,
+  } = useMutation(({ id, params }: { id: string; params: any }) =>
+    postUpdate(id, params)
+  );
 
   const onSubmit = (data) => {
-    console.log(data);
+    const id = post?.id;
+    const params = {
+      title: data.title,
+      content: data.content,
+      excerpt: data.excerpt,
+      image: data.image,
+      tagId: data.tags,
+      categoryId: data.categoryId.value,
+      postponedTo: format(new Date(data.postponedTo), 'yyy-MM-dd HH:mm:ss'),
+    };
 
-    /*updatePost(
+    updatePost(
       { id, params },
       {
-        onSuccess: () => {
-          onSavedSuccess();
+        onSuccess: (response) => {
+          onSavedSuccess(response);
+          queryClient.invalidateQueries(['post']);
         },
-      },
-    );*/
+        onError: ({ message }) => {
+          toast.error(message);
+        },
+      }
+    );
   };
 
   return (
     <AppLayout
       header={
         <>
-          <h2 className="font-semibold text-2xl text-gray-800 leading-tight">Update Post</h2>
+          <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
+            Update Post
+          </h2>
           {/* Validation Errors */}
           <Errors errors={Object.values(errors)} />
         </>
@@ -125,31 +143,21 @@ const UpdatePost = () => {
         )}
         {post && (
           <FormProvider {...methods}>
-            <form className="flex flex-col rounded-lg shadow-lg" onSubmit={handleSubmit(onSubmit)}>
-              <header className="flex flex-row justify-between content-center p-4 bg-gray-100 rounded-t-lg">
-                <h4 className="w-1/2 text-xl font-semibold text-gray-400 leading-tight m-0 flex justify-start items-center">
-                  {post?.title}
-                </h4>
-                <div className="action-buttons w-1/2 flex flex-row gap-4 justify-end">
-                  {editMode ? (
-                    <>
-                      <Button type="button" variant="text" onClick={() => setEditMode(false)}>
-                        Cancel
-                      </Button>
-                      <Button type="submit">Guardar Post</Button>
-                    </>
-                  ) : (
-                    <button className="flex justify-center content-center p-2 rounded-full text-orange-500 border-2 border-orange-500 bg-orange-200 hover:bg-orange-300 transition-all">
-                      <PencilIcon className="w-6 h-6" onClick={() => setEditMode(true)} />
-                    </button>
-                  )}
-                </div>
-              </header>
+            <form
+              className="flex flex-col rounded-lg shadow-lg"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <FormHeader
+                title={post?.title}
+                cancelAction={() => setEditMode(false)}
+                editAction={() => setEditMode(true)}
+                disabled={!editMode}
+              />
               <div className="p-4 flex flex-row gap-4 rounded-b-lg">
                 <div className="w-8/12">
                   <div className="mb-4 flex flex-col gap-2">
-                    <Label htmlFor="title">Titulo</Label>
                     <Input
+                      label="Titulo"
                       id="title"
                       name="title"
                       errors={errors?.['title']?.message}
@@ -160,8 +168,8 @@ const UpdatePost = () => {
                     />
                   </div>
                   <div className="mb-4 flex flex-col gap-2">
-                    <Label htmlFor="excerpt">Extracto</Label>
                     <Input
+                      label="Excerpt"
                       id="excerpt"
                       name="excerpt"
                       errors={errors?.['excerpt']?.message}
@@ -173,46 +181,15 @@ const UpdatePost = () => {
                   </div>
                   <div className="mb-4 flex flex-col gap-2">
                     <Label htmlFor="content">Contenido</Label>
-                    {errors?.['content']?.message && <span>{errors?.['content']?.message}</span>}
                     <Controller
                       control={control}
                       name="content"
                       render={() => (
-                        <Editor
-                          onInit={(evt, editor) => (editorRef.current = editor)}
-                          initialValue={post?.content}
-                          apiKey={'uv4awo44pqxuyzdzr1e0v8tsvkri1foum7hcm06x6mub8c49'}
-                          onEditorChange={() => setValue('content', editorRef?.current?.getContent())}
+                        <TextEditor
                           disabled={!editMode}
-                          init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: [
-                              'advlist',
-                              'autolink',
-                              'lists',
-                              'link',
-                              'image',
-                              'charmap',
-                              'preview',
-                              'anchor',
-                              'searchreplace',
-                              'visualblocks',
-                              'code',
-                              'fullscreen',
-                              'insertdatetime',
-                              'media',
-                              'table',
-                              'code',
-                              'help',
-                              'wordcount',
-                            ],
-                            toolbar:
-                              'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat',
-                            iframe_template_callback: (data) =>
-                              `<iframe title="${data.title}" width="${data.width}" height="${data.height}" src="${data.source}"></iframe>`,
-                            images_upload_handler: uploadPostImages,
-                          }}
+                          defaultValue={post?.content}
+                          errors={errors?.['content']?.message}
+                          onChange={(value) => setValue('content', value)}
                         />
                       )}
                     />
@@ -250,24 +227,12 @@ const UpdatePost = () => {
                   </div>
                   <div className="mb-4 flex flex-col gap-2">
                     <Label>Imagen Principal del Post</Label>
-                    <Image src={watch('image')?.name ?? post?.image} alt={post?.title} className="w-full rounded-lg" />
-                    <label
-                      htmlFor="image"
-                      className={`w-full max-w-md border-2 border-orange-400 bg-orange-50 hover:bg-orange-100  m-auto rounded-lg px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none ${
-                        editMode ? 'opacity-100 cursor-pointer' : 'opacity-50 cursor-not-allowed'
-                      }`}
-                    >
-                      <CloudUploadIcon className="w-6 h-6" />
-                      <span className="text-orange-500 font-semibold">Cambiar Imagen</span>
-                      <input
-                        className="hidden"
-                        type="file"
-                        id="image"
-                        name="image"
-                        onChange={(e) => setValue('image', e.target.files)}
-                        disabled={!editMode}
-                      />
-                    </label>
+                    <Image
+                      src={post?.image}
+                      alt={post?.title}
+                      className="w-full rounded-lg"
+                    />
+                    <UploadImage disabled={!editMode} />
                   </div>
                   <div className="mb-4 flex flex-col gap-2">
                     <Label>Tags</Label>

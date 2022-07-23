@@ -20,11 +20,6 @@ const getAuthApiUrl = () => {
   return `${url}`;
 };
 
-const getApiCookieUrl = () => {
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-  return `${url}/sanctum/csrf-cookie`;
-};
-
 const getInstance = (config?: AxiosRequestConfig) => {
   const transformRequest = [].concat(function (data) {
     if (!data) {
@@ -35,17 +30,20 @@ const getInstance = (config?: AxiosRequestConfig) => {
       exclude: ['_destroy'],
     });
   }, axios.defaults.transformRequest);
-  const transformResponse = [].concat(axios.defaults.transformResponse, function (data) {
-    if (!data) {
-      return;
+  const transformResponse = [].concat(
+    axios.defaults.transformResponse,
+    function (data) {
+      if (!data) {
+        return;
+      }
+
+      const { meta, ...rest } = data;
+
+      if (!meta) return camelcaseKeys(rest, { deep: true });
+
+      return { meta, ...camelcaseKeys(rest, { deep: true }) };
     }
-
-    const { meta, ...rest } = data;
-
-    if (!meta) return camelcaseKeys(rest, { deep: true });
-
-    return { meta, ...camelcaseKeys(rest, { deep: true }) };
-  });
+  );
 
   axios.defaults.withCredentials = true;
 
@@ -75,8 +73,6 @@ export const setFormDataHeader = () => {
     async (config) => {
       config.headers = {
         ...config.headers,
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
         'X-Requested-With': 'XMLHttpRequest',
       };
 
@@ -84,7 +80,7 @@ export const setFormDataHeader = () => {
     },
     (error: any) => {
       Promise.reject(error);
-    },
+    }
   );
 };
 

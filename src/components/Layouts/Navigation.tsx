@@ -1,11 +1,13 @@
+import { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
+import { MenuIcon, LogoutIcon } from '@/components/icons';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import Dropdown from '@/components/ui/Dropdown';
-import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ui/ResponsiveNavLink';
 import { DropdownButton } from '@/components/ui/DropdownLink';
+import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ui/ResponsiveNavLink';
 import { useAuth } from '@/hooks/auth';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { MenuIcon, LogoutIcon } from '@/components/icons';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
