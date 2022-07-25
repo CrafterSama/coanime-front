@@ -12,7 +12,7 @@ const AppLayout = ({ header, children }) => {
         <Navigation user={user} />
         {
           <header className="bg-white">
-            <div className="p-4">{header}</div>
+            <div className="py-6 px-8">{header}</div>
           </header>
         }
         <section>{children}</section>

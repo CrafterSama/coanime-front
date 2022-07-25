@@ -9,31 +9,32 @@ export const headers = [
     name: 'Imagen y Titulo',
     accessor: (row: any) => row,
     cell: (row) => (
-      <div className="w-96 flex flex-col gap-2">
-        <Link href={`/posts/${row.slug}`}>
-          <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm">
-            <div className="w-3/12">
-              <Image
-                className="rounded-lg"
-                src={row.image}
-                alt={row.title}
-                loading="lazy"
-                width="100%"
-                height="100%"
-              />
-            </div>
-            <div className="w-9/12 text-orange-500 underline underline-offset-2 font-semibold">
+      <div className="flex flex-row gap-2 w-96 py-1">
+        <div className="w-5/12 flex items-center">
+          <Image
+            className="rounded-lg w-full h-3/4 min-h-[90px]"
+            src={row.image}
+            alt={row.title}
+            loading="lazy"
+            width="100%"
+            height="100%"
+          />
+        </div>
+        <div className="w-7/12 text-orange-500 font-semibold">
+          <Link href={`/posts/${row.slug}`}>
+            <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-2">
               {row.title}
-            </div>
-          </a>
-        </Link>
-        <p className="text-gray-600 text-xs">
-          {strLimit(extractText(row?.content), 150)}
-        </p>
+            </a>
+          </Link>
+          <p className="text-gray-600 text-xs">
+            {strLimit(extractText(row?.content), 100)}
+          </p>
+        </div>
       </div>
     ),
     firstItem: true,
     fixed: true,
+    headerClassName: 'w-72',
   },
   {
     name: 'Visible en',

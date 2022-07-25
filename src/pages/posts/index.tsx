@@ -7,7 +7,7 @@ import { Rows, Table } from '@/components/ui/Table';
 import { usePosts } from '@/hooks/posts';
 
 const Posts = () => {
-  const { data = {}, isLoading, isError } = usePosts();
+  const { data = {}, isLoading } = usePosts();
   const { data: posts = [] } = data;
 
   return (

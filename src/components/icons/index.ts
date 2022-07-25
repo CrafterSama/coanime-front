@@ -15,3 +15,6 @@ export { default as PencilIcon } from './PencilIcon';
 export { default as CloudUploadIcon } from './CloudUploadIcon';
 export { default as CalendarIcon } from './CalendarIcon';
 export { default as XIcon } from './XIcon';
+export { default as UserIcon } from './UserIcon';
+export { default as UserAddIcon } from './UserAddIcon';
+export { default as UserCircleIcon } from './UserCircleIcon';

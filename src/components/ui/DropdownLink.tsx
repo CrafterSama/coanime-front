@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import { Menu } from '@headlessui/react';
 
-const DropdownLink = ({ icon = null, children, ...props }) => (
+const DropdownLink = ({ href, icon = null, children, ...props }) => (
   <Menu.Item>
     {({ active }) => (
-      <Link href={''} {...props}>
+      <Link href={href} {...props}>
         <a
           className={`w-full flex flex-row justify-between text-left px-4 py-2 text-sm leading-5 text-gray-700 ${
             active ? 'bg-gray-100' : ''

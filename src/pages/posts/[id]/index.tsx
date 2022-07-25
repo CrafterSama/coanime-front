@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
 import { TagsInput } from 'react-tag-input-component';
@@ -10,38 +10,28 @@ import Image from 'next/future/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import {
-  PencilIcon,
-  CloudUploadIcon,
-  CalendarIcon,
-  XIcon,
-} from '@/components/icons';
+import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import Button from '@/components/ui/Button';
 import Errors from '@/components/ui/Errors';
+import { FormWithContext } from '@/components/ui/Form';
+import FormHeader from '@/components/ui/FormHeader';
 import Input from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
-import { RoundedButton } from '@/components/ui/RoundedButton';
 import FormSelect from '@/components/ui/Select';
-import { postUpdate, usePost } from '@/hooks/posts';
-import axios from '@/lib/axios';
-import { httpClientAuth } from '@/lib/http';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Editor } from '@tinymce/tinymce-react';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
-import FormHeader from '@/components/ui/FormHeader';
+import { postUpdate, usePost } from '@/hooks/posts';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const UpdatePost = () => {
-  const editorRef = useRef(null);
   const router = useRouter();
   const queryClient = useQueryClient();
   const [editMode, setEditMode] = useState<boolean>(false);
   const id = router?.query?.id;
-  const { data = {}, isLoading, isError, refetch } = usePost(id as string);
+  const { data = {}, isLoading, refetch } = usePost(id as string);
 
   const { post, categories: categoriesData } = data;
 
@@ -55,27 +45,30 @@ const UpdatePost = () => {
     control,
     setValue,
     watch,
-    register,
     formState: { errors },
   } = methods;
 
+  const resetPostInfo = useCallback(() => {
+    setValue('title', post?.title);
+    setValue('content', post?.content);
+    setValue('excerpt', post?.excerpt);
+    setValue('image', post?.image);
+    setValue(
+      'tags',
+      post?.tags?.map((tag) => tag.name)
+    );
+    setValue('categoryId', {
+      value: post?.categories?.id,
+      label: post.categories.name,
+    });
+    setValue('postponedTo', new Date(post?.postponedTo));
+  }, [post, setValue]);
+
   useEffect(() => {
     if (post) {
-      setValue('title', post?.title);
-      setValue('content', post?.content);
-      setValue('excerpt', post?.excerpt);
-      setValue('image', post?.image);
-      setValue(
-        'tags',
-        post?.tags?.map((tag) => tag.name)
-      );
-      setValue('categoryId', {
-        value: post?.categories?.id,
-        label: post.categories.name,
-      });
-      setValue('postponedTo', new Date(post?.postponedTo));
+      resetPostInfo();
     }
-  }, [post, setValue]);
+  }, [post, resetPostInfo]);
 
   const categories = categoriesData?.map((category) => ({
     value: category.id,
@@ -142,112 +135,108 @@ const UpdatePost = () => {
           </div>
         )}
         {post && (
-          <FormProvider {...methods}>
-            <form
-              className="flex flex-col rounded-lg shadow-lg"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <FormHeader
-                title={post?.title}
-                cancelAction={() => setEditMode(false)}
-                editAction={() => setEditMode(true)}
-                disabled={!editMode}
-              />
-              <div className="p-4 flex flex-row gap-4 rounded-b-lg">
-                <div className="w-8/12">
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Input
-                      label="Titulo"
-                      id="title"
-                      name="title"
-                      errors={errors?.['title']?.message}
-                      placeholder="Title"
-                      className="w-full block text-lg"
-                      defaultValue={post?.title}
-                      disabled={!editMode}
-                    />
-                  </div>
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Input
-                      label="Excerpt"
-                      id="excerpt"
-                      name="excerpt"
-                      errors={errors?.['excerpt']?.message}
-                      placeholder="excerpt"
-                      className="w-full block text-base"
-                      defaultValue={post?.excerpt}
-                      disabled={!editMode}
-                    />
-                  </div>
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Label htmlFor="content">Contenido</Label>
-                    <Controller
-                      control={control}
-                      name="content"
-                      render={() => (
-                        <TextEditor
-                          disabled={!editMode}
-                          defaultValue={post?.content}
-                          errors={errors?.['content']?.message}
-                          onChange={(value) => setValue('content', value)}
-                        />
-                      )}
-                    />
-                  </div>
+          <FormWithContext methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            <FormHeader
+              title={post?.title}
+              subtitle={`Por: ${post?.users?.name}`}
+              cancelAction={() => setEditMode(false)}
+              editAction={() => setEditMode(true)}
+              disabled={!editMode}
+            />
+            <div className="p-4 flex flex-row gap-4 rounded-b-lg">
+              <div className="w-4/12">
+                <div className="mb-4 flex flex-col gap-2 datepicker-box">
+                  <Label htmlFor="description">Posponer hasta:</Label>
+                  <DateTimePicker
+                    onChange={(value) => setValue('postponedTo', value)}
+                    value={watch('postponedTo')}
+                    calendarIcon={
+                      <span className="text-orange-400">
+                        <CalendarIcon className="w-6 h-6" />
+                      </span>
+                    }
+                    clearIcon={
+                      <span className="text-orange-400">
+                        <XIcon className="w-6 h-6" />
+                      </span>
+                    }
+                    disabled={!editMode}
+                  />
                 </div>
-                <div className="w-4/12">
-                  <div className="mb-4 flex flex-col gap-2 datepicker-box">
-                    <Label htmlFor="description">Posponer hasta:</Label>
-                    <DateTimePicker
-                      onChange={(value) => setValue('postponedTo', value)}
-                      value={watch('postponedTo')}
-                      calendarIcon={
-                        <span className="text-orange-400">
-                          <CalendarIcon className="w-6 h-6" />
-                        </span>
-                      }
-                      clearIcon={
-                        <span className="text-orange-400">
-                          <XIcon className="w-6 h-6" />
-                        </span>
-                      }
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="description">Categoria</Label>
+                  <FormSelect
+                    options={categories}
+                    name="categoryId"
+                    value={watch('categoryId')}
+                    callBack={(option) => setValue('categoryId', option)}
+                    errors={errors?.['category_id']?.message}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label>Imagen Principal del Post</Label>
+                  <Image
+                    src={post?.image}
+                    alt={post?.title}
+                    className="w-full rounded-lg"
+                  />
+                  <UploadImage disabled={!editMode} />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label>Tags</Label>
+                  <div className={`tags-box ${!editMode && 'disabled'}`}>
+                    <TagsInput
+                      value={post?.tags?.map((tag) => tag.name)}
+                      onChange={(tags) => setValue('tags', tags)}
                       disabled={!editMode}
                     />
-                  </div>
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Label htmlFor="description">Categoria</Label>
-                    <FormSelect
-                      options={categories}
-                      name="categoryId"
-                      value={watch('categoryId')}
-                      callBack={(option) => setValue('categoryId', option)}
-                      errors={errors?.['category_id']?.message}
-                      disabled={!editMode}
-                    />
-                  </div>
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Label>Imagen Principal del Post</Label>
-                    <Image
-                      src={post?.image}
-                      alt={post?.title}
-                      className="w-full rounded-lg"
-                    />
-                    <UploadImage disabled={!editMode} />
-                  </div>
-                  <div className="mb-4 flex flex-col gap-2">
-                    <Label>Tags</Label>
-                    <div className={`tags-box ${!editMode && 'disabled'}`}>
-                      <TagsInput
-                        value={post?.tags?.map((tag) => tag.name)}
-                        onChange={(tags) => setValue('tags', tags)}
-                        disabled={!editMode}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
-            </form>
-          </FormProvider>
+              <div className="w-8/12">
+                <div className="mb-4 flex flex-col gap-2">
+                  <Input
+                    label="Titulo"
+                    id="title"
+                    name="title"
+                    errors={errors?.['title']?.message}
+                    placeholder="Title"
+                    className="w-full block text-lg"
+                    defaultValue={post?.title}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Input
+                    label="Excerpt"
+                    id="excerpt"
+                    name="excerpt"
+                    errors={errors?.['excerpt']?.message}
+                    placeholder="excerpt"
+                    className="w-full block text-base"
+                    defaultValue={post?.excerpt}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="content">Contenido</Label>
+                  <Controller
+                    control={control}
+                    name="content"
+                    render={() => (
+                      <TextEditor
+                        disabled={!editMode}
+                        defaultValue={post?.content}
+                        errors={errors?.['content']?.message}
+                        onChange={(value) => setValue('content', value)}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+          </FormWithContext>
         )}
       </article>
     </AppLayout>

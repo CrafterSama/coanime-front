@@ -18,6 +18,22 @@ type RowsProps = {
   rowExpandable?: boolean;
 };
 
+const ChevronTrigger = ({ innerRowItems, isOpen }) => (
+  <div className="flex justify-end">
+    <CollapsiblePrimitive.Trigger asChild>
+      {innerRowItems.length > 0 && (
+        <div>
+          {isOpen ? (
+            <ChevronUpIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
+          ) : (
+            <ChevronDownIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
+          )}
+        </div>
+      )}
+    </CollapsiblePrimitive.Trigger>
+  </div>
+);
+
 export const Rows: FC<RowsProps> = ({
   columns,
   row,
@@ -27,10 +43,15 @@ export const Rows: FC<RowsProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const tdStyles = (column) =>
-    cn(`p-2 ${column.cellClass}`, {
-      'sticky bg-white': column.fixed,
-      'bg-white': !column.fixed,
-    });
+    cn(
+      `col-span-1 flex py-2 first:justify-start justify-center items-center w-full  ${
+        column.cellClass ?? ''
+      }`,
+      {
+        'sticky bg-white': column.fixed,
+        'bg-white': !column.fixed,
+      }
+    );
 
   const renderCell = (row, column) => {
     const { accessor, cell } = column;
@@ -46,46 +67,44 @@ export const Rows: FC<RowsProps> = ({
   return (
     <CollapsiblePrimitive.Root open={isOpen} onOpenChange={setIsOpen} asChild>
       <>
-        <tr>
+        <div
+          className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}
+        >
           {columns.map((column, i) => (
-            <td key={`${column.name}-${i}`} className={tdStyles(column)}>
+            <div key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (
-                <div className="flex flex-row items-center justify-between py-2 space-x-3 bg-white">
-                  <div className="ml-2">{renderCell(row, column)}</div>
+                <div className="pl-4 border-l-4 border-transparent group-hover:border-orange-400">
+                  {renderCell(row, column)}
                   {column.firstItem &&
                     (innerRowItems.length >= 1 || rowExpandable) && (
-                      <div className="flex justify-end">
-                        <CollapsiblePrimitive.Trigger asChild>
-                          {innerRowItems.length > 0 && (
-                            <div>
-                              {isOpen ? (
-                                <ChevronUpIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
-                              ) : (
-                                <ChevronDownIcon className="cursor-pointer text-blue-grey-400 h-6 w-6" />
-                              )}
-                            </div>
-                          )}
-                        </CollapsiblePrimitive.Trigger>
-                      </div>
+                      <ChevronTrigger
+                        innerRowItems={innerRowItems}
+                        isOpen={isOpen}
+                      />
                     )}
                 </div>
               ) : (
-                <div className="ml-2">{renderCell(row, column)}</div>
+                <div className="flex justify-center items-center">
+                  {renderCell(row, column)}
+                </div>
               )}
-            </td>
+            </div>
           ))}
-        </tr>
+        </div>
         <CollapsiblePrimitive.Content asChild>
           <>
             {innerRowItems?.map((item: any, i) => {
               return (
-                <tr key={i} className="">
+                <div
+                  key={i}
+                  className={`grid grid-cols-${innerRowColumns?.length} grid-flow-col`}
+                >
                   {innerRowColumns.map((column, j) => (
-                    <td key={`${column.name}-${j}`} className="p-2">
-                      <div className="ml-2">{renderCell(item, column)}</div>
-                    </td>
+                    <div key={`${column.name}-${j}`} className="p-2">
+                      {renderCell(item, column)}
+                    </div>
                   ))}
-                </tr>
+                </div>
               );
             })}
           </>
@@ -107,17 +126,14 @@ export const Table: FC<TableProps> = ({
   fixedHeader = true,
 }) => {
   const thStyles = (column, fixedHeader) =>
-    cn(
-      'z-10 bg-gray-200 font-regular uppercase text-gray-600 text-md pt-2 px-2 pb-2 text-left align-center',
-      {
-        sticky: fixedHeader || column.fixed,
-        'top-0': fixedHeader,
-        'bg-gray-200': fixedHeader && !column.fixed,
-        'bg-gray-200 z-20 ': column.fixed,
-        'left-checkbox': column.fixed && column?.withFixedCheckbox,
-        'left-0': column.fixed && !column?.withFixedCheckbox,
-      }
-    );
+    cn('flex justify-center items-center', {
+      /*sticky: fixedHeader || column.fixed,*/
+      /*'top-0': fixedHeader,
+      'bg-gray-200': fixedHeader && !column.fixed,
+      'bg-gray-200 z-20 ': column.fixed,
+      'left-checkbox': column.fixed && column?.withFixedCheckbox,
+      'left-0': column.fixed && !column?.withFixedCheckbox,*/
+    });
   const handleSortChange = (index, currentSort) => {
     const column = columns[index];
     let sort = SORTING_TYPES.none;
@@ -173,33 +189,30 @@ export const Table: FC<TableProps> = ({
   return (
     <div className="rounded-lg flex flex-col">
       <div className="rounded-lg overflow-hidden">
-        <table className="min-w-full bg-white text-left">
-          <thead>
-            <tr className="p-2">
-              {columns.map((column, i) => (
-                <th
-                  key={`${column.name}-${i}`}
-                  className={thStyles(column, fixedHeader)}
-                >
-                  <div className="ml-2 flex flex-row items-center">
-                    {column?.sorting ? (
-                      renderSorting(i, column)
-                    ) : (
-                      <span className="text-sm whitespace-nowrap">
-                        {column.name}
-                      </span>
-                    )}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-        </table>
+        <div
+          className={`grid grid-cols-${columns.length} grid-flow-col bg-gray-200 items-center px-4 py-2`}
+        >
+          {columns.map((column, i) => (
+            <div key={`${column.name}-${i}`} className={thStyles(column, true)}>
+              <div
+                className={`flex flex-row items-center justify-center uppercase font-semibold ${column.headerClassName}`}
+              >
+                {column?.sorting ? (
+                  renderSorting(i, column)
+                ) : (
+                  <span className="text-sm whitespace-nowrap">
+                    {column.name}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="rounded-lg overflow-auto max-h-screen">
-        <table className="min-w-full bg-white text-left">
-          <tbody className="text-base">{children}</tbody>
-        </table>
+        <div className="min-w-full bg-white text-left">
+          <div className="text-base">{children}</div>
+        </div>
       </div>
     </div>
   );

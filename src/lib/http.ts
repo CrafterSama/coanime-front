@@ -12,7 +12,12 @@ export const HTTP_METHODS = {
 
 const getApiUrl = () => {
   const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-  return `${url}/api/v1`;
+  return `${url}/internal`;
+};
+
+const getApiExternalUrl = () => {
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  return `${url}/external`;
 };
 
 const getAuthApiUrl = () => {
@@ -62,6 +67,10 @@ const getInstance = (config?: AxiosRequestConfig) => {
 
 export const httpClient = getInstance({
   baseURL: getApiUrl(),
+});
+
+export const httpClientExternal = getInstance({
+  baseURL: getApiExternalUrl(),
 });
 
 export const httpClientAuth = getInstance({

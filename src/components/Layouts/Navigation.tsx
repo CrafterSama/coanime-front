@@ -2,13 +2,14 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { MenuIcon, LogoutIcon } from '@/components/icons';
+import { MenuIcon, LogoutIcon, UserCircleIcon } from '@/components/icons';
 import Dropdown from '@/components/ui/Dropdown';
-import { DropdownButton } from '@/components/ui/DropdownLink';
+import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
 import { useAuth } from '@/hooks/auth';
+import Image from 'next/future/image';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
@@ -27,44 +28,54 @@ const Navigation = ({ user }) => {
           </div>
           {/* Settings Dropdown */}
           <div className="hidden sm:flex sm:items-center sm:ml-6">
-            <Dropdown
-              align="right"
-              width={48}
-              trigger={
-                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                  <div className="flex flex-row justify-start items-center gap-4">
-                    <img
-                      src={user?.profile_photo_path}
-                      alt={user?.name}
-                      className="rounded-full w-8 h-8"
-                    />
-                    <span>{user?.name}</span>
-                  </div>
+            {user && (
+              <Dropdown
+                align="right"
+                width={48}
+                trigger={
+                  <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                    <div className="flex flex-row justify-start items-center gap-4">
+                      {/*<Image
+                        src={user?.profile_photo_path }
+                        alt={user?.name}
+                        className="rounded-full w-8 h-8"
+                        width={48}
+                        height={48}
+                      />*/}
+                      <span>{user?.name}</span>
+                    </div>
 
-                  <div className="ml-1">
-                    <svg
-                      className="fill-current h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </button>
-              }
-            >
-              {/* Authentication */}
-              <DropdownButton
-                icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
-                onClick={logout}
+                    <div className="ml-1">
+                      <svg
+                        className="fill-current h-4 w-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                }
               >
-                Logout
-              </DropdownButton>
-            </Dropdown>
+                {/* Authentication */}
+                <DropdownLink
+                  href="/dashboard/profile"
+                  icon={<UserCircleIcon className="h-6 w-6 text-gray-400" />}
+                >
+                  Profile
+                </DropdownLink>
+                <DropdownButton
+                  icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
+                  onClick={logout}
+                >
+                  Logout
+                </DropdownButton>
+              </Dropdown>
+            )}
           </div>
 
           {/* Hamburger */}

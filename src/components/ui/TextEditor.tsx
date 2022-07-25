@@ -7,7 +7,14 @@ const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
 });
 
-const TextEditor = ({ defaultValue, onChange, errors, disabled }) => {
+const TextEditor = ({
+  defaultValue,
+  onChange,
+  errors,
+  disabled,
+  width = '100%',
+  height = '600px',
+}) => {
   return (
     <div className="w-full">
       {errors && <p className="text-red-500 text-xs">{errors}</p>}
@@ -15,8 +22,8 @@ const TextEditor = ({ defaultValue, onChange, errors, disabled }) => {
         <div className="texteditor-box">
           <SunEditor
             setOptions={sunEditorOptions}
-            width="100%"
-            height="600px"
+            width={width}
+            height={height}
             defaultValue={defaultValue}
             readOnly={disabled}
             disable={disabled}
