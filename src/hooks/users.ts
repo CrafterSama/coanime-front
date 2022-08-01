@@ -21,3 +21,5 @@ export const useProfile = () => {
     return response.data;
   });
 };
+
+export const updateMe = async (params) => await httpClient.put(`me`, params);

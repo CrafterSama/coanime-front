@@ -15,32 +15,32 @@ export const menu = [
     text: 'Dashboard',
   },
   {
-    href: '/posts',
+    href: '/dashboard/posts',
     icon: <NewspaperIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Posts',
   },
   {
-    href: '/titles',
+    href: '/dashboard/titles',
     icon: <PhotographIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Titles',
   },
   {
-    href: '/people',
+    href: '/dashboard/people',
     icon: <UsersIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'People',
   },
   {
-    href: '/magazine',
+    href: '/dashboard/magazine',
     icon: <BookOpenIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Magazine',
   },
   {
-    href: '/companies',
+    href: '/dashboard/companies',
     icon: <OfficeBuildingIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Companies',
   },
   {
-    href: '/events',
+    href: '/dashboard/events',
     icon: <LocationMarkerIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Events',
   },

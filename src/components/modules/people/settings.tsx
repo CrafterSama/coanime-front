@@ -11,7 +11,7 @@ export const headers = [
     cell: (row) => (
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
-          <Link href={`/people/${row?.slug}`}>
+          <Link href={`/dashboard/people/${row?.slug}`}>
             <a>
               <Image
                 className="rounded-lg w-full h-full"
@@ -25,7 +25,7 @@ export const headers = [
           </Link>
         </div>
         <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
-          <Link href={`/people/${row?.slug}`}>
+          <Link href={`/dashboard/people/${row?.slug}`}>
             <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
               <h4 className="text-sm">{row?.name}</h4>
             </a>

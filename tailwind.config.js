@@ -11,7 +11,7 @@ module.exports = {
     typography: {
       extend: {
         fontFamily: {
-          sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
+          sans: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
         },
       },
     },

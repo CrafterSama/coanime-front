@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 
-import httpClient, { httpClientAuth } from '@/lib/http';
+import axios from '@/lib/axios';
+import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
 
 export const usePosts = () => {
   return useQuery(['posts'], async () => {
@@ -16,11 +17,26 @@ export const usePost = (slug: string) => {
   });
 };
 
+export const useViewArticle = (slug: string) => {
+  return useQuery(['view-article', slug], async () => {
+    const response = await httpClientExternal.get(`articles/${slug}`);
+    return response.data;
+  });
+};
+
 export const postUpdate = async (id: string | string[], params: any) =>
   await httpClient.put(`posts/${id}`, params);
 
-export const imageUpload = async (params: any | FormData) => {
-  const csrf = () => httpClientAuth.get('sanctum/csrf-cookie');
+export const imageUpload = async (files, model) => {
+  const formData = new FormData();
+  formData.append('model', model);
+  formData.append('file', files[0], files[0].name);
+  const csrf = () => httpClientAuth.get('/sanctum/csrf-cookie');
   await csrf();
-  return await httpClient.put(`upload-images`, params);
+  return await axios.post('/internal/upload-images', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+    },
+  });
 };
