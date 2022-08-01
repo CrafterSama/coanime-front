@@ -108,6 +108,34 @@ body {
   left: 0;
 }
 
+.mini-header-separator {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mini-header-separator::before {
+  content: '';
+  height: 2px;
+  flex-grow: 1;
+  flex-basis: 0;
+  background-color: var(--light-orange);
+  opacity: 0.2;
+  order: 2;
+  margin: 0 0 0 1rem;
+}
+
+.mini-header-separator span {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: var(--light-orange);
+  order: 1;
+}
+
 .carousel-caption {
   position: absolute;
   right: 15%;
@@ -957,7 +985,7 @@ ul.info__article-tags a:hover {
 }
 
 .subscribe__form input,
-button {
+.subscribe__form button {
   padding: 15px;
   border: none;
 }
