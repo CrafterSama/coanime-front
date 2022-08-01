@@ -22,13 +22,29 @@ const BroadcastToday = () => {
       {series.length > 0 && (
         <Swiper
           modules={[EffectFade, Navigation, Pagination, A11y, Thumbs]}
-          slidesPerView={6}
           loop={true}
           autoplay={{
             delay: 5000,
           }}
-          spaceBetween={16}
           navigation={true}
+          breakpoints={{
+            300: {
+              slidesPerView: 2,
+              spaceBetween: 5,
+            },
+            640: {
+              slidesPerView: 3,
+              spaceBetween: 5,
+            },
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 16,
+            },
+            1024: {
+              slidesPerView: 6,
+              spaceBetween: 16,
+            },
+          }}
         >
           {series?.map((serie) => (
             <SwiperSlide key={serie.id}>

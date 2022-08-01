@@ -24,6 +24,13 @@ export const useViewArticle = (slug: string) => {
   });
 };
 
+export const useArticles = () => {
+  return useQuery(['articles'], async () => {
+    const response = await httpClientExternal.get(`articles`);
+    return response.data;
+  });
+};
+
 export const postUpdate = async (id: string | string[], params: any) =>
   await httpClient.put(`posts/${id}`, params);
 
