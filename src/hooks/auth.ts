@@ -114,17 +114,19 @@ export const useAuth = ({
     return (window.location.pathname = '/login');
   };
 
+  const securePaths = [
+    'dashboard',
+    'posts',
+    'titles',
+    'events',
+    'companies',
+    'users',
+    'people',
+  ];
+
+  const pathname = router.pathname.split('/')[1];
+
   const onLogout = () => {
-    const securePaths = [
-      'dashboard',
-      'posts',
-      'titles',
-      'events',
-      'companies',
-      'users',
-      'people',
-    ];
-    const pathname = router.pathname.split('/')[1];
     if (securePaths.includes(pathname)) {
       const redirectWhenAuthenticated = router.asPath;
       return logout(redirectWhenAuthenticated);
@@ -135,7 +137,8 @@ export const useAuth = ({
   useEffect(() => {
     if (middleware === 'guest' && redirectIfAuthenticated && user)
       router.push(redirectIfAuthenticated);
-    if (middleware === 'auth' && error) onLogout();
+    if (middleware === 'auth' && error && securePaths.includes(pathname))
+      onLogout();
   }, [user, error]);
 
   return {

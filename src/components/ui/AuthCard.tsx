@@ -2,9 +2,7 @@ import { Logotype } from '@/components/ui/ApplicationLogo';
 import { useRandomImageByTitle } from '@/hooks/random-images';
 
 const AuthCard = ({ logo, children }) => {
-  const { data, isLoading, isError } = useRandomImageByTitle(
-    'kimetsu-no-yaiba'
-  );
+  const { data, isLoading } = useRandomImageByTitle('kimetsu-no-yaiba');
 
   const image = isLoading ? '' : data?.image;
 

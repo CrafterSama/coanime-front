@@ -18,3 +18,4 @@ export { default as XIcon } from './XIcon';
 export { default as UserIcon } from './UserIcon';
 export { default as UserAddIcon } from './UserAddIcon';
 export { default as UserCircleIcon } from './UserCircleIcon';
+export { default as LinkIcon } from './LinkIcon';

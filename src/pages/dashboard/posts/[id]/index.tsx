@@ -106,8 +106,8 @@ const UpdatePost = () => {
           onSavedSuccess(response);
           queryClient.invalidateQueries(['post']);
         },
-        onError: ({ message }) => {
-          toast.error(message);
+        onError: (error) => {
+          toast.error(error as string);
         },
       }
     );
@@ -144,56 +144,6 @@ const UpdatePost = () => {
               disabled={!editMode}
             />
             <div className="p-4 flex flex-row gap-4 rounded-b-lg">
-              <div className="w-4/12">
-                <div className="mb-4 flex flex-col gap-2 datepicker-box">
-                  <Label htmlFor="description">Posponer hasta:</Label>
-                  <DateTimePicker
-                    onChange={(value) => setValue('postponedTo', value)}
-                    value={watch('postponedTo')}
-                    calendarIcon={
-                      <span className="text-orange-400">
-                        <CalendarIcon className="w-6 h-6" />
-                      </span>
-                    }
-                    clearIcon={
-                      <span className="text-orange-400">
-                        <XIcon className="w-6 h-6" />
-                      </span>
-                    }
-                    disabled={!editMode}
-                  />
-                </div>
-                <div className="mb-4 flex flex-col gap-2">
-                  <Label htmlFor="description">Categoria</Label>
-                  <FormSelect
-                    options={categories}
-                    name="categoryId"
-                    value={watch('categoryId')}
-                    callBack={(option) => setValue('categoryId', option)}
-                    errors={errors?.['category_id']?.message}
-                    disabled={!editMode}
-                  />
-                </div>
-                <div className="mb-4 flex flex-col gap-2">
-                  <Label>Imagen Principal del Post</Label>
-                  <Image
-                    src={post?.image}
-                    alt={post?.title}
-                    className="w-full rounded-lg"
-                  />
-                  <UploadImage disabled={!editMode} />
-                </div>
-                <div className="mb-4 flex flex-col gap-2">
-                  <Label>Tags</Label>
-                  <div className={`tags-box ${!editMode && 'disabled'}`}>
-                    <TagsInput
-                      value={post?.tags?.map((tag) => tag.name)}
-                      onChange={(tags) => setValue('tags', tags)}
-                      disabled={!editMode}
-                    />
-                  </div>
-                </div>
-              </div>
               <div className="w-8/12">
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
@@ -233,6 +183,60 @@ const UpdatePost = () => {
                       />
                     )}
                   />
+                </div>
+              </div>
+              <div className="w-4/12">
+                <div className="mb-4 flex flex-col gap-2 datepicker-box">
+                  <Label htmlFor="description">Posponer hasta:</Label>
+                  <DateTimePicker
+                    onChange={(value) => setValue('postponedTo', value)}
+                    value={watch('postponedTo')}
+                    calendarIcon={
+                      <span className="text-orange-400">
+                        <CalendarIcon className="w-6 h-6" />
+                      </span>
+                    }
+                    clearIcon={
+                      <span className="text-orange-400">
+                        <XIcon className="w-6 h-6" />
+                      </span>
+                    }
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="description">Categoria</Label>
+                  <FormSelect
+                    options={categories}
+                    name="categoryId"
+                    value={watch('categoryId')}
+                    callBack={(option) => setValue('categoryId', option)}
+                    errors={errors?.['category_id']?.message}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label>Imagen Principal del Post</Label>
+                  <Image
+                    src={post?.image}
+                    alt={post?.title}
+                    className="w-full rounded-lg"
+                  />
+                  <UploadImage
+                    disabled={!editMode}
+                    name="image"
+                    model="posts"
+                  />
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label>Tags</Label>
+                  <div className={`tags-box ${!editMode && 'disabled'}`}>
+                    <TagsInput
+                      value={post?.tags?.map((tag) => tag.name)}
+                      onChange={(tags) => setValue('tags', tags)}
+                      disabled={!editMode}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

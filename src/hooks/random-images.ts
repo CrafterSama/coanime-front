@@ -2,11 +2,13 @@ import { useMutation, useQuery } from 'react-query';
 
 import axios from 'axios';
 
-import httpClient from '@/lib/http';
+import { httpClientExternal } from '@/lib/http';
 
 export const useRandomImageByTitle = (title) => {
   return useQuery(['randomImageByTitle', title], async () => {
-    const { data } = await httpClient.get(`random-image-title/${title}`);
+    const { data } = await httpClientExternal.get(
+      `random-image-title/${title}`
+    );
     return data;
   });
 };

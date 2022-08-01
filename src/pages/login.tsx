@@ -25,7 +25,7 @@ const Login = () => {
 
   const redirectionIfLoggedIn = () => {
     if (router.query.redirect) setRedirect(router.query.redirect as string);
-    setRedirect('/dashboard');
+    setRedirect('/');
   };
 
   const { login } = useAuth({

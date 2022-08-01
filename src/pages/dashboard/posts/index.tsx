@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import WebLayout from '@/components/Layouts/WebLayout';
+import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/posts/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
@@ -11,7 +11,13 @@ const Posts = () => {
   const { data: posts = [] } = data;
 
   return (
-    <WebLayout>
+    <AppLayout
+      header={
+        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+          Dashboard Articles
+        </h2>
+      }
+    >
       <Head>
         <title>Coanime.net - Articles Dashboard</title>
       </Head>
@@ -34,7 +40,7 @@ const Posts = () => {
           </div>
         </div>
       </div>
-    </WebLayout>
+    </AppLayout>
   );
 };
 

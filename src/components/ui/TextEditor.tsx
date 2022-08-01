@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 
 import { sunEditorOptions } from '@/constants/suneditor';
 import 'suneditor/dist/css/suneditor.min.css';
+import { uploadImages } from '@/hooks/images';
 
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
@@ -28,8 +29,27 @@ const TextEditor = ({
             readOnly={disabled}
             disable={disabled}
             onChange={(value) => onChange(value)}
+            onImageUploadBefore={async (files, info, uploadHandler) => {
+              // TODO: remove console
+              // console.log('file = ', files[0]);
+              const res = await uploadImages(files, 'posts');
+
+              const response = {
+                result: [
+                  {
+                    url: res?.data?.url,
+                    name: files[0].name,
+                    size: files[0].size,
+                  },
+                ],
+              };
+
+              uploadHandler(response);
+
+              return undefined;
+            }}
             setAllPlugins={true}
-            setDefaultStyle="font-family: Open sans; font-size: 16px;"
+            setDefaultStyle="font-family: Red Hat Text; font-size: 16px;"
           />
         </div>
       }
