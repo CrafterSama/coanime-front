@@ -294,10 +294,7 @@ p > .user-author {
 }
 
 .features {
-  position: relative;
   margin: 0px auto;
-  padding: 15px;
-  max-width: 1336px;
 }
 
 .features h2 {
@@ -305,10 +302,8 @@ p > .user-author {
 }
 
 .info__features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 15px;
-  margin-top: 30px;
+  @apply grid gap-4 mt-2;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
 }
 
 .info__features-box a {

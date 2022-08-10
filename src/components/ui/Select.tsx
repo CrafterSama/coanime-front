@@ -2,25 +2,33 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 type FormSelectProps = {
+  placeholder?: string;
   options: any[];
   callBack?: any;
+  onInputChange?: any;
+  isLoading?: boolean;
   defaultValue?: any;
   value?: any;
   disabled?: boolean;
   height?: string;
   errors?: string;
   name?: string;
+  getOptionLabel?: any;
 };
 
 const FormSelect = ({
+  placeholder = '',
   options,
   callBack,
+  isLoading = false,
+  onInputChange,
   defaultValue = {},
   value = {},
   disabled = false,
   height = '45px',
   errors = '',
   name = '',
+  getOptionLabel,
 }: FormSelectProps) => {
   const { control } = useFormContext();
 
@@ -56,11 +64,16 @@ const FormSelect = ({
             defaultValue={defaultValue}
             isSearchable
             isClearable
+            isLoading={isLoading}
             options={options}
+            onInputChange={onInputChange}
             onChange={(value) => callBack(value)}
             isDisabled={disabled}
             styles={colourStyles}
             name={name}
+            menuPlacement="auto"
+            placeholder={placeholder}
+            getOptionLabel={getOptionLabel}
           />
         )}
       />

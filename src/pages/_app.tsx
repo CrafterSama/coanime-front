@@ -1,5 +1,5 @@
 import { Toaster } from 'react-hot-toast';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
 import NextNProgress from 'nextjs-progressbar';
 
@@ -20,7 +20,7 @@ const App = ({ Component, pageProps }) => {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      <>
+      <Hydrate state={pageProps.dehydratedState}>
         <NextNProgress color="#f90" />
         <Toaster
           position="top-right"
@@ -34,7 +34,7 @@ const App = ({ Component, pageProps }) => {
           }}
         />
         <Component {...pageProps} />
-      </>
+      </Hydrate>
     </QueryClientProvider>
   );
 };

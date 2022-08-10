@@ -16,7 +16,7 @@ const PostHeader = ({ image, post }) => (
     <div className="full-header-title-bg">
       <div className="article__info-top">
         <div className="categories">
-          <Link href={`/categories/${post?.categories?.slug}`}>
+          <Link href={`/categorias/${post?.categories?.slug}`}>
             <a>{post?.categories?.name}</a>
           </Link>
         </div>

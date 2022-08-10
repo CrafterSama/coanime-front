@@ -132,7 +132,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
-  color: var(--light-orange);
   order: 1;
 }
 
@@ -988,6 +987,34 @@ ul.info__article-tags a:hover {
 .subscribe__form button {
   padding: 15px;
   border: none;
+}
+
+/* Series Web */
+.title-item {
+  flex: 1 0 16%;
+  min-width: 220px;
+  min-height: 375px;
+  position: relative;
+  box-shadow: 0 0 5px #666;
+  border-radius: 4px;
+}
+
+.title-item .overlayer {
+  background: linear-gradient(
+    165deg,
+    rgba(249, 141, 2, 0.2) 50%,
+    rgba(1, 6, 98, 0.8) 85%
+  );
+}
+
+.cloud-link::after {
+  content: ' \2022 ';
+  color: var(--gray);
+}
+
+.cloud-link:last-child::after {
+  content: '';
+  color: var(--gray);
 }
 
 /* Tags Input Styles */

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useClientRouter } from 'use-client-router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import BroadcastToday from '@/components/modules/home/components/BroadcastToday';
@@ -8,11 +9,16 @@ import TopSlider from '@/components/modules/home/components/TopSlider';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { useHome } from '@/hooks/home';
+import { useCategories } from '@/hooks/categories';
+import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next/types';
 
-export default function Home() {
-  const { data = {}, isLoading } = useHome();
+const Categories = () => {
+  const router = useRouter();
+  const { data = {}, isLoading } = useCategories(router?.query?.category);
   const { title = '', description = '', keywords = '', relevants = [] } = data;
+
+  console.log(data);
 
   return (
     <WebLayout>
@@ -44,4 +50,6 @@ export default function Home() {
       </Section>
     </WebLayout>
   );
-}
+};
+
+export default Categories;

@@ -16,14 +16,14 @@ const TitleRelated = ({ titles }) => (
             />
           </div>
           <div className="info__related">
-            <p className="info__relatedTitle-category">
+            <p className="info__relatedTitle-category font-semibold">
               {titles?.[0]?.type?.name}
             </p>
             <Link
               href={`/ecma/titulos/${titles?.[0]?.type?.slug}/${titles?.[0]?.slug}`}
             >
               <a>
-                <h3 className="info__relatedTitle-title">
+                <h3 className="info__relatedTitle-title font-semibold">
                   {titles?.[0]?.name}
                 </h3>
               </a>

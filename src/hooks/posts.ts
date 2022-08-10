@@ -17,7 +17,7 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const useViewArticle = (slug: string) => {
+export const useViewArticle = (slug: string | string[]) => {
   return useQuery(['view-article', slug], async () => {
     const response = await httpClientExternal.get(`articles/${slug}`);
     return response.data;

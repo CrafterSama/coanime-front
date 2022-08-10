@@ -32,7 +32,7 @@ export const strToSlug = (str) => {
 
 export const defaultImage = (string) =>
   string === 'https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'
-    ? `${window.location.origin}/assets/images/coanime-logo-default.svg`
+    ? 'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg'
     : string;
 
 export const getTitlesUrl = (type, title) => {

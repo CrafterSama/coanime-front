@@ -22,12 +22,12 @@ const RecentPosts = ({ posts }) => (
           <div className="overlayer"></div>
           <div className="item__info text-shadow bottom-attach flex flex-col gap-2">
             <div className="categories">
-              <Link href={`/categories/${post?.categories?.slug}`}>
+              <Link href={`/categorias/${post?.categories?.slug}`}>
                 <a>{post?.categories?.name}</a>
               </Link>
             </div>
             <h2 className="info__news-title">
-              <Link href={`/posts/${post?.slug}`}>
+              <Link href={`/posts/[slug]`} as={`/posts/${post?.slug}`}>
                 <a>{post?.title}</a>
               </Link>
             </h2>

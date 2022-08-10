@@ -7,4 +7,5 @@ export interface Posts {
   image?: string;
   tags: any[];
   postponedTo: any;
+  titleId: number;
 }

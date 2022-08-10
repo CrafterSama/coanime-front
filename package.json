@@ -37,12 +37,14 @@
     "react-instantsearch-dom": "^6.30.2",
     "react-query": "^4.0.0-beta.23",
     "react-select": "^5.4.0",
+    "react-select-search": "^3.0.10",
     "react-tag-input-component": "^1.0.9",
     "snakecase-keys": "^5.4.2",
     "suneditor": "^2.43.14",
     "suneditor-react": "^3.4.1",
     "swiper": "^8.3.2",
     "swr": "^1.2.2",
+    "use-client-router": "^1.0.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

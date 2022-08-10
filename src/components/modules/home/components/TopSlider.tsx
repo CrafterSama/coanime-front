@@ -40,7 +40,7 @@ const TopSlider = ({ relevants }) => (
                   Noticias Destacadas
                 </h3>
                 <h2 className="font-bold">
-                  <Link href={`/posts/${relevant.slug}`}>
+                  <Link href={`/posts/[slug]`} as={`/posts/${relevant.slug}`}>
                     <a className="text-white font-semibold">
                       {relevant?.title}
                     </a>

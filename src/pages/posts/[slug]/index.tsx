@@ -13,11 +13,13 @@ import Relateds from '@/components/modules/posts/components/Relateds';
 import TitleRelated from '@/components/modules/posts/components/TitleRelated';
 import PostHeader from '@/components/modules/posts/components/PostHeader';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
+import SectionTitle from '@/components/ui/SectionTitle';
+import Section from '@/components/ui/Section';
 
 const UpdatePost = () => {
   const router = useRouter();
-  const slug = router?.query?.slug;
-  const { data = {}, isLoading } = useViewArticle(slug as string);
+  const { slug } = router?.query;
+  const { data = {}, isLoading } = useViewArticle(slug);
 
   console.log('data', data);
 
@@ -48,8 +50,8 @@ const UpdatePost = () => {
           <article className="">
             <PostHeader image={pathImage} post={post} />
             <div className="article__info-box">
-              <div className="container-lg">
-                <div className="article">
+              <Section withContainer>
+                <Section className="article">
                   <div className="article-wrapper">
                     <main
                       className="info__article-content"
@@ -67,11 +69,11 @@ const UpdatePost = () => {
                   <div id="tags">
                     <Tags tags={post?.tags} />
                   </div>
-                </div>
-                <div id="author">
+                </Section>
+                <Section id="author">
                   <Author users={post?.users} />
-                </div>
-                <div className="article__side-small hide">
+                </Section>
+                <Section className="article__side-small hide">
                   <div className="article-relatedTitles">
                     <div id="relatedTitle">
                       <div className="relatedTitle"></div>
@@ -83,11 +85,16 @@ const UpdatePost = () => {
                       <div className="relateds"></div>
                     </div>
                   </div>
-                </div>
-                <div id="features">
+                </Section>
+                <Section withContainer id="features">
+                  <SectionTitle
+                    title="Categorías"
+                    subtitle="Algo mas relacionado a"
+                    fancyText={post?.categories?.name}
+                  />
                   <OtherArticles articles={otherArticles} />
-                </div>
-              </div>
+                </Section>
+              </Section>
             </div>
           </article>
         </>
