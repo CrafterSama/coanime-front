@@ -43,8 +43,8 @@ const Navigation = ({ user }) => {
             {/* Navigation Links */}
             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
               <NavLink
-                href="/enciclopedia"
-                active={router.pathname === '/enciclopedia'}
+                href="/ecma/titulos"
+                active={router.pathname === '/ecma'}
               >
                 Enciclopedia
               </NavLink>
@@ -86,11 +86,13 @@ const Navigation = ({ user }) => {
             ) : (
               <>
                 <Link href="/login">
-                  <a className="text-sm text-gray-700 underline">Login</a>
+                  <a className="text-sm font-medium text-gray-700 underline">
+                    Login
+                  </a>
                 </Link>
 
                 <Link href="/register">
-                  <a className="ml-4 text-sm text-gray-700 underline">
+                  <a className="ml-4 text-sm font-medium text-gray-700 underline">
                     Register
                   </a>
                 </Link>

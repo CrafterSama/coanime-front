@@ -6,6 +6,8 @@ import { menu } from '@/constants/menu';
 
 const Aside = () => {
   const router = useRouter();
+  console.log('🚀 ~ file: Aside.tsx ~ line 9 ~ Aside ~ router', router);
+
   return (
     <aside className="w-auto border-r border-gray-200">
       <div className="flex flex-col gap-4 m-auto">
@@ -21,7 +23,7 @@ const Aside = () => {
             <MenuLink
               key={item.href}
               href={item.href}
-              active={router.pathname.includes(item.href)}
+              active={router.asPath.includes(item.href)}
               icon={item.icon}
             >
               {item.text}

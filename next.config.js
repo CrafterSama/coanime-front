@@ -5,6 +5,7 @@ module.exports = {
       's3.us-east-2.amazonaws.com',
       'www.coanime.net',
       'coanime.net',
+      'cdn.myanimelist.net',
     ],
   },
   experimental: { images: { allowFutureImage: true } },

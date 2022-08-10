@@ -107,21 +107,17 @@ export const useAuth = ({
       await axios.post('/logout').then(() => mutate());
     }
 
-    if (redirect) {
-      window.location.pathname = redirect;
-    }
-
-    return (window.location.pathname = '/login');
+    return (window.location.pathname = `/login`);
   };
 
   const securePaths = [
     'dashboard',
-    'posts',
-    'titles',
-    'events',
-    'companies',
-    'users',
-    'people',
+    'dashboard/posts',
+    'dashboard/titles',
+    'dashboard/events',
+    'dashboard/companies',
+    'dashboard/users',
+    'dashboard/people',
   ];
 
   const pathname = router.pathname.split('/')[1];

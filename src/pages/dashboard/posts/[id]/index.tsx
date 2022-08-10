@@ -3,6 +3,7 @@ import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
+import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import format from 'date-fns/format';
@@ -24,7 +25,9 @@ import FormSelect from '@/components/ui/Select';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
 import { postUpdate, usePost } from '@/hooks/posts';
+import { useSearchTitle } from '@/hooks/titles';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { DEFAULT_IMAGE } from '@/constants/common';
 
 const UpdatePost = () => {
   const router = useRouter();
@@ -32,8 +35,28 @@ const UpdatePost = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const id = router?.query?.id;
   const { data = {}, isLoading, refetch } = usePost(id as string);
-
   const { post, categories: categoriesData } = data;
+  console.log('🚀 ~ file: index.tsx ~ line 38 ~ UpdatePost ~ post', post);
+  const [serieName, setSerieName] = useState<string>('a');
+  const [serieList, setSerieList] = useState<[]>();
+
+  const { data: serieData = {}, isLoading: isLoadingSeries } = useSearchTitle({
+    name: serieName,
+  });
+
+  const { result: series } = serieData;
+
+  useEffect(() => {
+    if (series?.data?.length > 0) {
+      setSerieList(
+        series?.data?.map((serie) => ({
+          label: serie.name,
+          value: serie.id,
+          type: serie.type?.name,
+        }))
+      );
+    }
+  }, [serieName, series]);
 
   const methods = useForm<Posts>({
     resolver: yupResolver(postSchema),
@@ -45,6 +68,7 @@ const UpdatePost = () => {
     control,
     setValue,
     watch,
+    register,
     formState: { errors },
   } = methods;
 
@@ -95,6 +119,7 @@ const UpdatePost = () => {
       excerpt: data.excerpt,
       image: data.image,
       tagId: data.tags,
+      titleId: data.titleId,
       categoryId: data.categoryId.value,
       postponedTo: format(new Date(data.postponedTo), 'yyy-MM-dd HH:mm:ss'),
     };
@@ -237,6 +262,51 @@ const UpdatePost = () => {
                       disabled={!editMode}
                     />
                   </div>
+                </div>
+                <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="title_id">Serie Relacionada</Label>
+                  {post?.titles?.length > 0 ? (
+                    <div className="flex flex-row gap-4">
+                      <div className="relative w-20 h-32">
+                        <Image
+                          src={post?.titles?.[0]?.images?.name ?? DEFAULT_IMAGE}
+                          alt={post?.titles?.[0]?.name}
+                          className="w-full relative"
+                        />
+                      </div>
+                      <div className="">
+                        <h3>
+                          {post?.titles?.[0]?.name} (
+                          {post?.titles?.[0]?.type?.name})
+                        </h3>
+                      </div>
+                    </div>
+                  ) : (
+                    'No tiene Serie Relacionada'
+                  )}
+                  <Select
+                    options={serieList}
+                    isLoading={isLoadingSeries}
+                    defaultValue={post?.titles?.[0]?.id}
+                    placeholder="Asignar una serie"
+                    onInputChange={(value) => setSerieName(value)}
+                    onChange={(option: { value: any; label: any }) =>
+                      setValue('titleId', option?.value)
+                    }
+                    isDisabled={!editMode}
+                    menuPlacement="auto"
+                    getOptionLabel={(option) =>
+                      `${option?.label} (${option?.type})`
+                    }
+                  />
+                  <input
+                    {...register}
+                    type="hidden"
+                    id="title_id"
+                    name="title_id"
+                    defaultValue={post?.titles?.[0]?.id}
+                    disabled={!editMode}
+                  />
                 </div>
               </div>
             </div>
