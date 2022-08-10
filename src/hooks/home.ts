@@ -25,6 +25,6 @@ export const useBroadcastToday = () => {
 
     response = await response.json();
 
-    return response?.data.filter((item) => item.approved === true);
+    return response;
   });
 };

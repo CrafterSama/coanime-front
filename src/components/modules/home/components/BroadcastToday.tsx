@@ -17,9 +17,9 @@ import { useBroadcastToday } from '@/hooks/home';
 import { defaultImage, getTitlesUrl } from '@/utils/string';
 
 const BroadcastToday = () => {
-  const { data = [], isLoading } = useBroadcastToday();
-
-  const series = data?.filter((item) => item.approved === true);
+  const { data: today, isLoading } = useBroadcastToday();
+  // @ts-ignore
+  const series = today?.data?.filter((item) => item.approved === true) ?? [];
 
   return (
     <>
