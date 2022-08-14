@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { SpinerIcon } from '@/components/icons';
 
 const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
@@ -11,7 +9,7 @@ const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
         />
       )}
       {showFancySpiner && (
-        <div className={`relative w-[500px] h-[365px]`}>
+        <div className={`relative w-[400px] h-[265px]`}>
           <img src="/images/saitama.gif" alt="Loading" />
         </div>
       )}
