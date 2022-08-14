@@ -35,7 +35,7 @@ const TopSlider = ({ relevants }) => (
                 quality={90}
               />
               <div className="overlayer" />
-              <div className="carousel-caption text-shadow pl-4 border-l-1 hover:border-l-2 border-orange-400 transition-all">
+              <div className="carousel-caption text-shadow">
                 <h3 className="text-white text-2xl font-semibold">
                   Noticias Destacadas
                 </h3>

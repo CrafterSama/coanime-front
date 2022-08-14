@@ -25,6 +25,32 @@ export default function Home() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
+        <meta name="author" content="@coanime" />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:site_name" content="Coanime" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={window.location.host} />
+        <meta
+          property="og:image"
+          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
+        />
+        <meta
+          property="og:image:secure_url"
+          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:site" content="@coanime" />
+        <meta
+          name="twitter:image:src"
+          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
+        />
+        <meta name="twitter:creator" content="@coanime" />
+        <meta name="referrer" content="default" />
+        <meta property="fb:pages" content="127729317274121" />
+        <meta content="all, index, follow" name="robots" />
       </Head>
 
       <Section>

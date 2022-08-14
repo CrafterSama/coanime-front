@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -41,6 +43,25 @@ const UpdatePost = () => {
             <title>{title}</title>
             <meta name="description" content={description} />
             <meta name="keywords" content={tags} />
+            <meta property="og:type" content="article" />
+            <meta
+              property="article:publisher"
+              content="http://www.facebook.com/Coanime"
+            />
+            <meta property="article:tag" content={tags} />
+            <meta property="article:section" content={post?.categories?.name} />
+            <meta
+              property="article:published_time"
+              content={
+                post?.postponedTo
+                  ? format(
+                      new Date(post?.postponedTo),
+                      'dd LLLL, yyyy hh:mm a',
+                      { locale: es }
+                    )
+                  : format(new Date(post?.createdAt), 'dd LLLL, yyyy hh:mm a')
+              }
+            />
           </Head>
           <article className="">
             <PostHeader image={pathImage} post={post} />

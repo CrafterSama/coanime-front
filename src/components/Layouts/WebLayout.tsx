@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
+import Footer from '@/components/Layouts/Footer';
 import Navigation from '@/components/Layouts/WebNavigation';
-import Footer from '@/components/ui/Footer';
 import { useAuth } from '@/hooks/auth';
 
 type WebLayoutProps = {

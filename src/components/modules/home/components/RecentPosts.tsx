@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/outline';
 
 const RecentPosts = ({ posts }) => (
-  <div className="recent-posts">
+  <div className="recent-posts px-4 xl:px-0">
     {posts?.map((post) => (
       <div key={post.id} className="box">
         <div className="box__item">
