@@ -6,7 +6,6 @@ import { menu } from '@/constants/menu';
 
 const Aside = () => {
   const router = useRouter();
-  console.log('🚀 ~ file: Aside.tsx ~ line 9 ~ Aside ~ router', router);
 
   return (
     <aside className="w-auto border-r border-gray-200">

@@ -11,17 +11,17 @@ export const HTTP_METHODS = {
 };
 
 const getApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL;
   return `${url}/internal`;
 };
 
 const getApiExternalUrl = () => {
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL;
   return `${url}/external`;
 };
 
 const getAuthApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL;
   return `${url}`;
 };
 
