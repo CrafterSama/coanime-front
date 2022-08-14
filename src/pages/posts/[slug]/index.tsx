@@ -49,6 +49,13 @@ const UpdatePost = () => {
               content="http://www.facebook.com/Coanime"
             />
             <meta property="article:tag" content={tags} />
+            <meta
+              name="twitter:image:src"
+              content={
+                pathImage ??
+                'https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg'
+              }
+            />
             <meta property="article:section" content={post?.categories?.name} />
             <meta
               property="article:published_time"

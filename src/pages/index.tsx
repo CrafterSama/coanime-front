@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import BroadcastToday from '@/components/modules/home/components/BroadcastToday';
@@ -11,6 +12,8 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { useHome } from '@/hooks/home';
 
 export default function Home() {
+  const router = useRouter();
+  console.log('🚀 ~ file: index.tsx ~ line 16 ~ Home ~ router', router);
   const { data = {}, isLoading } = useHome();
   const { title = '', description = '', keywords = '', relevants = [] } = data;
 
@@ -30,7 +33,7 @@ export default function Home() {
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.host} />
+        <meta property="og:url" content="https://front.coanime.net" />
         <meta
           property="og:image"
           content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
