@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
+import Navigation from '@/components/Layouts/WebNavigation';
+import Footer from '@/components/ui/Footer';
 import { useAuth } from '@/hooks/auth';
-
-import Navigation from './WebNavigation';
 
 type WebLayoutProps = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
         <Navigation user={user} />
       </header>
       <main className="flex flex-col flex-1 w-auto">{children}</main>
-      <footer className="footer"></footer>
+      <Footer />
     </div>
   );
 };
