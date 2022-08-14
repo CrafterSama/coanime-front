@@ -13,8 +13,6 @@ const Magazine = () => {
   const { data = {}, isLoading } = useMagazines({ page });
   const { result, title, description } = data;
 
-  console.log(result);
-
   return (
     <AppLayout
       header={

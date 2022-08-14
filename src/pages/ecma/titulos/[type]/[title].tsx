@@ -26,7 +26,6 @@ const Titles = () => {
   } = useRandomImageByTitle(router?.query?.title);
 
   const { title: webTitle, description, keywords, data: title } = data;
-  console.log('🚀 ~ file: [title].tsx ~ line 25 ~ Titles ~ title', title);
 
   return (
     <WebLayout>

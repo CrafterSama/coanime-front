@@ -18,8 +18,6 @@ const Categories = () => {
   const { data = {}, isLoading } = useCategories(router?.query?.category);
   const { title = '', description = '', keywords = '', relevants = [] } = data;
 
-  console.log(data);
-
   return (
     <WebLayout>
       {isLoading && (

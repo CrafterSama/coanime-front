@@ -36,7 +36,6 @@ const UpdatePost = () => {
   const id = router?.query?.id;
   const { data = {}, isLoading, refetch } = usePost(id as string);
   const { post, categories: categoriesData } = data;
-  console.log('🚀 ~ file: index.tsx ~ line 38 ~ UpdatePost ~ post', post);
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
 
