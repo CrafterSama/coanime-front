@@ -46,12 +46,22 @@ export const useAuth = ({
   };
 
   const login = async ({ setErrors, setStatus, ...props }) => {
-    await csrf();
+    const csrfToken = await csrf();
+
     setErrors([]);
     setStatus(null);
 
+    // Get the XSRF Token and set to header
+    const xSRFToken = csrfToken.config.headers['X-XSRF-TOKEN'] ?? '';
+
+    const headers = {
+      'X-XSRF-TOKEN': xSRFToken,
+    };
+    const config = {
+      headers: headers,
+    };
     axios
-      .post('/login', props)
+      .post('/login', props, config)
       .then(() => mutate())
       .catch((error) => {
         if (error.response.status !== 422) throw error;
