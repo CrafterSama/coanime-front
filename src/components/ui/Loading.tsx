@@ -11,12 +11,11 @@ const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
         />
       )}
       {showFancySpiner && (
-        <div className={`relative`}>
+        <div className={`relative w-[500px] h-[365px]`}>
           <Image
             src="/images/saitama.gif"
             alt="Loading"
-            width={'280%'}
-            height={'280%'}
+            layout="fill"
             objectFit="cover"
           />
         </div>
