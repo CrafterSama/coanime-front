@@ -1,27 +1,22 @@
-import format from 'date-fns/format';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import Loading from '@/components/ui/Loading';
-import { useViewArticle } from '@/hooks/posts';
-import Link from 'next/link';
-import Tags from '@/components/modules/posts/components/Tags';
 import Author from '@/components/modules/posts/components/Author';
-import Relateds from '@/components/modules/posts/components/Relateds';
-import TitleRelated from '@/components/modules/posts/components/TitleRelated';
-import PostHeader from '@/components/modules/posts/components/PostHeader';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
-import SectionTitle from '@/components/ui/SectionTitle';
+import PostHeader from '@/components/modules/posts/components/PostHeader';
+import Relateds from '@/components/modules/posts/components/Relateds';
+import Tags from '@/components/modules/posts/components/Tags';
+import TitleRelated from '@/components/modules/posts/components/TitleRelated';
+import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import { useViewArticle } from '@/hooks/posts';
 
 const UpdatePost = () => {
   const router = useRouter();
   const { slug } = router?.query;
   const { data = {}, isLoading } = useViewArticle(slug);
-
-  console.log('data', data);
 
   const {
     title,

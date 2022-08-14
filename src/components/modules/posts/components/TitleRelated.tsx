@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
+
 const TitleRelated = ({ titles }) => (
   <div id="relatedTitle">
     {titles?.length > 0 && (
@@ -9,7 +11,7 @@ const TitleRelated = ({ titles }) => (
           <div className="info__relatedTitle-image h-96 relative">
             <Image
               className="w-full h-full"
-              src={titles?.[0]?.images?.name}
+              src={titles?.[0]?.images?.name ?? DEFAULT_IMAGE}
               alt={titles?.[0]?.name}
               objectFit="cover"
               layout="fill"
