@@ -13,7 +13,6 @@ import { useHome } from '@/hooks/home';
 
 export default function Home() {
   const router = useRouter();
-  console.log('🚀 ~ file: index.tsx ~ line 16 ~ Home ~ router', router);
   const { data = {}, isLoading } = useHome();
   const { title = '', description = '', keywords = '', relevants = [] } = data;
 
