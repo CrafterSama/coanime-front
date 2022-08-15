@@ -11,7 +11,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { useHome } from '@/hooks/home';
 
-export default function Home() {
+const Home = () => {
   const router = useRouter();
   const { data = {}, isLoading } = useHome();
   const { title = '', description = '', keywords = '', relevants = [] } = data;
@@ -72,4 +72,14 @@ export default function Home() {
       </Section>
     </WebLayout>
   );
-}
+};
+
+export const getStaticProps = async ({ params }) => {
+  return {
+    props: {
+      ...params,
+    },
+  };
+};
+
+export default Home;
