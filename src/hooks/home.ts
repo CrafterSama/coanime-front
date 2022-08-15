@@ -3,11 +3,9 @@ import { useQuery } from 'react-query';
 import { httpClientExternal } from '@/lib/http';
 import { getDay } from '@/utils/date';
 
-export const useHome = () => {
-  return useQuery(['home'], async () => {
-    const response = await httpClientExternal.get(`home`);
-    return response.data;
-  });
+export const getHomeData = async () => {
+  const response = await httpClientExternal.get(`home`);
+  return response;
 };
 
 export const useMagazine = (slug: string) => {
@@ -17,14 +15,10 @@ export const useMagazine = (slug: string) => {
   });
 };
 
-export const useBroadcastToday = () => {
-  return useQuery(['broadcastToday'], async () => {
-    let response = await fetch(
-      `https://api.jikan.moe/v4/schedules/${getDay()}`
-    );
+export const getBroadcastToday = async () => {
+  let response = await fetch(`https://api.jikan.moe/v4/schedules/${getDay()}`);
 
-    response = await response.json();
+  response = await response.json();
 
-    return response;
-  });
+  return response;
 };

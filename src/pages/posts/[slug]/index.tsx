@@ -1,7 +1,8 @@
+import { useQuery } from 'react-query';
+
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import Author from '@/components/modules/posts/components/Author';
@@ -13,12 +14,12 @@ import TitleRelated from '@/components/modules/posts/components/TitleRelated';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { useViewArticle } from '@/hooks/posts';
+import { getArticleData } from '@/hooks/posts';
 
-const UpdatePost = () => {
-  const router = useRouter();
-  const { slug } = router?.query;
-  const { data = {}, isLoading } = useViewArticle(slug);
+const ShowArticle = ({ articleData }) => {
+  const { data = {}, isLoading } = useQuery(['viewArticles'], getArticleData, {
+    initialData: articleData,
+  });
 
   const {
     title,
@@ -126,4 +127,17 @@ const UpdatePost = () => {
   );
 };
 
-export default UpdatePost;
+export async function getServerSideProps({ params }) {
+  const { slug } = params;
+  const response = await getArticleData(slug as string);
+
+  const articleData = response.data;
+
+  return {
+    props: {
+      articleData,
+    },
+  };
+}
+
+export default ShowArticle;
