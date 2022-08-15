@@ -20,25 +20,23 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
     },
   });
   return (
-    <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <NextNProgress color="#ff7b00" />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              className:
-                'bg-white rounded-md border border-gray-300 shadow-xl text-sm',
-              duration: 4000,
-              style: {
-                marginTop: '30px',
-              },
-            }}
-          />
-          <Component {...pageProps} />
-        </Hydrate>
-      </QueryClientProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <NextNProgress color="#ff7b00" />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className:
+              'bg-white rounded-md border border-gray-300 shadow-xl text-sm',
+            duration: 4000,
+            style: {
+              marginTop: '30px',
+            },
+          }}
+        />
+        <Component {...pageProps} />
+      </Hydrate>
+    </QueryClientProvider>
   );
 };
 

@@ -74,7 +74,7 @@ const Home = () => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   return {
     props: {
       ...params,
