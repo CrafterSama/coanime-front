@@ -23,15 +23,15 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <NextNProgress color="#f90" />
+          <NextNProgress color="#ff7b00" />
           <Toaster
             position="top-right"
             toastOptions={{
               className:
                 'bg-white rounded-md border border-gray-300 shadow-xl text-sm',
-              duration: 5000,
+              duration: 4000,
               style: {
-                marginTop: '50px',
+                marginTop: '30px',
               },
             }}
           />

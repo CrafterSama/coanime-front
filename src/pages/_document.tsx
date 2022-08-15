@@ -8,8 +8,9 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="es">
         <Head>
+          <meta name="language" content="es" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />

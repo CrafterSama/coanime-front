@@ -28,10 +28,10 @@ const Home = () => {
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta name="author" content="@coanime" />
-        <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="Coanime" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://front.coanime.net" />
         <meta
           property="og:image"
