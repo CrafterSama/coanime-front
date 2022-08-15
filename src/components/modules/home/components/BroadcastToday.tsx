@@ -1,23 +1,30 @@
-import { useEffect, useState } from 'react';
+import { FC } from 'react';
+import { useQuery } from 'react-query';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import {
+  A11y,
+  EffectFade,
   Navigation,
   Pagination,
-  A11y,
   Thumbs,
-  EffectFade,
   Virtual,
 } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Loading from '@/components/ui/Loading';
-import { useBroadcastToday } from '@/hooks/home';
+import { getBroadcastToday } from '@/hooks/home';
 import { defaultImage, getTitlesUrl } from '@/utils/string';
 
-const BroadcastToday = () => {
-  const { data: today, isLoading } = useBroadcastToday();
+type BroadcastTodayProps = {
+  broadcastData?: any;
+};
+
+const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
+  const { data: today, isLoading } = useQuery(['posts'], getBroadcastToday, {
+    initialData: broadcastData,
+  });
   // @ts-ignore
   const series = today?.data?.filter((item) => item.approved === true) ?? [];
 
@@ -88,5 +95,13 @@ const BroadcastToday = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const response = await getBroadcastToday();
+
+  const broadcastData = response;
+
+  return { props: { broadcastData } };
+}
 
 export default BroadcastToday;

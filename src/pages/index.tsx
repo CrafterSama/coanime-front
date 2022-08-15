@@ -1,5 +1,6 @@
+import { useQuery } from 'react-query';
+
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import BroadcastToday from '@/components/modules/home/components/BroadcastToday';
@@ -9,11 +10,12 @@ import TopSlider from '@/components/modules/home/components/TopSlider';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { useHome } from '@/hooks/home';
+import { getHomeData } from '@/hooks/home';
 
-const Home = () => {
-  const router = useRouter();
-  const { data = {}, isLoading } = useHome();
+const Home = ({ homeData }) => {
+  const { data = {}, isLoading } = useQuery(['home'], getHomeData, {
+    initialData: homeData,
+  });
   const { title = '', description = '', keywords = '', relevants = [] } = data;
 
   return (
@@ -74,12 +76,12 @@ const Home = () => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
-  return {
-    props: {
-      ...params,
-    },
-  };
-};
+export async function getServerSideProps() {
+  const response = await getHomeData();
+
+  const homeData = response.data;
+
+  return { props: { homeData } };
+}
 
 export default Home;
