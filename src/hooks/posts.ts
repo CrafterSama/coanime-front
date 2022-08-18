@@ -17,18 +17,6 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const getArticleData = async (slug) => {
-  const response = await httpClientExternal.get(`articles/${slug}`);
-  return response;
-};
-
-export const useArticles = () => {
-  return useQuery(['articles'], async () => {
-    const response = await httpClientExternal.get(`articles`);
-    return response.data;
-  });
-};
-
 export const postUpdate = async (id: string | string[], params: any) =>
   await httpClient.put(`posts/${id}`, params);
 

@@ -14,7 +14,7 @@ import {
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Loading from '@/components/ui/Loading';
-import { getBroadcastToday } from '@/hooks/home';
+import { getBroadcastToday } from '@/services/home';
 import { defaultImage, getTitlesUrl } from '@/utils/string';
 
 type BroadcastTodayProps = {

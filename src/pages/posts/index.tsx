@@ -1,13 +1,17 @@
+import { useQuery } from 'react-query';
+
 import Head from 'next/head';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import { headers } from '@/components/modules/posts/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
-import { usePosts } from '@/hooks/posts';
+import { getArticlesData } from '@/hooks/posts';
 
-const Posts = () => {
-  const { data = {}, isLoading } = usePosts();
+const Posts = ({ articlesData }) => {
+  const { data = {}, isLoading } = useQuery(['articles'], getArticlesData, {
+    initialData: articlesData,
+  });
   const { data: posts = [] } = data;
 
   return (
@@ -36,6 +40,25 @@ const Posts = () => {
       </div>
     </WebLayout>
   );
+};
+
+export const getServerSideProps = async () => {
+  const response = await getArticlesData();
+
+  if (response.data.code === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const articlesData = response.data;
+
+  return {
+    props: {
+      articlesData,
+      revalidate: 5 * 60,
+    },
+  };
 };
 
 export default Posts;

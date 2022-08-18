@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -9,46 +9,131 @@ import CloudLinks from '@/components/ui/CloudLinks';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { useExternalTitlesByType } from '@/hooks/titles';
+import { getTitlesByType } from '@/services/titles';
 
-const Titles = () => {
-  const [page, setPage] = useState(1);
+type TitleData = {
+  title: string;
+  description: string;
+  keywords: string;
+  result: any;
+  genres: any;
+  types: any;
+};
+
+const Titles = ({ titlesData }) => {
   const router = useRouter();
-  const { data = {}, isLoading } = useExternalTitlesByType({
-    type: router?.query?.type,
-    page,
-  });
-  const { title, description, keywords, result: series, types } = data;
+  const { type } = router.query;
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState<TitleData>(titlesData);
+  const [kind, setKind] = useState<string>(type as string);
+  const {
+    title,
+    description,
+    keywords,
+    result: series = [],
+    types = [],
+  } = data;
+
+  const onPageChange = async () => {
+    if (type) {
+      if (kind !== type) {
+        setKind(type as string);
+        setPage(1);
+      }
+      await router.push({
+        pathname: `/ecma/titulos/${type}`,
+        query: {
+          page,
+        },
+      });
+      const response = await getTitlesByType({ type, page });
+      setData(response.data);
+      return;
+    }
+    return;
+  };
+
+  useEffect(() => {
+    onPageChange();
+  }, [page, type]);
 
   return (
     <WebLayout>
-      {isLoading && (
+      {!data && (
         <div className="flex justify-center content-center min-w-screen min-h-screen">
           <Loading showFancySpiner size={20} />
         </div>
       )}
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
-      </Head>
+      {data && (
+        <>
+          <Head>
+            <title>{title}</title>
+            <meta name="description" content={description} />
+            <meta name="keywords" content={keywords} />
+          </Head>
 
-      <Section withContainer>
-        <CloudLinks allLink="/ecma/titulos" links={types} />
-        <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
-          {series?.data?.map((serie) => (
-            <SerieCard key={serie?.id} serie={serie} />
-          ))}
-          {series?.data?.length < 1 && (
-            <div className="text-center text-gray-600">
-              No hay Series para mostrar en este apartado.
+          <Section withContainer>
+            <CloudLinks allLink="/ecma/titulos" links={types} />
+            <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
+              {series?.data?.map((serie) => (
+                <SerieCard key={serie?.id} serie={serie} />
+              ))}
+              {series?.data?.length < 1 && (
+                <div className="text-center text-gray-600">
+                  No hay Series para mostrar en este apartado.
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <Paginator page={page} setPage={setPage} lastPage={series?.lastPage} />
-      </Section>
+            <Paginator page={page} setPage={setPage} data={series} />
+          </Section>
+        </>
+      )}
     </WebLayout>
   );
+};
+
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export const getStaticProps = async ({ params }) => {
+  const { type } = params;
+  const response = await getTitlesByType({
+    type,
+    page: Number(params?.page) ?? 1,
+  });
+
+  if (response?.status === 404) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+        // statusCode: 301
+      },
+    };
+  }
+
+  if (response?.status === 500) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+        // statusCode: 301
+      },
+    };
+  }
+
+  const titlesData = response.data;
+
+  return {
+    props: {
+      titlesData,
+      revalidate: 5 * 60,
+    },
+  };
 };
 
 export default Titles;

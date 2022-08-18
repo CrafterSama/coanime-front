@@ -1,5 +1,7 @@
+import { useQuery } from 'react-query';
+
 import Head from 'next/head';
-import { useClientRouter } from 'use-client-router';
+import { GetStaticProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import BroadcastToday from '@/components/modules/home/components/BroadcastToday';
@@ -9,13 +11,15 @@ import TopSlider from '@/components/modules/home/components/TopSlider';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { useCategories } from '@/hooks/categories';
-import { useRouter } from 'next/router';
-import { GetStaticProps } from 'next/types';
+import { getCategory } from '@/services/categories';
+import { scrollWindowToTop } from '@/utils/scroll';
 
-const Categories = () => {
-  const router = useRouter();
-  const { data = {}, isLoading } = useCategories(router?.query?.category);
+const Categories = ({ categoryData }) => {
+  const { data = {}, isLoading } = useQuery(
+    ['categories', categoryData],
+    getCategory,
+    { initialData: categoryData }
+  );
   const { title = '', description = '', keywords = '', relevants = [] } = data;
 
   return (
@@ -48,6 +52,32 @@ const Categories = () => {
       </Section>
     </WebLayout>
   );
+};
+
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const response = await getCategory(String(params?.category) as string);
+
+  if (response?.data?.code === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const categoryData = response.data;
+
+  return {
+    props: {
+      categoryData,
+      revalidate: 5 * 60,
+    },
+  };
 };
 
 export default Categories;
