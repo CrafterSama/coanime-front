@@ -6,7 +6,7 @@ import WebLayout from '@/components/Layouts/WebLayout';
 import { headers } from '@/components/modules/posts/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
-import { getArticlesData } from '@/hooks/posts';
+import { getArticlesData } from '@/services/posts';
 
 const Posts = ({ articlesData }) => {
   const { data = {}, isLoading } = useQuery(['articles'], getArticlesData, {
