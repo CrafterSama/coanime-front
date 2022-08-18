@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import Author from '@/components/modules/posts/components/Author';
@@ -14,13 +17,19 @@ import TitleRelated from '@/components/modules/posts/components/TitleRelated';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { getArticleData } from '@/hooks/posts';
+import { getArticleData } from '@/services/posts';
+import { scrollWindowToTop } from '@/utils/scroll';
 
-const ShowArticle = ({ articleData }) => {
-  const { data = {}, isLoading } = useQuery(['viewArticles'], getArticleData, {
-    initialData: articleData,
-  });
-
+const ShowArticle = ({ slug, articleData }) => {
+  const router = useRouter();
+  const [fetching, setFetching] = useState(false);
+  const { data = {}, isLoading } = useQuery(
+    ['viewArticles', slug],
+    getArticleData,
+    {
+      initialData: articleData,
+    }
+  );
   const {
     title,
     description,
@@ -31,9 +40,21 @@ const ShowArticle = ({ articleData }) => {
     relateds,
   } = data;
 
+  const onUpdateData = () => {
+    setFetching(true);
+    setTimeout(() => {
+      scrollWindowToTop();
+      setFetching(false);
+    }, 1200);
+  };
+
+  useEffect(() => {
+    onUpdateData();
+  }, [slug]);
+
   return (
     <WebLayout>
-      {isLoading && (
+      {fetching && (
         <div className="flex justify-center content-center min-w-screen min-h-screen">
           <Loading size={16} />
         </div>
@@ -127,17 +148,32 @@ const ShowArticle = ({ articleData }) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
   const response = await getArticleData(slug as string);
+
+  if (response.data.code === 404) {
+    return {
+      notFound: true,
+    };
+  }
 
   const articleData = response.data;
 
   return {
     props: {
+      slug,
       articleData,
+      revalidate: 5 * 60,
     },
   };
-}
+};
 
 export default ShowArticle;

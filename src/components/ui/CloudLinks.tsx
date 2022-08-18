@@ -9,7 +9,9 @@ const CloudLinks = ({ allLink, links }) => {
       <span className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link">
         <Link href={allLink}>
           <a
-            className={`${router.asPath === allLink && 'text-orange-600'} ml-1`}
+            className={`${
+              router.asPath.includes(allLink) && 'text-orange-600'
+            } ml-1`}
           >
             Todas
           </a>
@@ -20,7 +22,7 @@ const CloudLinks = ({ allLink, links }) => {
           key={link?.id}
           className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link"
         >
-          <Link key={link?.id} href={`/ecma/titulos/${link?.slug}`}>
+          <Link key={link?.id} href={`${allLink}/${link?.slug}`}>
             <a
               className={`${
                 router.asPath.includes(link?.slug) && 'text-orange-600'

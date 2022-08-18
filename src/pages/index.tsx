@@ -10,7 +10,7 @@ import TopSlider from '@/components/modules/home/components/TopSlider';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { getHomeData } from '@/hooks/home';
+import { getHomeData } from '@/services/home';
 
 const Home = ({ homeData }) => {
   const { data = {}, isLoading } = useQuery(['home'], getHomeData, {

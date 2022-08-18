@@ -1,11 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 
-const Paginator = ({ page, setPage, lastPage }) => {
+const Paginator = ({ page, setPage, data }) => {
   const back = () => {
     if (page > 1) {
       setPage(Number(page) - 1);
     }
   };
+
+  const { total, lastPage } = data;
 
   const next = () => {
     if (page < lastPage) {
@@ -22,8 +24,11 @@ const Paginator = ({ page, setPage, lastPage }) => {
       >
         <ChevronLeftIcon className="w-6 h-6" />
       </button>
-      <div className="flex justify-center items-center px-2">
-        <span className="text-orange-400 font-semibold">{page}</span>
+      <div className="flex justify-center items-center gap-2 px-2">
+        <span className="text-orange-400 font-semibold">{`Pagina ${page} de`}</span>
+        <span className="text-orange-400 font-semibold">{`${lastPage} ${
+          lastPage === 1 ? 'pagina' : 'paginas'
+        }`}</span>
       </div>
       <button
         disabled={page === lastPage}
