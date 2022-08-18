@@ -10,7 +10,9 @@ const CloudLinks = ({ allLink, links }) => {
         <Link href={allLink}>
           <a
             className={`${
-              router.asPath.includes(allLink) && 'text-orange-600'
+              router.asPath.includes(allLink) &&
+              !router?.query?.type &&
+              'text-orange-600'
             } ml-1`}
           >
             Todas
