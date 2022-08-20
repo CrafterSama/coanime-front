@@ -16,7 +16,6 @@ type TitleData = {
   description: string;
   keywords: string;
   result: any;
-  genres: any;
   types: any;
 };
 
@@ -26,13 +25,10 @@ const Titles = ({ titlesData }) => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
   const [kind, setKind] = useState<string>(type as string);
-  const {
-    title,
-    description,
-    keywords,
-    result: series = [],
-    types = [],
-  } = data;
+
+  useEffect(() => {
+    setData(titlesData);
+  }, []);
 
   const onPageChange = async () => {
     if (type) {
@@ -58,37 +54,36 @@ const Titles = ({ titlesData }) => {
   }, [page, type]);
 
   return (
-    <WebLayout>
-      {!data && (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
-          <Loading showFancySpiner size={20} />
-        </div>
-      )}
-      {data && (
-        <>
-          <Head>
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <meta name="keywords" content={keywords} />
-          </Head>
-
+    <>
+      <Head>
+        <title>{titlesData?.title}</title>
+        <meta name="description" content={titlesData?.description} />
+        <meta name="keywords" content={titlesData?.keywords} />
+      </Head>
+      <WebLayout>
+        {!data && (
+          <div className="flex justify-center content-center min-w-screen min-h-screen">
+            <Loading showFancySpiner size={20} />
+          </div>
+        )}
+        {data && (
           <Section withContainer>
-            <CloudLinks allLink="/ecma/titulos" links={types} />
+            <CloudLinks allLink="/ecma/titulos" links={data?.types} />
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
-              {series?.data?.map((serie) => (
+              {data?.result?.data?.map((serie) => (
                 <SerieCard key={serie?.id} serie={serie} />
               ))}
-              {series?.data?.length < 1 && (
+              {data?.result?.data?.length < 1 && (
                 <div className="text-center text-gray-600">
                   No hay Series para mostrar en este apartado.
                 </div>
               )}
             </div>
-            <Paginator page={page} setPage={setPage} data={series} />
+            <Paginator page={page} setPage={setPage} data={data?.result} />
           </Section>
-        </>
-      )}
-    </WebLayout>
+        )}
+      </WebLayout>
+    </>
   );
 };
 
@@ -119,7 +114,7 @@ export const getStaticProps = async ({ params }) => {
   if (response?.status === 500) {
     return {
       redirect: {
-        destination: '/404',
+        destination: '/500',
         permanent: false,
         // statusCode: 301
       },

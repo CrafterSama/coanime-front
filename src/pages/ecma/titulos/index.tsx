@@ -50,20 +50,19 @@ const Titles = ({ titlesData }) => {
   }, [page]);
 
   return (
-    <WebLayout>
-      {!data && (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
-          <Loading showFancySpiner size={20} />
-        </div>
-      )}
-      {series && (
-        <>
-          <Head>
-            <title>{title ?? ''}</title>
-            <meta name="description" content={description ?? ''} />
-            <meta name="keywords" content={keywords ?? ''} />
-          </Head>
-
+    <>
+      <Head>
+        <title>{title ?? ''}</title>
+        <meta name="description" content={description ?? ''} />
+        <meta name="keywords" content={keywords ?? ''} />
+      </Head>
+      <WebLayout>
+        {!data && (
+          <div className="flex justify-center content-center min-w-screen min-h-screen">
+            <Loading showFancySpiner size={20} />
+          </div>
+        )}
+        {series && (
           <Section withContainer>
             <CloudLinks allLink="/ecma/titulos" links={types} />
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
@@ -73,9 +72,9 @@ const Titles = ({ titlesData }) => {
             </div>
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>
-        </>
-      )}
-    </WebLayout>
+        )}
+      </WebLayout>
+    </>
   );
 };
 
