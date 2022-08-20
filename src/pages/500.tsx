@@ -1,8 +1,7 @@
-import Image from 'next/image';
+import Head from 'next/head';
 import Link from 'next/link';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import Head from 'next/head';
 
 const ErrorPage = () => (
   <WebLayout>
@@ -34,5 +33,13 @@ const ErrorPage = () => (
     </div>
   </WebLayout>
 );
+
+export function getStaticProps() {
+  return {
+    props: {
+      revalidate: 5 * 60,
+    },
+  };
+}
 
 export default ErrorPage;

@@ -23,6 +23,9 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
             rel="stylesheet"
           />
+          <meta name="referrer" content="default" />
+          <meta property="fb:pages" content="127729317274121" />
+          <meta content="all, index, follow" name="robots" />
         </Head>
         <body className="antialiased">
           <Main />
