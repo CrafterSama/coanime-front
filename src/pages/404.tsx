@@ -35,4 +35,12 @@ const NotFoundPage = () => (
   </WebLayout>
 );
 
+export function getStaticProps() {
+  return {
+    props: {
+      revalidate: 5 * 60,
+    },
+  };
+}
+
 export default NotFoundPage;

@@ -221,9 +221,8 @@ body {
   margin-bottom: 5px;
 }
 .categories > a {
-  @apply font-medium text-xs rounded py-1 px-2 uppercase;
+  @apply font-medium text-xs rounded py-1 px-2 uppercase max-h-6;
   color: var(--light-orange);
-  -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
   background: var(--white);
   box-shadow: none;

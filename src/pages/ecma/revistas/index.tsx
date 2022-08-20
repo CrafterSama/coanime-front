@@ -4,37 +4,34 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import SerieCard from '@/components/modules/titles/components/SerieCard';
-import CloudLinks from '@/components/ui/CloudLinks';
+import MagazineCard from '@/components/modules/magazine/components/MagazineCard';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { getTitles } from '@/services/titles';
+import { getMagazines } from '@/services/magazine';
 
-type TitleData = {
+type MagazineData = {
   title: string;
   description: string;
   keywords: string;
   result: any;
-  genres: any;
-  types: any;
 };
 
-const Titles = ({ titlesData }) => {
+const Magazines = ({ magazinesData }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState<TitleData>(titlesData);
+  const [data, setData] = useState<MagazineData>(magazinesData);
 
-  const { result: series = [], types } = data;
+  const { result: magazines = [] } = data;
 
   const onPageChange = async () => {
     await router.push({
-      pathname: '/ecma/titulos/',
+      pathname: '/ecma/revistas',
       query: {
         page,
       },
     });
-    const response = await getTitles({ page });
+    const response = await getMagazines({ page });
     setData(response.data);
   };
 
@@ -45,9 +42,9 @@ const Titles = ({ titlesData }) => {
   return (
     <>
       <Head>
-        <title>{titlesData?.title}</title>
-        <meta name="description" content={titlesData?.description} />
-        <meta name="keywords" content={titlesData?.keywords} />
+        <title>{magazinesData?.title}</title>
+        <meta name="description" content={magazinesData?.description} />
+        <meta name="keywords" content={magazinesData?.keywords} />
       </Head>
       <WebLayout>
         {!data && (
@@ -55,15 +52,14 @@ const Titles = ({ titlesData }) => {
             <Loading showFancySpiner size={20} />
           </div>
         )}
-        {series && (
+        {magazines && (
           <Section withContainer>
-            <CloudLinks allLink="/ecma/titulos" links={types} />
-            <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
-              {series?.data?.map((serie) => (
-                <SerieCard key={serie?.id} serie={serie} />
+            <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
+              {magazines?.data?.map((magazine) => (
+                <MagazineCard key={magazine?.id} magazine={magazine} />
               ))}
             </div>
-            <Paginator page={page} setPage={setPage} data={series} />
+            <Paginator page={page} setPage={setPage} data={magazines} />
           </Section>
         )}
       </WebLayout>
@@ -72,7 +68,7 @@ const Titles = ({ titlesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const response = await getTitles({ page: Number(params?.page) ?? 1 });
+  const response = await getMagazines({ page: Number(params?.page) ?? 1 });
 
   if (response?.data?.code === 404) {
     return {
@@ -80,14 +76,14 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const titlesData = response.data;
+  const magazinesData = response.data;
 
   return {
     props: {
-      titlesData,
+      magazinesData,
       revalidate: 5 * 60,
     },
   };
 };
 
-export default Titles;
+export default Magazines;

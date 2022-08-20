@@ -1,41 +1,17 @@
-import { useEffect, useState } from 'react';
-
 import { format, isBefore } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { useRandomImageByTitle } from '@/hooks/random-images';
-import {
-  getAllTitles,
-  getRandomImageByTitle,
-  getTitle,
-  getTitles,
-} from '@/services/titles';
-import { scrollWindowToTop } from '@/utils/scroll';
-import { useQuery } from 'react-query';
-
-type TitleProps = {
-  code: number;
-  title: string;
-  description: string;
-  keywords: string;
-  result: any;
-};
+import { getRandomImageByTitle, getTitle } from '@/services/titles';
 
 const Titles = ({ titleData, randomImage }) => {
-  console.log(
-    '🚀 ~ file: [title].tsx ~ line 28 ~ Titles ~ titleData',
-    titleData
-  );
-
   return (
     <>
       {titleData && (
@@ -46,12 +22,12 @@ const Titles = ({ titleData, randomImage }) => {
         </Head>
       )}
       <WebLayout>
-        {!titleData?.result && (
+        {!titleData && (
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         )}
-        {titleData?.result && (
+        {titleData && (
           <>
             <div id="title">
               <Section>
