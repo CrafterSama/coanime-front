@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 import { useQuery } from 'react-query';
 
 import Head from 'next/head';
@@ -7,16 +9,40 @@ import BroadcastToday from '@/components/modules/home/components/BroadcastToday'
 import OtherNews from '@/components/modules/home/components/OtherNews';
 import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
+import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
+import { getArticlesData } from '@/services/posts';
 
-const Home = ({ homeData }) => {
+const Home = ({ homeData, articlesData }) => {
+  const [articles, setArticles] = useState([]);
+  const [loadArticles, setLoadArticles] = useState(false);
+  const [page, setPage] = useState(1);
   const { data = {}, isLoading } = useQuery(['home'], getHomeData, {
     initialData: homeData,
   });
   const { title = '', description = '', keywords = '', relevants = [] } = data;
+
+  useEffect(() => {
+    if (articlesData) {
+      setArticles([...articles, ...articlesData?.data]);
+    }
+  }, []);
+
+  const moreArticles = async () => {
+    setLoadArticles(true);
+    const response = await getArticlesData({ page });
+    const oldArticles: any[] = articles;
+    const newArticles: any[] = response?.data?.data;
+    setArticles([...oldArticles, ...newArticles]);
+    setLoadArticles(false);
+  };
+
+  useEffect(() => {
+    moreArticles();
+  }, [page]);
 
   return (
     <WebLayout>
@@ -70,18 +96,30 @@ const Home = ({ homeData }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="News" subtitle="Otras Noticias" />
-        <OtherNews />
+        <OtherNews articles={articles} />
+        <div className="flex justify-center">
+          <Button onClick={() => setPage(page + 1)}>
+            {loadArticles ? (
+              <CgSpinner className="animate-spin" />
+            ) : (
+              'Mas Articulos'
+            )}
+          </Button>
+        </div>
       </Section>
     </WebLayout>
   );
 };
 
 export async function getServerSideProps() {
+  const page = 1;
   const response = await getHomeData();
+  const articles = await getArticlesData({ page });
 
   const homeData = response.data;
+  const articlesData = articles.data;
 
-  return { props: { homeData } };
+  return { props: { homeData, articlesData } };
 }
 
 export default Home;

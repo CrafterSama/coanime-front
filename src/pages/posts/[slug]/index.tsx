@@ -40,16 +40,20 @@ const ShowArticle = ({ slug, articleData }) => {
     relateds,
   } = data;
 
+  useEffect(() => {
+    if (articleData) window.scrollTo(0, 0);
+  }, [articleData]);
+
   const onUpdateData = () => {
     setFetching(true);
     setTimeout(() => {
-      scrollWindowToTop();
       setFetching(false);
     }, 1200);
   };
 
   useEffect(() => {
     onUpdateData();
+    window.scrollTo(0, 0);
   }, [slug]);
 
   return (
@@ -155,8 +159,8 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { slug } = params;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params;
   const response = await getArticleData(slug as string);
 
   if (response.data.code === 404) {

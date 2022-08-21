@@ -5,7 +5,13 @@ export const getArticleData = async (slug) => {
   return response;
 };
 
-export const getArticlesData = async () => {
-  const response = await httpClientExternal.get(`articles`);
+export const getArticlesData = async ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClientExternal.get(`articles`, { params });
   return response;
 };
