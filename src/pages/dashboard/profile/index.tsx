@@ -100,6 +100,12 @@ const Profile = () => {
   );
 
   const onSubmit = (data) => {
+    if (data.avatar && !data.profilePhotoPath) {
+      data.profilePhotoPath = data.avatar;
+    }
+    if (data.cover && !data.profileCoverPath) {
+      data.profileCoverPath = data.cover;
+    }
     const params = data;
     updateProfile(
       { params },
@@ -218,54 +224,54 @@ const Profile = () => {
                                   Cover photo{' '}
                                 </Label>
                                 {result?.profileCoverPath ? (
-                                  <div className="mt-1 flex justify-center min-h-[180px] rounded-md overflow-hidden relative">
-                                    <Image
-                                      src={result?.profileCoverPath}
-                                      className="w-full h-full"
-                                      layout="fill"
-                                      alt="cover"
-                                      objectFit="cover"
-                                      objectPosition="center"
-                                    />
-                                    <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
-                                      <PencilIcon className="w-6 h-6" />
-                                    </span>
-                                  </div>
+                                  <label htmlFor="cover">
+                                    <div className="mt-1 flex justify-center min-h-[180px] rounded-md overflow-hidden relative">
+                                      <Image
+                                        src={result?.profileCoverPath}
+                                        className="w-full h-full"
+                                        layout="fill"
+                                        alt="cover"
+                                        objectFit="cover"
+                                        objectPosition="center"
+                                      />
+                                      <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
+                                        <PencilIcon className="w-6 h-6" />
+                                      </span>
+                                    </div>
+                                  </label>
                                 ) : (
                                   <div className="mt-1 flex justify-center border-2 border-gray-300 border-dashed min-h-[180px] rounded-md overflow-hidden relative">
                                     <div className="space-y-1 text-center w-full">
                                       <label
                                         htmlFor="cover"
-                                        className="flex h-full relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 text-center"
+                                        className="flex flex-col h-full relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 text-center"
                                       >
-                                        <>
-                                          <div className="flex w-full justify-center items-center font-light text-gray-300">
-                                            <PhotographIcon
-                                              className="w-16 h-16"
-                                              strokeWidth={1}
-                                            />
-                                          </div>
-                                          <div className="flex text-sm text-gray-600">
-                                            <span className="w-full text-center">
-                                              Upload a file
-                                            </span>
-                                            <input
-                                              id="cover"
-                                              name="cover"
-                                              type="file"
-                                              className="sr-only"
-                                              onChange={(e) => uploadCover(e)}
-                                              disabled={!editMode}
-                                            />
-                                          </div>
-                                          <p className="text-xs text-gray-500">
-                                            PNG, JPG, GIF up to 10MB
-                                          </p>
-                                        </>
+                                        <div className="flex justify-center items-center font-light text-gray-300">
+                                          <PhotographIcon
+                                            className="w-16 h-16"
+                                            strokeWidth={1}
+                                          />
+                                        </div>
+                                        <div className="flex text-sm text-gray-600">
+                                          <span className="w-full text-center">
+                                            Upload a file
+                                          </span>
+                                        </div>
+                                        <p className="text-xs text-gray-500">
+                                          PNG, JPG, GIF up to 10MB
+                                        </p>
                                       </label>
                                     </div>
                                   </div>
                                 )}
+                                <input
+                                  id="cover"
+                                  name="cover"
+                                  type="file"
+                                  className="hidden"
+                                  onChange={(e) => uploadCover(e)}
+                                  disabled={!editMode}
+                                />
                               </div>
                               <div className="grid grid-cols-3 gap-6">
                                 <Input
