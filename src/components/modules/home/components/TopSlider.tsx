@@ -55,7 +55,14 @@ const TopSlider = ({ relevants }) => (
                   <p className="flex flex-row gap-2 text-gray-400">
                     <ClockIcon className="w-6 h-6" />
                     <span className="text-gray-300">
-                      {format(new Date(relevant.postponedTo), 'd LLLL, yyyy')}
+                      {format(
+                        new Date(
+                          relevant?.postponedTo
+                            ? relevant?.postponedTo
+                            : relevant?.createdAt
+                        ),
+                        'd LLLL, yyyy'
+                      )}
                     </span>
                   </p>
                 </div>

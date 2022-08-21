@@ -26,7 +26,7 @@ const OtherNews = ({ articles }) => {
               <div className="overlayer"></div>
               <div className="absolute bottom-0 left-0 px-4 py-4 flex flex-col gap-4">
                 <div className="categories">
-                  <Link href={`/categories/${article.categories.slug}`}>
+                  <Link href={`/categorias/${article.categories.slug}`}>
                     <a>{article.categories.name}</a>
                   </Link>
                 </div>
@@ -39,9 +39,17 @@ const OtherNews = ({ articles }) => {
                 </div>
                 <span className="text-gray-200 flex flex-row gap-2">
                   <ClockIcon className="w-6 h-6" />
-                  {format(new Date(article.postponedTo), 'dd LLLL, yyyy', {
-                    locale: es,
-                  })}
+                  {format(
+                    new Date(
+                      article.postponedTo
+                        ? article.postponedTo
+                        : article.createdAt
+                    ),
+                    'dd LLLL, yyyy',
+                    {
+                      locale: es,
+                    }
+                  )}
                 </span>
               </div>
             </div>

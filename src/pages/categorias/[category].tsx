@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import Head from 'next/head';
@@ -11,16 +12,39 @@ import TopSlider from '@/components/modules/home/components/TopSlider';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { getCategory } from '@/services/categories';
-import { scrollWindowToTop } from '@/utils/scroll';
+import { getArticlesByCategories, getCategory } from '@/services/categories';
+import Button from '@/components/ui/Button';
+import { CgSpinner } from 'react-icons/cg';
 
-const Categories = ({ categoryData }) => {
+const Categories = ({ category, categoryData, articlesData }) => {
+  const [articles, setArticles] = useState([]);
+  const [loadArticles, setLoadArticles] = useState(false);
+  const [page, setPage] = useState(1);
   const { data = {}, isLoading } = useQuery(
     ['categories', categoryData],
     getCategory,
     { initialData: categoryData }
   );
   const { title = '', description = '', keywords = '', relevants = [] } = data;
+
+  useEffect(() => {
+    if (articlesData) {
+      setArticles([...articles, ...articlesData?.data]);
+    }
+  }, []);
+
+  const moreArticles = async () => {
+    setLoadArticles(true);
+    const response = await getArticlesByCategories({ page, category });
+    const oldArticles: any[] = articles;
+    const newArticles: any[] = response?.data?.data;
+    setArticles([...oldArticles, ...newArticles]);
+    setLoadArticles(false);
+  };
+
+  useEffect(() => {
+    moreArticles();
+  }, [page]);
 
   return (
     <WebLayout>
@@ -48,7 +72,16 @@ const Categories = ({ categoryData }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="News" subtitle="Otras Noticias" />
-        <OtherNews />
+        <OtherNews articles={articles} />
+        <div className="flex justify-center">
+          <Button onClick={() => setPage(page + 1)}>
+            {loadArticles ? (
+              <CgSpinner className="animate-spin" />
+            ) : (
+              'Mas Articulos'
+            )}
+          </Button>
+        </div>
       </Section>
     </WebLayout>
   );
@@ -61,8 +94,13 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response = await getCategory(String(params?.category) as string);
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { category } = context.params;
+  const response = await getCategory(String(category) as string);
+  const articles = await getArticlesByCategories({
+    category: String(category) as string,
+    page: 1,
+  });
 
   if (response?.data?.code === 404) {
     return {
@@ -71,10 +109,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   const categoryData = response.data;
+  const articlesData = articles.data;
 
   return {
     props: {
+      category,
       categoryData,
+      articlesData,
       revalidate: 5 * 60,
     },
   };

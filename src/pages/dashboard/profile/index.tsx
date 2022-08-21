@@ -100,12 +100,6 @@ const Profile = () => {
   );
 
   const onSubmit = (data) => {
-    if (data.avatar) {
-      data.profilePhotoPath = data.avatar;
-    }
-    if (data.cover) {
-      data.profileCoverPath = data.cover;
-    }
     const params = data;
     updateProfile(
       { params },
