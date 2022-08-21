@@ -1,18 +1,47 @@
-import { useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import { headers } from '@/components/modules/posts/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
 import { getArticlesData } from '@/services/posts';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import OtherNews from '@/components/modules/home/components/OtherNews';
+import Button from '@/components/ui/Button';
+import { CgSpinner } from 'react-icons/cg';
+
+type ArticlesProps = {
+  title: string;
+  description: string;
+  keywords: string;
+  data: any;
+};
 
 const Posts = ({ articlesData }) => {
-  const { data = {}, isLoading } = useQuery(['articles'], getArticlesData, {
-    initialData: articlesData,
-  });
-  const { data: posts = [] } = data;
+  const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState<ArticlesProps>(articlesData);
+
+  const { data: articles = [] } = data;
+
+  const onPageChange = async () => {
+    await router.push({
+      pathname: '/posts',
+      query: {
+        page,
+      },
+    });
+    const response = await getArticlesData({ page });
+    setData(response.data);
+  };
+
+  useEffect(() => {
+    onPageChange();
+  }, [page]);
 
   return (
     <WebLayout>
@@ -21,29 +50,26 @@ const Posts = ({ articlesData }) => {
       </Head>
 
       <div className="py-12">
-        <div className="max-w-9xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
-            {isLoading && (
-              <div className="flex justify-center content-center min-w-screen min-h-screen">
-                <Loading size={16} />
-              </div>
-            )}
-            {posts && (
-              <Table columns={headers}>
-                {posts?.map((row) => (
-                  <Rows key={row.id} columns={headers} row={row} />
-                ))}
-              </Table>
-            )}
+        <Section withContainer>
+          <SectionTitle title="Hot News" subtitle={`Pagina ${page}`} />
+          <OtherNews articles={articles} />
+          <div className="flex justify-center">
+            <Button onClick={() => setPage(page + 1)}>
+              {!articles ? (
+                <CgSpinner className="animate-spin" />
+              ) : (
+                'Mas Articulos'
+              )}
+            </Button>
           </div>
-        </div>
+        </Section>
       </div>
     </WebLayout>
   );
 };
 
-export const getServerSideProps = async () => {
-  const response = await getArticlesData();
+export const getServerSideProps = async ({ params }) => {
+  const response = await getArticlesData({ page: Number(params?.page) ?? 1 });
 
   if (response.data.code === 404) {
     return {
