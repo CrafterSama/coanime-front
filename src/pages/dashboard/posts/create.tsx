@@ -108,18 +108,21 @@ const CreatePost = () => {
   const onSubmit = (data) => {
     const postponed = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
-      : dayjs().utc().format('YYYY-MM-DD HH:mm:ss');
+      : dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const image = data.image === '[object FileList]' && null;
 
     const params = {
       title: data.title,
       content: data.content,
       excerpt: data.excerpt,
-      image: data.image === [],
+      image: image,
       tagId: data.tags,
       titleId: data.titleId,
       categoryId: data.categoryId.value,
       postponedTo: postponed,
     };
+
+    console.log('🚀 ~ file: create.tsx ~ line 123 ~ onSubmit ~ params', params);
 
     createPost(
       { params },
