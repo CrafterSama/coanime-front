@@ -5,7 +5,7 @@ import { headers } from '@/components/modules/posts/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
 import { usePosts } from '@/hooks/posts';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
+import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 
@@ -19,7 +19,7 @@ const Posts = () => {
         <div className="flex flex-row gap-4 justify-between items-center">
           <div className="flex flex-row gap-4">
             <div className="flex justify-center items-center">
-              <Link href="/posts">
+              <Link href="/dashboard">
                 <a className="bg-gray-200 text-orange-400 rounded">
                   <ChevronLeftIcon className="w-6 h-6" />
                 </a>
@@ -29,7 +29,11 @@ const Posts = () => {
               Dashboard Articles
             </h2>
           </div>
-          <Button>Crear</Button>
+          <Link href={`/dashboard/posts/create`}>
+            <a className="font-semibold py-2 px-4 rounded-lg transition-colors border-2 text-orange-500 bg-orange-100 border-orange-500 hover:bg-orange-200 flex flex-row justify-center items-center gap-2">
+              <PlusIcon className="h-4 w-4" /> Crear
+            </a>
+          </Link>
         </div>
       }
     >

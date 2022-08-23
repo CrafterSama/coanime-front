@@ -12,7 +12,7 @@ const TextEditor = ({
   defaultValue,
   onChange,
   errors,
-  disabled,
+  disabled = false,
   width = '100%',
   height = '600px',
 }) => {

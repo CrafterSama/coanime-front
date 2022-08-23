@@ -1,4 +1,11 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import {
+  Controller,
+  DeepRequired,
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+  useFormContext,
+} from 'react-hook-form';
 import Select, { StylesConfig } from 'react-select';
 
 type FormSelectProps = {
@@ -11,7 +18,7 @@ type FormSelectProps = {
   value?: any;
   disabled?: boolean;
   height?: string;
-  errors?: string;
+  errors?: string | Merge<FieldError, FieldErrorsImpl<DeepRequired<any>>>;
   name?: string;
   getOptionLabel?: any;
 };
@@ -26,7 +33,7 @@ const FormSelect = ({
   value = {},
   disabled = false,
   height = '45px',
-  errors = '',
+  errors = null,
   name = '',
   getOptionLabel,
 }: FormSelectProps) => {
@@ -79,7 +86,7 @@ const FormSelect = ({
       />
       {errors && (
         <div className="flex flex-row justify-between mt-1">
-          <div className="text-red-400">{errors} </div>
+          <div className="text-red-400">{errors as string}</div>
         </div>
       )}
     </div>

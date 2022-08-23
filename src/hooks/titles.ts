@@ -22,6 +22,13 @@ export const useTitle = (slug: string) => {
   });
 };
 
+export const useGetTitle = (type: string, title: string) => {
+  return useQuery(['title', type, title], async () => {
+    const response = await httpClientExternal.get(`titles/${type}/${title}`);
+    return response.data;
+  });
+};
+
 export const useSearchTitle = ({ name = 'a' }) => {
   return useQuery(['externalSearchTitle', name], async () => {
     const response = await httpClientExternal.get(`search/titles/${name}`);

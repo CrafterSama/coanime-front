@@ -34,6 +34,7 @@ import {
 
 const Profile = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [uploadingImages, setUploadingImages] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const { data = {}, isLoading } = useProfile();
   const { result, title, description } = data;
@@ -70,22 +71,28 @@ const Profile = () => {
   const cover = watch('cover');
 
   const uploadAvatar = async (e) => {
+    setUploadingImages(true);
     try {
       const response = await uploadImages(e.target.files, 'users');
       setValue('profilePhotoPath', response?.data?.url);
       toast.success('Profile photo uploaded successfully');
     } catch (error) {
       toast.error('Profile photo upload failed');
+    } finally {
+      setUploadingImages(false);
     }
   };
 
   const uploadCover = async (e) => {
+    setUploadingImages(true);
     try {
       const response = await uploadImages(e.target.files, 'users');
       setValue('profileCoverPath', response?.data?.url);
       toast.success('Cover photo uploaded successfully');
     } catch (error) {
       toast.error('Cover photo upload failed');
+    } finally {
+      setUploadingImages(false);
     }
   };
 
@@ -95,9 +102,10 @@ const Profile = () => {
     }
   }, [result, resetProfileData]);
 
-  const { mutate: updateProfile } = useMutation(({ params }: { params: any }) =>
-    updateMe(params)
-  );
+  const {
+    mutate: updateProfile,
+    isLoading: isSaving,
+  } = useMutation(({ params }: { params: any }) => updateMe(params));
 
   const onSubmit = (data) => {
     if (data.avatar && !data.profilePhotoPath) {
@@ -156,6 +164,7 @@ const Profile = () => {
                         cancelAction={() => setEditMode(false)}
                         editAction={() => setEditMode(true)}
                         disabled={!editMode}
+                        isSaving={isSaving || uploadingImages}
                       />
                       <div className="shadow sm:rounded-md sm:overflow-hidden">
                         <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
