@@ -9,7 +9,7 @@ import { uploadImages } from '@/hooks/images';
 
 import Label from './Label';
 
-const UploadImage = ({ disabled, name, model }) => {
+const UploadImage = ({ disabled = false, name, model }) => {
   const { register, watch, setValue } = useFormContext();
   const [newImage, setNewImage] = useState<boolean>(false);
 

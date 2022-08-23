@@ -15,7 +15,7 @@ import { useAuth } from '@/hooks/auth';
 const Register = () => {
   const { register } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/dashboard',
+    redirectIfAuthenticated: '/',
   });
 
   const [name, setName] = useState('');

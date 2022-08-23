@@ -1,11 +1,13 @@
-import Image from 'next/image';
-
-import Section from '@/components/ui/Section';
-import { DEFAULT_IMAGE } from '@/constants/common';
-import Link from 'next/link';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { ClockIcon } from '@heroicons/react/outline';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { AdminPermissions } from '@/components/modules/common/Permissions';
+import Section from '@/components/ui/Section';
+import { DEFAULT_IMAGE } from '@/constants/common';
+import { useAuth } from '@/hooks/auth';
+import { ClockIcon, PencilAltIcon, PencilIcon } from '@heroicons/react/outline';
 
 const OtherNews = ({ articles }) => {
   return (
@@ -52,6 +54,15 @@ const OtherNews = ({ articles }) => {
                   )}
                 </span>
               </div>
+              <AdminPermissions>
+                <div className="absolute top-0 right-0 px-2 py-2 flex flex-col gap-4">
+                  <Link href={`/dashboard/posts/${article.slug}`}>
+                    <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                      <PencilIcon className="w-5 h-5" />
+                    </a>
+                  </Link>
+                </div>
+              </AdminPermissions>
             </div>
           ))}
         </div>

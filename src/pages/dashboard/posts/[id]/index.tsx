@@ -7,6 +7,8 @@ import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import format from 'date-fns/format';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import Image from 'next/future/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -21,13 +23,17 @@ import FormHeader from '@/components/ui/FormHeader';
 import Input from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
+import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
-import { postUpdate, usePost } from '@/hooks/posts';
-import { useSearchTitle } from '@/hooks/titles';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { usePost } from '@/hooks/posts';
+import { useSearchTitle } from '@/hooks/titles';
+import { postUpdate } from '@/services/posts';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+dayjs.extend(utc);
 
 const UpdatePost = () => {
   const router = useRouter();
@@ -87,6 +93,8 @@ const UpdatePost = () => {
     setValue('postponedTo', new Date(post?.postponedTo));
   }, [post, setValue]);
 
+  const postponed = watch('postponedTo');
+
   useEffect(() => {
     if (post) {
       resetPostInfo();
@@ -112,6 +120,9 @@ const UpdatePost = () => {
 
   const onSubmit = (data) => {
     const id = post?.id;
+    const postponed = data.postponedTo
+      ? dayjs(data.postponedTo).utc().format('DD-MM-YYYY HH:mm')
+      : dayjs().utc().format('DD-MM-YYYY HH:mm');
     const params = {
       title: data.title,
       content: data.content,
@@ -120,7 +131,7 @@ const UpdatePost = () => {
       tagId: data.tags,
       titleId: data.titleId,
       categoryId: data.categoryId.value,
-      postponedTo: format(new Date(data.postponedTo), 'yyy-MM-dd HH:mm:ss'),
+      postponedTo: postponed,
     };
 
     updatePost(
@@ -140,13 +151,11 @@ const UpdatePost = () => {
   return (
     <AppLayout
       header={
-        <>
-          <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-            Update Post
-          </h2>
-          {/* Validation Errors */}
-          <Errors errors={Object.values(errors)} />
-        </>
+        <SectionHeader
+          backlink="/dashboard/posts"
+          text="Edición de Articulo"
+          errors={errors}
+        />
       }
     >
       <Head>
@@ -210,11 +219,14 @@ const UpdatePost = () => {
                 </div>
               </div>
               <div className="w-4/12">
-                <div className="mb-4 flex flex-col gap-2 datepicker-box">
-                  <Label htmlFor="description">Posponer hasta:</Label>
+                <div className="mb-4 flex flex-col gap-3 datepicker-box">
+                  <Label htmlFor="description">
+                    Posponer hasta(Hora Local):
+                  </Label>
                   <DateTimePicker
                     onChange={(value) => setValue('postponedTo', value)}
                     value={watch('postponedTo')}
+                    format="dd-MM-yyyy hh:mm a"
                     calendarIcon={
                       <span className="text-orange-400">
                         <CalendarIcon className="w-6 h-6" />
@@ -227,6 +239,14 @@ const UpdatePost = () => {
                     }
                     disabled={!editMode}
                   />
+
+                  <span className="text-sm font-bold">
+                    {`Hora del Server: ${
+                      postponed
+                        ? dayjs(postponed).utc().format('DD-MM-YYYY hh:mm a')
+                        : ''
+                    }`}
+                  </span>
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
                   <Label htmlFor="description">Categoria</Label>

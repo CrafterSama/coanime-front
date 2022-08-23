@@ -152,14 +152,14 @@ const ShowArticle = ({ slug, articleData }) => {
   );
 };
 
-export function getStaticPaths() {
+/*export function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
   };
-}
+}*/
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const { slug } = context.params;
   const response = await getArticleData(slug as string);
 

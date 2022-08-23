@@ -3,6 +3,7 @@ import Image from 'next/future/image';
 import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
+import { DEFAULT_IMAGE } from '@/constants/common';
 
 export const headers = [
   {
@@ -13,7 +14,7 @@ export const headers = [
         <div className="w-5/12 flex items-center">
           <Image
             className="rounded-lg w-full h-3/4 min-h-[90px]"
-            src={row.image}
+            src={row.image ?? DEFAULT_IMAGE}
             alt={row.title}
             loading="lazy"
             width="100%"
@@ -37,12 +38,12 @@ export const headers = [
     headerClassName: 'w-72',
   },
   {
-    name: 'Visible en',
+    name: 'Visible el',
     accessor: (row: any) => row,
     cell: (row) => (
       <div className="w-40">
         <span className="text-sm text-gray-700 mr-2">
-          {dayjs(row.postponed_to).format('DD/MM/YYYY HH:mm a')}
+          {dayjs(row.postponedTo).format('DD/MM/YYYY hh:mm a')}
         </span>
       </div>
     ),

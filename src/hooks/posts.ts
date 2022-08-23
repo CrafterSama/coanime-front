@@ -3,9 +3,15 @@ import { useQuery } from 'react-query';
 import axios from '@/lib/axios';
 import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
 
-export const usePosts = () => {
+export const usePosts = ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
   return useQuery(['posts'], async () => {
-    const response = await httpClient.get(`posts`);
+    const response = await httpClient.get(`posts-dashboard`, { params });
     return response.data;
   });
 };
@@ -17,8 +23,12 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const postUpdate = async (id: string | string[], params: any) =>
-  await httpClient.put(`posts/${id}`, params);
+export const useGetArticle = (slug: string) => {
+  return useQuery(['useArticle', slug], async () => {
+    const response = await httpClientExternal.get(`articles/${slug}`);
+    return response.data;
+  });
+};
 
 export const imageUpload = async (files, model) => {
   const formData = new FormData();
