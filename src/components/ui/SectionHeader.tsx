@@ -9,12 +9,14 @@ type SectionHeaderProps = {
   backlink: string;
   text: string;
   errors?: any;
+  rightElement?: React.ReactElement | string;
 };
 
 const SectionHeader: FC<SectionHeaderProps> = ({
   backlink,
   text,
   errors = {},
+  rightElement = null,
 }) => (
   <div className="flex flex-row gap-4 justify-between items-center">
     <div className="flex flex-col gap-2">
@@ -32,6 +34,7 @@ const SectionHeader: FC<SectionHeaderProps> = ({
       </div>
       <Errors errors={Object.values(errors)} />
     </div>
+    {rightElement}
   </div>
 );
 

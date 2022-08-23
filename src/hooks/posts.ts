@@ -3,9 +3,15 @@ import { useQuery } from 'react-query';
 import axios from '@/lib/axios';
 import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
 
-export const usePosts = () => {
+export const usePosts = ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
   return useQuery(['posts'], async () => {
-    const response = await httpClient.get(`posts-dashboard`);
+    const response = await httpClient.get(`posts-dashboard`, { params });
     return response.data;
   });
 };

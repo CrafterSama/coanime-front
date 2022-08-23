@@ -6,18 +6,15 @@ import { useMutation, useQueryClient } from 'react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
-import format, { formatISO, formatISO9075 } from 'date-fns';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import Errors from '@/components/ui/Errors';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
 import Input from '@/components/ui/Input';
@@ -28,7 +25,6 @@ import UploadImage from '@/components/ui/UploadImage';
 import { useCategoriesList } from '@/hooks/categories';
 import { useSearchTitle } from '@/hooks/titles';
 import { postCreate } from '@/services/posts';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import SectionHeader from '@/components/ui/SectionHeader';
 

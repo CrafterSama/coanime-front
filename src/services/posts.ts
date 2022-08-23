@@ -21,3 +21,14 @@ export const getArticlesData = async ({ page = 1 }) => {
   const response = await httpClientExternal.get(`articles`, { params });
   return response;
 };
+
+export const getPosts = async ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClient.get(`posts-dashboard`, { params });
+  return response.data;
+};

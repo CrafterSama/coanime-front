@@ -1,10 +1,10 @@
-import { SpinerIcon } from '@/components/icons';
+import { CgSpinner } from 'react-icons/cg';
 
 const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
   return (
     <div className="flex flex-col justify-center content-center">
       {!showFancySpiner && (
-        <SpinerIcon
+        <CgSpinner
           className={`animate-spin w-[${size}px] h-[${size}px] text-orange-500`}
         />
       )}
