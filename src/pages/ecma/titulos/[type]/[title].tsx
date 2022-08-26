@@ -217,12 +217,6 @@ export async function getStaticProps({ params }) {
     randomImage = error.response.data.message.text;
   }
 
-  if (res?.status === 404 || res?.status === 500) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
       type,
