@@ -56,6 +56,7 @@ const Navigation = ({ user }) => {
                 {/* Authentication */}
                 <DropdownLink
                   href="/dashboard/profile"
+                  scroll={true}
                   icon={<UserCircleIcon className="h-6 w-6 text-gray-400" />}
                 >
                   Profile

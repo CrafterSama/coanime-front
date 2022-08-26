@@ -1,31 +1,23 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { format, isBefore } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { getTitle } from '@/services/titles';
 import { useRandomImageByTitle } from '@/hooks/random-images';
-import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
+import { getRandomImageByTitle, getTitle } from '@/services/titles';
 
-const Titles = ({ title, titleData, errors }) => {
+const Titles = ({ titleData, randomImage, errors }) => {
   const router = useRouter();
-  const [randomImage, setRandomImage] = useState('');
-  const { data = {}, isLoading } = useRandomImageByTitle(title);
-
-  useEffect(() => {
-    if (title) {
-      setRandomImage(data.url);
-    }
-  }, [title]);
 
   useEffect(() => {
     if (errors) {
@@ -60,9 +52,11 @@ const Titles = ({ title, titleData, errors }) => {
                         randomImage?.image ? '' : 'blur'
                       } w-full h-full`}
                       src={
-                        randomImage?.image ??
-                        titleData?.result?.images?.name ??
-                        DEFAULT_IMAGE
+                        randomImage?.image
+                          ? randomImage?.image
+                          : titleData?.result?.images?.name
+                          ? titleData?.result?.images?.name
+                          : DEFAULT_IMAGE
                       }
                       alt={titleData?.result?.name}
                       layout="fill"
@@ -204,16 +198,23 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ request, response, params }) {
+export async function getStaticProps({ params }) {
   let res = null;
   let errors = null;
   let titleData = null;
+  let randomImage = null;
   const { type, title } = params;
   try {
     res = await getTitle({ type, title });
     titleData = res.data;
   } catch (error) {
     errors = error.response.data.message.text;
+  }
+
+  try {
+    randomImage = await getRandomImageByTitle({ title });
+  } catch (error) {
+    randomImage = error.response.data.message.text;
   }
 
   if (res?.status === 404 || res?.status === 500) {
@@ -227,6 +228,7 @@ export async function getStaticProps({ request, response, params }) {
       type,
       title,
       titleData,
+      randomImage,
       errors,
       revalidate: 5 * 60,
     },

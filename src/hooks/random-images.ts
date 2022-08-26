@@ -6,10 +6,14 @@ import { httpClientExternal } from '@/lib/http';
 
 export const useRandomImageByTitle = (title) => {
   return useQuery(['randomImageByTitle', title], async () => {
-    const { data } = await httpClientExternal.get(
-      `random-image-title/${title}`
-    );
-    return data;
+    try {
+      const { data } = await httpClientExternal.get(
+        `random-image-title/${title}`
+      );
+      return data;
+    } catch (error) {
+      return error.response.data.message.text;
+    }
   });
 };
 
