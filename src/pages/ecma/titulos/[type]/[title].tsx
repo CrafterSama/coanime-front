@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { format, isBefore } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
@@ -9,9 +11,29 @@ import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo'
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { getRandomImageByTitle, getTitle } from '@/services/titles';
+import { getTitle } from '@/services/titles';
+import { useRandomImageByTitle } from '@/hooks/random-images';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
-const Titles = ({ titleData, randomImage }) => {
+const Titles = ({ title, titleData, errors }) => {
+  const router = useRouter();
+  const [randomImage, setRandomImage] = useState('');
+  const { data = {}, isLoading } = useRandomImageByTitle(title);
+
+  useEffect(() => {
+    if (title) {
+      setRandomImage(data.url);
+    }
+  }, [title]);
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+      router.push('/404');
+    }
+  }, [errors]);
+
   return (
     <>
       {titleData && (
@@ -182,35 +204,21 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const params = context.params;
+export async function getStaticProps({ request, response, params }) {
+  let res = null;
+  let errors = null;
+  let titleData = null;
   const { type, title } = params;
-  const response = await getTitle({
-    type,
-    title,
-  });
-
-  const randomImage = await getRandomImageByTitle({ title });
-
-  const titleData = response.data;
-
-  if (response.status === 404) {
-    return {
-      redirect: {
-        destination: '/404',
-        permanent: false,
-        // statusCode: 301
-      },
-    };
+  try {
+    res = await getTitle({ type, title });
+    titleData = res.data;
+  } catch (error) {
+    errors = error.response.data.message.text;
   }
 
-  if (response.status === 500) {
+  if (res?.status === 404 || res?.status === 500) {
     return {
-      redirect: {
-        destination: '/500',
-        permanent: false,
-        // statusCode: 301
-      },
+      notFound: true,
     };
   }
 
@@ -219,7 +227,7 @@ export async function getStaticProps(context) {
       type,
       title,
       titleData,
-      randomImage,
+      errors,
       revalidate: 5 * 60,
     },
   };

@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
-import format from 'date-fns/format';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Image from 'next/future/image';
@@ -17,7 +16,6 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import Errors from '@/components/ui/Errors';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
 import Input from '@/components/ui/Input';

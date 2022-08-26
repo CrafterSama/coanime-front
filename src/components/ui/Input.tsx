@@ -37,7 +37,7 @@ const Input = ({
           id={name}
           name={name}
           disabled={disabled}
-          className={`w-full rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 ${
+          className={`w-full rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:outline-0 focus:ring focus:ring-orange-200 focus:ring-opacity-50 ${
             left ? 'pl-10 py-2 pr-2' : 'p-2'
           } ${className} ${errors ? 'border-red-400' : ''}`}
           {...props}

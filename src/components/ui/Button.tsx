@@ -15,12 +15,12 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const classes = cn(
-    'font-semibold py-2 px-4 rounded-lg transition-colors border-2',
+    'font-semibold py-2 px-4 rounded-lg transition-colors border',
     {
       'text-white bg-orange-500 border-orange-500': variant === 'solid',
-      'text-orange-500 bg-orange-100 border-orange-500 hover:bg-orange-200':
+      'text-orange-500 bg-orange-100 hover:bg-orange-200':
         variant === 'outline',
-      'text-orange-500 bg-transparent border-transparent hover:border-orange-500':
+      'text-orange-500 bg-transparent border border-transparent hover:border-orange-500':
         variant === 'text',
     }
   );

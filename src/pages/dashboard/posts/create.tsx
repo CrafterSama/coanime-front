@@ -19,6 +19,7 @@ import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
 import Input from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
+import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
@@ -26,7 +27,6 @@ import { useCategoriesList } from '@/hooks/categories';
 import { useSearchTitle } from '@/hooks/titles';
 import { postCreate } from '@/services/posts';
 import { yupResolver } from '@hookform/resolvers/yup';
-import SectionHeader from '@/components/ui/SectionHeader';
 
 dayjs.extend(utc);
 
@@ -35,7 +35,6 @@ const CreatePost = () => {
   const { data = {} } = useCategoriesList();
   const { categories: categoriesData } = data;
   const queryClient = useQueryClient();
-  const [editMode, setEditMode] = useState<boolean>(false);
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
 
@@ -118,8 +117,6 @@ const CreatePost = () => {
       postponedTo: postponed,
     };
 
-    console.log('🚀 ~ file: create.tsx ~ line 123 ~ onSubmit ~ params', params);
-
     createPost(
       { params },
       {
@@ -151,8 +148,8 @@ const CreatePost = () => {
         <FormWithContext methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <FormHeader
             title="Nuevo Post"
-            cancelAction={() => setEditMode(false)}
-            editAction={() => setEditMode(true)}
+            cancelAction={() => router.push('/dashboard/posts')}
+            editAction={() => {}}
           />
           <div className="p-4 flex flex-row gap-4 rounded-b-lg">
             <div className="w-8/12">
@@ -193,9 +190,7 @@ const CreatePost = () => {
             </div>
             <div className="w-4/12">
               <div className="mb-4 flex flex-col gap-3 datepicker-box">
-                <Label htmlFor="description">
-                  Posponer hasta(Hora del Server):
-                </Label>
+                <Label htmlFor="description">Posponer hasta(Hora Local):</Label>
                 <DateTimePicker
                   onChange={(value) => setValue('postponedTo', value)}
                   minDate={new Date()}
