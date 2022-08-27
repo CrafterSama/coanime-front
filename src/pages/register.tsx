@@ -1,18 +1,21 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
-import AuthCard from '@/components/AuthCard';
-import AuthValidationErrors from '@/components/AuthValidationErrors';
-import Button from '@/components/Button';
-import GuestLayout from '@/components/Layouts/GuestLayout';
-import Input from '@/components/Input';
-import Label from '@/components/Label';
-import Link from 'next/link';
-import { useAuth } from '@/hooks/auth';
 import { useState } from 'react';
+
+import Head from 'next/head';
+import Link from 'next/link';
+
+import GuestLayout from '@/components/Layouts/GuestLayout';
+import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
+import AuthCard from '@/components/ui/AuthCard';
+import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
+import Button from '@/components/ui/Button';
+import { InputWithoutContext } from '@/components/ui/Input';
+import Label from '@/components/ui/Label';
+import { useAuth } from '@/hooks/auth';
 
 const Register = () => {
   const { register } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/dashboard',
+    redirectIfAuthenticated: '/',
   });
 
   const [name, setName] = useState('');
@@ -21,7 +24,7 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const submitForm = event => {
+  const submitForm = (event) => {
     event.preventDefault();
 
     register({
@@ -35,6 +38,9 @@ const Register = () => {
 
   return (
     <GuestLayout>
+      <Head>
+        <title>Coanime.net - register</title>
+      </Head>
       <AuthCard
         logo={
           <Link href="/">
@@ -42,7 +48,8 @@ const Register = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         {/* Validation Errors */}
         <AuthValidationErrors className="mb-4" errors={errors} />
 
@@ -51,12 +58,13 @@ const Register = () => {
           <div>
             <Label htmlFor="name">Name</Label>
 
-            <Input
+            <InputWithoutContext
               id="name"
               type="text"
+              name="name"
               value={name}
               className="block mt-1 w-full"
-              onChange={event => setName(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               required
               autoFocus
             />
@@ -66,12 +74,13 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="email">Email</Label>
 
-            <Input
+            <InputWithoutContext
               id="email"
               type="email"
+              name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
             />
           </div>
@@ -80,12 +89,13 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="password"
               type="password"
+              name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
               required
               autoComplete="new-password"
             />
@@ -95,24 +105,26 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <Input
+            <InputWithoutContext
               id="passwordConfirmation"
               type="password"
+              name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={event => setPasswordConfirmation(event.target.value)}
+              onChange={(event) => setPasswordConfirmation(event.target.value)}
               required
             />
           </div>
 
-          <div className="flex items-center justify-end mt-4">
-            <Link href="/login">
-              <a className="underline text-sm text-gray-600 hover:text-gray-900">
-                Already registered?
-              </a>
-            </Link>
-
-            <Button className="ml-4">Register</Button>
+          <div className="flex flex-col items-center justify-end mt-4 gap-4">
+            <Button>Register</Button>
+            <div className="flex w-full justify-center">
+              <Link href="/login">
+                <a className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
+                  Already registered?
+                </a>
+              </Link>
+            </div>
           </div>
         </form>
       </AuthCard>

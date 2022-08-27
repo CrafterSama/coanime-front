@@ -1,10 +1,12 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
-import AuthCard from '@/components/AuthCard';
-import Button from '@/components/Button';
-import GuestLayout from '@/components/Layouts/GuestLayout';
-import Link from 'next/link';
-import { useAuth } from '@/hooks/auth';
 import { useState } from 'react';
+
+import Link from 'next/link';
+
+import GuestLayout from '@/components/Layouts/GuestLayout';
+import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
+import AuthCard from '@/components/ui/AuthCard';
+import Button from '@/components/ui/Button';
+import { useAuth } from '@/hooks/auth';
 
 const VerifyEmail = () => {
   const { logout, resendEmailVerification } = useAuth({
@@ -22,7 +24,8 @@ const VerifyEmail = () => {
               <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
             </a>
           </Link>
-        }>
+        }
+      >
         <div className="mb-4 text-sm text-gray-600">
           Thanks for signing up! Before getting started, could you verify your
           email address by clicking on the link we just emailed to you? If you
@@ -44,7 +47,8 @@ const VerifyEmail = () => {
           <button
             type="button"
             className="underline text-sm text-gray-600 hover:text-gray-900"
-            onClick={logout}>
+            onClick={logout}
+          >
             Logout
           </button>
         </div>

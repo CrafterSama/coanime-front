@@ -1,17 +1,53 @@
-const NotFoundPage = () => (
-    <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-        <div className="max-w-xl mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center pt-8 sm:justify-start sm:pt-0">
-                <div className="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
-                    404
-                </div>
+import { useEffect } from 'react';
 
-                <div className="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                    Not Found
-                </div>
+import Head from 'next/head';
+import Link from 'next/link';
+
+import WebLayout from '@/components/Layouts/WebLayout';
+
+const NotFoundPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <WebLayout>
+      <Head>
+        <title>404 - Not Found</title>
+      </Head>
+      <div className="relative flex items-top justify-center min-h-screen bg-white sm:items-center sm:pt-0">
+        <div className="container">
+          <div className="text-center w-full flex flex-col gap-4 justify-center items-center text-lg">
+            <div className="relative w-[430px] h-[380px]">
+              <img src="/images/opps.gif" alt="404" className="w-full h-auto" />
             </div>
+            <h1 className="text-2xl">404 | Not Found</h1>
+            <div className="container">
+              <h3>
+                El Contenido que estas buscando no existe o no esta guardado aun
+                en nuestra Base de Datos
+              </h3>
+              <hr />
+              <p>
+                Regresa al{' '}
+                <Link href="/">
+                  <a className="text-orange-400 font-bold">Inicio</a>
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-)
+      </div>
+    </WebLayout>
+  );
+};
 
-export default NotFoundPage
+export function getStaticProps() {
+  return {
+    props: {
+      revalidate: 5 * 60,
+    },
+  };
+}
+
+export default NotFoundPage;

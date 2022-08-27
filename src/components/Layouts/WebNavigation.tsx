@@ -1,0 +1,255 @@
+import { useState } from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { Logotype } from '@/components/ui/ApplicationLogo';
+import Dropdown from '@/components/ui/Dropdown';
+import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
+import NavLink from '@/components/ui/NavLink';
+import ResponsiveNavLink, {
+  ResponsiveNavButton,
+} from '@/components/ui/ResponsiveNavLink';
+import { useAuth } from '@/hooks/auth';
+import { hasRole } from '@/utils/common';
+import { DEFAULT_IMAGE } from '@/constants/common';
+import { FaChevronDown } from 'react-icons/fa';
+import { AiOutlineDashboard } from 'react-icons/ai';
+import { LogoutIcon, TemplateIcon } from '@heroicons/react/outline';
+
+const Navigation = ({ user }) => {
+  const router = useRouter();
+
+  const { logout } = useAuth();
+
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <nav
+        className={`${
+          router?.asPath?.includes('ecma') && 'border-b border-gray-200'
+        }`}
+      >
+        {/* Primary Navigation Menu */}
+        <div className={`max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8`}>
+          <div className="flex justify-between h-16">
+            <div className="flex">
+              {/* Logo */}
+              <div className="flex-shrink-0 flex items-center">
+                <Link href="/">
+                  <a className="relative w-48">
+                    <Logotype
+                      logoColor="#FE6A00"
+                      lettersColor="#333333"
+                      className="h-15"
+                    />
+                  </a>
+                </Link>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <NavLink
+                  href="/ecma/titulos"
+                  active={router.pathname.includes('/ecma')}
+                >
+                  Enciclopedia
+                </NavLink>
+                <NavLink
+                  href="/eventos"
+                  active={router.pathname.includes('/eventos')}
+                >
+                  Eventos
+                </NavLink>
+              </div>
+            </div>
+
+            {/* Settings Dropdown */}
+            <div className="hidden sm:flex sm:items-center sm:ml-6 z-10">
+              {user ? (
+                <Dropdown
+                  align="right"
+                  width={48}
+                  trigger={
+                    <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                      <div className="flex flex-row justify-start items-center gap-4">
+                        <Image
+                          src={user?.profilePhotoPath ?? DEFAULT_IMAGE}
+                          alt={user?.name}
+                          className="rounded-full w-8 h-8"
+                          width={48}
+                          height={48}
+                        />
+                        <span>{user?.name}</span>
+                      </div>
+
+                      <div className="ml-1">
+                        <FaChevronDown className="h-3 w-3 text-gray-400" />
+                      </div>
+                    </button>
+                  }
+                >
+                  {/* Authentication */}
+                  {(hasRole(user?.roles, 'administrator') ||
+                    hasRole(user?.roles, 'moderator')) && (
+                    <DropdownLink
+                      href="/dashboard"
+                      icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}
+                    >
+                      Dashboard
+                    </DropdownLink>
+                  )}
+                  <DropdownButton
+                    onClick={logout}
+                    icon={<LogoutIcon className="h-6 w-6 text-gray-700" />}
+                  >
+                    Logout
+                  </DropdownButton>
+                </Dropdown>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <a className="text-sm font-medium text-gray-700 underline">
+                      Login
+                    </a>
+                  </Link>
+
+                  <Link href="/register">
+                    <a className="ml-4 text-sm font-medium text-gray-700 underline">
+                      Register
+                    </a>
+                  </Link>
+                </>
+              )}
+            </div>
+
+            {/* Hamburger */}
+            <div className="-mr-2 flex items-center sm:hidden">
+              <button
+                onClick={() => setOpen((open) => !open)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+              >
+                <svg
+                  className="h-6 w-6"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  {open ? (
+                    <path
+                      className="inline-flex"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      className="inline-flex"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Responsive Navigation Menu */}
+        {open && (
+          <div className="block sm:hidden">
+            <div className="pt-2 pb-3 space-y-1">
+              <ResponsiveNavLink
+                href="/ecma/titulos"
+                active={router.pathname.includes('/ecma/titulos')}
+              >
+                Enciclopedia
+              </ResponsiveNavLink>
+            </div>
+
+            {/* Responsive Settings Options */}
+            <div className="pt-4 pb-1 border-t border-gray-200">
+              <div className="flex items-center px-4">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-10 w-10 fill-current text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </div>
+
+                <div className="ml-3">
+                  <div className="font-medium text-base text-gray-800">
+                    {user?.name}
+                  </div>
+                  <div className="font-medium text-sm text-gray-500">
+                    {user?.email}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 space-y-1">
+                {/* Authentication */}
+                <ResponsiveNavButton onClick={logout}>
+                  Logout
+                </ResponsiveNavButton>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+      {router?.asPath?.includes('ecma') && (
+        <div className="w-full bg-white sub-navbar">
+          <div className="max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="space-x-8 sm:ml-10 sm:flex">
+              <NavLink
+                className="py-4"
+                href="/ecma/titulos"
+                active={router.pathname?.includes('/ecma/titulos')}
+              >
+                Títulos
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/ecma/personas"
+                active={router.pathname?.includes('/ecma/personas')}
+              >
+                Personas
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/ecma/revistas"
+                active={router.pathname?.includes('/ecma/revistas')}
+              >
+                Revistas
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/ecma/entidades"
+                active={router.pathname?.includes('/ecma/entidades')}
+              >
+                Entidades
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Navigation;

@@ -1,0 +1,23 @@
+import { useQuery } from 'react-query';
+
+import httpClient, { httpClientAuth } from '@/lib/http';
+
+export const useMagazines = ({ page = '' }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  return useQuery(['magazines', page], async () => {
+    const response = await httpClient.get(`magazine`, params);
+    return response.data;
+  });
+};
+
+export const useMagazine = (slug: string) => {
+  return useQuery(['magazine', slug], async () => {
+    const response = await httpClient.get(`magazines/${slug}`);
+    return response.data;
+  });
+};
