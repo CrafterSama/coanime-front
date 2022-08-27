@@ -196,17 +196,18 @@ const Titles = ({ titleData, randomImage, errors }) => {
 };
 
 export async function getStaticPaths() {
-  const response = await getAllTitles();
-  const paths = response?.result?.map((title) => ({
-    params: {
-      type: title?.type?.slug,
-      title: title?.slug,
-    },
-  }));
+  /*const response = await getAllTitles();
+  const paths =
+    response?.result?.map((title) => ({
+      params: {
+        type: title?.type?.slug,
+        title: title?.slug,
+      },
+    })) || [];*/
 
   return {
-    paths,
-    fallback: false,
+    paths: [],
+    fallback: true,
   };
 }
 
