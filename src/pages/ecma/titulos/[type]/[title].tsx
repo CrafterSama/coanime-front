@@ -20,8 +20,13 @@ import {
   getTitle,
 } from '@/services/titles';
 
-const Titles = ({ titleData, randomImage, errors }) => {
+const Titles = ({ title, titleData, errors }) => {
   const router = useRouter();
+
+  const {
+    data: randomImage = {},
+    isLoading: imageLoading,
+  } = useRandomImageByTitle(title);
 
   useEffect(() => {
     if (errors) {
@@ -51,22 +56,24 @@ const Titles = ({ titleData, randomImage, errors }) => {
               <Section>
                 <div className="title-header">
                   <figure className="title-header-image relative">
-                    <Image
-                      className={`${
-                        randomImage?.image ? '' : 'blur'
-                      } w-full h-full`}
-                      src={
-                        randomImage?.image
-                          ? randomImage?.image
-                          : titleData?.result?.images?.name
-                          ? titleData?.result?.images?.name
-                          : DEFAULT_IMAGE
-                      }
-                      alt={titleData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
-                    />
+                    {imageLoading && (
+                      <Image
+                        className={`${
+                          randomImage?.image ? '' : 'blur'
+                        } w-full h-full`}
+                        src={
+                          randomImage?.image
+                            ? randomImage?.image
+                            : titleData?.result?.images?.name
+                            ? titleData?.result?.images?.name
+                            : DEFAULT_IMAGE
+                        }
+                        alt={titleData?.result?.name}
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                      />
+                    )}
                   </figure>
                   <div className="overlayer"></div>
                 </div>
@@ -215,7 +222,6 @@ export async function getStaticProps({ params }) {
   let res = null;
   let errors = null;
   let titleData = null;
-  let randomImage = null;
   const { type, title } = params;
   try {
     res = await getTitle({ type, title });
@@ -224,18 +230,11 @@ export async function getStaticProps({ params }) {
     errors = error.response.data.message.text;
   }
 
-  try {
-    randomImage = await getRandomImageByTitle({ title });
-  } catch (error) {
-    randomImage = error.response.data.message.text;
-  }
-
   return {
     props: {
       type,
       title,
       titleData,
-      randomImage,
       errors,
       revalidate: 5 * 60,
     },
