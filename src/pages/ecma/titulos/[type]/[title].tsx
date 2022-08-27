@@ -191,14 +191,14 @@ const Titles = ({ titleData, randomImage, errors }) => {
   );
 };
 
-export async function getStaticPaths() {
+/*export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
   };
-}
+}*/
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   let res = null;
   let errors = null;
   let titleData = null;
