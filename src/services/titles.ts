@@ -3,8 +3,8 @@ import { httpClientExternal } from '@/lib/http';
 import { getJikanAnime, getJikanManga } from './jikan';
 
 export const getAllTitles = async () => {
-  const response = await httpClientExternal.get(`titles`);
-  return response;
+  const response = await httpClientExternal.get(`get-titles`);
+  return response.data;
 };
 
 export const getTitles = async ({ page = 1 }) => {

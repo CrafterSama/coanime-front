@@ -14,7 +14,11 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useRandomImageByTitle } from '@/hooks/random-images';
-import { getRandomImageByTitle, getTitle } from '@/services/titles';
+import {
+  getAllTitles,
+  getRandomImageByTitle,
+  getTitle,
+} from '@/services/titles';
 
 const Titles = ({ titleData, randomImage, errors }) => {
   const router = useRouter();
@@ -191,14 +195,22 @@ const Titles = ({ titleData, randomImage, errors }) => {
   );
 };
 
-/*export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true,
-  };
-}*/
+export async function getStaticPaths() {
+  const response = await getAllTitles();
+  const paths = response?.result?.map((title) => ({
+    params: {
+      type: title?.type?.slug,
+      title: title?.slug,
+    },
+  }));
 
-export async function getServerSideProps({ params }) {
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
   let res = null;
   let errors = null;
   let titleData = null;
