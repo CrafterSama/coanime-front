@@ -135,7 +135,7 @@ const UpdateTitle = ({ id }) => {
           onSavedSuccess(response);
           queryClient.invalidateQueries(['title']);
         },
-        onError: (error) => {
+        onError: (error: { response }) => {
           toast.error(error.response.message);
         },
       }
