@@ -86,7 +86,7 @@ const UpdatePost = () => {
     );
     setValue('categoryId', {
       value: post?.categories?.id,
-      label: post.categories.name,
+      label: post?.categories?.name,
     });
     setValue('postponedTo', new Date(post?.postponedTo));
   }, [post, setValue]);
@@ -274,6 +274,7 @@ const UpdatePost = () => {
                   <Label>Tags</Label>
                   <div className={`tags-box ${!editMode && 'disabled'}`}>
                     <TagsInput
+                      seprators={[',', 'Enter']}
                       value={post?.tags?.map((tag) => tag.name)}
                       onChange={(tags) => setValue('tags', tags)}
                       disabled={!editMode}

@@ -7,7 +7,12 @@ import { AdminPermissions } from '@/components/modules/common/Permissions';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
-import { ClockIcon, PencilAltIcon, PencilIcon } from '@heroicons/react/outline';
+import {
+  ClockIcon,
+  PencilAltIcon,
+  PencilIcon,
+  UserCircleIcon,
+} from '@heroicons/react/outline';
 
 const OtherNews = ({ articles }) => {
   return (
@@ -26,7 +31,7 @@ const OtherNews = ({ articles }) => {
                 layout="fill"
               />
               <div className="overlayer"></div>
-              <div className="absolute bottom-0 left-0 px-4 py-4 flex flex-col gap-4">
+              <div className="absolute bottom-0 left-0 px-4 py-4 flex flex-col gap-1">
                 <div className="categories">
                   <Link href={`/categorias/${article.categories.slug}`}>
                     <a>{article.categories.name}</a>
@@ -39,6 +44,9 @@ const OtherNews = ({ articles }) => {
                     </a>
                   </Link>
                 </div>
+                <span className="text-gray-200 flex flex-row gap-2">
+                  <UserCircleIcon className="w-6 h-6" /> {article.users.name}
+                </span>
                 <span className="text-gray-200 flex flex-row gap-2">
                   <ClockIcon className="w-6 h-6" />
                   {format(

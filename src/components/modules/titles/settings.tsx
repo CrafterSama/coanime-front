@@ -3,6 +3,8 @@ import Image from 'next/future/image';
 import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
+import { DEFAULT_IMAGE } from '@/constants/common';
+import { LinkIcon } from '@heroicons/react/outline';
 
 export const headers = [
   {
@@ -11,11 +13,11 @@ export const headers = [
     cell: (row) => (
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
-          <Link href={`/dashboard/titles/${row?.slug}`}>
+          <Link href={`/dashboard/titles/${row?.id}`}>
             <a>
               <Image
                 className="rounded-lg w-full h-full"
-                src={row?.images.name}
+                src={row?.images?.name ?? DEFAULT_IMAGE}
                 alt={row?.name}
                 loading="lazy"
                 width="100%"
@@ -25,11 +27,18 @@ export const headers = [
           </Link>
         </div>
         <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
-          <Link href={`/dashboard/titles/${row?.slug}`}>
-            <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{row?.name}</h4>
-            </a>
-          </Link>
+          <div className="flex flex-row gap-2">
+            <Link href={`/dashboard/titles/${row?.id}`}>
+              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
+                <h4 className="text-sm">{row?.name}</h4>
+              </a>
+            </Link>
+            <Link href={`/ecma/titulos/${row?.type?.slug}/${row?.slug}`}>
+              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
+                <LinkIcon className="h-4 w-4" />
+              </a>
+            </Link>
+          </div>
           <p className="text-gray-600 text-xs">
             {strLimit(extractText(row?.sinopsis), 150)}
           </p>

@@ -21,6 +21,7 @@ type FormSelectProps = {
   errors?: string | Merge<FieldError, FieldErrorsImpl<DeepRequired<any>>>;
   name?: string;
   getOptionLabel?: any;
+  isClearable?: boolean;
 };
 
 const FormSelect = ({
@@ -36,6 +37,7 @@ const FormSelect = ({
   errors = null,
   name = '',
   getOptionLabel,
+  isClearable = true,
 }: FormSelectProps) => {
   const { control } = useFormContext();
 
@@ -70,7 +72,7 @@ const FormSelect = ({
             value={value}
             defaultValue={defaultValue}
             isSearchable
-            isClearable
+            isClearable={isClearable}
             isLoading={isLoading}
             options={options}
             onInputChange={onInputChange}

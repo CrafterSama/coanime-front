@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
@@ -34,7 +34,6 @@ const CreatePost = () => {
   const router = useRouter();
   const { data = {} } = useCategoriesList();
   const { categories: categoriesData } = data;
-  const queryClient = useQueryClient();
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
 
@@ -122,7 +121,6 @@ const CreatePost = () => {
       {
         onSuccess: (response) => {
           onSavedSuccess(response);
-          queryClient.invalidateQueries(['post']);
         },
         onError: (message) => {
           toast.error(`Error: ${message}`);

@@ -1,4 +1,4 @@
-import { httpClientExternal } from '@/lib/http';
+import httpClient, { httpClientExternal } from '@/lib/http';
 
 import { getJikanAnime, getJikanManga } from './jikan';
 
@@ -48,3 +48,9 @@ export const getRandomImageByTitle = async ({ title }) => {
   const { data } = await httpClientExternal.get(`random-image-title/${title}`);
   return data;
 };
+
+export const titleUpdate = async (id: string | string[], params: any) =>
+  await httpClient.put(`titles/${id}`, params);
+
+export const titleCreate = async (params: any) =>
+  await httpClient.post(`titles`, params);

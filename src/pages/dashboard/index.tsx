@@ -1,16 +1,13 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
 import AppLayout from '@/components/Layouts/AppLayout';
+import SectionHeader from '@/components/ui/SectionHeader';
+import { PlusIcon } from '@heroicons/react/outline';
 
 const Dashboard = () => {
   return (
-    <AppLayout
-      header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Dashboard
-        </h2>
-      }
-    >
+    <AppLayout header={<SectionHeader backlink="/" text="Dashboard" />}>
       <Head>
         <title>Coanime.net - Dashboard</title>
       </Head>

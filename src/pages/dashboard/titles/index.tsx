@@ -1,24 +1,38 @@
 import { useState } from 'react';
 
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/titles/settings';
 import Loading from '@/components/ui/Loading';
+import Paginator from '@/components/ui/Paginator';
+import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { useTitles } from '@/hooks/titles';
+import { PlusIcon } from '@heroicons/react/outline';
 
 const Titles = () => {
-  const [page, setPage] = useState('');
+  const router = useRouter();
+  const [page, setPage] = useState(1);
   const { data = {}, isLoading } = useTitles({ page });
   const { result, title, description } = data;
 
   return (
     <AppLayout
       header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Titles
-        </h2>
+        <SectionHeader
+          backlink="/dashboard"
+          text="Lista de Titulos"
+          rightElement={
+            <Link href={`/dashboard/titles/create`}>
+              <a className="font-semibold py-2 px-4 rounded-lg transition-colors border-2 text-orange-500 bg-orange-100 border-orange-500 hover:bg-orange-200 flex flex-row justify-center items-center gap-2">
+                <PlusIcon className="h-4 w-4" /> Crear
+              </a>
+            </Link>
+          }
+        />
       }
     >
       <Head>
@@ -35,11 +49,14 @@ const Titles = () => {
               </div>
             )}
             {result?.data && (
-              <Table columns={headers}>
-                {result?.data?.map((row) => (
-                  <Rows key={row.id} columns={headers} row={row} />
-                ))}
-              </Table>
+              <>
+                <Table columns={headers}>
+                  {result?.data?.map((row) => (
+                    <Rows key={row.id} columns={headers} row={row} />
+                  ))}
+                </Table>
+                <Paginator page={page} setPage={setPage} data={result} />
+              </>
             )}
           </div>
         </div>
