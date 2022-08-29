@@ -1,6 +1,6 @@
 {
   "name": "coanime-dashboard",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.1.25",
   "private": true,
   "scripts": {
     "devHttps": "node server.js",
