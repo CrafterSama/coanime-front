@@ -73,7 +73,7 @@ const CreatePost = () => {
     register('title');
     register('content');
     register('excerpt');
-    register('image');
+    setValue('image', '');
     register('tags');
     register('categoryId');
     register('postponedTo');
@@ -103,13 +103,12 @@ const CreatePost = () => {
     const postponed = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
       : dayjs().format('YYYY-MM-DD HH:mm:ss');
-    const image = data.image === '[object FileList]' && null;
 
     const params = {
       title: data.title,
       content: data.content,
       excerpt: data.excerpt,
-      image: image,
+      image: data.image,
       tagId: data.tags,
       titleId: data.titleId,
       categoryId: data.categoryId.value,
