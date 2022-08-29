@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Navigation, Pagination, A11y, Thumbs, EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/outline';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -27,7 +28,7 @@ const TopSlider = ({ relevants }) => (
           <SwiperSlide key={relevant.id}>
             <div className="flex relative min-h-screen">
               <Image
-                src={relevant.image}
+                src={relevant.image ?? DEFAULT_IMAGE}
                 alt={relevant.title}
                 className="w-full h-full"
                 objectFit="cover"
