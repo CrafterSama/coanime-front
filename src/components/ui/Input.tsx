@@ -67,7 +67,7 @@ export const InputWithoutContext = ({
     <div className="flex flex-col gap-2">
       <input
         disabled={disabled}
-        className={`${className} rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 p-2 w-full`}
+        className={`rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 p-2 w-full ${className}`}
         {...props}
       />
       {hint && (
