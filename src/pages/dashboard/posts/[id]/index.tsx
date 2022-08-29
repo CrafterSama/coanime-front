@@ -260,7 +260,7 @@ const UpdatePost = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Label>Imagen Principal del Post</Label>
                   <Image
-                    src={post?.image}
+                    src={post?.image ?? DEFAULT_IMAGE}
                     alt={post?.title}
                     className="w-full rounded-lg"
                   />

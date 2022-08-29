@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import Link from 'next/link';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { PlusIcon } from '@heroicons/react/outline';
 
 const Dashboard = () => {
   return (
