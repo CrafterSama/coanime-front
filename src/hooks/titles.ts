@@ -2,14 +2,18 @@ import { useQuery } from 'react-query';
 
 import httpClient, { httpClientExternal } from '@/lib/http';
 
-export const useTitles = ({ page = 1 }) => {
+export const useTitles = ({ page = 1, name }) => {
   const params = {};
 
   if (page) {
     params['page'] = page;
   }
 
-  return useQuery(['titles', page], async () => {
+  if (name) {
+    params['name'] = name;
+  }
+
+  return useQuery(['titles', page, name], async () => {
     const response = await httpClient.get(`titles`, { params });
     return response.data;
   });
