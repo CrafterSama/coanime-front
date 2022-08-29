@@ -11,12 +11,16 @@ import NavLink from '@/components/ui/NavLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
+import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { hasRole } from '@/utils/common';
-import { DEFAULT_IMAGE } from '@/constants/common';
-import { FaChevronDown } from 'react-icons/fa';
-import { AiOutlineDashboard } from 'react-icons/ai';
-import { LogoutIcon, TemplateIcon } from '@heroicons/react/outline';
+import {
+  LogoutIcon,
+  MenuIcon,
+  TemplateIcon,
+  XIcon,
+  ChevronDownIcon,
+} from '@heroicons/react/outline';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
@@ -86,7 +90,7 @@ const Navigation = ({ user }) => {
                       </div>
 
                       <div className="ml-1">
-                        <FaChevronDown className="h-3 w-3 text-gray-400" />
+                        <ChevronDownIcon className="h-3 w-3 text-gray-400" />
                       </div>
                     </button>
                   }
@@ -131,86 +135,70 @@ const Navigation = ({ user }) => {
                 onClick={() => setOpen((open) => !open)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
               >
-                <svg
-                  className="h-6 w-6"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  {open ? (
-                    <path
-                      className="inline-flex"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      className="inline-flex"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
+                {open ? (
+                  <XIcon className="w-6 h-6" />
+                ) : (
+                  <MenuIcon className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>
         </div>
 
         {/* Responsive Navigation Menu */}
-        {open && (
-          <div className="block sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
-              <ResponsiveNavLink
-                href="/ecma/titulos"
-                active={router.pathname.includes('/ecma/titulos')}
-              >
-                Enciclopedia
-              </ResponsiveNavLink>
+        <div
+          className={`absolute top-16 ${
+            open ? 'left-0' : '-left-[100%]'
+          } bg-white transition-all w-full`}
+        >
+          <div className="pt-2 pb-3 space-y-1">
+            <ResponsiveNavLink
+              href="/ecma/titulos"
+              active={router.pathname.includes('/ecma/titulos')}
+            >
+              Enciclopedia
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              href="/eventos"
+              active={router.pathname.includes('/eventos')}
+            >
+              Eventos
+            </ResponsiveNavLink>
+          </div>
+
+          {/* Responsive Settings Options */}
+          <div className="pt-4 pb-1 border-t border-gray-200">
+            <div className="flex items-center px-4">
+              <div className="flex-shrink-0">
+                <Image
+                  src={user?.profilePhotoPath ?? DEFAULT_IMAGE}
+                  alt={user?.name}
+                  className="rounded-full w-8 h-8"
+                  width={48}
+                  height={48}
+                />
+              </div>
+
+              <div className="ml-3">
+                <div className="font-medium text-base text-gray-800">
+                  {user?.name}
+                </div>
+                <div className="font-medium text-sm text-gray-500">
+                  {user?.email}
+                </div>
+              </div>
             </div>
 
-            {/* Responsive Settings Options */}
-            <div className="pt-4 pb-1 border-t border-gray-200">
-              <div className="flex items-center px-4">
-                <div className="flex-shrink-0">
-                  <svg
-                    className="h-10 w-10 fill-current text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                </div>
-
-                <div className="ml-3">
-                  <div className="font-medium text-base text-gray-800">
-                    {user?.name}
-                  </div>
-                  <div className="font-medium text-sm text-gray-500">
-                    {user?.email}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-3 space-y-1">
-                {/* Authentication */}
-                <ResponsiveNavButton onClick={logout}>
-                  Logout
-                </ResponsiveNavButton>
-              </div>
+            <div className="mt-3 space-y-1">
+              {/* Authentication */}
+              <ResponsiveNavButton onClick={logout}>
+                <span className="flex gap-2 justify-end items-center">
+                  <LogoutIcon className="h-6 w-6 text-gray-700" /> Logout
+                </span>
+              </ResponsiveNavButton>
             </div>
           </div>
-        )}
+        </div>
       </nav>
       {router?.asPath?.includes('ecma') && (
         <div className="w-full bg-white sub-navbar">

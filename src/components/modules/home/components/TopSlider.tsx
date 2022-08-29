@@ -29,7 +29,7 @@ const TopSlider = ({ relevants }) => (
             <div className="flex relative min-h-screen">
               <Image
                 src={relevant.image ?? DEFAULT_IMAGE}
-                alt={relevant.title}
+                alt={`${relevant.title} - Coanime.net`}
                 className="w-full h-full"
                 objectFit="cover"
                 layout="fill"
@@ -49,23 +49,25 @@ const TopSlider = ({ relevants }) => (
                 </h2>
                 <div className="flex flex-col gap-2">
                   <p>{relevant.excerpt}</p>
-                  <p className="flex flex-row gap-2 text-gray-400">
-                    <UserCircleIcon className="w-6 h-6" />
-                    <span className="text-white">{relevant.users.name}</span>
-                  </p>
-                  <p className="flex flex-row gap-2 text-gray-400">
-                    <ClockIcon className="w-6 h-6" />
-                    <span className="text-gray-300">
-                      {format(
-                        new Date(
-                          relevant?.postponedTo
-                            ? relevant?.postponedTo
-                            : relevant?.createdAt
-                        ),
-                        'd LLLL, yyyy'
-                      )}
-                    </span>
-                  </p>
+                  <div className="flex flex-row gap-4">
+                    <p className="flex flex-row gap-2 text-gray-400">
+                      <UserCircleIcon className="w-6 h-6" />
+                      <span className="text-white">{relevant.users.name}</span>
+                    </p>
+                    <p className="flex flex-row gap-2 text-gray-400">
+                      <ClockIcon className="w-6 h-6" />
+                      <span className="text-gray-300">
+                        {format(
+                          new Date(
+                            relevant?.postponedTo
+                              ? relevant?.postponedTo
+                              : relevant?.createdAt
+                          ),
+                          'd LLLL, yyyy'
+                        )}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -11,7 +11,7 @@ const PersonCard = ({ person }) => (
     <Image
       src={
         person?.image
-          ? `https://coanime.net/images/encyclopedia/people/${person?.image}`
+          ? `https://api.coanime.net/storage/images/encyclopedia/people/${person?.image}`
           : defaultImage
       }
       alt={person?.name}

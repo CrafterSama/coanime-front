@@ -873,8 +873,18 @@ p > .user-author {
   .info__article-content {
     margin-top: 15px;
   }
-  .full-header-title-bg {
+  /*.full-header-title-bg {
     position: relative;
+  }*/
+  .recent-posts .box:nth-child(3) h2.info__news-title > a {
+    color: var(--white);
+  }
+  .recent-posts .box h4.info__news-sub-title {
+    display: none;
+  }
+  .carousel-caption {
+    right: 5%;
+    left: 12%;
   }
 }
 
@@ -956,7 +966,7 @@ p > .user-author {
 .info__features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 15px;
+  grid-gap: 20px;
   margin-top: 30px;
 }
 
