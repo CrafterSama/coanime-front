@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { format, isBefore } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { isBefore } from 'date-fns';
+import dayjs from 'dayjs';
+import es from 'dayjs/locale/es';
+import utc from 'dayjs/plugin/utc';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,11 +16,9 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useRandomImageByTitle } from '@/hooks/random-images';
-import {
-  getAllTitles,
-  getRandomImageByTitle,
-  getTitle,
-} from '@/services/titles';
+import { getTitle } from '@/services/titles';
+
+dayjs.extend(utc);
 
 const Titles = ({ title, titleData, errors }) => {
   const router = useRouter();
@@ -56,17 +56,15 @@ const Titles = ({ title, titleData, errors }) => {
               <Section>
                 <div className="title-header">
                   <figure className="title-header-image relative">
-                    {imageLoading && (
+                    {!imageLoading && (
                       <Image
                         className={`${
                           randomImage?.image ? '' : 'blur'
                         } w-full h-full`}
                         src={
-                          randomImage?.image
-                            ? randomImage?.image
-                            : titleData?.result?.images?.name
-                            ? titleData?.result?.images?.name
-                            : DEFAULT_IMAGE
+                          randomImage?.image ??
+                          titleData?.result?.images?.name ??
+                          DEFAULT_IMAGE
                         }
                         alt={titleData?.result?.name}
                         layout="fill"
@@ -121,11 +119,10 @@ const Titles = ({ title, titleData, errors }) => {
                             value={
                               <span className="post-date">
                                 {titleData?.result?.broadTime
-                                  ? format(
-                                      new Date(titleData?.result?.broadTime),
-                                      'dd LLLL, yyyy',
-                                      { locale: es }
-                                    )
+                                  ? dayjs(titleData?.result?.broadTime)
+                                      .utc()
+                                      .locale(es)
+                                      .format('MMMM DD, YYYY')
                                   : 'Sin Información'}
                               </span>
                             }
@@ -135,11 +132,10 @@ const Titles = ({ title, titleData, errors }) => {
                             value={
                               <span className="post-date">
                                 {titleData?.result?.broadFinish
-                                  ? format(
-                                      new Date(titleData?.result?.broadFinish),
-                                      'dd LLLL, yyyy',
-                                      { locale: es }
-                                    )
+                                  ? dayjs(titleData?.result?.broadFinish)
+                                      .utc()
+                                      .locale(es)
+                                      .format('MMMM DD, YYYY')
                                   : 'Sin Información'}
                               </span>
                             }

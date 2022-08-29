@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import httpClient, { httpClientExternal } from '@/lib/http';
 
-export const useTitles = ({ page = '' }) => {
+export const useTitles = ({ page = 1 }) => {
   const params = {};
 
   if (page) {
@@ -15,9 +15,16 @@ export const useTitles = ({ page = '' }) => {
   });
 };
 
-export const useTitle = (slug: string) => {
-  return useQuery(['title', slug], async () => {
-    const response = await httpClient.get(`titles/${slug}`);
+export const useTitle = ({ id }) => {
+  return useQuery(['title', id], async () => {
+    const response = await httpClient.get(`titles/${id}`);
+    return response.data;
+  });
+};
+
+export const useCreateTitle = () => {
+  return useQuery(['createTitle'], async () => {
+    const response = await httpClient.get(`titles/create`);
     return response.data;
   });
 };

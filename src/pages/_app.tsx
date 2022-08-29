@@ -1,7 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
-import { SessionProvider } from 'next-auth/react';
 import NextNProgress from 'nextjs-progressbar';
 
 import '@/styles/DateTimePicker.css';
@@ -9,7 +8,7 @@ import '@/styles/Calendar.css';
 import '@/styles/Clock.css';
 import '@/styles/app.css';
 
-const App = ({ Component, pageProps: { session, ...pageProps } }) => {
+const App = ({ Component, pageProps: { ...pageProps } }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {

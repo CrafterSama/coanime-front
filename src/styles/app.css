@@ -1295,6 +1295,25 @@ ul.info__article-tags a:hover {
   color: red;
 }
 
+/* Multiselect Styles */
+.genres .rw-widget-input {
+  border: 2px solid rgb(253, 186, 116);
+  border-radius: 0.35rem;
+}
+
+.genres .rw-multiselect-tag {
+  border-radius: 0.35rem;
+  background-color: rgba(255, 153, 0, 0.3);
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.genres .rw-state-disabled .rw-widget-input {
+  background-color: #f9f6f6;
+}
+
 .texteditor-box .sun-editor {
   border: 2px solid rgb(253, 186, 116);
   border-radius: 0.375rem;
