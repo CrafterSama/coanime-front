@@ -9,7 +9,7 @@ const EventCard = ({ event }) => (
     <Image
       src={
         event?.image
-          ? `https://coanime.net/images/events/${event?.image}`
+          ? `https://api.coanime.net/storage/images/events/${event?.image}`
           : defaultImage
       }
       alt={event?.name}

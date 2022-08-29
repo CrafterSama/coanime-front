@@ -1,6 +1,6 @@
 {
   "name": "coanime-dashboard",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.1.25",
   "private": true,
   "scripts": {
     "devHttps": "node server.js",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
-    "@heroicons/react": "^1.0.6",
+    "@heroicons/react": "v1",
     "@hookform/resolvers": "^2.9.6",
     "@radix-ui/react-collapsible": "^0.1.6",
     "@tinymce/tinymce-react": "^4.1.0",

@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/outline';
 
 const RecentPosts = ({ posts }) => (
@@ -11,8 +12,8 @@ const RecentPosts = ({ posts }) => (
         <div className="box__item">
           <figure className="item__image">
             <Image
-              src={post.image}
-              alt={post.title}
+              src={post.image ?? DEFAULT_IMAGE}
+              alt={`${post.title} - Coanime.net`}
               className="w-full h-full"
               objectFit="cover"
               layout="fill"
@@ -31,7 +32,7 @@ const RecentPosts = ({ posts }) => (
                 <a>{post?.title}</a>
               </Link>
             </h2>
-            <h4 className="info__news-sub-title">{post?.excerpt}</h4>
+            <h4 className=" ">{post?.excerpt}</h4>
             <p className="flex flex-row gap-4">
               <span className="flex flex-row gap-2">
                 <UserCircleIcon className="w-6 h-6" />

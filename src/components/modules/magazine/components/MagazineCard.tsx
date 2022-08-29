@@ -9,7 +9,7 @@ const MagazineCard = ({ magazine }) => (
     <Image
       src={
         magazine?.image?.name
-          ? `https://coanime.net/images/encyclopedia/magazine/${magazine?.image?.name}`
+          ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine?.image?.name}`
           : defaultImage
       }
       alt={magazine?.name}

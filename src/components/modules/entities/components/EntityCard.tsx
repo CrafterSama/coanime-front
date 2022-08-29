@@ -9,7 +9,7 @@ const EntityCard = ({ entity }) => (
     <Image
       src={
         entity?.image?.name
-          ? `https://coanime.net/images/encyclopedia/companies/${entity?.image?.name}`
+          ? `https://api.coanime.net/storage/images/encyclopedia/companies/${entity?.image?.name}`
           : defaultImage
       }
       alt={entity?.name}

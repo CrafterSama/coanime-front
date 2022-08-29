@@ -26,7 +26,7 @@ const OtherNews = ({ articles }) => {
             >
               <Image
                 src={article.image ?? DEFAULT_IMAGE}
-                alt={article.title}
+                alt={`${article.title} - Coanime.net`}
                 className="w-full h-auto object-cover"
                 layout="fill"
               />
