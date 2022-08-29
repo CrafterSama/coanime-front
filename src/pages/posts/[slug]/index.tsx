@@ -66,23 +66,43 @@ const ShowArticle = ({ slug, articleData }) => {
       {post && (
         <>
           <Head>
+            <meta name="copyright" content="Copyright (C) 2006 Coanime.net" />
             <title>{title}</title>
             <meta name="description" content={description} />
             <meta name="keywords" content={tags} />
+            <link rel="feed_image" href={post.image} />
+            <link rel="image_src" href={post.image} />
+            <meta name="robots" content="max-image-preview:large" />
+            <meta property="og:title" content={title} />
             <meta property="og:type" content="article" />
             <meta
-              property="article:publisher"
-              content="http://www.facebook.com/Coanime"
-            />
-            <meta property="article:tag" content={tags} />
-            <meta
-              name="twitter:image:src"
+              property="og:image"
               content={
+                post?.image ??
                 pathImage ??
                 'https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg'
               }
             />
+            <meta property="og:image:width" content="600" />
+            <meta property="og:image:height" content="315" />
+            <meta
+              property="og:url"
+              content={`https://coanime.net/posts/${post?.slug}`}
+            />
+            <meta property="og:site_name" content="Coanime.net" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@coanime" />
+            <meta
+              name="twitter:image"
+              content={
+                post?.image ??
+                pathImage ??
+                'https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg'
+              }
+            />
+            <meta name="twitter:title" content={post?.title} />
             <meta property="article:section" content={post?.categories?.name} />
+            <meta property="article:tag" content={tags} />
             <meta
               property="article:published_time"
               content={
