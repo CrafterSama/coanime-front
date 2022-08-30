@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { GetStaticProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import Author from '@/components/modules/posts/components/Author';
@@ -18,9 +18,8 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
-import { scrollWindowToTop } from '@/utils/scroll';
 
-const ShowArticle = ({ slug, articleData }) => {
+const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
   const { data = {}, isLoading } = useQuery(
@@ -39,6 +38,13 @@ const ShowArticle = ({ slug, articleData }) => {
     otherArticles,
     relateds,
   } = data;
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+      router.push('/404');
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (articleData) window.scrollTo(0, 0);
@@ -127,7 +133,7 @@ const ShowArticle = ({ slug, articleData }) => {
                       dangerouslySetInnerHTML={{ __html: post?.content }}
                     ></main>
                   </div>
-                  <div className="article__side">
+                  <div className="article__side hidden lg:block">
                     <div className="article-relatedTitles">
                       <TitleRelated titles={post?.titles} />
                     </div>
@@ -142,17 +148,13 @@ const ShowArticle = ({ slug, articleData }) => {
                 <Section id="author">
                   <Author users={post?.users} />
                 </Section>
-                <Section className="article__side-small hide">
+                <Section className="article__side-small lg:hidden">
+                  <SectionTitle title="Series" subtitle="Serie Relacionada" />
                   <div className="article-relatedTitles">
-                    <div id="relatedTitle">
-                      <div className="relatedTitle"></div>
-                    </div>
+                    <TitleRelated titles={post?.titles} />
                   </div>
-
-                  <div className="article-relateds">
-                    <div id="relateds">
-                      <div className="relateds"></div>
-                    </div>
+                  <div className="article-relateds mx-auto">
+                    <Relateds relateds={relateds} />
                   </div>
                 </Section>
                 <Section withContainer id="features">
@@ -179,22 +181,23 @@ const ShowArticle = ({ slug, articleData }) => {
   };
 }*/
 
-export const getServerSideProps = async (context) => {
-  const { slug } = context.params;
-  const response = await getArticleData(slug as string);
-
-  if (response.data.code === 404) {
-    return {
-      notFound: true,
-    };
+export const getServerSideProps = async ({ params }) => {
+  const { slug } = params;
+  let errors = null;
+  let response = null;
+  let articleData = null;
+  try {
+    response = await getArticleData(slug as string);
+    articleData = response.data;
+  } catch (error) {
+    errors = error.response.data.message.text;
   }
-
-  const articleData = response.data;
 
   return {
     props: {
       slug,
       articleData,
+      errors,
       revalidate: 5 * 60,
     },
   };

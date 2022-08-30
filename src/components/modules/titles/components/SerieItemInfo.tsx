@@ -5,9 +5,11 @@ type SerieItemInfoProps = {
   value: string | ReactNode;
 };
 const SerieItemInfo: FC<SerieItemInfoProps> = ({ title, value }) => (
-  <li>
-    <div className="font-bold w-[180px] mr-4">{title}:</div>
-    <div>{value}</div>
+  <li className="flex gap-1 md:gap-0 flex-row justify-start items-center">
+    <div className="font-bold min-w-[120px] md:min-w-[180px] md:max-w-[480px]">
+      {title}:
+    </div>
+    <div className="min-w-[120px] max-w-[480px]">{value}</div>
   </li>
 );
 

@@ -20,6 +20,7 @@ import {
   TemplateIcon,
   XIcon,
   ChevronDownIcon,
+  UserCircleIcon,
 } from '@heroicons/react/outline';
 
 const Navigation = ({ user }) => {
@@ -78,14 +79,20 @@ const Navigation = ({ user }) => {
                   width={48}
                   trigger={
                     <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                      <div className="flex flex-row justify-start items-center gap-4">
-                        <Image
-                          src={user?.profilePhotoPath ?? DEFAULT_IMAGE}
-                          alt={user?.name}
-                          className="rounded-full w-8 h-8"
-                          width={48}
-                          height={48}
-                        />
+                      <div className="flex flex-row justify-start items-center gap-4 relative">
+                        {user && (
+                          <Image
+                            src={
+                              user?.profilePhotoPath
+                                ? user?.profilePhotoPath
+                                : DEFAULT_IMAGE
+                            }
+                            alt={user?.name}
+                            className="rounded-full w-8 h-8"
+                            width={48}
+                            height={48}
+                          />
+                        )}
                         <span>{user?.name}</span>
                       </div>
 
@@ -105,6 +112,12 @@ const Navigation = ({ user }) => {
                       Dashboard
                     </DropdownLink>
                   )}
+                  <DropdownLink
+                    href="/perfil"
+                    icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}
+                  >
+                    Perfil
+                  </DropdownLink>
                   <DropdownButton
                     onClick={logout}
                     icon={<LogoutIcon className="h-6 w-6 text-gray-700" />}
@@ -168,35 +181,65 @@ const Navigation = ({ user }) => {
 
           {/* Responsive Settings Options */}
           <div className="pt-4 pb-1 border-t border-gray-200">
-            <div className="flex items-center px-4">
-              <div className="flex-shrink-0">
-                <Image
-                  src={user?.profilePhotoPath ?? DEFAULT_IMAGE}
-                  alt={user?.name}
-                  className="rounded-full w-8 h-8"
-                  width={48}
-                  height={48}
-                />
-              </div>
+            {user?.name ? (
+              <>
+                <div className="flex items-center px-4">
+                  <div className="flex-shrink-0 relative">
+                    {user?.name && (
+                      <Image
+                        src={
+                          user?.profilePhotoPath
+                            ? user?.profilePhotoPath
+                            : DEFAULT_IMAGE
+                        }
+                        alt={user?.name}
+                        className="rounded-full w-8 h-8"
+                        width="48px"
+                        height="48px"
+                      />
+                    )}
+                  </div>
 
-              <div className="ml-3">
-                <div className="font-medium text-base text-gray-800">
-                  {user?.name}
+                  <div className="ml-3">
+                    <div className="font-medium text-base text-gray-800">
+                      {user?.name}
+                    </div>
+                    <div className="font-medium text-sm text-gray-500">
+                      {user?.email}
+                    </div>
+                  </div>
                 </div>
-                <div className="font-medium text-sm text-gray-500">
-                  {user?.email}
-                </div>
-              </div>
-            </div>
 
-            <div className="mt-3 space-y-1">
-              {/* Authentication */}
-              <ResponsiveNavButton onClick={logout}>
-                <span className="flex gap-2 justify-end items-center">
-                  <LogoutIcon className="h-6 w-6 text-gray-700" /> Logout
-                </span>
-              </ResponsiveNavButton>
-            </div>
+                <div className="mt-3 space-y-1">
+                  {/* Authentication */}
+                  <ResponsiveNavLink href="/perfil">
+                    <span className="flex gap-2 justify-end items-center">
+                      <UserCircleIcon className="h-6 w-6 text-gray-700" />{' '}
+                      Perfil
+                    </span>
+                  </ResponsiveNavLink>
+                  <ResponsiveNavButton onClick={logout}>
+                    <span className="flex gap-2 justify-end items-center">
+                      <LogoutIcon className="h-6 w-6 text-gray-700" /> Logout
+                    </span>
+                  </ResponsiveNavButton>
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-end py-2 px-4">
+                <Link href="/login">
+                  <a className="text-sm font-medium text-gray-700 underline">
+                    Login
+                  </a>
+                </Link>
+
+                <Link href="/register">
+                  <a className="ml-4 text-sm font-medium text-gray-700 underline">
+                    Register
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>

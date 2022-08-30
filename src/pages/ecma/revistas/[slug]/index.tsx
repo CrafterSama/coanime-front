@@ -40,7 +40,7 @@ const Magazine = ({ magazineData }) => {
                       } w-full h-full`}
                       src={
                         magazineData?.result?.image?.name
-                          ? `https://coanime.net/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
+                          ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
                           : DEFAULT_IMAGE
                       }
                       alt={magazineData?.result?.name}
@@ -54,14 +54,14 @@ const Magazine = ({ magazineData }) => {
               </Section>
               <div className="title-content">
                 <Section withContainer>
-                  <div className="title-info container">
+                  <div className="title-info container px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <figure className="title-image overlap-banner relative rounded">
                         <Image
                           className="w-[300px] h-[380px] object-cover object-center mx-auto"
                           src={
                             magazineData?.result?.image?.name
-                              ? `https://coanime.net/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
+                              ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
                               : DEFAULT_IMAGE
                           }
                           layout="fill"
@@ -70,7 +70,7 @@ const Magazine = ({ magazineData }) => {
                       </figure>
                       <div className="title-info-box">
                         <div className="title-name-box">
-                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl">
+                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center">
                             {magazineData?.result?.name}
                           </h1>
                         </div>
@@ -123,11 +123,13 @@ const Magazine = ({ magazineData }) => {
                           <ItemInfo
                             title="Website"
                             value={
-                              <Link href={magazineData?.result?.website}>
-                                <a target="_blank">
-                                  {magazineData?.result?.website}
-                                </a>
-                              </Link>
+                              magazineData?.result?.website ? (
+                                <Link href={magazineData?.result?.website}>
+                                  <a target="_blank">Website</a>
+                                </Link>
+                              ) : (
+                                'Sin Información'
+                              )
                             }
                           />
                         </ul>

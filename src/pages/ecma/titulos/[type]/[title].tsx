@@ -78,7 +78,7 @@ const Titles = ({ title, titleData, errors }) => {
               </Section>
               <div className="title-content">
                 <Section withContainer>
-                  <div className="title-info container">
+                  <div className="title-info container mx-auto px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <figure className="title-image overlap-banner relative rounded">
                         <Image
@@ -90,7 +90,7 @@ const Titles = ({ title, titleData, errors }) => {
                       </figure>
                       <div className="title-info-box">
                         <div className="title-name-box">
-                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl">
+                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center">
                             {titleData?.result?.name}
                           </h1>
                         </div>
@@ -168,11 +168,11 @@ const Titles = ({ title, titleData, errors }) => {
                                 new Date(),
                                 new Date(titleData?.result?.broadFinish)
                               ) ? (
-                                <div className="border-2 border-teal-500 text-teal-500 rounded-md px-1">
+                                <div className="border-2 border-teal-500 text-teal-500 rounded-md px-1 max-w-[100px]">
                                   En Emisión
                                 </div>
                               ) : (
-                                <div className="rounded-md border-2 border-red-400 text-red-400 px-1">
+                                <div className="rounded-md border-2 border-red-400 text-red-400 px-1 max-w-[100px]">
                                   Finalizado
                                 </div>
                               )
