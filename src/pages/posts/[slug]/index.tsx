@@ -133,7 +133,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                       dangerouslySetInnerHTML={{ __html: post?.content }}
                     ></main>
                   </div>
-                  <div className="article__side hidden lg:block">
+                  <div className="hidden lg:block article__side">
                     <div className="article-relatedTitles">
                       <TitleRelated titles={post?.titles} />
                     </div>
@@ -149,7 +149,6 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                   <Author users={post?.users} />
                 </Section>
                 <Section className="article__side-small lg:hidden">
-                  <SectionTitle title="Series" subtitle="Serie Relacionada" />
                   <div className="article-relatedTitles">
                     <TitleRelated titles={post?.titles} />
                   </div>
