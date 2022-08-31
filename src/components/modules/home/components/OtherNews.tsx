@@ -3,7 +3,7 @@ import { es } from 'date-fns/locale';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { AdminPermissions } from '@/components/modules/common/Permissions';
+import { Permissions } from '@/components/modules/common/Permissions';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
@@ -22,7 +22,7 @@ const OtherNews = ({ articles }) => {
           {articles.map((article, index) => (
             <div
               key={index}
-              className="w-full sm:w-[300px] h-[300px] relative overflow-hidden rounded"
+              className="article w-full sm:w-[300px] h-[300px] relative overflow-hidden rounded"
             >
               <Image
                 src={article.image ?? DEFAULT_IMAGE}
@@ -45,9 +45,9 @@ const OtherNews = ({ articles }) => {
                   </Link>
                 </div>
                 <div className="flex gap-2 justify-start items-center">
-                  <span className="text-gray-200 flex flex-row gap-2 text-sm">
+                  {/*<span className="text-gray-200 flex flex-row gap-2 text-sm">
                     <UserCircleIcon className="w-6 h-6" /> {article.users.name}
-                  </span>
+                  </span>*/}
                   <span className="text-gray-200 flex flex-row gap-2 text-sm">
                     <ClockIcon className="w-6 h-6" />
                     {format(
@@ -64,7 +64,7 @@ const OtherNews = ({ articles }) => {
                   </span>
                 </div>
               </div>
-              <AdminPermissions>
+              <Permissions>
                 <div className="absolute top-0 right-0 px-2 py-2 flex flex-col gap-4">
                   <Link href={`/dashboard/posts/${article.slug}`}>
                     <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
@@ -72,7 +72,7 @@ const OtherNews = ({ articles }) => {
                     </a>
                   </Link>
                 </div>
-              </AdminPermissions>
+              </Permissions>
             </div>
           ))}
         </div>

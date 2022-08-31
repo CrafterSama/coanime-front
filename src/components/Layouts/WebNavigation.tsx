@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { Permissions } from '@/components/modules/common/Permissions';
 import { Logotype } from '@/components/ui/ApplicationLogo';
 import Dropdown from '@/components/ui/Dropdown';
 import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
@@ -13,7 +14,6 @@ import ResponsiveNavLink, {
 } from '@/components/ui/ResponsiveNavLink';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
-import { hasRole } from '@/utils/common';
 import {
   LogoutIcon,
   MenuIcon,
@@ -103,15 +103,14 @@ const Navigation = ({ user }) => {
                   }
                 >
                   {/* Authentication */}
-                  {(hasRole(user?.roles, 'administrator') ||
-                    hasRole(user?.roles, 'moderator')) && (
+                  <Permissions>
                     <DropdownLink
                       href="/dashboard"
                       icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}
                     >
                       Dashboard
                     </DropdownLink>
-                  )}
+                  </Permissions>
                   <DropdownLink
                     href="/perfil"
                     icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}

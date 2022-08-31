@@ -26,7 +26,7 @@ const TopSlider = ({ relevants }) => (
       >
         {relevants.map((relevant) => (
           <SwiperSlide key={relevant.id}>
-            <div className="flex relative min-h-screen">
+            <div className="top-slider flex relative min-h-screen">
               <Image
                 src={relevant.image ?? DEFAULT_IMAGE}
                 alt={`${relevant.title} - Coanime.net`}
