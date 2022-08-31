@@ -22,6 +22,17 @@ export const getArticlesData = async ({ page = 1 }) => {
   return response;
 };
 
+export const getArticlesJapan = async ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClientExternal.get(`articles-japan`, { params });
+  return response;
+};
+
 export const getPosts = async ({ page = 1 }) => {
   const params = {};
 

@@ -22,7 +22,7 @@ const OtherNews = ({ articles }) => {
           {articles.map((article, index) => (
             <div
               key={index}
-              className="w-full sm:w-[320px] h-[340px] relative overflow-hidden rounded"
+              className="w-full sm:w-[300px] h-[300px] relative overflow-hidden rounded"
             >
               <Image
                 src={article.image ?? DEFAULT_IMAGE}
