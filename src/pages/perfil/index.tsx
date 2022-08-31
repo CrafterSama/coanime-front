@@ -34,6 +34,7 @@ import {
   PencilIcon,
   LockClosedIcon,
 } from '@heroicons/react/outline';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const Profile = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -43,7 +44,10 @@ const Profile = () => {
   const { result, title, description } = data;
   const { user } = useAuth({ middleware: 'auth' });
 
-  const methods = useForm<any>();
+  const methods = useForm<any>(/*{
+    resolver: yupResolver(profileSchema),
+    mode: 'onChange',
+  }*/);
 
   const {
     handleSubmit,
@@ -111,6 +115,19 @@ const Profile = () => {
     isLoading: isSaving,
   } = useMutation(({ params }: { params: any }) => updateMe(params));
 
+  const onHandleError = (error) => {
+    if (
+      error?.response?.status === 422 &&
+      error?.response?.data?.errors?.password
+    ) {
+      error?.response?.data?.errors?.password?.map((error) =>
+        toast.error(error)
+      );
+      return;
+    }
+    return toast.error(error?.response?.data?.message || error?.message);
+  };
+
   const onSubmit = (data) => {
     if (data.avatar && !data.profilePhotoPath) {
       data.profilePhotoPath = data.avatar;
@@ -128,7 +145,7 @@ const Profile = () => {
           queryClient.invalidateQueries(['profile']);
         },
         onError: (error) => {
-          toast.error(error as string);
+          onHandleError(error);
         },
       }
     );
@@ -234,7 +251,7 @@ const Profile = () => {
                                       setValue('password', e.target.value)
                                     }
                                     errors={errors?.['password']?.message}
-                                    hint="You only Change your password if you enter a new one here"
+                                    hint="Tu contraseña solo cambia si ingresa una nueva aquí. Importante: Su contraseña debe tener al menos 8 caracteres y contener al menos un número y una letra mayúscula y minúscula y un símbolo."
                                     disabled={!editMode}
                                   />
                                   <Input
