@@ -9,7 +9,7 @@ const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
         />
       )}
       {showFancySpiner && (
-        <div className={`relative w-[400px] h-[265px]`}>
+        <div className={`relative w-[100%] h-auto`}>
           <img src="/images/saitama.gif" alt="Loading" />
         </div>
       )}

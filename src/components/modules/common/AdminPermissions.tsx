@@ -4,11 +4,6 @@ import { hasRole } from '@/utils/common';
 export const AdminPermissions = ({ children }) => {
   const { user } = useAuth({ middleware: 'auth' });
   return (
-    <>
-      {user &&
-        (hasRole(user?.roles, 'administrator') ||
-          hasRole(user?.roles, 'moderator') ||
-          hasRole(user?.roles, 'writer')) && <>{children}</>}
-    </>
+    <>{user && hasRole(user?.roles, 'administrator') && <>{children}</>}</>
   );
 };

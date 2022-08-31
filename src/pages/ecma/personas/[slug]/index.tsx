@@ -38,7 +38,7 @@ const Person = ({ personData }) => {
                       } w-full h-full`}
                       src={
                         personData?.result?.image
-                          ? `https://coanime.net/images/encyclopedia/people/${personData?.result?.image}`
+                          ? `https://api.coanime.net/storage/images/encyclopedia/people/${personData?.result?.image}`
                           : DEFAULT_IMAGE
                       }
                       alt={personData?.result?.name}
@@ -52,14 +52,14 @@ const Person = ({ personData }) => {
               </Section>
               <div className="title-content">
                 <Section withContainer>
-                  <div className="title-info container">
+                  <div className="title-info container px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <figure className="title-image overlap-banner relative rounded">
                         <Image
                           className="w-[300px] h-[380px] object-cover object-center mx-auto"
                           src={
                             personData?.result?.image
-                              ? `https://coanime.net/images/encyclopedia/people/${personData?.result?.image}`
+                              ? `https://api.coanime.net/storage/images/encyclopedia/people/${personData?.result?.image}`
                               : DEFAULT_IMAGE
                           }
                           layout="fill"

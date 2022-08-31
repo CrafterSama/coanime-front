@@ -16,7 +16,7 @@ const AuthCard = ({ logo, children }) => {
   return (
     <div className="min-h-screen flex flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-white relative">
       <div
-        className="image-side flex w-1/2 min-h-screen relative"
+        className="image-side hidden lg:flex w-1/2 min-h-screen relative"
         style={bgStyle}
       >
         <div className="absolute inset-0 flex flex-col w-full h-full items-end justify-end bg-indigo-600 bg-opacity-50">
@@ -27,10 +27,10 @@ const AuthCard = ({ logo, children }) => {
           />
         </div>
       </div>
-      <div className="form-side flex flex-col w-1/2 min-h-screen justify-center content-center">
-        <div className="flex flex-col gap-4 m-auto">
+      <div className="form-side flex flex-col w-full lg:w-1/2 min-h-screen justify-center content-center">
+        <div className="flex flex-col gap-4 m-auto min-w-[340px] md:min-w-[400px]">
           <div className="w-20 h-20 rounded-full self-center">{logo}</div>
-          <div className="w-full px-6 pt-16 pb-8 sm:min-w-[480px] bg-white shadow-md overflow-hidden sm:rounded-lg">
+          <div className="px-4 pt-16 pb-8 w-full md:min-w-[480px] bg-white shadow-md overflow-hidden rounded-lg">
             {children}
           </div>
         </div>

@@ -1,25 +1,38 @@
+import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import Label from '@/components/ui/Label';
 
 type InputProps = {
+  id?: string;
+  type?: string;
   label?: string;
   left?: React.ReactNode;
   right?: React.ReactNode;
   name?: string;
-  errors?: string;
+  errors?: any;
+  defaultValue?: any;
+  placeholder?: string;
   disabled?: boolean;
   className?: string;
   hint?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({
+const Input: FC<InputProps> = ({
+  id,
+  type = 'text',
   label,
   left = null,
+  right = null,
   name,
   errors,
+  defaultValue = null,
+  placeholder = '',
   disabled = false,
   className = '',
   hint = '',
+  onChange = () => {},
   ...props
 }) => {
   const { register } = useFormContext();
@@ -34,14 +47,23 @@ const Input = ({
         )}
         <input
           {...register(name)}
+          type={type}
           id={name}
           name={name}
+          onChange={onChange}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
           disabled={disabled}
           className={`w-full rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:outline-0 focus:ring focus:ring-orange-200 focus:ring-opacity-50 ${
             left ? 'pl-10 py-2 pr-2' : 'p-2'
           } ${className} ${errors ? 'border-red-400' : ''}`}
           {...props}
         />
+        {right && (
+          <div className="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">{right}</span>
+          </div>
+        )}
       </div>
       {hint && (
         <div className="flex flex-row justify-between">

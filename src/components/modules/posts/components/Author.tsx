@@ -1,11 +1,15 @@
 import Image from 'next/image';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
+
 const Author = ({ users }) => (
   <div className="author">
     <div className="info__article-author">
       <div className="flex flex-col w-32 h-32 relative">
         <Image
-          src={users?.profilePhotoPath}
+          src={
+            users?.profilePhotoPath ? users?.profilePhotoPath : DEFAULT_IMAGE
+          }
           alt={users?.name}
           className="w-full h-full"
           objectFit="cover"

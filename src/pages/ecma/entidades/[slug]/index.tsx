@@ -10,6 +10,7 @@ import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEntity } from '@/services/entities';
 import ImageDetails from '@/components/ui/ImageDetails';
+import Link from 'next/link';
 
 const Entity = ({ entityData }) => {
   return (
@@ -39,7 +40,7 @@ const Entity = ({ entityData }) => {
                       } w-full h-full`}
                       src={
                         entityData?.result?.image
-                          ? `https://coanime.net/images/encyclopedia/people/${entityData?.result?.image}`
+                          ? `https://api.coanime.net/storage/images/encyclopedia/people/${entityData?.result?.image}`
                           : DEFAULT_IMAGE
                       }
                       alt={entityData?.result?.name}
@@ -53,18 +54,18 @@ const Entity = ({ entityData }) => {
               </Section>
               <div className="title-content">
                 <Section withContainer>
-                  <div className="title-info container">
+                  <div className="title-info container px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <ImageDetails
                         src={
                           entityData?.result?.image
-                            ? `https://coanime.net/images/encyclopedia/people/${entityData?.result?.image}`
+                            ? `https://api.coanime.net/storage/images/encyclopedia/people/${entityData?.result?.image}`
                             : DEFAULT_IMAGE
                         }
                       />
                       <div className="title-info-box">
                         <div className="title-name-box">
-                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl">
+                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center">
                             {entityData?.result?.name}
                           </h1>
                         </div>
@@ -96,7 +97,13 @@ const Entity = ({ entityData }) => {
                           <ItemInfo
                             title="Website"
                             value={
-                              entityData?.result?.website || 'Sin Información'
+                              entityData?.result?.website ? (
+                                <Link href={entityData?.result?.website}>
+                                  <a target="_blank">Ir al Website</a>
+                                </Link>
+                              ) : (
+                                'Sin Información'
+                              )
                             }
                           />
                         </ul>

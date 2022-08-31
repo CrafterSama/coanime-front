@@ -14,9 +14,13 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
-import { getArticlesData } from '@/services/posts';
+import { getArticlesData, getArticlesJapan } from '@/services/posts';
 
-const Home = ({ homeData, articlesData }) => {
+const Home = ({ homeData, articlesData, articlesJapan }) => {
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 20 ~ Home ~ articlesJapan',
+    articlesJapan
+  );
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -24,6 +28,7 @@ const Home = ({ homeData, articlesData }) => {
     initialData: homeData,
   });
   const { title = '', description = '', keywords = '', relevants = [] } = data;
+  const { data: japan = {} } = articlesJapan;
 
   useEffect(() => {
     if (articlesData) {
@@ -94,6 +99,16 @@ const Home = ({ homeData, articlesData }) => {
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
         <BroadcastToday />
       </Section>
+      <Section className="bg-indigo-50 shadow-lg shadow-inner py-4">
+        <Section withContainer>
+          <SectionTitle
+            title="Japón y Cultura"
+            subtitle="Articulos relacionados con la Cultura de"
+            fancyText="Japón"
+          />
+          <OtherNews articles={japan} />
+        </Section>
+      </Section>
       <Section withContainer>
         <SectionTitle title="News" subtitle="Otras Noticias" />
         <OtherNews articles={articles} />
@@ -115,11 +130,13 @@ export async function getServerSideProps() {
   const page = 1;
   const response = await getHomeData();
   const articles = await getArticlesData({ page });
+  const japan = await getArticlesJapan({ page });
 
   const homeData = response.data;
   const articlesData = articles.data;
+  const articlesJapan = japan.data;
 
-  return { props: { homeData, articlesData } };
+  return { props: { homeData, articlesData, articlesJapan } };
 }
 
 export default Home;

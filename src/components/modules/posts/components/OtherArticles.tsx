@@ -1,3 +1,4 @@
+import { DEFAULT_IMAGE } from '@/constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,7 +15,7 @@ const OtherArticles = ({ articles }) => (
               <Link href={`/posts/${article?.slug}`}>
                 <a>
                   <Image
-                    src={article.image}
+                    src={article.image ? article.image : DEFAULT_IMAGE}
                     alt={article.title}
                     className="w-full h-full"
                     objectPosition="cover"

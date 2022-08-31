@@ -40,7 +40,7 @@ const Event = ({ eventData }) => {
                       } w-full h-full`}
                       src={
                         eventData?.result?.image
-                          ? `https://coanime.net/images/events/${eventData?.result?.image}`
+                          ? `https://api.coanime.net/storage/images/events/${eventData?.result?.image}`
                           : DEFAULT_IMAGE
                       }
                       alt={eventData?.result?.name}
@@ -54,12 +54,12 @@ const Event = ({ eventData }) => {
               </Section>
               <div className="title-content">
                 <Section withContainer>
-                  <div className="title-info container">
+                  <div className="title-info container px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <ImageDetails
                         src={
                           eventData?.result?.image
-                            ? `https://coanime.net/images/events/${eventData?.result?.image}`
+                            ? `https://api.coanime.net/storage/images/events/${eventData?.result?.image}`
                             : DEFAULT_IMAGE
                         }
                       />

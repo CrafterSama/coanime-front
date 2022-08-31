@@ -13,6 +13,10 @@ class MyDocument extends Document {
           <meta name="language" content="es" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta
+            name="google-site-verification"
+            content="eIQBLZgWmisXKwYEiGVWty1gOk2YPohgAWQKvGjKEsE"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"

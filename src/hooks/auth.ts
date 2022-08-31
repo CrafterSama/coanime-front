@@ -128,6 +128,7 @@ export const useAuth = ({
     'dashboard/companies',
     'dashboard/users',
     'dashboard/people',
+    'perfil',
   ];
 
   const pathname = router.pathname.split('/')[1];

@@ -566,7 +566,7 @@ body {
   display: block;
   margin: 15px auto;
   max-width: 800px;
-  width: auto;
+  width: 100% !important;
   height: 100%;
   border-radius: 5px;
   box-shadow: 0px 0px 100px var(--gray);
@@ -588,6 +588,19 @@ body {
 .info__article-content .embed-responsive {
   display: flex;
   justify-content: center;
+}
+
+.info__article-content blockquote {
+  border-left: 3px solid var(--light-orange);
+  background: rgba(255, 237, 197, 0.2);
+  padding: 1px 0 1px 16px;
+}
+
+.info__article-content blockquote > p {
+  font-size: 15px;
+  line-height: 1.5;
+  font-style: italic;
+  color: gray;
 }
 
 .embed-responsive {
@@ -631,14 +644,14 @@ fieldset.sinopsis {
   border: none;
   border-radius: 6px;
   padding: 0px 35px;
-  background: var(--light);
+  background: #f2f2f2;
+  margin: 16px;
 }
 
 fieldset.sinopsis > legend {
   font-size: 18px;
-  background: var(--orange);
-  border-radius: 25px;
-  border-bottom-left-radius: 0;
+  background: var(--light-orange);
+  border-radius: 5px;
   padding: 5px 10px;
   color: var(--white);
   max-width: 130px;
@@ -740,6 +753,11 @@ p > .user-author {
 .title-top-box .title-info-box .title-name-box.overlap-banner {
   margin-top: 20px;
 }
+
+.title-top-box .title-info-box .title-info-details {
+  @apply flex flex-col gap-4;
+}
+
 .title-top-box .title-info-box .title-info-details > li {
   margin-top: 3px;
   line-height: 20px;
@@ -840,6 +858,7 @@ p > .user-author {
   }
   .title-top-box .title-info-details.overlap-banner > li {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
   .title-name {
     font-size: 1.8rem;
@@ -852,7 +871,7 @@ p > .user-author {
   font-weight: 400;
 }
 
-@media (min-width: 320px) and (max-width: 992px) {
+@media (min-width: 320px) and (max-width: 1024px) {
   .article {
     position: relative;
     margin: 0px auto;
@@ -1082,7 +1101,7 @@ h3.info__relateds-title {
   max-height: 360px;
   max-width: 270px;
   border: 5px solid var(--white);
-  box-shadow: 0px 0px 100px var(--gray);
+  box-shadow: 0px 0px 25px var(--gray);
 }
 
 .info__relatedTitle-image > img {
@@ -1138,7 +1157,7 @@ ul.info__relatedTitle-rate li i {
 @media (min-width: 320px) and (max-width: 992px) {
   .info__relatedTitle {
     display: grid;
-    grid-template-columns: repeat(2, 45% 55%);
+    grid-template-columns: repeat(1, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 15px;
   }
