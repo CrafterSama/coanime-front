@@ -100,18 +100,10 @@ const Titles = ({ titlesData }) => {
               })}
             </div>
             {activeTab === 'types' && (
-              <CloudLinks
-                allLink="/ecma/titulos"
-                path="titulos"
-                links={types}
-              />
+              <CloudLinks allLink="/ecma/titulos" links={types} />
             )}
             {activeTab === 'genres' && (
-              <CloudLinks
-                allLink="/ecma/titulos"
-                path="generos"
-                links={genres}
-              />
+              <CloudLinks allLink="/ecma/generos" links={genres} />
             )}
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
               {data?.result?.data?.map((serie) => (
