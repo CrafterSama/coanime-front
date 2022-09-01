@@ -47,6 +47,7 @@ const Titles = ({ titlesData }) => {
 
   useEffect(() => {
     onPageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

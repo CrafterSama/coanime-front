@@ -10,7 +10,7 @@ import CloudLinks from '@/components/ui/CloudLinks';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { getTitlesByGenre, getTitlesByType } from '@/services/titles';
+import { getTitlesByGenre } from '@/services/titles';
 
 type TitleData = {
   title: string;
@@ -36,6 +36,7 @@ const Titles = ({ titlesData }) => {
 
   useEffect(() => {
     setData(titlesData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onPageChange = async () => {
@@ -59,6 +60,7 @@ const Titles = ({ titlesData }) => {
 
   useEffect(() => {
     onPageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, genre]);
 
   return (
