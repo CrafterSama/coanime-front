@@ -48,7 +48,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
             ]}
             loop={true}
             autoplay={{
-              delay: 5000,
+              delay: 1000,
             }}
             navigation={true}
             breakpoints={{
@@ -89,6 +89,11 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
                     >
                       <a>{serie?.title}</a>
                     </Link>
+                  </div>
+                  <div
+                    className={`absolute top-0 right-0 h-4 w-4 p-1 rounded-full bg-white bg-opacity-80 text-orange-500 flex justify-center items-center text-center text-xs`}
+                  >
+                    {index + 1}
                   </div>
                 </div>
               </SwiperSlide>
