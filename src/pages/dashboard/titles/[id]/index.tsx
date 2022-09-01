@@ -113,6 +113,12 @@ const UpdateTitle = ({ id }) => {
     titleUpdate(id, params)
   );
 
+  const onHandleError = (error) => {
+    return toast.error(
+      error?.response?.data?.message?.text || error?.response?.data?.message
+    );
+  };
+
   const onSubmit = (data) => {
     const id = title?.id;
     const params = {
@@ -136,7 +142,7 @@ const UpdateTitle = ({ id }) => {
           queryClient.invalidateQueries(['title']);
         },
         onError: (error: { response }) => {
-          toast.error(error.response.message);
+          onHandleError(error);
         },
       }
     );

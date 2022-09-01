@@ -85,6 +85,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
                     <Link
                       href={getTitlesUrl(serie?.type, serie?.title)}
                       scroll={true}
+                      prefetch={false}
                     >
                       <a>{serie?.title}</a>
                     </Link>

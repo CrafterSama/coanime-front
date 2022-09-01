@@ -101,6 +101,12 @@ const CreateTitle = () => {
     titleCreate(params)
   );
 
+  const onHandleError = (error) => {
+    return toast.error(
+      error?.response?.data?.message?.text || error?.response?.data?.message
+    );
+  };
+
   const onSubmit = (data) => {
     const params = {
       ...data,
@@ -120,7 +126,7 @@ const CreateTitle = () => {
           onSavedSuccess(response);
         },
         onError: (error) => {
-          toast.error(error as string);
+          onHandleError(error);
         },
       }
     );
