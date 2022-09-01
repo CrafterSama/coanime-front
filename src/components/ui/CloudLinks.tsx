@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const CloudLinks = ({ allLink, path, links }) => {
+const CloudLinks = ({ allLink, links }) => {
   const router = useRouter();
 
   return (
@@ -24,7 +24,7 @@ const CloudLinks = ({ allLink, path, links }) => {
           key={link?.id}
           className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link"
         >
-          <Link key={link?.id} href={`${path}/${link?.slug}`}>
+          <Link key={link?.id} href={`${allLink}/${link?.slug}`}>
             <a
               className={`${
                 router.asPath.includes(link?.slug) && 'text-orange-600'

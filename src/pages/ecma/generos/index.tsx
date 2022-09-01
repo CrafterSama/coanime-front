@@ -30,13 +30,13 @@ const Titles = ({ titlesData }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
-  const [activeTab, setActiveTab] = useState('types');
+  const [activeTab, setActiveTab] = useState('genres');
 
   const { result: series = [], types, genres } = data;
 
   const onPageChange = async () => {
     await router.push({
-      pathname: '/ecma/titulos/',
+      pathname: '/ecma/generos/',
       query: {
         page,
       },
