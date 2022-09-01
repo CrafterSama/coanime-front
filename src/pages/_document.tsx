@@ -17,6 +17,22 @@ class MyDocument extends Document {
             name="google-site-verification"
             content="eIQBLZgWmisXKwYEiGVWty1gOk2YPohgAWQKvGjKEsE"
           />
+          {/*<!-- Google tag (gtag.js) -->*/}
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-2WVH3WRHQ6"
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){ dataLayer.push(arguments);   }
+            gtag('js', new Date());
+
+            gtag('config', 'G-2WVH3WRHQ6');
+            `,
+            }}
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
