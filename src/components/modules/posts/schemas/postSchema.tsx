@@ -1,11 +1,14 @@
 import * as yup from 'yup';
+import { setLocale } from 'yup';
+import { es } from 'yup-locales';
+setLocale(es);
 
 export const postSchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
-  excerpt: yup.string().required('Excerpt is required'),
-  content: yup.string().required('Content is required'),
-  image: yup.string().required(),
-  categoryId: yup.object().required('Categories is required'),
+  title: yup.string().required('El titulo es rquerido'),
+  excerpt: yup.string().required('El extracto es Requerido'),
+  content: yup.string().required('El Contenido es requerido'),
+  image: yup.string().required('Debes Subir una Imagen'),
+  categoryId: yup.object().required('Las Categorias son requeridas'),
   tags: yup.array().notRequired(),
   postponedTo: yup.string().notRequired(),
 });

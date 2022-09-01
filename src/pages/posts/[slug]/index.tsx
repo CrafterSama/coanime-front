@@ -5,9 +5,11 @@ import { useQuery } from 'react-query';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
+import { Permissions } from '@/components/modules/common/Permissions';
 import Author from '@/components/modules/posts/components/Author';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 import PostHeader from '@/components/modules/posts/components/PostHeader';
@@ -18,6 +20,7 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
+import { PencilIcon } from '@heroicons/react/outline';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -124,6 +127,15 @@ const ShowArticle = ({ slug, articleData, errors }) => {
           </Head>
           <article className="">
             <PostHeader image={pathImage} post={post} />
+            <Permissions>
+              <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
+                <Link href={`/dashboard/posts/${post.slug}`}>
+                  <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                    <PencilIcon className="w-5 h-5" />
+                  </a>
+                </Link>
+              </div>
+            </Permissions>
             <div className="article__info-box">
               <Section withContainer>
                 <Section className="article">
