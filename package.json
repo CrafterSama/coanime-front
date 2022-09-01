@@ -47,7 +47,8 @@
     "swiper": "^8.3.2",
     "swr": "^1.2.2",
     "use-client-router": "^1.0.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "yup-locales": "^1.2.10"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.1",

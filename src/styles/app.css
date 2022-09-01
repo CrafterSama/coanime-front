@@ -150,9 +150,7 @@ body {
   transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-div:hover > .overlayer,
-.top-slider:hover .overlayer,
-.article:hover .overlayer {
+.other-news .article:hover .overlayer {
   position: absolute;
   background: linear-gradient(
     to bottom,
@@ -163,12 +161,12 @@ div:hover > .overlayer,
   height: 100%;
 }
 
-.article img {
+.other-news .article img {
   transform: scale(1) rotate(0deg);
   transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.article:hover img {
+.other-news .article:hover img {
   transform: scale(1.1) rotate(-1deg);
 }
 
@@ -1290,9 +1288,11 @@ ul.info__article-tags a:hover {
 .title-item .overlayer {
   background: linear-gradient(
     165deg,
-    rgba(249, 141, 2, 0.2) 50%,
+    rgba(1, 6, 98, 0) 0%,
+    rgba(1, 6, 98, 0.2) 50%,
     rgba(1, 6, 98, 0.8) 85%
   );
+  height: 100%;
 }
 
 .cloud-link::after {

@@ -99,7 +99,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
         <BroadcastToday />
       </Section>
-      <Section className="bg-indigo-50 shadow-lg shadow-inner py-4">
+      <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>
           <SectionTitle
             title="Japón y Cultura"
