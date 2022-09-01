@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 import { useQuery } from 'react-query';
 
 import Head from 'next/head';
@@ -9,12 +10,11 @@ import BroadcastToday from '@/components/modules/home/components/BroadcastToday'
 import OtherNews from '@/components/modules/home/components/OtherNews';
 import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
+import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByCategories, getCategory } from '@/services/categories';
-import Button from '@/components/ui/Button';
-import { CgSpinner } from 'react-icons/cg';
 
 const Categories = ({ category, categoryData, articlesData }) => {
   const [articles, setArticles] = useState([]);
@@ -31,6 +31,7 @@ const Categories = ({ category, categoryData, articlesData }) => {
     if (articlesData) {
       setArticles([...articles, ...articlesData?.data]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const moreArticles = async () => {
@@ -44,6 +45,7 @@ const Categories = ({ category, categoryData, articlesData }) => {
 
   useEffect(() => {
     moreArticles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (
