@@ -221,23 +221,14 @@ const Titles = ({ title, titleData, errors }) => {
   );
 };
 
-export async function getStaticPaths() {
-  /*const response = await getAllTitles();
-  const paths =
-    response?.result?.map((title) => ({
-      params: {
-        type: title?.type?.slug,
-        title: title?.slug,
-      },
-    })) || [];*/
-
+/*export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
   };
-}
+}*/
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   let res = null;
   let errors = null;
   let titleData = null;

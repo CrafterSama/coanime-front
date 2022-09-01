@@ -82,11 +82,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
                     quality={90}
                   />
                   <div className="absolute left-0 right-0 bottom-0 h-auto p-2 bg-white bg-opacity-80 text-indigo-900 flex justify-center items-center text-center text-xs">
-                    <Link
-                      href={getTitlesUrl(serie?.type, serie?.title)}
-                      scroll={true}
-                      prefetch={false}
-                    >
+                    <Link href={getTitlesUrl(serie?.type, serie?.title)}>
                       <a>{serie?.title}</a>
                     </Link>
                   </div>
