@@ -28,31 +28,31 @@ const tabs = [
 
 const Titles = ({ titlesData }) => {
   const router = useRouter();
-  const { type } = router.query;
+  const { genre } = router.query;
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
-  const [kind, setKind] = useState<string>(type as string);
+  const [kind, setKind] = useState<string>(genre as string);
   const [activeTab, setActiveTab] = useState('genres');
 
-  const { result: series = [], types, genres } = data;
+  const { types, genres } = data;
 
   useEffect(() => {
     setData(titlesData);
   }, []);
 
   const onPageChange = async () => {
-    if (type) {
-      if (kind !== type) {
-        setKind(type as string);
+    if (genre) {
+      if (kind !== genre) {
+        setKind(genre as string);
         setPage(1);
       }
       await router.push({
-        pathname: `/ecma/titulos/${type}`,
+        pathname: `/ecma/generos/${genre}`,
         query: {
           page,
         },
       });
-      const response = await getTitlesByType({ type, page });
+      const response = await getTitlesByGenre({ genre, page });
       setData(response.data);
       return;
     }
@@ -61,7 +61,7 @@ const Titles = ({ titlesData }) => {
 
   useEffect(() => {
     onPageChange();
-  }, [page, type]);
+  }, [page, genre]);
 
   return (
     <>
