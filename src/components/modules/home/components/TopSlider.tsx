@@ -21,7 +21,7 @@ const TopSlider = ({ relevants }) => (
           clickable: true,
         }}
         loop={true}
-        autoplay={{ delay: 2000 }}
+        autoplay={{ delay: 1500 }}
         className="flex flex-row gap-8 w-full"
       >
         {relevants.map((relevant) => (

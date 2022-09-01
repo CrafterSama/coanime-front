@@ -17,10 +17,6 @@ import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
 
 const Home = ({ homeData, articlesData, articlesJapan }) => {
-  console.log(
-    '🚀 ~ file: index.tsx ~ line 20 ~ Home ~ articlesJapan',
-    articlesJapan
-  );
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -34,6 +30,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
     if (articlesData) {
       setArticles([...articles, ...articlesData?.data]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const moreArticles = async () => {
@@ -47,6 +44,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 
   useEffect(() => {
     moreArticles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (
