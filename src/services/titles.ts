@@ -29,6 +29,17 @@ export const getTitlesByType = async ({ type, page = 1 }) => {
   return response;
 };
 
+export const getTitlesByGenre = async ({ genre, page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClientExternal.get(`genres/${genre}`, { params });
+  return response;
+};
+
 const jikanAnime = ['tv', 'pelicula', 'ova', 'especial', 'ona', 'music'];
 const jikanManga = [
   'manga',

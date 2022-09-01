@@ -26,6 +26,11 @@ const UploadImage = ({ disabled = false, name, model }) => {
         return toast.success(response?.data?.message?.text);
       }
     } catch (error) {
+      if (error.response.status === 413) {
+        return toast.error(
+          `Image upload failed, Error: La Imagen excede el Tamaño permitido.( 1.5MB)`
+        );
+      }
       return toast.error(
         `Image upload failed, Error: ${error.response?.data?.message}`
       );
