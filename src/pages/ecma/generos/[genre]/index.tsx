@@ -10,7 +10,7 @@ import CloudLinks from '@/components/ui/CloudLinks';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { getTitlesByType } from '@/services/titles';
+import { getTitlesByGenre, getTitlesByType } from '@/services/titles';
 
 type TitleData = {
   title: string;
@@ -32,7 +32,7 @@ const Titles = ({ titlesData }) => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
   const [kind, setKind] = useState<string>(type as string);
-  const [activeTab, setActiveTab] = useState('types');
+  const [activeTab, setActiveTab] = useState('genres');
 
   const { result: series = [], types, genres } = data;
 
@@ -139,9 +139,9 @@ export function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { type } = params;
-  const response = await getTitlesByType({
-    type,
+  const { genre } = params;
+  const response = await getTitlesByGenre({
+    genre,
     page: Number(params?.page) ?? 1,
   });
 

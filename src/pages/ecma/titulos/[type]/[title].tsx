@@ -11,14 +11,28 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
+import { Permissions } from '@/components/modules/common/Permissions';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useRandomImageByTitle } from '@/hooks/random-images';
 import { getTitle } from '@/services/titles';
+import { PencilIcon } from '@heroicons/react/outline';
 
 dayjs.extend(utc);
+
+const STATUS_COLORS = {
+  emision: 'border-teal-400 text-teal-400',
+  finalizado: 'border-red-400 text-red-400',
+  estreno: 'border-blue-400 text-blue-400',
+};
+
+const status = {
+  'En emisión': 'emision',
+  Finalizado: 'finalizado',
+  Estreno: 'estreno',
+};
 
 const Titles = ({ title, titleData, errors }) => {
   const router = useRouter();
@@ -59,10 +73,10 @@ const Titles = ({ title, titleData, errors }) => {
                     {!imageLoading && (
                       <Image
                         className={`${
-                          randomImage?.image ? '' : 'blur'
+                          randomImage?.url ? '' : 'blur'
                         } w-full h-full`}
                         src={
-                          randomImage?.image ??
+                          randomImage?.url ??
                           titleData?.result?.images?.name ??
                           DEFAULT_IMAGE
                         }
@@ -74,6 +88,15 @@ const Titles = ({ title, titleData, errors }) => {
                     )}
                   </figure>
                   <div className="overlayer"></div>
+                  <Permissions>
+                    <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
+                      <Link href={`/dashboard/titles/${titleData.id}`}>
+                        <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                          <PencilIcon className="w-5 h-5" />
+                        </a>
+                      </Link>
+                    </div>
+                  </Permissions>
                 </div>
               </Section>
               <div className="title-content">
@@ -163,18 +186,18 @@ const Titles = ({ title, titleData, errors }) => {
                           <SerieItemInfo
                             title="Estatus"
                             value={
-                              titleData?.result?.status === 'En Emisión' &&
-                              isBefore(
-                                new Date(),
-                                new Date(titleData?.result?.broadFinish)
-                              ) ? (
-                                <div className="border-2 border-teal-500 text-teal-500 rounded-md px-1 max-w-[100px]">
-                                  En Emisión
+                              titleData?.result?.status ? (
+                                <div
+                                  className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
+                                    STATUS_COLORS[
+                                      status[titleData?.result?.status]
+                                    ]
+                                  }`}
+                                >
+                                  {titleData?.result?.status}
                                 </div>
                               ) : (
-                                <div className="rounded-md border-2 border-red-400 text-red-400 px-1 max-w-[100px]">
-                                  Finalizado
-                                </div>
+                                'Sin Información'
                               )
                             }
                           />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import cn from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -20,12 +21,18 @@ type TitleData = {
   types: any;
 };
 
+const tabs = [
+  { key: 'types', title: 'Tipos' },
+  { key: 'genres', title: 'Géneros' },
+];
+
 const Titles = ({ titlesData }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
+  const [activeTab, setActiveTab] = useState('types');
 
-  const { result: series = [], types } = data;
+  const { result: series = [], types, genres } = data;
 
   const onPageChange = async () => {
     await router.push({
@@ -57,7 +64,41 @@ const Titles = ({ titlesData }) => {
         )}
         {series && (
           <Section withContainer>
-            <CloudLinks allLink="/ecma/titulos" links={types} />
+            <div className="flex flex-row gap-4 justify-center">
+              {tabs.map((item) => {
+                return (
+                  <div
+                    key={item.key}
+                    className={cn(
+                      'inline-block p-1 font-bold	cursor-pointer border-b-2 ',
+                      {
+                        'text-gray-400 border-transparent':
+                          item.key !== activeTab,
+                        'text-gray-700 border-orange-500':
+                          item.key === activeTab,
+                      }
+                    )}
+                    onClick={() => setActiveTab(item.key)}
+                  >
+                    {item.title}
+                  </div>
+                );
+              })}
+            </div>
+            {activeTab === 'types' && (
+              <CloudLinks
+                allLink="/ecma/titulos"
+                path="titulos"
+                links={types}
+              />
+            )}
+            {activeTab === 'genres' && (
+              <CloudLinks
+                allLink="/ecma/titulos"
+                path="generos"
+                links={genres}
+              />
+            )}
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
               {series?.data?.map((serie) => (
                 <SerieCard key={serie?.id} serie={serie} />
