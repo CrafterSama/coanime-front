@@ -34,8 +34,6 @@ const Titles = ({ titlesData }) => {
   const [kind, setKind] = useState<string>(type as string);
   const [activeTab, setActiveTab] = useState('types');
 
-  const { result: series = [], types, genres } = data;
-
   useEffect(() => {
     setData(titlesData);
   }, []);
@@ -100,10 +98,10 @@ const Titles = ({ titlesData }) => {
               })}
             </div>
             {activeTab === 'types' && (
-              <CloudLinks allLink="/ecma/titulos" links={types} />
+              <CloudLinks allLink="/ecma/titulos" links={data?.types} />
             )}
             {activeTab === 'genres' && (
-              <CloudLinks allLink="/ecma/generos" links={genres} />
+              <CloudLinks allLink="/ecma/generos" links={data?.genres} />
             )}
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
               {data?.result?.data?.map((serie) => (
