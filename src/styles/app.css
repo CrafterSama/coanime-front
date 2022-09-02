@@ -543,7 +543,7 @@ body {
 }
 
 .info__article-subtitle {
-  font-size: 20px;
+  font-size: 1rem;
   line-height: 32px;
   color: var(--dark-gray);
   font-weight: normal;
@@ -946,7 +946,7 @@ p > .user-author {
 
 @media (min-width: 320px) and (max-width: 480px) {
   .info__article-title {
-    font-size: 22px;
+    font-size: 1.4rem;
   }
 }
 
