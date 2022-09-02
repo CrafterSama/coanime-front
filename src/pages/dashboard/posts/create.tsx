@@ -36,12 +36,17 @@ const CreatePost = () => {
   const { categories: categoriesData } = data;
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
+  const [titleCount, setTitleCount] = useState(0);
 
   const { data: serieData = {}, isLoading: isLoadingSeries } = useSearchTitle({
     name: serieName,
   });
 
   const { result: series } = serieData;
+
+  const onChangeTitle = (e) => {
+    setTitleCount(e.target.value.length);
+  };
 
   useEffect(() => {
     if (series?.data?.length > 0) {
@@ -158,6 +163,8 @@ const CreatePost = () => {
                   errors={errors?.['title']?.message}
                   placeholder="Title"
                   className="w-full block text-lg"
+                  hint={`Cantidad de Caracteres: ${titleCount}`}
+                  onChange={onChangeTitle}
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">

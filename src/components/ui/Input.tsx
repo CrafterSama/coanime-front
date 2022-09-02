@@ -15,8 +15,9 @@ type InputProps = {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
-  hint?: string;
+  hint?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  charactersCount?: any;
 };
 
 const Input: FC<InputProps> = ({
@@ -33,6 +34,7 @@ const Input: FC<InputProps> = ({
   className = '',
   hint = '',
   onChange = () => {},
+  charactersCount = null,
   ...props
 }) => {
   const { register } = useFormContext();
@@ -66,12 +68,23 @@ const Input: FC<InputProps> = ({
         )}
       </div>
       {hint && (
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-start">
           <div className="text-gray-400 text-xs">{hint} </div>
         </div>
       )}
+      {charactersCount && (
+        <div className="flex flex-row justify-end">
+          <div
+            className={`${
+              charactersCount > 70 ? 'text-red-400' : 'text-gray-400'
+            } text-xs`}
+          >
+            {`Cantidad de Caracteres: ${charactersCount}`}
+          </div>
+        </div>
+      )}
       {errors && (
-        <div className="flex flex-row justify-between mt-1">
+        <div className="flex flex-row justify-start mt-1">
           <div className="text-red-400">{errors} </div>
         </div>
       )}

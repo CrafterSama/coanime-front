@@ -42,12 +42,21 @@ const UpdatePost = () => {
   const { post, categories: categoriesData } = data;
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
+  const [titleCount, setTitleCount] = useState(0);
+  const [excerptCount, setExcerptCount] = useState(0);
 
   const { data: serieData = {}, isLoading: isLoadingSeries } = useSearchTitle({
     name: serieName,
   });
 
   const { result: series } = serieData;
+
+  const onChangeTitle = (length) => {
+    setTitleCount(length);
+  };
+  const onChangeExcerpt = (length) => {
+    setExcerptCount(length);
+  };
 
   useEffect(() => {
     if (series?.data?.length > 0) {
@@ -77,8 +86,8 @@ const UpdatePost = () => {
 
   const resetPostInfo = useCallback(() => {
     setValue('title', post?.title);
-    setValue('content', post?.content);
     setValue('excerpt', post?.excerpt);
+    setValue('content', post?.content);
     setValue('image', post?.image);
     setValue(
       'tags',
@@ -96,6 +105,8 @@ const UpdatePost = () => {
   useEffect(() => {
     if (post) {
       resetPostInfo();
+      onChangeTitle(watch('title').length);
+      onChangeExcerpt(watch('excerpt').length);
     }
   }, [post, resetPostInfo]);
 
@@ -186,6 +197,8 @@ const UpdatePost = () => {
                     className="w-full block text-lg"
                     defaultValue={post?.title}
                     disabled={!editMode}
+                    charactersCount={titleCount}
+                    onChange={(e) => onChangeTitle(e.target.value.length)}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -198,6 +211,8 @@ const UpdatePost = () => {
                     className="w-full block text-base"
                     defaultValue={post?.excerpt}
                     disabled={!editMode}
+                    charactersCount={excerptCount}
+                    onChange={(e) => onChangeExcerpt(e.target.value.length)}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
