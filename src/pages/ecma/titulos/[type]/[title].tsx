@@ -90,7 +90,7 @@ const Titles = ({ title, titleData, errors }) => {
                   <div className="overlayer"></div>
                   <Permissions>
                     <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                      <Link href={`/dashboard/titles/${titleData.id}`}>
+                      <Link href={`/dashboard/titles/${titleData.result.id}`}>
                         <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
                           <PencilIcon className="w-5 h-5" />
                         </a>
