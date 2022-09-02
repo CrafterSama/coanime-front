@@ -37,6 +37,7 @@ const CreatePost = () => {
   const [serieName, setSerieName] = useState<string>('a');
   const [serieList, setSerieList] = useState<[]>();
   const [titleCount, setTitleCount] = useState(0);
+  const [excerptCount, setExcerptCount] = useState(0);
 
   const { data: serieData = {}, isLoading: isLoadingSeries } = useSearchTitle({
     name: serieName,
@@ -44,8 +45,12 @@ const CreatePost = () => {
 
   const { result: series } = serieData;
 
-  const onChangeTitle = (e) => {
-    setTitleCount(e.target.value.length);
+  const onChangeTitle = (length) => {
+    setTitleCount(length);
+  };
+
+  const onChangeExcerpt = (length) => {
+    setExcerptCount(length);
   };
 
   useEffect(() => {
@@ -163,8 +168,8 @@ const CreatePost = () => {
                   errors={errors?.['title']?.message}
                   placeholder="Title"
                   className="w-full block text-lg"
-                  hint={`Cantidad de Caracteres: ${titleCount}`}
-                  onChange={onChangeTitle}
+                  hint={titleCount}
+                  onChange={(e) => onChangeTitle(e.target.value.length)}
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
@@ -175,6 +180,8 @@ const CreatePost = () => {
                   errors={errors?.['excerpt']?.message}
                   placeholder="excerpt"
                   className="w-full block text-base"
+                  hint={excerptCount}
+                  onChange={(e) => onChangeExcerpt(e.target.value.length)}
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
