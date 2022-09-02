@@ -30,6 +30,11 @@ class MyDocument extends Document {
           <meta name="referrer" content="default" />
           <meta property="fb:pages" content="127729317274121" />
           <meta content="all, index, follow" name="robots" />
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4955562843486224"
+            crossOrigin="anonymous" // disabled-eslint
+          ></script>
         </Head>
         <body className="antialiased">
           <Main />
