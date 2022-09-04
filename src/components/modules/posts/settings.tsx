@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { LinkIcon } from '@heroicons/react/outline';
 
 export const headers = [
   {
@@ -22,11 +23,18 @@ export const headers = [
           />
         </div>
         <div className="w-7/12 text-orange-500 font-semibold">
-          <Link href={`/dashboard/posts/${row.slug}`}>
-            <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-2">
-              {row.title}
-            </a>
-          </Link>
+          <div className="flex flex-row gap-2">
+            <Link href={`/dashboard/posts/${row.slug}`}>
+              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-2">
+                {row.title}
+              </a>
+            </Link>
+            <Link href={`/posts/${row?.slug}`}>
+              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
+                <LinkIcon className="h-4 w-4" />
+              </a>
+            </Link>
+          </div>
           <p className="text-gray-600 text-xs">
             {strLimit(extractText(row?.content), 100)}
           </p>

@@ -113,7 +113,7 @@ const Titles = ({ title, titleData, errors }) => {
                       </figure>
                       <div className="title-info-box">
                         <div className="title-name-box">
-                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center">
+                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center lg:text-left">
                             {titleData?.result?.name}
                           </h1>
                         </div>
@@ -176,7 +176,7 @@ const Titles = ({ title, titleData, errors }) => {
                           <SerieItemInfo
                             title="Episodios"
                             value={
-                              titleData?.result?.episodes || 'Sin Información'
+                              titleData?.result?.episodies || 'Sin Información'
                             }
                           />
                           <SerieItemInfo

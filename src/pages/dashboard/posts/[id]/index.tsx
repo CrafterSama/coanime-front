@@ -101,12 +101,14 @@ const UpdatePost = () => {
   }, [post, setValue]);
 
   const postponed = watch('postponedTo');
+  const title = watch('title');
+  const excerpt = watch('excerpt');
 
   useEffect(() => {
     if (post) {
       resetPostInfo();
-      onChangeTitle(watch('title').length);
-      onChangeExcerpt(watch('excerpt').length);
+      onChangeTitle(title?.length ?? 0);
+      onChangeExcerpt(excerpt?.length ?? 0);
     }
   }, [post, resetPostInfo]);
 
@@ -275,7 +277,7 @@ const UpdatePost = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Label>Imagen Principal del Post</Label>
                   <Image
-                    src={post?.image ?? DEFAULT_IMAGE}
+                    src={post?.image ? post?.image : DEFAULT_IMAGE}
                     alt={post?.title}
                     className="w-full rounded-lg"
                   />
