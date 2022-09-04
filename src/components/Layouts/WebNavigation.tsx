@@ -106,6 +106,7 @@ const Navigation = ({ user }) => {
                   <Permissions>
                     <DropdownLink
                       href="/dashboard"
+                      rel="nofollow"
                       icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}
                     >
                       Dashboard

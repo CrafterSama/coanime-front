@@ -1,22 +1,16 @@
-import {
-  FaFacebook,
-  FaHeart,
-  FaInstagram,
-  FaReact,
-  FaTwitter,
-} from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
+import { format } from 'date-fns';
 import Link from 'next/link';
 
 import Section from '@/components/ui/Section';
-import { format } from 'date-fns';
 
 const Footer = () => {
   return (
     <footer className="bg-gray-800">
       <div className="flex">
         <Section withContainer>
-          <div className="py-4 px-4 sm:px-0">
+          <div className="py-4 px-4">
             <div className="flex flex-row gap-4 items-center justify-start py-4">
               <h4 className="text-base font-bold text-white">Síguenos</h4>
               <Link href="https://www.facebook.com/Coanime/">

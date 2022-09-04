@@ -1,0 +1,9 @@
+User-Agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /dashboard/posts
+Disallow: /dashboard/titles
+Disallow: /dashboard/people
+Disallow: /dashboard/entities
+Disallow: /dashboard/events
+Disallow: /dashboard/magazines
