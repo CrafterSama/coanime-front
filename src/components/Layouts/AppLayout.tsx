@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Navigation from '@/components/Layouts/Navigation';
@@ -20,18 +21,23 @@ const AppLayout = ({ header, children }) => {
   }, [user]);
 
   return (
-    <div className="flex flex-row min-h-screen">
-      <Aside />
-      <main className="flex flex-col flex-1 w-auto">
-        <Navigation user={user} />
-        {
-          <header className="bg-white">
-            <div className="py-6 px-8">{header}</div>
-          </header>
-        }
-        <section>{children}</section>
-      </main>
-    </div>
+    <>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <div className="flex flex-row min-h-screen">
+        <Aside />
+        <main className="flex flex-col flex-1 w-auto">
+          <Navigation user={user} />
+          {
+            <header className="bg-white">
+              <div className="py-6 px-8">{header}</div>
+            </header>
+          }
+          <section>{children}</section>
+        </main>
+      </div>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ const NotFoundPage = () => {
     <WebLayout>
       <Head>
         <title>404 - Not Found</title>
+        <meta name="robots" content="noindex" />
       </Head>
       <div className="relative flex items-top justify-center min-h-screen bg-white sm:items-center sm:pt-0">
         <div className="container">
