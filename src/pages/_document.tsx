@@ -40,18 +40,6 @@ class MyDocument extends Document {
         <body className="antialiased">
           <Main />
           <NextScript />
-          {/* Default Statcounter code for Coanime.net http://coanime.net */}
-          <Script
-            dangerouslySetInnerHTML={{
-              __html: `var sc_project=9208621;
-              var sc_invisible=0;
-              var sc_security="953d137a";
-              var scJsHost = "https://";
-              document.write("<sc"+"ript type='text/javascript' src='" +
-              scJsHost+
-              "statcounter.com/counter/counter.js'></"+"script>");`,
-            }}
-          />
         </body>
       </Html>
     );

@@ -168,7 +168,7 @@ const CreatePost = () => {
                   errors={errors?.['title']?.message}
                   placeholder="Title"
                   className="w-full block text-lg"
-                  hint={titleCount}
+                  charactersCount={titleCount}
                   onChange={(e) => onChangeTitle(e.target.value.length)}
                 />
               </div>
@@ -180,7 +180,7 @@ const CreatePost = () => {
                   errors={errors?.['excerpt']?.message}
                   placeholder="excerpt"
                   className="w-full block text-base"
-                  hint={excerptCount}
+                  charactersCount={excerptCount}
                   onChange={(e) => onChangeExcerpt(e.target.value.length)}
                 />
               </div>

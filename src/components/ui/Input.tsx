@@ -72,7 +72,7 @@ const Input: FC<InputProps> = ({
           <div className="text-gray-400 text-xs">{hint} </div>
         </div>
       )}
-      {charactersCount && (
+      {charactersCount >= 0 ? (
         <div className="flex flex-row justify-end">
           <div
             className={`${
@@ -82,7 +82,7 @@ const Input: FC<InputProps> = ({
             {`Cantidad de Caracteres: ${charactersCount}`}
           </div>
         </div>
-      )}
+      ) : null}
       {errors && (
         <div className="flex flex-row justify-start mt-1">
           <div className="text-red-400">{errors} </div>
