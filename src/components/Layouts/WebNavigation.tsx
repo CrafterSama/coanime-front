@@ -279,6 +279,71 @@ const Navigation = ({ user }) => {
           </div>
         </div>
       )}
+      {/*(router?.pathname === '/' ||
+        router?.asPath.includes('/categorias/')) && (
+        <div className="w-full bg-white sub-navbar">
+          <div className="max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="flex justify-around items-center">
+              <NavLink
+                className="py-4"
+                href="/"
+                active={router.pathname === '/'}
+              >
+                Principal
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/anime"
+                active={router.pathname?.includes('/categorias/anime')}
+              >
+                Anime
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/manga"
+                active={router.pathname?.includes('/categorias/manga')}
+              >
+                Manga
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/juegos"
+                active={router.pathname?.includes('/categorias/juegos')}
+              >
+                Juegos
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/peliculas"
+                active={router.pathname?.includes('/categorias/peliculas')}
+              >
+                Películas
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/doramas"
+                active={router.pathname?.includes('/categorias/doramas')}
+              >
+                Doramas
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/japon"
+                active={router.pathname?.includes('/categorias/japon')}
+              >
+                Japón
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/curiosidades"
+                active={router.pathname?.includes('/categorias/curiosidades')}
+              >
+                Curiosidades
+              </NavLink>
+            </div>
+          </div>
+        </div>
+        )*/}
     </>
   );
 };

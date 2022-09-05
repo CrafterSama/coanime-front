@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { sunEditorOptions } from '@/constants/suneditor';
 import 'suneditor/dist/css/suneditor.min.css';
 import { uploadImages } from '@/hooks/images';
+import toast from 'react-hot-toast';
 
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
@@ -47,6 +48,9 @@ const TextEditor = ({
               uploadHandler(response);
 
               return undefined;
+            }}
+            onImageUploadError={(errorMessage, result) => {
+              toast.error(errorMessage);
             }}
             setAllPlugins={true}
             setDefaultStyle="font-family: Red Hat Text; font-size: 16px;"

@@ -22,6 +22,7 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/outline';
 import Script from 'next/script';
+import DisqusComments from '@/components/modules/common/DisqusComments';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -42,6 +43,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     otherArticles,
     relateds,
   } = data;
+  const PAGE_URL = 'https://coanime.net/posts/';
 
   useEffect(() => {
     if (errors) {
@@ -180,27 +182,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                     title="Charlemos"
                     subtitle="Sección de comentarios"
                   />
-                  <div id="disqus_thread"></div>
-                  <Script
-                    dangerouslySetInnerHTML={{
-                      __html: `
-                        {/*/**
-                        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-                        /**/}
-                        var disqus_config = function () {
-                          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                        };
-                        (function() { // DON'T EDIT BELOW THIS LINE
-                          var d = document, s = d.createElement('script');
-                          s.src = 'https://EXAMPLE.disqus.com/embed.js';
-                          s.setAttribute('data-timestamp', +new Date());
-                          (d.head || d.body).appendChild(s);
-                        })();
-                      `,
-                    }}
-                  />
+                  <DisqusComments post={post} />
                 </Section>
               </Section>
             </div>
