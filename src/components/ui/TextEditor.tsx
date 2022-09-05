@@ -33,9 +33,7 @@ const TextEditor = ({
             onImageUploadBefore={async (files, info, uploadHandler) => {
               // TODO: remove console
               // console.log('file = ', files[0]);
-              const res = await uploadImages(files, 'posts')
-                .then((response) => response)
-                .catch((error) => error.response);
+              const res = await uploadImages(files, 'posts');
 
               const response = {
                 result: [
