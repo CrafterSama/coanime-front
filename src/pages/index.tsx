@@ -15,6 +15,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
+import { PlusIcon, PlusSmIcon } from '@heroicons/react/outline';
 
 const Home = ({ homeData, articlesData, articlesJapan }) => {
   const [articles, setArticles] = useState([]);
@@ -92,6 +93,15 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
         <RecentPosts posts={data?.result} />
+        <div className="w-full flex justify-end items-center mt-2">
+          <a
+            className="flex flex-row items-center text-orange-500"
+            href="#news"
+          >
+            <PlusSmIcon className="w-6 h-6 text-orange-400" />
+            Mas Noticias
+          </a>
+        </div>
       </Section>
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
@@ -107,7 +117,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           <OtherNews articles={japan} />
         </Section>
       </Section>
-      <Section withContainer>
+      <Section withContainer id="news">
         <SectionTitle title="News" subtitle="Otras Noticias" />
         <OtherNews articles={articles} />
         <div className="flex justify-center">
