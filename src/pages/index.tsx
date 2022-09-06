@@ -93,7 +93,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
         <RecentPosts posts={data?.result} />
-        <div className="w-full flex justify-end items-center mt-2">
+        <div className="w-full flex justify-end items-center mt-2 px-4">
           <a
             className="flex flex-row items-center text-orange-500"
             href="#news"
