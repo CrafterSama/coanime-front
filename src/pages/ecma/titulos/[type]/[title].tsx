@@ -50,8 +50,6 @@ const Titles = ({ title, titleData, errors }) => {
     title: titleData?.result?.id,
   });
 
-  console.log(userStatistics);
-
   const { data: userRates, refetch: refetchRates } = useCheckUserRates({
     user: user?.id,
     title: titleData?.result?.id,
@@ -159,18 +157,32 @@ const Titles = ({ title, titleData, errors }) => {
                               </div>
                             </>
                           ) : (
-                            <div className="relative">
-                              <Link href="/login">
-                                <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
-                                  <div className="mr-1">
-                                    <PlusSmIcon className="w-4 h-4" />
-                                  </div>
-                                  <div className="flex flex-row justify-start items-center gap-4 relative">
-                                    Watch Options
-                                  </div>
-                                </a>
-                              </Link>
-                            </div>
+                            <>
+                              <div className="relative">
+                                <Link href="/login">
+                                  <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                    <div className="mr-1">
+                                      <PlusSmIcon className="w-4 h-4" />
+                                    </div>
+                                    <div className="flex flex-row justify-start items-center gap-4 relative">
+                                      Watch Options
+                                    </div>
+                                  </a>
+                                </Link>
+                              </div>
+                              <div className="relative">
+                                <Link href="/login">
+                                  <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                    <div className="mr-1">
+                                      <PlusSmIcon className="w-4 h-4" />
+                                    </div>
+                                    <div className="flex flex-row justify-start items-center gap-4 relative">
+                                      Rate Options
+                                    </div>
+                                  </a>
+                                </Link>
+                              </div>
+                            </>
                           )}
                         </div>
                       </div>
