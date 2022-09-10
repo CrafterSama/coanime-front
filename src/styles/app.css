@@ -565,6 +565,13 @@ body {
   margin-top: 50px;
 }
 
+.info__article-content ul,
+.info__article-content ol {
+  list-style: inherit;
+  margin: inherit;
+  padding: inherit;
+}
+
 .info__article-content figure {
   padding: 0 !important;
   position: relative;
@@ -754,7 +761,7 @@ p > .user-author {
   width: 280px;
   height: 380px;
   margin: 0;
-  overflow: hidden;
+  /*overflow: hidden;*/
   border: 7px solid var(--white);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   display: grid;

@@ -19,13 +19,6 @@ const Dropdown = ({
   children,
 }) => {
   let alignmentClasses;
-  let classWidth;
-
-  switch (width) {
-    case 48:
-      classWidth = 'w-48';
-      break;
-  }
 
   switch (align) {
     case 'left':
@@ -58,7 +51,7 @@ const Dropdown = ({
             leaveTo="transform opacity-0 scale-95"
           >
             <div
-              className={`absolute z-50 mt-2 ${classWidth} rounded-md shadow-lg ${alignmentClasses}`}
+              className={`absolute z-50 mt-2 w-${width} rounded-md shadow-lg ${alignmentClasses}`}
             >
               <Menu.Items
                 className={`rounded-md focus:outline-none ring-1 ring-black ring-opacity-5 ${contentClasses}`}

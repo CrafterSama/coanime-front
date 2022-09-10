@@ -7,7 +7,7 @@ const SectionTitle = ({ title, subtitle, fancyText = null }, props) => (
         <>
           {' '}
           <span className="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-orange-400 relative inline-block">
-            <span className="relative text-white">{fancyText}</span>
+            <span className="relative text-white m-1">{fancyText}</span>
           </span>
         </>
       )}
