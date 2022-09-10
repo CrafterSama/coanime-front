@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { isBefore } from 'date-fns';
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es';
 import utc from 'dayjs/plugin/utc';
@@ -12,13 +11,18 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import { Permissions } from '@/components/modules/common/Permissions';
+import Rates from '@/components/modules/titles/components/Rates';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
+import Statistics from '@/components/modules/titles/components/Statistics';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { useAuth } from '@/hooks/auth';
 import { useRandomImageByTitle } from '@/hooks/random-images';
+import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
-import { PencilIcon } from '@heroicons/react/outline';
+import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { UseQueryResult } from 'react-query';
 
 dayjs.extend(utc);
 
@@ -35,7 +39,23 @@ const status = {
 };
 
 const Titles = ({ title, titleData, errors }) => {
+  const { user } = useAuth({ middleware: 'auth' });
   const router = useRouter();
+
+  const {
+    data: userStatistics,
+    refetch: refetchStatistics,
+  } = useCheckUserStatistics({
+    user: user?.id,
+    title: titleData?.result?.id,
+  });
+
+  console.log(userStatistics);
+
+  const { data: userRates, refetch: refetchRates } = useCheckUserRates({
+    user: user?.id,
+    title: titleData?.result?.id,
+  });
 
   const {
     data: randomImage = {},
@@ -103,15 +123,58 @@ const Titles = ({ title, titleData, errors }) => {
                 <Section withContainer>
                   <div className="title-info container mx-auto px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
-                      <figure className="title-image overlap-banner relative rounded">
-                        <Image
-                          className="w-[300px] h-[380px] object-cover object-center mx-auto"
-                          src={titleData?.result?.images?.name ?? DEFAULT_IMAGE}
-                          layout="fill"
-                          objectFit="cover"
-                        />
-                      </figure>
-                      <div className="title-info-box">
+                      <div className="title-image-box overlap-banner relative w-[300px]">
+                        <figure className="title-image overlap-banner relative rounded">
+                          <Image
+                            className="w-[300px] h-[380px] object-cover object-center mx-auto"
+                            src={
+                              titleData?.result?.images?.name ?? DEFAULT_IMAGE
+                            }
+                            layout="fill"
+                            objectFit="cover"
+                          />
+                        </figure>
+                        <div className="absolute left-1 -bottom-10 w-[290px] flex justify-between">
+                          {user ? (
+                            <>
+                              {titleData?.result?.type?.id !== 8 && (
+                                <div className="relative">
+                                  <Statistics
+                                    serie={titleData?.result}
+                                    statistics={titleData?.statistics}
+                                    userStatistics={
+                                      userStatistics?.data?.statistics
+                                    }
+                                    refetch={refetchStatistics}
+                                  />
+                                </div>
+                              )}
+                              <div className="relative">
+                                <Rates
+                                  serie={titleData?.result}
+                                  rates={titleData?.rates}
+                                  userRates={userRates?.data?.rates}
+                                  refetch={refetchRates}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <div className="relative">
+                              <Link href="/login">
+                                <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                  <div className="mr-1">
+                                    <PlusSmIcon className="w-4 h-4" />
+                                  </div>
+                                  <div className="flex flex-row justify-start items-center gap-4 relative">
+                                    Watch Options
+                                  </div>
+                                </a>
+                              </Link>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="title-info-box mt-10 lg:mt-0">
                         <div className="title-name-box">
                           <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center lg:text-left">
                             {titleData?.result?.name}
