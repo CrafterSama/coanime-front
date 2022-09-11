@@ -40,6 +40,21 @@ export const useGetTitle = (type: string, title: string) => {
   });
 };
 
+export const useGetUserTitleList = ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  return useQuery(['user-list', page], async () => {
+    const response = await httpClientExternal.get(`/user/title-list`, {
+      params,
+    });
+    return response.data;
+  });
+};
+
 export const useSearchTitle = ({ name = 'a' }) => {
   return useQuery(['externalSearchTitle', name], async () => {
     const response = await httpClientExternal.get(`search/titles/${name}`);

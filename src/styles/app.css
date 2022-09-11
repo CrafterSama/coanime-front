@@ -567,9 +567,20 @@ body {
 
 .info__article-content ul,
 .info__article-content ol {
-  list-style: inherit;
-  margin: inherit;
-  padding: inherit;
+  margin: unset;
+  padding: 0 0 0 2rem;
+}
+
+.info__article-content ul {
+  list-style: unset;
+}
+
+.info__article-content ol {
+  list-style: url;
+}
+
+.info__article-content ol > li {
+  margin: 0.5rem 0;
 }
 
 .info__article-content figure {

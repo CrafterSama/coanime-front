@@ -43,7 +43,6 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     otherArticles,
     relateds,
   } = data;
-  const PAGE_URL = 'https://coanime.net/posts/';
 
   useEffect(() => {
     if (errors) {
@@ -60,7 +59,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     setFetching(true);
     setTimeout(() => {
       setFetching(false);
-    }, 1200);
+    }, 800);
   };
 
   useEffect(() => {

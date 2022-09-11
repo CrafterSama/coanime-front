@@ -21,6 +21,7 @@ import {
   XIcon,
   ChevronDownIcon,
   UserCircleIcon,
+  CollectionIcon,
 } from '@heroicons/react/outline';
 
 const Navigation = ({ user }) => {
@@ -117,6 +118,12 @@ const Navigation = ({ user }) => {
                     icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}
                   >
                     Perfil
+                  </DropdownLink>
+                  <DropdownLink
+                    href="/mi-lista"
+                    icon={<CollectionIcon className="h-6 w-6 text-gray-700" />}
+                  >
+                    Mi Lista
                   </DropdownLink>
                   <DropdownButton
                     onClick={logout}
