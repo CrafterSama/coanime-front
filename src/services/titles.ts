@@ -65,3 +65,16 @@ export const titleUpdate = async (id: string | string[], params: any) =>
 
 export const titleCreate = async (params: any) =>
   await httpClient.post(`titles`, params);
+
+export const getUserTitleList = async ({ page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClientExternal.get(`/user/title-list`, {
+    params,
+  });
+  return response;
+};
