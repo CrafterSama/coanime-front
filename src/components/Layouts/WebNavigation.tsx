@@ -219,10 +219,24 @@ const Navigation = ({ user }) => {
 
                 <div className="mt-3 space-y-1">
                   {/* Authentication */}
+                  <Permissions>
+                    <ResponsiveNavLink href="/dashboard">
+                      <span className="flex gap-2 justify-end items-center">
+                        <TemplateIcon className="h-6 w-6 text-gray-700" />{' '}
+                        Dashboard
+                      </span>
+                    </ResponsiveNavLink>
+                  </Permissions>
                   <ResponsiveNavLink href="/perfil">
                     <span className="flex gap-2 justify-end items-center">
                       <UserCircleIcon className="h-6 w-6 text-gray-700" />{' '}
                       Perfil
+                    </span>
+                  </ResponsiveNavLink>
+                  <ResponsiveNavLink href="/mi-lista">
+                    <span className="flex gap-2 justify-end items-center">
+                      <CollectionIcon className="h-6 w-6 text-gray-700" /> Mi
+                      Lista
                     </span>
                   </ResponsiveNavLink>
                   <ResponsiveNavButton onClick={logout}>
