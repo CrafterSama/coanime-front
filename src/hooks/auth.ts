@@ -129,6 +129,7 @@ export const useAuth = ({
     'dashboard/users',
     'dashboard/people',
     'perfil',
+    'mi-lista',
   ];
 
   const pathname = router.pathname.split('/')[1];
