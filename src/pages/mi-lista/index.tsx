@@ -19,7 +19,7 @@ const Titles = ({ titlesData }) => {
   const router = useRouter();
   const [page, setPage] = useState(titlesData);
   const { data: response } = useGetUserTitleList({ page });
-  const [data, setData] = useState(response?.data?.list);
+  const [data, setData] = useState(response?.data?.result);
   const [loading, setLoading] = useState(false);
 
   const onPageChange = async () => {
@@ -30,7 +30,7 @@ const Titles = ({ titlesData }) => {
       },
     });
     const response = await getUserTitleList({ page });
-    setData(response?.data?.list);
+    setData(response?.data?.result);
     setLoading(false);
   };
 
@@ -42,9 +42,9 @@ const Titles = ({ titlesData }) => {
   return (
     <>
       <Head>
-        <title>{titlesData?.title}</title>
-        <meta name="description" content={titlesData?.description} />
-        <meta name="keywords" content={titlesData?.keywords} />
+        <title>{response?.title}</title>
+        <meta name="description" content={response?.description} />
+        <meta name="keywords" content={response?.keywords} />
       </Head>
       <WebLayout>
         {!data && (

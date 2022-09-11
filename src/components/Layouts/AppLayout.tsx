@@ -25,7 +25,7 @@ const AppLayout = ({ header, children }) => {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <div className="flex flex-row min-h-screen">
+      <div id="top" className="flex flex-row min-h-screen">
         <Aside />
         <main className="flex flex-col flex-1 w-auto">
           <Navigation user={user} />
