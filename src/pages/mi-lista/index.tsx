@@ -69,10 +69,9 @@ const Titles = ({ titlesData }) => {
                 </h1>
                 <p className="text-sm font-bold lg:text-base text-white">
                   Aca tenemos una lista de todos los títulos que vamos agregando
-                  si la vimos, la queremos ver o simplemente abandonamos , a
-                  medida que vayas agregando series a tu lista a traves de las
-                  watch options, la serie ira creciendo y nuestro sistema podría
-                  irte recomendando otras series que te puedan gustar.
+                  a traves de las watch options, mientras la lista ira creciendo
+                  y nuestro sistema podría irte recomendando otras series que te
+                  puedan gustar.
                 </p>
               </div>
             </div>
