@@ -26,16 +26,21 @@ const NotFoundPage = () => {
               </small>
             </div>
             <h1 className="text-2xl">404 | Not Found</h1>
-            <div className="container">
+            <div className="container max-w-6xl">
               <h3>
                 El Contenido que estas buscando no existe o no esta guardado aun
-                en nuestra Base de Datos
+                en nuestra Base de Datos, si fuiste redirigido a esta pagina
+                tratando de acceder a algún titulo de la enciclopedia, puedes
+                escribirnos en nuestras redes sociales, pidiendo el titulo en si
+                o escribo a traves de nuestro correo contacto@coanime.net
               </h3>
               <hr />
               <p>
-                Regresa al{' '}
+                O simplemente regresa al{' '}
                 <Link href="/">
-                  <a className="text-orange-400 font-bold">Inicio</a>
+                  <a className="text-orange-400 font-bold">
+                    Inicio y sigue navegando
+                  </a>
                 </Link>
               </p>
             </div>
