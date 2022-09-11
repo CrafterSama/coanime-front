@@ -37,7 +37,7 @@ const Titles = ({ titlesData }) => {
   useEffect(() => {
     onPageChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   return (
     <>
@@ -75,7 +75,7 @@ const Titles = ({ titlesData }) => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
+            <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
               {data?.data?.map((serie) => (
                 <div
                   key={serie?.titles?.id}
