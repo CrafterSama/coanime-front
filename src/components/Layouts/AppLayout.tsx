@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import Head from 'next/head';
@@ -12,6 +12,7 @@ import { hasRole } from '@/utils/common';
 const AppLayout = ({ header, children }) => {
   const router = useRouter();
   const { user } = useAuth({ middleware: 'auth' });
+  const [isTiny, setIsTiny] = useState(false);
 
   useEffect(() => {
     if (user && user?.roles.length === 1 && hasRole(user?.roles, 'user')) {
@@ -26,9 +27,9 @@ const AppLayout = ({ header, children }) => {
         <meta name="robots" content="noindex" />
       </Head>
       <div id="top" className="flex flex-row min-h-screen">
-        <Aside />
+        <Aside isTiny={isTiny} />
         <main className="flex flex-col flex-1 w-auto">
-          <Navigation user={user} />
+          <Navigation user={user} menuActionButton={() => setIsTiny(!isTiny)} />
           {
             <header className="bg-white">
               <div className="py-6 px-8">{header}</div>
