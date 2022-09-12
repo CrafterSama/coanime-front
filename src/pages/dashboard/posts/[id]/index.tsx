@@ -187,8 +187,8 @@ const UpdatePost = () => {
               editAction={() => setEditMode(true)}
               disabled={!editMode}
             />
-            <div className="p-4 flex flex-row gap-4 rounded-b-lg">
-              <div className="w-8/12">
+            <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
+              <div className="w-full md:w-8/12">
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Titulo"
@@ -233,7 +233,7 @@ const UpdatePost = () => {
                   />
                 </div>
               </div>
-              <div className="w-4/12">
+              <div className="w-full md:w-4/12">
                 <div className="mb-4 flex flex-col gap-3 datepicker-box">
                   <Label htmlFor="description">
                     Posponer hasta(Hora Local):

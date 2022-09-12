@@ -44,7 +44,7 @@ export const Rows: FC<RowsProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const tdStyles = (column) =>
     cn(
-      `col-span-1 flex py-2 first:justify-start justify-center items-center w-full  ${
+      `col-span-1 first:flex hidden md:flex py-2 first:justify-start justify-center items-center w-full  ${
         column.cellClass ?? ''
       }`,
       {
@@ -126,7 +126,7 @@ export const Table: FC<TableProps> = ({
   fixedHeader = true,
 }) => {
   const thStyles = (column, fixedHeader) =>
-    cn('flex justify-center items-center', {
+    cn('first:flex hidden md:flex justify-center items-center', {
       /*sticky: fixedHeader || column.fixed,*/
       /*'top-0': fixedHeader,
       'bg-gray-200': fixedHeader && !column.fixed,
