@@ -40,7 +40,7 @@ const Posts = () => {
         }
       >
         <div className="py-12">
-          <div className="max-w-9xl mx-auto sm:px-6 lg:px-8">
+          <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-start py-4">
               <InputWithoutContext
                 placeholder="Buscar"
