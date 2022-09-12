@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -6,6 +6,8 @@ import Link from 'next/link';
 import WebLayout from '@/components/Layouts/WebLayout';
 
 const NotFoundPage = () => {
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

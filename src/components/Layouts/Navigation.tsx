@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
 
+import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 
 import { MenuIcon, LogoutIcon, UserCircleIcon } from '@/components/icons';
@@ -8,12 +10,10 @@ import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
-import { useAuth } from '@/hooks/auth';
-import Image from 'next/future/image';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { FaChevronDown } from 'react-icons/fa';
+import { useAuth } from '@/hooks/auth';
 
-const Navigation = ({ user }) => {
+const Navigation = ({ user, menuActionButton = () => {} }) => {
   const router = useRouter();
 
   const { logout } = useAuth();
@@ -25,7 +25,10 @@ const Navigation = ({ user }) => {
       {/* Primary Navigation Menu */}
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex">
+          <div
+            className="flex cursor-pointer hidden sm:block"
+            onClick={menuActionButton}
+          >
             <MenuIcon className="h-6 w-6 text-gray-400" />
           </div>
           {/* Settings Dropdown */}

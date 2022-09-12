@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 type MenuLinkProps = {
   icon?: React.ReactNode;
+  isTiny?: boolean;
   active?: boolean;
   children: React.ReactNode;
   href?: string;
@@ -12,6 +13,7 @@ type MenuLinkProps = {
 
 const MenuLink: FC<MenuLinkProps> = ({
   icon,
+  isTiny = false,
   active = false,
   children,
   href,
@@ -31,8 +33,14 @@ const MenuLink: FC<MenuLinkProps> = ({
           active ? 'bg-orange-100' : 'hover:bg-orange-100'
         } ${className}`}
       >
-        {icon ?? ''}
-        <span className="menu-txt">{children}</span>
+        {icon && (
+          <span className={`${isTiny ? '-ml-3' : 'md:ml-0'} -ml-3`}>
+            {icon}
+          </span>
+        )}
+        {!isTiny && (
+          <span className="hidden md:block menu-txt">{children}</span>
+        )}
       </a>
     </Link>
   </li>

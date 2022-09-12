@@ -5,15 +5,25 @@ import { Logotype } from '@/components/ui/ApplicationLogo';
 import MenuLink from '@/components/ui/MenuLink';
 import { menu } from '@/constants/menu';
 
-const Aside = () => {
+const Aside = ({ isTiny = false }) => {
   const router = useRouter();
+  const path = router.asPath.split('/')[router.asPath.split('/').length - 1];
+  //debugger; // eslint-disable-line
 
   return (
-    <aside className="w-auto border-r border-gray-200">
+    <aside
+      className={`${
+        isTiny ? 'w-14' : 'md:w-auto'
+      } w-14 border-r border-gray-200`}
+    >
       <div className="flex flex-col gap-4 m-auto">
         <div className="w-auto h-20 p-4 rounded-full self-center ">
           <Link href="/">
-            <a>
+            <a
+              className={`${
+                isTiny ? 'w-14' : 'w-14 md:w-full'
+              } grid overflow-hidden text-left px-2`}
+            >
               <Logotype
                 logoColor="#FE6A00"
                 lettersColor="#FE6A00"
@@ -27,8 +37,9 @@ const Aside = () => {
             <MenuLink
               key={item.href}
               href={item.href}
-              active={router.asPath.includes(item.href)}
+              active={path === item.breadcrumb}
               icon={item.icon}
+              isTiny={isTiny}
             >
               {item.text}
             </MenuLink>

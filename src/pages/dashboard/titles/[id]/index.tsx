@@ -176,8 +176,8 @@ const UpdateTitle = ({ id }) => {
               editAction={() => setEditMode(true)}
               disabled={!editMode}
             />
-            <div className="p-4 flex flex-row gap-4 rounded-b-lg">
-              <div className="w-9/12">
+            <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
+              <div className="w-full md:w-9/12">
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Nombre del Titulo"
@@ -216,8 +216,8 @@ const UpdateTitle = ({ id }) => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row gap-4">
-                  <div className="mb-4 flex flex-col gap-2 w-5/6">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="mb-4 flex flex-col gap-2 w-full md:w-5/6">
                     <Label htmlFor="sinopsis">Sinopsis</Label>
                     <Controller
                       control={control}
@@ -232,7 +232,7 @@ const UpdateTitle = ({ id }) => {
                       )}
                     />
                   </div>
-                  <div className="mb-4 flex flex-col gap-2 w-1/6">
+                  <div className="mb-4 flex flex-col gap-2 w-full md:w-1/6">
                     <Label>Portada del Titulo</Label>
                     <div className="flex relative mx-auto">
                       <Image
@@ -249,7 +249,7 @@ const UpdateTitle = ({ id }) => {
                   </div>
                 </div>
               </div>
-              <div className="w-3/12">
+              <div className="w-full md:w-3/12">
                 <div className="mb-4 flex flex-col gap-3">
                   <Label htmlFor="typeId">Tipo de Contenido</Label>
                   <FormSelect

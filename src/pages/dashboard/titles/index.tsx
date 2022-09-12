@@ -46,7 +46,7 @@ const Titles = () => {
         }
       >
         <div className="py-12">
-          <div className="max-w-9xl mx-auto sm:px-6 lg:px-8">
+          <div className="max-w-9xl mx-auto px-4  sm:px-6 lg:px-8">
             <div className="flex gap-2 justify-start items-center py-4">
               <InputWithoutContext
                 type="search"
@@ -60,7 +60,7 @@ const Titles = () => {
                 onClick={clearFilter}
               />
             </div>
-            <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
+            <div className="bg-white overflow-auto min-h-screen shadow-lg sm:rounded-lg">
               {isLoading && (
                 <div className="flex justify-center content-center min-w-screen min-h-screen">
                   <Loading size={16} />
