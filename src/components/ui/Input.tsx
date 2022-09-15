@@ -72,11 +72,11 @@ const Input: FC<InputProps> = ({
           <div className="text-gray-400 text-xs">{hint} </div>
         </div>
       )}
-      {charactersCount >= 0 ? (
+      {charactersCount >= 0 && charactersCount !== null ? (
         <div className="flex flex-row justify-end">
           <div
             className={`${
-              charactersCount > 70 ? 'text-red-400' : 'text-gray-400'
+              charactersCount > 75 ? 'text-red-400' : 'text-gray-400'
             } text-xs`}
           >
             {`Cantidad de Caracteres: ${charactersCount}`}

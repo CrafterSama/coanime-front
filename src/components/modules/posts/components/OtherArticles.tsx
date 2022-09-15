@@ -1,6 +1,9 @@
-import { DEFAULT_IMAGE } from '@/constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { Permissions } from '@/components/modules/common/Permissions';
+import { DEFAULT_IMAGE } from '@/constants/common';
+import { PencilIcon } from '@heroicons/react/outline';
 
 const OtherArticles = ({ articles }) => (
   <div className="features">
@@ -23,6 +26,15 @@ const OtherArticles = ({ articles }) => (
                   />
                 </a>
               </Link>
+              <Permissions>
+                <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
+                  <Link href={`/dashboard/posts/${article?.slug}`}>
+                    <a className="text-orange-400 text-xl font-bold p-1 rounded bg-gray-400 bg-opacity-70">
+                      <PencilIcon className="w-5 h-5 text-white" />
+                    </a>
+                  </Link>
+                </div>
+              </Permissions>
             </div>
             <span className="categories">
               <Link href={`/categorias/${article?.categories?.slug}`}>
