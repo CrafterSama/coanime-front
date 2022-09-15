@@ -121,7 +121,7 @@ const Titles = ({ title, titleData, errors }) => {
                 <Section withContainer>
                   <div className="title-info container mx-auto px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
-                      <div className="title-image-box overlap-banner relative w-[300px]">
+                      <div className="title-image-box overlap-banner relative">
                         <figure className="title-image overlap-banner relative rounded">
                           <Image
                             className="w-[300px] h-[380px] object-cover object-center mx-auto"
@@ -132,7 +132,7 @@ const Titles = ({ title, titleData, errors }) => {
                             objectFit="cover"
                           />
                         </figure>
-                        <div className="absolute left-1 -bottom-10 w-[290px] flex justify-between">
+                        <div className="w-[290px] flex justify-between mx-auto mt-4">
                           {user ? (
                             <>
                               {titleData?.result?.type?.id !== 8 && (

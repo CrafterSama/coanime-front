@@ -114,7 +114,7 @@ const Navigation = ({ user }) => {
                     </DropdownLink>
                   </Permissions>
                   <DropdownLink
-                    href="/perfil"
+                    href={`/perfil/${user.slug}`}
                     icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}
                   >
                     Perfil
@@ -227,7 +227,7 @@ const Navigation = ({ user }) => {
                       </span>
                     </ResponsiveNavLink>
                   </Permissions>
-                  <ResponsiveNavLink href="/perfil">
+                  <ResponsiveNavLink href={`/perfil/${user.slug}`}>
                     <span className="flex gap-2 justify-end items-center">
                       <UserCircleIcon className="h-6 w-6 text-gray-700" />{' '}
                       Perfil

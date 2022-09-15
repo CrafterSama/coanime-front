@@ -15,7 +15,7 @@ export const headers = [
             <a>
               <Image
                 className="rounded-lg w-full h-full"
-                src={`https://coanime.net/images/encyclopedia/people/${row?.image}`}
+                src={`https://api.coanime.net/storage/images/encyclopedia/people/${row?.image}`}
                 alt={row?.name}
                 loading="lazy"
                 width="100%"

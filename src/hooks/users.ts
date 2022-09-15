@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
+import httpClient, { httpClientExternal } from '@/lib/http';
 
 export const useTitles = ({ page = '' }) => {
   const params = {};
@@ -18,6 +18,20 @@ export const useTitles = ({ page = '' }) => {
 export const useProfile = () => {
   return useQuery(['profile'], async () => {
     const response = await httpClient.get(`me`);
+    return response.data;
+  });
+};
+
+export const useProfileByUser = ({ slug }) => {
+  return useQuery(['profile', slug], async () => {
+    const response = await httpClientExternal.get(`profile/${slug}`);
+    return response.data;
+  });
+};
+
+export const usePostsByUser = ({ id }) => {
+  return useQuery(['profile-posts', id], async () => {
+    const response = await httpClientExternal.get(`profile/${id}/posts`);
     return response.data;
   });
 };
