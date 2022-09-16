@@ -11,6 +11,9 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitles } from '@/services/titles';
+import FlexLayout from '@/components/ui/FlexLayout';
+import { Tabs, TabsContent } from '@/components/ui/Tabs';
+import SeriesList from '@/components/modules/titles/components/SeriesList';
 
 type TitleData = {
   title: string;
@@ -20,11 +23,6 @@ type TitleData = {
   genres: any;
   types: any;
 };
-
-const tabs = [
-  { key: 'types', title: 'Tipos' },
-  { key: 'genres', title: 'Géneros' },
-];
 
 const Titles = ({ titlesData }) => {
   const router = useRouter();
@@ -50,6 +48,19 @@ const Titles = ({ titlesData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+  const tabs = [
+    {
+      key: 'types',
+      title: 'Tipos',
+      component: <CloudLinks allLink="/ecma/titulos" links={types} />,
+    },
+    {
+      key: 'genres',
+      title: 'Géneros',
+      component: <CloudLinks allLink="/ecma/generos" links={genres} />,
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -65,38 +76,25 @@ const Titles = ({ titlesData }) => {
         )}
         {series && (
           <Section withContainer>
-            <div className="flex flex-row gap-4 justify-center">
-              {tabs.map((item) => {
-                return (
-                  <div
+            <FlexLayout justify="center" gap={1}>
+              <FlexLayout direction="row" justify="center">
+                {tabs.map((item) => (
+                  <Tabs
                     key={item.key}
-                    className={cn(
-                      'inline-block p-1 font-bold	cursor-pointer border-b-2 ',
-                      {
-                        'text-gray-400 border-transparent':
-                          item.key !== activeTab,
-                        'text-gray-700 border-orange-500':
-                          item.key === activeTab,
-                      }
-                    )}
+                    active={activeTab === item.key}
                     onClick={() => setActiveTab(item.key)}
                   >
                     {item.title}
-                  </div>
-                );
-              })}
-            </div>
-            {activeTab === 'types' && (
-              <CloudLinks allLink="/ecma/titulos" links={types} />
-            )}
-            {activeTab === 'genres' && (
-              <CloudLinks allLink="/ecma/generos" links={genres} />
-            )}
-            <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
-              {series?.data?.map((serie) => (
-                <SerieCard key={serie?.id} serie={serie} />
+                  </Tabs>
+                ))}
+              </FlexLayout>
+              {tabs.map((item) => (
+                <TabsContent key={item.key} active={activeTab === item.key}>
+                  {item.component}
+                </TabsContent>
               ))}
-            </div>
+            </FlexLayout>
+            <SeriesList series={series?.data} />
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>
         )}

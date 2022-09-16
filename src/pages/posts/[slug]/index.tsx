@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
+import DisqusComments from '@/components/modules/common/DisqusComments';
 import { Permissions } from '@/components/modules/common/Permissions';
 import Author from '@/components/modules/posts/components/Author';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
@@ -21,8 +22,6 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/outline';
-import Script from 'next/script';
-import DisqusComments from '@/components/modules/common/DisqusComments';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -191,13 +190,6 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     </WebLayout>
   );
 };
-
-/*export function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true,
-  };
-}*/
 
 export const getServerSideProps = async ({ params }) => {
   const { slug } = params;
