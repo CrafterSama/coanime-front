@@ -7,10 +7,8 @@ const Paginator = ({ page, setPage, data }) => {
     }
   };
 
-  const { total, lastPage } = data;
-
   const next = () => {
-    if (page < lastPage) {
+    if (page < data?.lastPage) {
       setPage(Number(page) + 1);
     }
   };
@@ -26,12 +24,12 @@ const Paginator = ({ page, setPage, data }) => {
       </button>
       <div className="flex justify-center items-center gap-2 px-2">
         <span className="text-orange-400 font-semibold">{`Pagina ${page} de`}</span>
-        <span className="text-orange-400 font-semibold">{`${lastPage} ${
-          lastPage === 1 ? 'pagina' : 'paginas'
+        <span className="text-orange-400 font-semibold">{`${data?.lastPage} ${
+          data?.lastPage === 1 ? 'pagina' : 'paginas'
         }`}</span>
       </div>
       <button
-        disabled={page === lastPage}
+        disabled={page === data?.lastPage}
         className="px-1 py-4 flex justify-center items-center bg-orange-600 text-white rounded hover:shadow-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={next}
       >

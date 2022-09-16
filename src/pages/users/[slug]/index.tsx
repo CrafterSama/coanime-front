@@ -15,24 +15,80 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
+import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
+import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { Tabs, TabsContent } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
-import { usePostsByUser, useProfileByUser } from '@/hooks/users';
+import {
+  usePostsByUser,
+  useProfileByUser,
+  useTitlesByUser,
+} from '@/hooks/users';
 import { LinkIcon, PencilIcon } from '@heroicons/react/outline';
+import SeriesList from '@/components/modules/titles/components/SeriesList';
 
 const imageFalse = 'https://api.coanime.net/storage/images/profiles/';
 
 const Profile = ({ slug }) => {
+  const [activeTab, setActiveTab] = useState('posts');
+  const [postsPage, setPostsPage] = useState(1);
+  const [titlesPage, setTitlesPage] = useState(1);
   const { user } = useAuth({ middleware: 'auth' });
   const router = useRouter();
   const { data = {}, isLoading } = useProfileByUser({ slug });
   const { data: posts = [], isLoading: isLoadingPosts } = usePostsByUser({
     id: data?.result?.id,
+    page: postsPage,
   });
-  const [postsPage, setPostsPage] = useState(1);
+  const { data: titles = [], isLoading: isLoadingTitles } = useTitlesByUser({
+    id: data?.result?.id,
+    page: titlesPage,
+  });
+
+  const tabs = [
+    {
+      key: 'posts',
+      title: 'Noticias',
+      component: (
+        <>
+          <SectionTitle
+            title="Noticias destacadas"
+            subtitle="agregadas por el usuario"
+            fancyText={posts?.result?.total}
+          />
+          <OtherArticles articles={posts?.result?.data} />
+          <Paginator
+            page={postsPage}
+            setPage={setPostsPage}
+            data={posts?.result}
+          />
+        </>
+      ),
+    },
+    {
+      key: 'titles',
+      title: `Titulos`,
+      component: (
+        <>
+          <SectionTitle
+            title="Titulos"
+            subtitle="agregados por el usuario"
+            fancyText={titles?.result?.total}
+          />
+          <SeriesList series={titles?.result?.data} />
+          <Paginator
+            page={titlesPage}
+            setPage={setTitlesPage}
+            data={titles?.result}
+          />
+        </>
+      ),
+    },
+  ];
   return (
     <>
       {data && (
@@ -80,11 +136,11 @@ const Profile = ({ slug }) => {
                   )}
                 </div>
               </Section>
-              <div className="title-content">
+              <div className="title-content pb-0">
                 <Section withContainer>
                   <div className="w-full flex flex-col gap-4">
-                    <div className="flex flex-row gap-10">
-                      <figure className="title-content-image relative w-64 h-64 rounded-full overflow-hidden p-2 bg-white -mt-20 box-border">
+                    <div className="flex flex-col lg:flex-row gap-10">
+                      <figure className="title-content-image mx-auto lg:mx-0 relative w-64 h-64 rounded-full overflow-hidden p-2 bg-white -mt-20 box-border">
                         <img
                           src={
                             !data?.result?.profilePhotoPath
@@ -106,8 +162,8 @@ const Profile = ({ slug }) => {
                           </div>
                         )}
                       </figure>
-                      <div className="flex flex-col">
-                        <h1 className="text-2xl font-bold text-left">
+                      <div className="flex flex-col justify-center items-center lg:items-start">
+                        <h1 className="text-2xl font-bold text-center lg:text-left">
                           {data?.result?.name}
                           {' // '}
                           <span className="text-orange-400">
@@ -120,7 +176,7 @@ const Profile = ({ slug }) => {
                             __html: data?.result?.bio,
                           }}
                         />
-                        <div className="flex flex-row gap-2 mb-2">
+                        <div className="flex flex-row text-center lg:text-left gap-2 mb-2">
                           <span className="flex flex-row gap-2">
                             <h5 className="text-base font-bold">
                               Activo(a) desde:
@@ -188,17 +244,32 @@ const Profile = ({ slug }) => {
                     </div>
                   </div>
                 </Section>
+                <Section withContainer>
+                  <FlexLayout direction="row" justify="start" className="px-4">
+                    {tabs.map((item) => (
+                      <Tabs
+                        key={item.key}
+                        active={activeTab === item.key}
+                        onClick={() => setActiveTab(item.key)}
+                      >
+                        {item.title}
+                      </Tabs>
+                    ))}
+                  </FlexLayout>
+                </Section>
               </div>
               <Section withContainer>
                 {!isLoadingPosts && (
-                  <>
-                    <SectionTitle
-                      title="Posts destacados"
-                      subtitle="agregados por el usuario"
-                      fancyText={posts?.result?.total}
-                    />
-                    <OtherArticles articles={posts?.result?.data} />
-                  </>
+                  <FlexLayout gap={2}>
+                    {tabs.map((item) => (
+                      <TabsContent
+                        key={item.key}
+                        active={activeTab === item.key}
+                      >
+                        {item.component}
+                      </TabsContent>
+                    ))}
+                  </FlexLayout>
                 )}
               </Section>
             </div>

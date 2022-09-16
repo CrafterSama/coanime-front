@@ -10,7 +10,7 @@ export const useTitles = ({ page = '' }) => {
   }
 
   return useQuery(['titles', page], async () => {
-    const response = await httpClient.get(`titles`, params);
+    const response = await httpClient.get(`titles`, { params });
     return response.data;
   });
 };
@@ -29,9 +29,32 @@ export const useProfileByUser = ({ slug }) => {
   });
 };
 
-export const usePostsByUser = ({ id }) => {
-  return useQuery(['profile-posts', id], async () => {
-    const response = await httpClientExternal.get(`profile/${id}/posts`);
+export const usePostsByUser = ({ id, page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  return useQuery(['profile-posts', id, page], async () => {
+    const response = await httpClientExternal.get(`profile/${id}/posts`, {
+      params,
+    });
+    return response.data;
+  });
+};
+
+export const useTitlesByUser = ({ id, page = 1 }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  return useQuery(['profile-titles', id, page], async () => {
+    const response = await httpClientExternal.get(`profile/${id}/titles`, {
+      params,
+    });
     return response.data;
   });
 };

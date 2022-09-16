@@ -31,9 +31,14 @@ const TextEditor = ({
             disable={disabled}
             onChange={(value) => onChange(value)}
             onImageUploadBefore={async (files, info, uploadHandler) => {
-              // TODO: remove console
-              // console.log('file = ', files[0]);
-              const res = await uploadImages(files, 'posts');
+              let res = null;
+              await uploadImages(files, 'posts')
+                .then((response) => {
+                  res = response;
+                })
+                .catch((error) => {
+                  toast.error(error.message);
+                });
 
               const response = {
                 result: [
