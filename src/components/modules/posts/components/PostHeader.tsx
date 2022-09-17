@@ -27,7 +27,10 @@ const PostHeader = ({ image, post }) => (
             {post?.postponedTo &&
               format(new Date(post?.postponedTo), 'd LLLL, yyyy')}
           </span>{' '}
-          por <span className="user-author">{post?.users?.name}</span>
+          por{' '}
+          <Link href={`/users/[slug]`} as={`/users/${post?.users?.slug}`}>
+            <a className="text-gray-300">{post?.users?.name}</a>
+          </Link>
         </p>
       </div>
     </div>

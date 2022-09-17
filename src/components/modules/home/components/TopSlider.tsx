@@ -52,7 +52,12 @@ const TopSlider = ({ relevants }) => (
                   <div className="flex flex-row gap-4">
                     <p className="flex flex-row gap-2 text-gray-400">
                       <UserCircleIcon className="w-6 h-6" />
-                      <span className="text-white">{relevant.users.name}</span>
+                      <Link
+                        href={`/users/[slug]`}
+                        as={`/users/${relevant?.users?.slug}`}
+                      >
+                        <a className="text-gray-300">{relevant?.users?.name}</a>
+                      </Link>
                     </p>
                     <p className="flex flex-row gap-2 text-gray-400">
                       <ClockIcon className="w-6 h-6" />

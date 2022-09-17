@@ -60,7 +60,10 @@ const Profile = ({ slug }) => {
             subtitle="agregadas por el usuario"
             fancyText={posts?.result?.total}
           />
-          <OtherArticles articles={posts?.result?.data} />
+          <OtherArticles
+            articles={posts?.result?.data}
+            total={posts?.result?.total}
+          />
           <Paginator
             page={postsPage}
             setPage={setPostsPage}
@@ -79,7 +82,10 @@ const Profile = ({ slug }) => {
             subtitle="agregados por el usuario"
             fancyText={titles?.result?.total}
           />
-          <SeriesList series={titles?.result?.data} />
+          <SeriesList
+            series={titles?.result?.data}
+            total={titles?.result?.total}
+          />
           <Paginator
             page={titlesPage}
             setPage={setTitlesPage}
