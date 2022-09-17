@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 
@@ -19,7 +20,9 @@ const Author = ({ users }) => (
       </div>
       <div className="info__author">
         <p className="info__author-name">
-          <span className="user-author">{users?.name}</span>
+          <Link href={`/users/[slug]`} as={`/users/${users?.slug}`}>
+            <a className="text-gray-300">{users?.name}</a>
+          </Link>
         </p>
         <p
           className="info__author-ocupation"

@@ -36,7 +36,9 @@ const RecentPosts = ({ posts }) => (
             <p className="flex flex-row gap-4">
               <span className="flex flex-row gap-2">
                 <UserCircleIcon className="w-6 h-6" />
-                <span className="text-gray-300">{post?.users?.name}</span>
+                <Link href={`/users/[slug]`} as={`/users/${post?.users?.slug}`}>
+                  <a className="text-gray-300">{post?.users?.name}</a>
+                </Link>
               </span>
               <span className="flex flex-row gap-2">
                 <ClockIcon className="w-6 h-6" />
