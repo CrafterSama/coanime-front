@@ -25,7 +25,13 @@ const Categories = ({ category, categoryData, articlesData }) => {
     getCategory,
     { initialData: categoryData }
   );
-  const { title = '', description = '', keywords = '', relevants = [] } = data;
+  const {
+    title = '',
+    description = '',
+    keywords = '',
+    relevants = [],
+    broadcast = [],
+  } = data;
 
   useEffect(() => {
     if (articlesData) {
@@ -70,7 +76,7 @@ const Categories = ({ category, categoryData, articlesData }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday />
+        <BroadcastToday broadcast={broadcast} />
       </Section>
       <Section withContainer>
         <SectionTitle title="News" subtitle="Otras Noticias" />
