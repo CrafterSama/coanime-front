@@ -22,13 +22,12 @@ type BroadcastTodayProps = {
   broadcast?: any[];
 };
 
-const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast }) => {
+const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
   /*const { data: today, isLoading } = useQuery(['posts'], getBroadcastToday, {
     initialData: broadcastData,
   });*/
 
-  const series = broadcast.filter((item) => item.approved === true) ?? [];
-  console.log('🚀 ~ file: BroadcastToday.tsx ~ line 31 ~ series', series);
+  const series = broadcast?.filter((item) => item.approved === true) ?? [];
 
   return (
     <>
