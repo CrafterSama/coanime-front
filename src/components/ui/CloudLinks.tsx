@@ -5,7 +5,7 @@ const CloudLinks = ({ allLink, links }) => {
   const router = useRouter();
 
   return (
-    <div className="text-center px-4 py-2 max-w-4xl mx-auto py-4">
+    <div className="text-center px-4 py-2 max-w-5xl mx-auto py-4">
       <span className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link">
         <Link href={allLink}>
           <a

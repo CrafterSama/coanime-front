@@ -57,8 +57,8 @@ const UpdateTitle = ({ id }) => {
   ];
 
   const resetTitleInfo = useCallback(() => {
-    const start = title.broadTime.split('-');
-    const finish = title.broadFinish.split('-');
+    const start = title.broadTime ? title.broadTime.split('-') : null;
+    const finish = title.broadFinish ? title.broadFinish.split('-') : null;
     setValue('name', title.name);
     setValue('sinopsis', title.sinopsis);
     setValue('otherTitles', title.otherTitles);
@@ -74,8 +74,14 @@ const UpdateTitle = ({ id }) => {
       'genreId',
       title.genres.map((genre) => ({ value: genre.id, label: genre.name }))
     );
-    setValue('broadTime', new Date(start[0], start[1] - 1, start[2]));
-    setValue('broadFinish', new Date(finish[0], finish[1] - 1, finish[2]));
+    setValue(
+      'broadTime',
+      title.broadTime ? new Date(start[0], start[1] - 1, start[2]) : null
+    );
+    setValue(
+      'broadFinish',
+      title.broadFinish ? new Date(finish[0], finish[1] - 1, finish[2]) : null
+    );
     setValue('episodies', title.episodies);
     setValue('status', { value: title.status, label: title.status });
     setValue('trailerUrl', title.trailerUrl);
