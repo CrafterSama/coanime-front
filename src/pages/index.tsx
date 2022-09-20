@@ -24,7 +24,13 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
   const { data = {}, isLoading } = useQuery(['home'], getHomeData, {
     initialData: homeData,
   });
-  const { title = '', description = '', keywords = '', relevants = [] } = data;
+  const {
+    title = '',
+    description = '',
+    keywords = '',
+    relevants = [],
+    broadcast = [],
+  } = data;
   const { data: japan = {} } = articlesJapan;
 
   useEffect(() => {
@@ -105,7 +111,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday />
+        <BroadcastToday broadcast={broadcast} />
       </Section>
       <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>

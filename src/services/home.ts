@@ -13,3 +13,11 @@ export const getBroadcastToday = async () => {
 
   return response;
 };
+
+export const getSeriesSoon = async () => {
+  let response = await fetch(`https://api.jikan.moe/v4/schedules/${getDay()}`);
+
+  response = await response.json();
+
+  return response;
+};
