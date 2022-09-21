@@ -7,7 +7,7 @@ export const getAllTitles = async () => {
   return response.data;
 };
 
-export const getTitles = async ({ page = 1 }) => {
+export const getTitles = async ({ page }) => {
   const params = {};
 
   if (page) {
