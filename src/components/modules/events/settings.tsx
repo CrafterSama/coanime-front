@@ -43,12 +43,16 @@ export const headers = [
   {
     name: 'Ciudad/Pais',
     accessor: (row: any) => row,
-    cell: ({ country, city, address }) => (
-      <div className="w-40 flex flex-col gap-2 text-sm">
-        <span>{address}</span>
-        <span>{`${country?.emoji} ${city?.name}, ${country?.name}`}</span>
-      </div>
-    ),
+    cell: ({ country, city, address }) => {
+      const name = JSON.parse(country.translations);
+      console.log(city);
+      return (
+        <div className="w-40 flex flex-col gap-2 text-sm">
+          <span>{address}</span>
+          <span>{`${country?.emoji} ${city?.name}, ${name['es']}`}</span>
+        </div>
+      );
+    },
   },
   {
     name: 'Inicio/Termino',

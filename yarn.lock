@@ -353,6 +353,21 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@googlemaps/js-api-loader@1.14.3":
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.14.3.tgz#d7a161cd547be04ad46a1cb176e6c2647f6d74a7"
+  integrity sha512-6iIb+qpGgQpgIHmIFO44WhE1rDUxPVHuezNFL30wRJnkvhwFm94tD291UvNg9L05hLDSoL16jd0lbqqmdy4C5g==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+
+"@googlemaps/markerclusterer@2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.0.10.tgz#3ffd88180f491ad6bc3a1014b11edbd19cb8f1bc"
+  integrity sha512-3UdPE2XH+DkFRTWIxEOcKdTqb3O9dMMxBn5jlhSae//uBGPqv9iHv9dz4l6/0Mwt7YcYmkwSpQZMc61WvZI/Qg==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    supercluster "^7.1.3"
+
 "@headlessui/react@^1.4.2":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.6.5.tgz#5587c537de809cf3146eb2ff263e5e940b1bf69c"
@@ -618,6 +633,28 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@react-google-maps/api@^2.12.2":
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-2.12.2.tgz#284e4149bdf4a28077adaea162f23a7c504e1b05"
+  integrity sha512-o1WDdhaGta9c/pNpqydDrncxz4XcKJ4uT6aDXCCkfy5h7i71v8fYNkpxPye3l8S3ErQgkW5SPcFj8A6/AU9mdA==
+  dependencies:
+    "@googlemaps/js-api-loader" "1.14.3"
+    "@googlemaps/markerclusterer" "2.0.10"
+    "@react-google-maps/infobox" "2.11.8"
+    "@react-google-maps/marker-clusterer" "2.11.8"
+    "@types/google.maps" "3.49.2"
+    invariant "2.2.4"
+
+"@react-google-maps/infobox@2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-2.11.8.tgz#8f1f6c4373ab4b1c5b69747c5f3bc1ea21d7045f"
+  integrity sha512-15y3dniys1Op5HREyLwiJI2pAdeeHRJT5b4WPrS+vyL5KF6iXK1P3y/9bXtnxHiKe2v6iPreaEhR3VgvfRA50Q==
+
+"@react-google-maps/marker-clusterer@2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-2.11.8.tgz#9b830b405cc203b305ac6f771da2e307ad30515e"
+  integrity sha512-OEcdbTXEgPwdpGvVuSrhIhjcZPhlzPz2TvaKCBLraf1PKiDyLOPhlTVRlbIziLiu0xN89pJcill1w9UVIVFF+Q==
+
 "@restart/hooks@^0.4.5":
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/@restart/hooks/-/hooks-0.4.7.tgz#d79ca6472c01ce04389fc73d4a79af1b5e33cd39"
@@ -667,6 +704,11 @@
   integrity sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==
   dependencies:
     classnames "*"
+
+"@types/google.maps@3.49.2":
+  version "3.49.2"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.49.2.tgz#9640491ec3aa96c9de1466894117ce81c02588df"
+  integrity sha512-ZO1qWciukqED9qcUNW7OaPXWnTlT+tO3WcYkmudZyQW2BqD7TlMFRrdqSCoqfwKhERCwBA5A/YZt/g5A3BqgLQ==
 
 "@types/json-schema@^7.0.9":
   version "7.0.11"
@@ -2023,7 +2065,7 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -2225,6 +2267,11 @@ json5@^1.0.1:
   dependencies:
     array-includes "^3.1.5"
     object.assign "^4.1.2"
+
+kdbush@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-3.0.0.tgz#f8484794d47004cc2d85ed3a79353dbe0abc2bf0"
+  integrity sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==
 
 levn@^0.4.1:
   version "0.4.1"
@@ -3332,6 +3379,13 @@ suneditor@^2.43.14:
   version "2.43.14"
   resolved "https://registry.yarnpkg.com/suneditor/-/suneditor-2.43.14.tgz#d4de15a57bf77eca36653ff50894c72f63ffae96"
   integrity sha512-5FMoAW/TwwU2MQl795iE1RZy5vHxgReHJjo208z2SAyr/erG2N4XDv392tThHAe0fWBNvx3b8HfaMrrj5do00w==
+
+supercluster@^7.1.3:
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-7.1.5.tgz#65a6ce4a037a972767740614c19051b64b8be5a3"
+  integrity sha512-EulshI3pGUM66o6ZdH3ReiFcvHpM3vAigyK+vcxdjpJyEbIIrtbmBdY23mGgnI24uXiGFvrGq9Gkum/8U7vJWg==
+  dependencies:
+    kdbush "^3.0.0"
 
 supports-color@^5.3.0:
   version "5.5.0"

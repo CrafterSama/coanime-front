@@ -55,11 +55,14 @@ export const headers = [
   {
     name: 'Ciudad/Pais',
     accessor: (row: any) => row,
-    cell: ({ country }) => (
-      <div className="w-40 flex flex-row gap-2 text-sm">
-        <span>{`${country?.emoji} ${country?.name}`}</span>
-      </div>
-    ),
+    cell: (row) => {
+      const name = JSON.parse(row?.country?.translations);
+      return (
+        <div className="w-40 flex flex-row gap-2 text-sm">
+          <span>{`${row?.country?.emoji} ${name['es']}`}</span>
+        </div>
+      );
+    },
   },
   {
     name: 'Agregado el',

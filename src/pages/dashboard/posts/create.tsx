@@ -243,7 +243,11 @@ const CreatePost = () => {
               <div className="mb-4 flex flex-col gap-2">
                 <Label>Tags</Label>
                 <div className={`tags-box`}>
-                  <TagsInput onChange={(tags) => setValue('tags', tags)} />
+                  <TagsInput
+                    onChange={(tags) => setValue('tags', tags)}
+                    seprators={['Enter', ',']}
+                    isEditOnRemove={true}
+                  />
                 </div>
               </div>
               <div className="mb-4 flex flex-col gap-2">

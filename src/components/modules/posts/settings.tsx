@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { LinkIcon } from '@heroicons/react/outline';
+import { EyeIcon, LinkIcon } from '@heroicons/react/outline';
 
 export const headers = [
   {
@@ -50,9 +50,15 @@ export const headers = [
     accessor: (row: any) => row,
     cell: (row) => (
       <div className="w-40">
-        <span className="text-sm text-gray-700 mr-2">
-          {dayjs(row.postponedTo).format('DD/MM/YYYY hh:mm a')}
-        </span>
+        <div className="flex flex-col justify-center items-center">
+          <span className="text-sm text-gray-700 mr-2">
+            {dayjs(row.postponedTo).format('DD/MM/YYYY hh:mm a')}
+          </span>
+          <span className="text-sm text-gray-700 flex gap-2 justify-center items-center">
+            <EyeIcon className="h-6 w-6 text-gray-400" />
+            {row.viewCounter} Vistas
+          </span>
+        </div>
       </div>
     ),
   },

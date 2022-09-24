@@ -10,28 +10,22 @@ import {
 } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import BroadcastSerieCard from '@/components/modules/home/components/BroadcastSerieCard';
+import UpcomingSerieCard from '@/components/modules/home/components/UpcomingSerieCard';
 import Loading from '@/components/ui/Loading';
 
-type BroadcastTodayProps = {
-  broadcast?: any[];
+type UpcomingSeriesProps = {
+  upcoming?: any[];
 };
 
-const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
-  /*const { data: today, isLoading } = useQuery(['posts'], getBroadcastToday, {
-    initialData: broadcastData,
-  });*/
-
-  const series = broadcast?.filter((item) => item.approved === true) ?? [];
-
+const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
   return (
     <>
-      {!broadcast && (
+      {!upcoming && (
         <div className="flex justify-center content-center min-w-screen min-h-screen">
           <Loading size={16} />
         </div>
       )}
-      {series.length > 0 && (
+      {upcoming.length > 0 && (
         <div className="broadcast-today px-4 xl:px-0">
           <Swiper
             modules={[
@@ -65,9 +59,9 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
               },
             }}
           >
-            {series?.map((serie, index) => (
+            {upcoming?.map((serie, index) => (
               <SwiperSlide key={index} virtualIndex={index}>
-                <BroadcastSerieCard serie={serie} position={index + 1} />
+                <UpcomingSerieCard serie={serie} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -77,4 +71,4 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
   );
 };
 
-export default BroadcastToday;
+export default UpcomingSeries;
