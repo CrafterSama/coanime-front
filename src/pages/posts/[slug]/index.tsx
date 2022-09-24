@@ -158,7 +158,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                     <Tags tags={post?.tags} />
                   </div>
                 </Section>
-                <Section id="author">
+                <Section id="author rounded-xl shadow-lg">
                   <Author users={post?.users} />
                 </Section>
                 <Section className="article__side-small lg:hidden">
@@ -176,10 +176,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                     fancyText={post?.categories?.name}
                   />
                   <OtherArticles articles={otherArticles} />
-                  <SectionTitle
-                    title="Charlemos"
-                    subtitle="Sección de comentarios"
-                  />
+                  <SectionTitle title="" subtitle="¿nos dejas un comentario?" />
                   <DisqusComments post={post} />
                 </Section>
               </Section>

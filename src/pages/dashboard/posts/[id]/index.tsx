@@ -291,7 +291,8 @@ const UpdatePost = () => {
                   <Label>Tags</Label>
                   <div className={`tags-box ${!editMode && 'disabled'}`}>
                     <TagsInput
-                      seprators={[',', 'Enter']}
+                      seprators={['Enter', ',']}
+                      isEditOnRemove={true}
                       value={post?.tags?.map((tag) => tag.name)}
                       onChange={(tags) => setValue('tags', tags)}
                       disabled={!editMode}

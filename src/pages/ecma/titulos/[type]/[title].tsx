@@ -23,6 +23,10 @@ import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
 import { UseQueryResult } from 'react-query';
+import FlexLayout from '@/components/ui/FlexLayout';
+import { Tabs, TabsContent } from '@/components/ui/Tabs';
+import SectionTitle from '@/components/ui/SectionTitle';
+import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 
 dayjs.extend(utc);
 
@@ -39,6 +43,7 @@ const status = {
 };
 
 const Titles = ({ title, titleData, errors }) => {
+  const [activeTab, setActiveTab] = useState('posts');
   const { user } = useAuth({ middleware: 'auth' });
   const router = useRouter();
 
@@ -66,6 +71,26 @@ const Titles = ({ title, titleData, errors }) => {
       router.push('/404');
     }
   }, [errors]);
+
+  const tabs = [
+    {
+      key: 'posts',
+      title: 'Noticias',
+      component: (
+        <>
+          <SectionTitle
+            title="Noticias"
+            subtitle="Cantidad de noticias relacionados"
+            fancyText={titleData?.result?.posts?.length}
+          />
+          <OtherArticles
+            articles={titleData?.result?.posts}
+            total={titleData?.result?.posts?.length}
+          />
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -287,7 +312,40 @@ const Titles = ({ title, titleData, errors }) => {
                     ></div>
                   </div>
                 </Section>
+                <Section withContainer>
+                  <FlexLayout direction="row" justify="start" className="px-4">
+                    {tabs.map((item) => (
+                      <Tabs
+                        key={item.key}
+                        active={activeTab === item.key}
+                        onClick={() => setActiveTab(item.key)}
+                      >
+                        {item.title}
+                      </Tabs>
+                    ))}
+                  </FlexLayout>
+                </Section>
               </div>
+              <Section withContainer>
+                {titleData?.result?.posts?.length > 0 ? (
+                  <FlexLayout gap={2}>
+                    {tabs.map((item) => (
+                      <TabsContent
+                        key={item.key}
+                        active={activeTab === item.key}
+                      >
+                        {item.component}
+                      </TabsContent>
+                    ))}
+                  </FlexLayout>
+                ) : (
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-400">
+                      Sin Publicaciones
+                    </h2>
+                  </div>
+                )}
+              </Section>
             </div>
           </>
         )}

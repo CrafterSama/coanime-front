@@ -683,6 +683,10 @@ p.info__article-caption {
   text-align: center;
 }
 
+#disqus_recommendations {
+  display: none;
+}
+
 fieldset.sinopsis {
   border: none;
   border-radius: 6px;

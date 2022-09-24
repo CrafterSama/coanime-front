@@ -9,6 +9,7 @@ import BroadcastToday from '@/components/modules/home/components/BroadcastToday'
 import OtherNews from '@/components/modules/home/components/OtherNews';
 import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
+import UpcomingSeries from '@/components/modules/home/components/UpcomingSeries';
 import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
@@ -30,6 +31,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
     keywords = '',
     relevants = [],
     broadcast = [],
+    upcoming = [],
   } = data;
   const { data: japan = {} } = articlesJapan;
 
@@ -112,6 +114,10 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
         <BroadcastToday broadcast={broadcast} />
+      </Section>
+      <Section withContainer>
+        <SectionTitle title="" subtitle="Próximos Estrenos" />
+        <UpcomingSeries upcoming={upcoming} />
       </Section>
       <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>
