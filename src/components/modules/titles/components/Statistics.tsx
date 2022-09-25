@@ -47,7 +47,7 @@ const Statistics = ({ serie, statistics, userStatistics, refetch }) => {
           </button>
         }
       >
-        {statistics.map((stats) => (
+        {statistics?.map((stats) => (
           <DropdownButton
             key={stats.id}
             onClick={() => updateStatistics(serie.id, stats.id)}

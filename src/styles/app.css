@@ -108,6 +108,12 @@ body {
  * The following styles are for the slider only.
  */
 
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 2rem;
+  color: var(--light-orange);
+}
+
 .top-slider .swiper-horizontal > .swiper-pagination-bullets,
 .top-slider .swiper-pagination-bullets.swiper-pagination-horizontal,
 .top-slider .swiper-pagination-custom,
@@ -1298,6 +1304,7 @@ ul.info__article-tags a:hover {
   position: relative;
   box-shadow: 0 0 5px #666;
   border-radius: 4px;
+  max-width: 245px;
 }
 
 .title-item .overlayer {
