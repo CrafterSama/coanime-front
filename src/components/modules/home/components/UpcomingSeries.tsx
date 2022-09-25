@@ -18,6 +18,7 @@ type UpcomingSeriesProps = {
 };
 
 const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
+  const series = upcoming?.filter((item) => item.images !== null) ?? [];
   return (
     <>
       {!upcoming && (
@@ -25,7 +26,7 @@ const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
           <Loading size={16} />
         </div>
       )}
-      {upcoming.length > 0 && (
+      {series.length > 0 && (
         <div className="broadcast-today px-4 xl:px-0">
           <Swiper
             modules={[
@@ -59,7 +60,7 @@ const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
               },
             }}
           >
-            {upcoming?.map((serie, index) => (
+            {series?.map((serie, index) => (
               <SwiperSlide key={index} virtualIndex={index}>
                 <UpcomingSerieCard serie={serie} />
               </SwiperSlide>

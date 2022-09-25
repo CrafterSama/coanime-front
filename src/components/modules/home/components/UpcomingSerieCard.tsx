@@ -1,7 +1,11 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
+
+dayjs.extend(utc);
 
 const BroadcastSerieCard = ({ serie }) => (
   <div className="h-72 w-52 relative rounded overflow-hidden bg-gray-100 p-2">
@@ -17,6 +21,11 @@ const BroadcastSerieCard = ({ serie }) => (
       <Link href={`/ecma/titulos/${serie?.type?.slug}/${serie?.slug}`}>
         <a className="text-sm">{serie?.name}</a>
       </Link>
+    </div>
+    <div
+      className={`absolute top-0 right-0 h-4 w-[68%] p-1 rounded-bl-xl bg-gray-900 bg-opacity-80 text-white flex justify-end items-center text-center text-xs`}
+    >
+      Estreno: {dayjs(serie.broadTime).utc().format('MMM DD, YYYY')}
     </div>
   </div>
 );
