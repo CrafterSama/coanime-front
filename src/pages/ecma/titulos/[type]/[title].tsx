@@ -11,22 +11,21 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import { Permissions } from '@/components/modules/common/Permissions';
+import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 import Rates from '@/components/modules/titles/components/Rates';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Statistics from '@/components/modules/titles/components/Statistics';
+import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import { Tabs, TabsContent } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useRandomImageByTitle } from '@/hooks/random-images';
 import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
-import { UseQueryResult } from 'react-query';
-import FlexLayout from '@/components/ui/FlexLayout';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
-import SectionTitle from '@/components/ui/SectionTitle';
-import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 
 dayjs.extend(utc);
 
@@ -47,6 +46,15 @@ const Titles = ({ title, titleData, errors }) => {
   const { user } = useAuth({ middleware: 'auth' });
   const router = useRouter();
 
+  useEffect(() => {
+    if (errors || titleData?.code === 404) {
+      titleData?.code === 400
+        ? toast.error(titleData.message.text)
+        : toast.error(errors);
+      router.push('/404');
+    }
+  }, [errors]);
+
   const {
     data: userStatistics,
     refetch: refetchStatistics,
@@ -64,13 +72,6 @@ const Titles = ({ title, titleData, errors }) => {
     data: randomImage = {},
     isLoading: imageLoading,
   } = useRandomImageByTitle(title);
-
-  useEffect(() => {
-    if (errors) {
-      toast.error(errors);
-      router.push('/404');
-    }
-  }, [errors]);
 
   const tabs = [
     {
@@ -133,7 +134,7 @@ const Titles = ({ title, titleData, errors }) => {
                   <div className="overlayer"></div>
                   <Permissions>
                     <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                      <Link href={`/dashboard/titles/${titleData.result.id}`}>
+                      <Link href={`/dashboard/titles/${titleData?.result?.id}`}>
                         <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
                           <PencilIcon className="w-5 h-5" />
                         </a>
@@ -370,10 +371,12 @@ export async function getServerSideProps({ params }) {
     res = await getTitle({ type, title });
     titleData = res.data;
   } catch (error) {
-    if (error.response.data.message) {
-      errors = error.response.data.message;
-    } else {
+    if (error?.response?.data?.message?.text) {
+      errors = error.response.data.message.text;
+    } else if (error.message) {
       errors = error.message;
+    } else {
+      errors = error;
     }
   }
 
