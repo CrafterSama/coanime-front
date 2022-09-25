@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
+import SeriesList from '@/components/modules/titles/components/SeriesList';
 import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
@@ -29,7 +30,6 @@ import {
   useTitlesByUser,
 } from '@/hooks/users';
 import { LinkIcon, PencilIcon } from '@heroicons/react/outline';
-import SeriesList from '@/components/modules/titles/components/SeriesList';
 
 const imageFalse = 'https://api.coanime.net/storage/images/profiles/';
 
@@ -38,13 +38,12 @@ const Profile = ({ slug }) => {
   const [postsPage, setPostsPage] = useState(1);
   const [titlesPage, setTitlesPage] = useState(1);
   const { user } = useAuth({ middleware: 'auth' });
-  const router = useRouter();
   const { data = {}, isLoading } = useProfileByUser({ slug });
   const { data: posts = [], isLoading: isLoadingPosts } = usePostsByUser({
     id: data?.result?.id,
     page: postsPage,
   });
-  const { data: titles = [], isLoading: isLoadingTitles } = useTitlesByUser({
+  const { data: titles = [] } = useTitlesByUser({
     id: data?.result?.id,
     page: titlesPage,
   });

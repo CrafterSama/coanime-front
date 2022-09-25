@@ -14,8 +14,6 @@ type LogotypeProps = {
   lettersColor?: string;
 };
 
-const default_logo_color = '#FE6A00';
-
 export const Logotype: FC<LogotypeProps> = ({
   className,
   logoColor,

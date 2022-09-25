@@ -13,7 +13,12 @@ import ResponsiveNavLink, {
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 
-const Navigation = ({ user, menuActionButton = () => {} }) => {
+const Navigation = ({
+  user,
+  menuActionButton = () => {
+    //
+  },
+}) => {
   const router = useRouter();
 
   const { logout } = useAuth();

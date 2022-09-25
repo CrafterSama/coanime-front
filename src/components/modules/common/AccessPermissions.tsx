@@ -15,6 +15,7 @@ const AccessPermissions = (children) => {
       toast.error('You do not have permission to access this page');
       router.push('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <>{children}</>;

@@ -21,19 +21,21 @@ type InputProps = {
 };
 
 const Input: FC<InputProps> = ({
-  id,
+  name,
+  id = name,
   type = 'text',
   label,
   left = null,
   right = null,
-  name,
   errors,
   defaultValue = null,
   placeholder = '',
   disabled = false,
   className = '',
   hint = '',
-  onChange = () => {},
+  onChange = () => {
+    //
+  },
   charactersCount = null,
   ...props
 }) => {
@@ -50,7 +52,7 @@ const Input: FC<InputProps> = ({
         <input
           {...register(name)}
           type={type}
-          id={name}
+          id={id}
           name={name}
           onChange={onChange}
           defaultValue={defaultValue}

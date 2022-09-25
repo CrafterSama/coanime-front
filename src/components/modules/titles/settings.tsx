@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import Image from 'next/future/image';
 import Link from 'next/link';
 
-import { extractText, strLimit } from '@/utils/string';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { extractText, strLimit } from '@/utils/string';
 import { LinkIcon } from '@heroicons/react/outline';
 
 export const headers = [
@@ -64,7 +64,7 @@ export const headers = [
   {
     name: 'Clasificación',
     accessor: (row: any) => row,
-    cell: ({ type, rating }) => (
+    cell: ({ rating }) => (
       <div className="w-40 flex flex-row gap-2 text-sm">
         <span>{`${rating?.name}: ${rating?.description}`}</span>
       </div>

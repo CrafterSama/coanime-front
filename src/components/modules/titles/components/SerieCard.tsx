@@ -2,9 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import SerieGenres from '@/components/modules/titles/components/SerieGenres';
-import { useAuth } from '@/hooks/auth';
-import Statistics from './Statistics';
-import { scrollWindowToTop } from '@/utils/scroll';
 
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';

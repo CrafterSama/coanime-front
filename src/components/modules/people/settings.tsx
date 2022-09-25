@@ -54,7 +54,6 @@ export const headers = [
     name: 'Ciudad/Pais',
     accessor: (row: any) => row,
     cell: (row) => {
-      console.log(row);
       const name = JSON.parse(row?.country?.translations);
       return (
         <div className="w-40 flex flex-row gap-2 text-sm">

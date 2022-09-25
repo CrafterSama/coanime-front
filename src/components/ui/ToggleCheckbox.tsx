@@ -13,7 +13,9 @@ const ToggleCheckbox: FC<ToggleCheckboxProps> = ({
   label = '',
   name = '',
   disabled = false,
-  onChange = () => {},
+  onChange = () => {
+    //
+  },
   ...props
 }) => {
   const { register, watch } = useFormContext();

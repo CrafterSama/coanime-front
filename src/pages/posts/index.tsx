@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import { headers } from '@/components/modules/posts/settings';
-import Loading from '@/components/ui/Loading';
-import { Rows, Table } from '@/components/ui/Table';
-import { getArticlesData } from '@/services/posts';
-import Section from '@/components/ui/Section';
-import SectionTitle from '@/components/ui/SectionTitle';
 import OtherNews from '@/components/modules/home/components/OtherNews';
 import Button from '@/components/ui/Button';
-import { CgSpinner } from 'react-icons/cg';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import { getArticlesData } from '@/services/posts';
 
 type ArticlesProps = {
   title: string;
@@ -41,6 +38,7 @@ const Posts = ({ articlesData }) => {
 
   useEffect(() => {
     onPageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

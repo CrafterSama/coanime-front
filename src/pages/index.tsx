@@ -16,7 +16,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
-import { PlusIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { PlusSmIcon } from '@heroicons/react/outline';
 
 const Home = ({ homeData, articlesData, articlesJapan }) => {
   const [articles, setArticles] = useState([]);

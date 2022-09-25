@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import Image from 'next/future/image';
 import Link from 'next/link';
 
-import { extractText, strLimit } from '@/utils/string';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { extractText, strLimit } from '@/utils/string';
 import { EyeIcon, LinkIcon } from '@heroicons/react/outline';
 
 export const headers = [

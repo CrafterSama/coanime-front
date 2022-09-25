@@ -1,9 +1,9 @@
 import { FC } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
 import { PencilIcon } from '@/components/icons';
 import Button from '@/components/ui/Button';
 import { RoundedButton } from '@/components/ui/RoundedButton';
-import { CgSpinner } from 'react-icons/cg';
 
 type FormHeaderProps = {
   title: string;
@@ -20,8 +20,12 @@ type FormHeaderProps = {
 const FormHeader: FC<FormHeaderProps> = ({
   title,
   subtitle = '',
-  cancelAction = () => {},
-  editAction = () => {},
+  cancelAction = () => {
+    //
+  },
+  editAction = () => {
+    //
+  },
   disabled = false,
   primaryActionText = 'Guardar',
   secondaryActionText = 'Cancelar',
