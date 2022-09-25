@@ -22,7 +22,8 @@ const Button = ({
         variant === 'outline',
       'text-orange-500 bg-transparent border border-transparent hover:border-orange-500':
         variant === 'text',
-    }
+    },
+    className
   );
 
   return <button type={type} className={classes} {...props} />;

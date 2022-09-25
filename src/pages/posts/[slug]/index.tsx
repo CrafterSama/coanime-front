@@ -26,13 +26,9 @@ import { PencilIcon } from '@heroicons/react/outline';
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
-  const { data = {}, isLoading } = useQuery(
-    ['viewArticles', slug],
-    getArticleData,
-    {
-      initialData: articleData,
-    }
-  );
+  const { data = {} } = useQuery(['viewArticles', slug], getArticleData, {
+    initialData: articleData,
+  });
   const {
     title,
     description,
@@ -48,6 +44,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
       toast.error(errors);
       router.push('/404');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors]);
 
   useEffect(() => {

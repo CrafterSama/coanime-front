@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import Head from 'next/head';
 import Image from 'next/image';
+import { GetServerSideProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import { FormWithContext } from '@/components/ui/Form';
@@ -21,7 +22,6 @@ import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import TextEditor from '@/components/ui/TextEditor';
-import { useAuth } from '@/hooks/auth';
 import { uploadImages } from '@/hooks/images';
 import { useProfile, updateMe } from '@/hooks/users';
 import {
@@ -34,8 +34,6 @@ import {
   PencilIcon,
   LockClosedIcon,
 } from '@heroicons/react/outline';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { GetServerSideProps } from 'next/types';
 
 const Profile = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -43,18 +41,12 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const { data = {}, isLoading } = useProfile();
   const { result, title, description } = data;
-  const { user } = useAuth({ middleware: 'auth' });
 
-  const methods = useForm<any>(/*{
-    resolver: yupResolver(profileSchema),
-    mode: 'onChange',
-  }*/);
+  const methods = useForm<any>();
 
   const {
     handleSubmit,
-    control,
     setValue,
-    watch,
     formState: { errors },
   } = methods;
 
@@ -73,11 +65,9 @@ const Profile = () => {
       setValue('cover', result?.profileCoverPath);
       setValue('avatar', result?.profilePhotoPath);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [result, setValue]
   );
-
-  const avatar = watch('avatar');
-  const cover = watch('cover');
 
   const uploadAvatar = async (e) => {
     setUploadingImages(true);

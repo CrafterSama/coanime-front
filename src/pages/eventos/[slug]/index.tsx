@@ -4,13 +4,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import WebLayout from '@/components/Layouts/WebLayout';
+import ImageDetails from '@/components/ui/ImageDetails';
 import ItemInfo from '@/components/ui/ItemInfo';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { getEntity } from '@/services/entities';
 import { getEvent } from '@/services/events';
-import ImageDetails from '@/components/ui/ImageDetails';
 
 const Event = ({ eventData }) => {
   return (

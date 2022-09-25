@@ -125,14 +125,9 @@ export const Table: FC<TableProps> = ({
   columns,
   fixedHeader = true,
 }) => {
-  const thStyles = (column, fixedHeader) =>
+  const thStyles = () =>
     cn('first:flex hidden md:flex justify-center items-center', {
-      /*sticky: fixedHeader || column.fixed,*/
-      /*'top-0': fixedHeader,
-      'bg-gray-200': fixedHeader && !column.fixed,
-      'bg-gray-200 z-20 ': column.fixed,
-      'left-checkbox': column.fixed && column?.withFixedCheckbox,
-      'left-0': column.fixed && !column?.withFixedCheckbox,*/
+      'sticky top-0': fixedHeader,
     });
   const handleSortChange = (index, currentSort) => {
     const column = columns[index];
@@ -193,7 +188,7 @@ export const Table: FC<TableProps> = ({
           className={`grid grid-cols-${columns.length} grid-flow-col bg-gray-200 items-center px-4 py-2`}
         >
           {columns.map((column, i) => (
-            <div key={`${column.name}-${i}`} className={thStyles(column, true)}>
+            <div key={`${column.name}-${i}`} className={thStyles()}>
               <div
                 className={`flex flex-row items-center justify-center uppercase font-semibold ${column.headerClassName}`}
               >

@@ -10,7 +10,7 @@ import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
+import { TabsContent } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';
@@ -22,7 +22,6 @@ const Titles = ({ titlesData }) => {
   const [page, setPage] = useState(titlesData);
   const { data: response } = useGetUserTitleList({ page });
   const [data, setData] = useState(response?.results);
-  const [activeTab, setActiveTab] = useState('4');
   const [loading, setLoading] = useState(false);
 
   const onPageChange = async () => {
@@ -38,29 +37,6 @@ const Titles = ({ titlesData }) => {
   };
 
   const series = response?.results?.data;
-
-  const tabs = [
-    {
-      key: '4',
-      title: 'La Estoy Viendo',
-    },
-    {
-      key: '5',
-      title: 'La Vi Completa',
-    },
-    {
-      key: '3',
-      title: 'La Quiero Ver',
-    },
-    {
-      key: '2',
-      title: 'La Deje de Ver',
-    },
-    {
-      key: '1',
-      title: 'La Abandone',
-    },
-  ];
 
   useEffect(() => {
     onPageChange();
@@ -104,41 +80,28 @@ const Titles = ({ titlesData }) => {
               </div>
             </div>
             <div className="py-4">
-              {/*<FlexLayout direction="row" justify="start" className="px-4">
-                {tabs.map((item) => (
-                  <Tabs
-                    key={item.key}
-                    active={activeTab === item.key}
-                    onClick={() => setActiveTab(item.key)}
-                  >
-                    {item.title}
-                  </Tabs>
-                ))}
-              </FlexLayout>*/}
               <FlexLayout gap={2}>
                 {series?.length > 0 ? (
-                  <TabsContent active={true}>
-                    <>
-                      <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
-                        {series?.map((serie) => (
-                          <div
-                            key={serie?.titles?.id}
-                            className="relative title-item rounded-lg overflow-hidden"
-                          >
-                            <SerieCard serie={serie?.titles} />
-                            <div className="text-center text-sm font-semibold text-gray-700 py-1 px-2 rounded-b-lg bg-orange-100">
-                              {serie?.statistics?.name}
-                            </div>
+                  <>
+                    <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
+                      {series?.map((serie) => (
+                        <div
+                          key={serie?.titles?.id}
+                          className="relative title-item rounded-lg overflow-hidden"
+                        >
+                          <SerieCard serie={serie?.titles} />
+                          <div className="text-center text-sm font-semibold text-gray-700 py-1 px-2 rounded-b-lg bg-orange-100">
+                            {serie?.statistics?.name}
                           </div>
-                        ))}
-                      </div>
-                      <Paginator
-                        page={page}
-                        setPage={setPage}
-                        data={response?.results}
-                      />
-                    </>
-                  </TabsContent>
+                        </div>
+                      ))}
+                    </div>
+                    <Paginator
+                      page={page}
+                      setPage={setPage}
+                      data={response?.results}
+                    />
+                  </>
                 ) : (
                   <div className="text-center py-4">
                     <h3 className="text-xl font-bold text-gray-400">

@@ -6,13 +6,7 @@ import Link from 'next/link';
 import { Permissions } from '@/components/modules/common/Permissions';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { useAuth } from '@/hooks/auth';
-import {
-  ClockIcon,
-  PencilAltIcon,
-  PencilIcon,
-  UserCircleIcon,
-} from '@heroicons/react/outline';
+import { ClockIcon, PencilIcon } from '@heroicons/react/outline';
 
 const OtherNews = ({ articles }) => {
   return (
@@ -45,9 +39,6 @@ const OtherNews = ({ articles }) => {
                   </Link>
                 </div>
                 <div className="flex gap-2 justify-start items-center">
-                  {/*<span className="text-gray-200 flex flex-row gap-2 text-sm">
-                    <UserCircleIcon className="w-6 h-6" /> {article.users.name}
-                  </span>*/}
                   <span className="text-gray-200 flex flex-row gap-2 text-sm">
                     <ClockIcon className="w-6 h-6" />
                     {format(

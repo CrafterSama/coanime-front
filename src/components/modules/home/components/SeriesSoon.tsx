@@ -11,9 +11,9 @@ import {
 } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import SerieCard from '@/components/modules/titles/components/SerieCard';
 import Loading from '@/components/ui/Loading';
 import { getBroadcastToday } from '@/services/home';
-import SerieCard from '@/components/modules/titles/components/SerieCard';
 
 type BroadcastTodayProps = {
   broadcastData?: any;

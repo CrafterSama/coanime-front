@@ -1,9 +1,10 @@
+import toast from 'react-hot-toast';
+
 import dynamic from 'next/dynamic';
 
 import { sunEditorOptions } from '@/constants/suneditor';
 import 'suneditor/dist/css/suneditor.min.css';
 import { uploadImages } from '@/hooks/images';
-import toast from 'react-hot-toast';
 
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
@@ -54,7 +55,7 @@ const TextEditor = ({
 
               return undefined;
             }}
-            onImageUploadError={(errorMessage, result) => {
+            onImageUploadError={(errorMessage) => {
               toast.error(errorMessage);
             }}
             setAllPlugins={true}
