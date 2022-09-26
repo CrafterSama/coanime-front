@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Permissions } from '@/components/modules/common/Permissions';
+import SearchBox from '@/components/modules/common/SearchBox';
 import { Logotype } from '@/components/ui/ApplicationLogo';
 import Dropdown from '@/components/ui/Dropdown';
 import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
@@ -41,7 +42,7 @@ const Navigation = ({ user }) => {
         {/* Primary Navigation Menu */}
         <div className={`max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8`}>
           <div className="flex justify-between h-16">
-            <div className="flex">
+            <div className="flex gap-4">
               {/* Logo */}
               <div className="flex-shrink-0 flex items-center">
                 <Link href="/">
@@ -56,7 +57,7 @@ const Navigation = ({ user }) => {
               </div>
 
               {/* Navigation Links */}
-              <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <div className="hidden space-x-8 sm:-my-px sm:ml-10 lg:flex">
                 <NavLink
                   href="/ecma/titulos"
                   active={router.pathname.includes('/ecma')}
@@ -72,8 +73,12 @@ const Navigation = ({ user }) => {
               </div>
             </div>
 
+            <div className="hidden lg:flex items-center min-w-[300px] px-2">
+              <SearchBox />
+            </div>
             {/* Settings Dropdown */}
-            <div className="hidden sm:flex sm:items-center sm:ml-6 z-10">
+            <div className="hidden lg:flex sm:gap-8 sm:items-center sm:ml-6 z-10">
+              {/* Search Input */}
               {user ? (
                 <Dropdown
                   align="right"
@@ -150,7 +155,7 @@ const Navigation = ({ user }) => {
             </div>
 
             {/* Hamburger */}
-            <div className="-mr-2 flex items-center sm:hidden">
+            <div className="-mr-2 flex items-center lg:hidden">
               <button
                 onClick={() => setOpen((open) => !open)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
@@ -184,6 +189,9 @@ const Navigation = ({ user }) => {
             >
               Eventos
             </ResponsiveNavLink>
+          </div>
+          <div className="lg:hidden flex justify-center items-center min-w-[300px] px-4 py-2">
+            <SearchBox />
           </div>
 
           {/* Responsive Settings Options */}

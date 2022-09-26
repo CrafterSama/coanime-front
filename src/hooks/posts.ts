@@ -20,6 +20,19 @@ export const usePosts = ({ page = 1, name = '' }) => {
   });
 };
 
+export const useSearchPosts = ({ name = '' }) => {
+  const params = {};
+
+  if (name) {
+    params['name'] = name;
+  }
+
+  return useQuery(['posts-search', name], async () => {
+    const response = await httpClientExternal.get(`posts-search`, { params });
+    return response.data;
+  });
+};
+
 export const usePost = (slug: string) => {
   return useQuery(['post', slug], async () => {
     const response = await httpClient.get(`posts/${slug}`);
