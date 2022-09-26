@@ -55,7 +55,7 @@ export const useGetUserTitleList = ({ page = 1 }) => {
   });
 };
 
-export const useSearchTitle = ({ name = 'a' }) => {
+export const useSearchTitle = ({ name = '' }) => {
   return useQuery(['externalSearchTitle', name], async () => {
     const response = await httpClientExternal.get(`search/titles/${name}`);
     return response.data;
