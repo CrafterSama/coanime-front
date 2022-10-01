@@ -5,6 +5,7 @@ type ButtonProps = {
   variant?: 'solid' | 'outline' | 'text';
   className?: string;
   children: any;
+  disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 

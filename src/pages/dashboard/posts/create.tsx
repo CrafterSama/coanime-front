@@ -105,9 +105,10 @@ const CreatePost = () => {
     router.push('/dashboard/posts');
   };
 
-  const { mutate: createPost } = useMutation(({ params }: { params: any }) =>
-    postCreate(params)
-  );
+  const {
+    mutate: createPost,
+    isLoading: savingLoading,
+  } = useMutation(({ params }: { params: any }) => postCreate(params));
 
   const onSubmit = (data) => {
     const postponed = data.postponedTo
@@ -157,6 +158,7 @@ const CreatePost = () => {
             title="Nuevo Post"
             cancelAction={() => router.push('/dashboard/posts')}
             editAction={() => {}}
+            isSaving={savingLoading}
           />
           <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
             <div className="w-full md:w-8/12">
