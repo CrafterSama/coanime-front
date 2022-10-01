@@ -54,7 +54,9 @@ const FormHeader: FC<FormHeaderProps> = ({
             <Button type="button" variant="text" onClick={cancelAction}>
               {secondaryActionText}
             </Button>
-            <Button type="submit">{primaryActionText}</Button>
+            <Button type="submit" disabled={isSaving}>
+              {primaryActionText}
+            </Button>
           </>
         )}
       </div>

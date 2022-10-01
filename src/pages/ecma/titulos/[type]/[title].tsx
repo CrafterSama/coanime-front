@@ -355,13 +355,6 @@ const Titles = ({ title, titleData, errors }) => {
   );
 };
 
-/*export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true,
-  };
-}*/
-
 export async function getServerSideProps({ params }) {
   let res = null;
   let errors = null;

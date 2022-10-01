@@ -18,7 +18,7 @@ type UpcomingSeriesProps = {
 };
 
 const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
-  const series = upcoming?.filter((item) => item.images !== null) ?? [];
+  const series = upcoming ?? [];
   return (
     <>
       {!upcoming && (
