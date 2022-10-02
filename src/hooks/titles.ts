@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import httpClient, { httpClientExternal } from '@/lib/http';
 
-export const useTitles = ({ page = 1, name }) => {
+export const useTitles = ({ page, name }) => {
   const params = {};
 
   if (page) {

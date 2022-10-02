@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/posts/settings';
@@ -14,10 +15,32 @@ import { usePosts } from '@/hooks/posts';
 import { PlusIcon } from '@heroicons/react/outline';
 
 const Posts = () => {
-  const [page, setPage] = useState(1);
-  const [name, setName] = useState('');
+  const router = useRouter();
+  const { page: queryPage } = router.query;
+  const [page, setPage] = useState<any>(queryPage);
+  const [name, setName] = useState<any>('');
   const { data = {}, isLoading } = usePosts({ page, name });
   const { data: posts = [] } = data;
+
+  useEffect(() => {
+    if (queryPage) {
+      setPage(queryPage);
+    }
+  }, [queryPage]);
+
+  const onPageChange = async () => {
+    await router.push({
+      pathname: '/dashboard/posts',
+      query: {
+        page,
+      },
+    });
+  };
+
+  useEffect(() => {
+    onPageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <>

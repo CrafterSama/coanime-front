@@ -18,6 +18,17 @@ export const getTitles = async ({ page }) => {
   return response;
 };
 
+export const getUpcomingTitles = async ({ page }) => {
+  const params = {};
+
+  if (page) {
+    params['page'] = page;
+  }
+
+  const response = await httpClientExternal.get(`titles/upcoming`, { params });
+  return response;
+};
+
 export const getTitlesByType = async ({ type, page = 1 }) => {
   const params = {};
 

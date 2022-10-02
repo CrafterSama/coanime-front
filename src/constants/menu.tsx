@@ -16,13 +16,13 @@ export const menu = [
     text: 'Dashboard',
   },
   {
-    href: '/dashboard/posts',
+    href: '/dashboard/posts?page=1',
     breadcrumb: 'posts',
     icon: <NewspaperIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Posts',
   },
   {
-    href: '/dashboard/titles',
+    href: '/dashboard/titles?page=1',
     breadcrumb: 'titles',
     icon: <PhotographIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Titles',
