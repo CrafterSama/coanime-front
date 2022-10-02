@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/titles/settings';
@@ -14,10 +15,32 @@ import { useTitles } from '@/hooks/titles';
 import { FilterIcon, PlusIcon } from '@heroicons/react/outline';
 
 const Titles = () => {
-  const [page, setPage] = useState(1);
-  const [name, setName] = useState('');
+  const router = useRouter();
+  const { page: queryPage } = router.query;
+  const [page, setPage] = useState<any>(queryPage);
+  const [name, setName] = useState<any>(null);
   const { data = {}, isLoading } = useTitles({ page, name });
   const { result, title, description } = data;
+
+  useEffect(() => {
+    if (queryPage) {
+      setPage(queryPage);
+    }
+  }, [queryPage]);
+
+  const onPageChange = async () => {
+    await router.push({
+      pathname: '/dashboard/titles',
+      query: {
+        page,
+      },
+    });
+  };
+
+  useEffect(() => {
+    onPageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   const clearFilter = () => {
     setName('');
