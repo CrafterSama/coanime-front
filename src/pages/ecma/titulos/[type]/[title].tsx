@@ -26,6 +26,8 @@ import { useRandomImageByTitle } from '@/hooks/random-images';
 import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
+import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
 
 dayjs.extend(utc);
 
@@ -44,7 +46,20 @@ const status = {
 const Titles = ({ title, titleData, errors }) => {
   const [activeTab, setActiveTab] = useState('posts');
   const { user } = useAuth({ middleware: 'auth' });
+  const [censored, setCensored] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const router = useRouter();
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    if (titleData?.result?.ratingId === 6) {
+      setCensored(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (errors || titleData?.code === 404) {
@@ -95,6 +110,20 @@ const Titles = ({ title, titleData, errors }) => {
 
   return (
     <>
+      <Modal title="Consentimiento" isOpen={isOpen} toggleModal={toggleModal}>
+        <p className="py-4">Eres tu mayor de 18 años?</p>
+        <div className="flex flex-row w-full justify-around">
+          <Button
+            onClick={() => {
+              setCensored(false);
+              toggleModal();
+            }}
+          >
+            Si
+          </Button>
+          <Button onClick={toggleModal}>No</Button>
+        </div>
+      </Modal>
       {titleData && (
         <Head>
           <title>{titleData?.title ?? ''}</title>
@@ -116,8 +145,8 @@ const Titles = ({ title, titleData, errors }) => {
                   <figure className="title-header-image relative">
                     {!imageLoading && (
                       <Image
-                        className={`${
-                          randomImage?.url ? '' : 'blur'
+                        className={`${randomImage?.url ? '' : 'blur'} ${
+                          censored ? 'blur-lg opacity-70' : ''
                         } w-full h-full`}
                         src={
                           randomImage?.url ??
@@ -148,15 +177,36 @@ const Titles = ({ title, titleData, errors }) => {
                   <div className="title-info container mx-auto px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <div className="title-image-box overlap-banner relative">
-                        <figure className="title-image overlap-banner relative rounded">
+                        <figure className="title-image overlap-banner relative rounded group overflow-hidden">
                           <Image
-                            className="w-[300px] h-[380px] object-cover object-center mx-auto"
+                            className={`w-[300px] h-[380px] object-cover object-center mx-auto ${
+                              censored ? 'blur' : ''
+                            }`}
                             src={
                               titleData?.result?.images?.name ?? DEFAULT_IMAGE
                             }
                             layout="fill"
                             objectFit="cover"
                           />
+                          {censored && (
+                            <>
+                              <div className="absolute top-0 left-0 w-full h-full bg-black/40 flex flex-col justify-center items-center">
+                                <Image
+                                  src="/images/censored.png"
+                                  alt="Censurado"
+                                  height={100}
+                                  width={200}
+                                  className="absolute top-0 right-0"
+                                />
+                              </div>
+                              <button
+                                className="absolute group-hover:bottom-2 -bottom-12 right-3 transition-all px-4 py-1 bg-gray-400 rounded-md text-white"
+                                onClick={() => toggleModal()}
+                              >
+                                {censored ? 'Ver imagen' : 'Ocultar imagen'}
+                              </button>
+                            </>
+                          )}
                         </figure>
                         <div className="w-[290px] flex justify-between mx-auto mt-4">
                           {user ? (

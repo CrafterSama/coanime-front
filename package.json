@@ -15,7 +15,7 @@
     "eslint:fix": "npm run eslint -- --fix"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.2",
+    "@headlessui/react": "^1.7.3",
     "@heroicons/react": "v1",
     "@hookform/resolvers": "^2.9.6",
     "@radix-ui/react-collapsible": "^0.1.6",
