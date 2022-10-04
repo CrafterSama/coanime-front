@@ -97,12 +97,12 @@ const Home = (
         <meta content="all, index, follow" name="robots" />
       </Head>
 
-      {/*<Section>
-        <TopSlider relevants={relevants} />
-      </Section>*/}
+      <Section>
+        <TopSlider relevants={data?.relevants} />
+      </Section>
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
-        <RecentPosts posts={data?.result} />
+        {/*<RecentPosts posts={data?.result} />*/}
         <div className="w-full flex justify-end items-center mt-2 px-4">
           <a
             className="flex flex-row items-center text-orange-500"
