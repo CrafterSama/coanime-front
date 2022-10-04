@@ -26,7 +26,7 @@ const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
           <Loading size={16} />
         </div>
       )}
-      {series.length > 0 && (
+      {series?.length > 0 && (
         <div className="broadcast-today px-4 xl:px-0">
           <Swiper
             modules={[

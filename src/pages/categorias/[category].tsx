@@ -16,7 +16,11 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByCategories, getCategory } from '@/services/categories';
 
-const Categories = ({ category, categoryData, articlesData }) => {
+const Categories = (
+  props,
+  { category, categoryData, articlesData, errorsCategory, errorsArticles }
+) => {
+  console.log('🚀 ~ file: [category].tsx ~ line 23 ~ props', props);
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -104,11 +108,20 @@ export function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { category } = context.params;
-  const response = await getCategory(String(category) as string);
-  const articles = await getArticlesByCategories({
-    category: String(category) as string,
-    page: 1,
-  });
+  let response = null;
+  let errorsCategory = null;
+  let articles = null;
+  let errorsArticles = null;
+  try {
+    response = await getCategory(String(category) as string);
+  } catch (error) {
+    errorsCategory = error.response.data.message.text;
+  }
+  try {
+    articles = await getArticlesByCategories({ category, page: 1 });
+  } catch (error) {
+    errorsArticles = error.response.data.message.text;
+  }
 
   if (response?.data?.code === 404) {
     return {
@@ -124,6 +137,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       category,
       categoryData,
       articlesData,
+      errorsCategory,
+      errorsArticles,
       revalidate: 5 * 60,
     },
   };
