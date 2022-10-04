@@ -19,6 +19,15 @@ import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmIcon } from '@heroicons/react/outline';
 
 const Home = ({ homeData, articlesData, articlesJapan }) => {
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 22 ~ Home ~ articlesJapan',
+    articlesJapan
+  );
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 22 ~ Home ~ articlesData',
+    articlesData
+  );
+  console.log('🚀 ~ file: index.tsx ~ line 22 ~ Home ~ homeData', homeData);
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -149,10 +158,22 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 export async function getServerSideProps() {
   const page = 1;
   const response = await getHomeData();
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 161 ~ getServerSideProps ~ response',
+    response
+  );
   const articles = await getArticlesData({ page });
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 163 ~ getServerSideProps ~ articles',
+    articles
+  );
   const japan = await getArticlesJapan({ page });
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 165 ~ getServerSideProps ~ japan',
+    japan
+  );
 
-  const homeData = response.data;
+  const homeData = response?.data || {};
   const articlesData = articles.data;
   const articlesJapan = japan.data;
 
