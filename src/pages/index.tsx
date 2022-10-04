@@ -148,15 +148,15 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 
 export async function getServerSideProps() {
   const page = 1;
-  const response = await getHomeData();
-  /*const articles = await getArticlesData({ page });*/
-  /*const japan = await getArticlesJapan({ page });*/
+  /*const response = await getHomeData();*/
+  const articles = await getArticlesData({ page });
+  const japan = await getArticlesJapan({ page });
 
-  const homeData = response.data;
-  /*const articlesData = articles.data;*/
-  /*const articlesJapan = japan.data;*/
+  /*const homeData = response.data;*/
+  const articlesData = articles.data;
+  const articlesJapan = japan.data;
 
-  return { props: { homeData /*articlesData, articlesJapan*/ } };
+  return { props: { /*homeData*/ articlesData, articlesJapan } };
 }
 
 export default Home;
