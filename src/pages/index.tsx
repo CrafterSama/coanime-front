@@ -18,7 +18,7 @@ import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmIcon } from '@heroicons/react/outline';
 
-const Home = ({ homeData, articlesData, articlesJapan }) => {
+const Home = ({ articlesData, articlesJapan }) => {
   console.log(
     '🚀 ~ file: index.tsx ~ line 22 ~ Home ~ articlesJapan',
     articlesJapan
@@ -27,21 +27,13 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
     '🚀 ~ file: index.tsx ~ line 22 ~ Home ~ articlesData',
     articlesData
   );
-  console.log('🚀 ~ file: index.tsx ~ line 22 ~ Home ~ homeData', homeData);
+  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery(
+    ['home'],
+    getHomeData
+  );
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
-  const { data = {}, isLoading } = useQuery(['home'], getHomeData, {
-    initialData: homeData,
-  });
-  const {
-    title = '',
-    description = '',
-    keywords = '',
-    relevants = [],
-    broadcast = [],
-    upcoming = [],
-  } = data;
   const { data: japan = {} } = articlesJapan;
 
   useEffect(() => {
@@ -73,12 +65,12 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
         </div>
       )}
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
+        <title>{data?.title}</title>
+        <meta name="description" content={data?.description} />
+        <meta name="keywords" content={data?.keywords} />
         <meta name="author" content="@coanime" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta property="og:title" content={data?.title} />
+        <meta property="og:description" content={data?.description} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://front.coanime.net" />
@@ -91,8 +83,8 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:title" content={data?.title} />
+        <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:site" content="@coanime" />
         <meta
           name="twitter:image:src"
@@ -104,9 +96,9 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
         <meta content="all, index, follow" name="robots" />
       </Head>
 
-      <Section>
+      {/*<Section>
         <TopSlider relevants={relevants} />
-      </Section>
+      </Section>*/}
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
         <RecentPosts posts={data?.result} />
@@ -122,11 +114,11 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday broadcast={broadcast} />
+        <BroadcastToday broadcast={data?.broadcast} />
       </Section>
       <Section withContainer>
         <SectionTitle title="" subtitle="Próximos Estrenos" />
-        <UpcomingSeries upcoming={upcoming} />
+        <UpcomingSeries upcoming={data?.upcoming} />
       </Section>
       <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>
@@ -157,11 +149,11 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 
 export async function getServerSideProps() {
   const page = 1;
-  const response = await getHomeData();
+  /*const response = await getHomeData();
   console.log(
     '🚀 ~ file: index.tsx ~ line 161 ~ getServerSideProps ~ response',
     response
-  );
+  );*/
   const articles = await getArticlesData({ page });
   console.log(
     '🚀 ~ file: index.tsx ~ line 163 ~ getServerSideProps ~ articles',
@@ -173,11 +165,11 @@ export async function getServerSideProps() {
     japan
   );
 
-  const homeData = response?.data || {};
+  /*const homeData = response?.data || {};*/
   const articlesData = articles.data;
   const articlesJapan = japan.data;
 
-  return { props: { homeData, articlesData, articlesJapan } };
+  return { props: { /*homeData, */ articlesData, articlesJapan } };
 }
 
 export default Home;
