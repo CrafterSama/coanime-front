@@ -30,9 +30,6 @@ const Home = (
   }
 ) => {
   console.log('🚀 ~ file: index.tsx ~ line 32 ~ props', props);
-  const { data, isLoading } = useQuery(['home'], getHomeData, {
-    initialData: homeData,
-  });
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -60,18 +57,18 @@ const Home = (
 
   return (
     <WebLayout>
-      {isLoading && (
+      {!homeData?.title && (
         <div className="flex justify-center content-center min-w-screen min-h-screen">
           <Loading showFancySpiner size={20} />
         </div>
       )}
       <Head>
-        <title>{data?.title}</title>
-        <meta name="description" content={data?.description} />
-        <meta name="keywords" content={data?.keywords} />
+        <title>{homeData?.title}</title>
+        <meta name="description" content={homeData?.description} />
+        <meta name="keywords" content={homeData?.keywords} />
         <meta name="author" content="@coanime" />
-        <meta property="og:title" content={data?.title} />
-        <meta property="og:description" content={data?.description} />
+        <meta property="og:title" content={homeData?.title} />
+        <meta property="og:description" content={homeData?.description} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://front.coanime.net" />
@@ -84,8 +81,8 @@ const Home = (
           content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={data?.title} />
-        <meta name="twitter:description" content={data?.description} />
+        <meta name="twitter:title" content={homeData?.title} />
+        <meta name="twitter:description" content={homeData?.description} />
         <meta name="twitter:site" content="@coanime" />
         <meta
           name="twitter:image:src"
@@ -98,11 +95,11 @@ const Home = (
       </Head>
 
       <Section>
-        <TopSlider relevants={data?.relevants} />
+        <TopSlider relevants={homeData?.relevants} />
       </Section>
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
-        <RecentPosts posts={data?.result} />
+        <RecentPosts posts={homeData?.result} />
         <div className="w-full flex justify-end items-center mt-2 px-4">
           <a
             className="flex flex-row items-center text-orange-500"
@@ -115,11 +112,11 @@ const Home = (
       </Section>
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday broadcast={data?.broadcast} />
+        <BroadcastToday broadcast={homeData?.broadcast} />
       </Section>
       <Section withContainer>
         <SectionTitle title="" subtitle="Próximos Estrenos" />
-        <UpcomingSeries upcoming={data?.upcoming} />
+        <UpcomingSeries upcoming={homeData?.upcoming} />
       </Section>
       <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>
