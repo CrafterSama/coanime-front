@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
 import { useQuery } from 'react-query';
 
@@ -16,19 +17,15 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByCategories, getCategory } from '@/services/categories';
 
-const Categories = (
-  props,
-  { category, categoryData, articlesData, errorsCategory, errorsArticles }
-) => {
-  console.log('🚀 ~ file: [category].tsx ~ line 23 ~ props', props);
-  const [articles, setArticles] = useState([]);
-  const [loadArticles, setLoadArticles] = useState(false);
-  const [page, setPage] = useState(1);
+const Categories = ({ category, categoryData, articlesData, errors }) => {
   const { data = {}, isLoading } = useQuery(
     ['categories', categoryData],
     getCategory,
     { initialData: categoryData }
   );
+  const [articles, setArticles] = useState([]);
+  const [loadArticles, setLoadArticles] = useState(false);
+  const [page, setPage] = useState(1);
   const {
     title = '',
     description = '',
@@ -40,6 +37,9 @@ const Categories = (
   useEffect(() => {
     if (articlesData) {
       setArticles([...articles, ...articlesData?.data]);
+    }
+    if (errors) {
+      toast.error(errors);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,18 +109,13 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { category } = context.params;
   let response = null;
-  let errorsCategory = null;
   let articles = null;
-  let errorsArticles = null;
+  let errors = null;
   try {
     response = await getCategory(String(category) as string);
-  } catch (error) {
-    errorsCategory = error.response.data.message.text;
-  }
-  try {
     articles = await getArticlesByCategories({ category, page: 1 });
   } catch (error) {
-    errorsArticles = error.response.data.message.text;
+    errors = error.response.data.message.text;
   }
 
   if (response?.data?.code === 404) {
@@ -129,16 +124,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const categoryData = response.data;
-  const articlesData = articles.data;
-
   return {
     props: {
       category,
-      categoryData,
-      articlesData,
-      errorsCategory,
-      errorsArticles,
+      categoryData: response?.data,
+      articlesData: articles?.data,
+      errors,
       revalidate: 5 * 60,
     },
   };
