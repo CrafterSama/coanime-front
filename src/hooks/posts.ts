@@ -15,9 +15,6 @@ export const usePosts = ({ page = 1, name = '' }) => {
   }
 
   return useQuery(['posts', page, name], async () => {
-    if (!name) {
-      return;
-    }
     const response = await httpClient.get(`posts-dashboard`, { params });
     return response.data;
   });
