@@ -18,13 +18,21 @@ import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmIcon } from '@heroicons/react/outline';
 
-const Home = ({ articlesData, articlesJapan }) => {
-  const { data, isLoading }: { data: any; isLoading: boolean } = useQuery(
-    ['home'],
-    getHomeData
-  );
-  console.log('🚀 ~ file: index.tsx ~ line 23 ~ Home ~ data', data);
-  const { data: japan = {} } = articlesJapan;
+const Home = (
+  props,
+  {
+    homeData,
+    articlesData,
+    articlesJapan,
+    errorsHomeData,
+    errorsArticles,
+    errorsJapan,
+  }
+) => {
+  console.log('🚀 ~ file: index.tsx ~ line 32 ~ props', props);
+  const { data, isLoading } = useQuery(['home'], getHomeData, {
+    initialData: homeData,
+  });
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -120,7 +128,7 @@ const Home = ({ articlesData, articlesJapan }) => {
             subtitle="Articulos relacionados con la Cultura de"
             fancyText="Japón"
           />
-          <OtherNews articles={japan} />
+          <OtherNews articles={articlesJapan?.data} />
         </Section>
       </Section>
       <Section withContainer id="news">
@@ -142,15 +150,42 @@ const Home = ({ articlesData, articlesJapan }) => {
 
 export async function getServerSideProps() {
   const page = 1;
-  /*const response = await getHomeData();*/
-  const articles = await getArticlesData({ page });
-  const japan = await getArticlesJapan({ page });
+  let response = null;
+  let errorsHomeData = null;
+  let articles = null;
+  let errorsArticles = null;
+  let japan = null;
+  let errorsJapan = null;
+  try {
+    response = await getHomeData();
+  } catch (error) {
+    errorsHomeData = error.response.data.message.text;
+  }
+  try {
+    articles = await getArticlesJapan({ page });
+  } catch (error) {
+    errorsArticles = error.response.data.message.text;
+  }
+  try {
+    japan = await getArticlesJapan({ page });
+  } catch (error) {
+    errorsJapan = error.response.data.message.text;
+  }
 
-  /*const homeData = response?.data || {};*/
+  const homeData = response?.data || {};
   const articlesData = articles.data;
   const articlesJapan = japan.data;
 
-  return { props: { /*homeData, */ articlesData, articlesJapan } };
+  return {
+    props: {
+      homeData,
+      articlesData,
+      articlesJapan,
+      errorsHomeData,
+      errorsArticles,
+      errorsJapan,
+    },
+  };
 }
 
 export default Home;
