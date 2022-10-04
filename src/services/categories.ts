@@ -1,7 +1,7 @@
 import { httpClientExternal } from '@/lib/http';
 
 export const getCategory = async (category) => {
-  const response = await httpClientExternal.get(`categories/${category}`);
+  const response = await httpClientExternal.get(`home?category=${category}`);
   return response;
 };
 
@@ -13,7 +13,7 @@ export const getArticlesByCategories = async ({ page = 1, category }) => {
   }
 
   const response = await httpClientExternal.get(
-    `categories/articles/${category}`,
+    `articles?category=${category}`,
     {
       params,
     }
