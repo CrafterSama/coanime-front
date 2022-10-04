@@ -25,10 +25,6 @@ type TitleData = {
 };
 
 const Titles = ({ titlesData }) => {
-  console.log(
-    '🚀 ~ file: index.tsx ~ line 28 ~ Titles ~ titlesData',
-    titlesData
-  );
   const router = useRouter();
   const [page, setPage] = useState<any>(1);
   const [data, setData] = useState<TitleData>(titlesData);
