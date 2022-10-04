@@ -190,9 +190,9 @@ const Navigation = ({ user }) => {
               Eventos
             </ResponsiveNavLink>
           </div>
-          <div className="lg:hidden flex justify-center items-center min-w-[300px] px-4 py-2">
+          {/*<div className="lg:hidden flex justify-center items-center min-w-[300px] px-4 py-2">
             <SearchBox />
-          </div>
+          </div>*/}
 
           {/* Responsive Settings Options */}
           <div className="pt-4 pb-1 border-t border-gray-200">
