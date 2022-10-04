@@ -111,15 +111,15 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           </a>
         </div>
       </Section>
-      {/*<Section withContainer>
+      <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
         <BroadcastToday broadcast={broadcast} />
-      </Section>*/}
-      {/*<Section withContainer>
+      </Section>
+      <Section withContainer>
         <SectionTitle title="" subtitle="Próximos Estrenos" />
         <UpcomingSeries upcoming={upcoming} />
-      </Section>*/}
-      {/*<Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
+      </Section>
+      <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
         <Section withContainer>
           <SectionTitle
             title="Japón y Cultura"
@@ -128,7 +128,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           />
           <OtherNews articles={japan} />
         </Section>
-      </Section>*/}
+      </Section>
       <Section withContainer id="news">
         <SectionTitle title="News" subtitle="Otras Noticias" />
         <OtherNews articles={articles} />
@@ -148,15 +148,15 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 
 export async function getServerSideProps() {
   const page = 1;
-  /*const response = await getHomeData();*/
+  const response = await getHomeData();
   const articles = await getArticlesData({ page });
   const japan = await getArticlesJapan({ page });
 
-  /*const homeData = response.data;*/
+  const homeData = response.data;
   const articlesData = articles.data;
   const articlesJapan = japan.data;
 
-  return { props: { /*homeData*/ articlesData, articlesJapan } };
+  return { props: { homeData, articlesData, articlesJapan } };
 }
 
 export default Home;
