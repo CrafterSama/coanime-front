@@ -10,5 +10,8 @@ module.exports = {
       'cdn.myanimelist.net',
     ],
   },
-  experimental: { images: { allowFutureImage: true } },
+  experimental: {
+    images: { allowFutureImage: true },
+    largePageDataBytes: 128 * 100000,
+  },
 };
