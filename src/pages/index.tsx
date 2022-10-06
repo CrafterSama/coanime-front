@@ -158,6 +158,10 @@ export async function getServerSideProps() {
     articles = await getArticlesData({ page });
     japan = await getArticlesJapan({ page });
   } catch (error) {
+    console.log(
+      '🚀 ~ file: index.tsx ~ line 161 ~ getServerSideProps ~ error',
+      error
+    );
     errors = error.response.data.message.text;
   }
 
