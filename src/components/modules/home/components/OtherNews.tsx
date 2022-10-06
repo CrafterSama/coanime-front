@@ -13,7 +13,7 @@ const OtherNews = ({ articles }) => {
     <div className="other-news px-4 xl:px-0">
       <Section withContainer>
         <div className="flex flex-wrap gap-4 justify-center">
-          {articles.map((article, index) => (
+          {articles?.map((article, index) => (
             <div
               key={index}
               className="article w-full sm:w-[300px] h-[300px] relative overflow-hidden rounded"

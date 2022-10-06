@@ -27,10 +27,15 @@ export const useSearchPosts = ({ name = '' }) => {
     params['name'] = name;
   }
 
-  return useQuery(['posts-search', name], async () => {
-    const response = await httpClientExternal.get(`posts-search`, { params });
-    return response.data;
-  });
+  const isLongEnough = name.length >= 2;
+  return useQuery(
+    ['posts-search', name],
+    async () => {
+      const response = await httpClientExternal.get(`posts-search`, { params });
+      return response.data;
+    },
+    { enabled: isLongEnough }
+  );
 };
 
 export const usePost = (slug: string) => {

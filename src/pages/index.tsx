@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
 import { useQuery } from 'react-query';
 
@@ -18,26 +19,20 @@ import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmIcon } from '@heroicons/react/outline';
 
-const Home = ({ homeData, articlesData, articlesJapan }) => {
+const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
+  const { data, isLoading } = useQuery(['homeData'], getHomeData, {
+    initialData: homeData,
+  });
   const [articles, setArticles] = useState([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
-  const { data = {}, isLoading } = useQuery(['home'], getHomeData, {
-    initialData: homeData,
-  });
-  const {
-    title = '',
-    description = '',
-    keywords = '',
-    relevants = [],
-    broadcast = [],
-    upcoming = [],
-  } = data;
-  const { data: japan = {} } = articlesJapan;
 
   useEffect(() => {
     if (articlesData) {
       setArticles([...articles, ...articlesData?.data]);
+    }
+    if (errors) {
+      toast.error(errors);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -64,12 +59,12 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
         </div>
       )}
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
+        <title>{data?.title}</title>
+        <meta name="description" content={data?.description} />
+        <meta name="keywords" content={data?.keywords} />
         <meta name="author" content="@coanime" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta property="og:title" content={data?.title} />
+        <meta property="og:description" content={data?.description} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://front.coanime.net" />
@@ -82,8 +77,8 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:title" content={data?.title} />
+        <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:site" content="@coanime" />
         <meta
           name="twitter:image:src"
@@ -96,7 +91,7 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
       </Head>
 
       <Section>
-        <TopSlider relevants={relevants} />
+        <TopSlider relevants={data?.relevants} />
       </Section>
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
@@ -111,24 +106,30 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
           </a>
         </div>
       </Section>
-      {/*<Section withContainer>
+      <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday broadcast={broadcast} />
-      </Section>*/}
-      {/*<Section withContainer>
-        <SectionTitle title="" subtitle="Próximos Estrenos" />
-        <UpcomingSeries upcoming={upcoming} />
-      </Section>*/}
-      {/*<Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
+        <BroadcastToday broadcast={data?.broadcast} />
+      </Section>
+      <Section withContainer>
+        <SectionTitle
+          title=""
+          subtitle="Próximos Estrenos"
+          actionLink="/ecma/titulos/estrenos"
+          justify="justify-between"
+        />
+        <UpcomingSeries upcoming={data?.upcoming} />
+      </Section>
+      <Section className="bg-indigo-50 shadow-inner py-4">
         <Section withContainer>
           <SectionTitle
             title="Japón y Cultura"
             subtitle="Articulos relacionados con la Cultura de"
             fancyText="Japón"
+            subTitleBackground="bg-indigo-50"
           />
-          <OtherNews articles={japan} />
+          <OtherNews articles={articlesJapan?.data} />
         </Section>
-      </Section>*/}
+      </Section>
       <Section withContainer id="news">
         <SectionTitle title="News" subtitle="Otras Noticias" />
         <OtherNews articles={articles} />
@@ -148,15 +149,26 @@ const Home = ({ homeData, articlesData, articlesJapan }) => {
 
 export async function getServerSideProps() {
   const page = 1;
-  /*const response = await getHomeData();*/
-  const articles = await getArticlesData({ page });
-  const japan = await getArticlesJapan({ page });
+  let response = null;
+  let articles = null;
+  let japan = null;
+  let errors = null;
+  try {
+    response = await getHomeData();
+    articles = await getArticlesData({ page });
+    japan = await getArticlesJapan({ page });
+  } catch (error) {
+    errors = error.response.data.message.text;
+  }
 
-  /*const homeData = response.data;*/
-  const articlesData = articles.data;
-  const articlesJapan = japan.data;
-
-  return { props: { /*homeData*/ articlesData, articlesJapan } };
+  return {
+    props: {
+      homeData: response?.data,
+      articlesData: articles?.data,
+      articlesJapan: japan?.data,
+      errors,
+    },
+  };
 }
 
 export default Home;

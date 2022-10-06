@@ -24,7 +24,7 @@ const TopSlider = ({ relevants }) => (
         autoplay={{ delay: 1500 }}
         className="flex flex-row gap-8 w-full"
       >
-        {relevants.map((relevant) => (
+        {relevants?.map((relevant) => (
           <SwiperSlide key={relevant.id}>
             <div className="top-slider flex relative min-h-screen">
               <Image

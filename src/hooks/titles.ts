@@ -56,8 +56,13 @@ export const useGetUserTitleList = ({ page = 1 }) => {
 };
 
 export const useSearchTitle = ({ name = '' }) => {
-  return useQuery(['externalSearchTitle', name], async () => {
-    const response = await httpClientExternal.get(`search/titles/${name}`);
-    return response.data;
-  });
+  const isLongEnough = name.length >= 2;
+  return useQuery(
+    ['externalSearchTitle', name],
+    async () => {
+      const response = await httpClientExternal.get(`search/titles/${name}`);
+      return response.data;
+    },
+    { enabled: isLongEnough }
+  );
 };
