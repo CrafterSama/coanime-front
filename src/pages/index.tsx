@@ -68,7 +68,7 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
         <meta property="og:description" content={data?.description} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
-        <meta property="og:url" content="https://front.coanime.net" />
+        <meta property="og:url" content="https://coanime.net" />
         <meta property="og:image" content={data?.image} />
         <meta property="og:image:secure_url" content={data?.image} />
         <meta name="twitter:card" content="summary_large_image" />
