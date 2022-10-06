@@ -111,15 +111,21 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
         <BroadcastToday broadcast={data?.broadcast} />
       </Section>
       <Section withContainer>
-        <SectionTitle title="" subtitle="Próximos Estrenos" />
+        <SectionTitle
+          title=""
+          subtitle="Próximos Estrenos"
+          actionLink="/ecma/titulos/estrenos"
+          justify="justify-between"
+        />
         <UpcomingSeries upcoming={data?.upcoming} />
       </Section>
-      <Section className="bg-indigo-50 bg-opacity-50 shadow-inner py-4">
+      <Section className="bg-indigo-50 shadow-inner py-4">
         <Section withContainer>
           <SectionTitle
             title="Japón y Cultura"
             subtitle="Articulos relacionados con la Cultura de"
             fancyText="Japón"
+            subTitleBackground="bg-indigo-50"
           />
           <OtherNews articles={articlesJapan?.data} />
         </Section>

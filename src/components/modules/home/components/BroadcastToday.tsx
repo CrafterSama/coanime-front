@@ -34,6 +34,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
       {series?.length > 0 && (
         <div className="broadcast-today px-4 xl:px-0">
           <Swiper
+            className="flex"
             modules={[
               EffectFade,
               Navigation,
