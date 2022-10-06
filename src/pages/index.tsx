@@ -60,6 +60,7 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
       )}
       <Head>
         <title>{data?.title}</title>
+        <meta name="title" content={data?.title} />
         <meta name="description" content={data?.description} />
         <meta name="keywords" content={data?.keywords} />
         <meta name="author" content="@coanime" />
@@ -68,22 +69,13 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://front.coanime.net" />
-        <meta
-          property="og:image"
-          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
-        />
-        <meta
-          property="og:image:secure_url"
-          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
-        />
+        <meta property="og:image" content={data?.image} />
+        <meta property="og:image:secure_url" content={data?.image} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={data?.title} />
         <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:site" content="@coanime" />
-        <meta
-          name="twitter:image:src"
-          content="https://coanime.s3.us-east-2.amazonaws.com/coanime-logo-default.svg"
-        />
+        <meta name="twitter:image:src" content={data?.image} />
         <meta name="twitter:creator" content="@coanime" />
         <meta name="referrer" content="default" />
         <meta property="fb:pages" content="127729317274121" />
@@ -158,10 +150,6 @@ export async function getServerSideProps() {
     articles = await getArticlesData({ page });
     japan = await getArticlesJapan({ page });
   } catch (error) {
-    console.log(
-      '🚀 ~ file: index.tsx ~ line 161 ~ getServerSideProps ~ error',
-      error
-    );
     errors = error.response.data.message.text;
   }
 
