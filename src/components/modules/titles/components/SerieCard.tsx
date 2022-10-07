@@ -13,9 +13,20 @@ const SerieCard = ({ serie }) => {
         src={serie?.images?.name ?? defaultImage}
         alt={serie?.name}
         layout="fill"
-        className="w-full h-full"
+        className={`w-full h-full ${serie?.ratingId === 6 ? 'blur-lg' : ''}`}
         objectFit="cover"
       />
+      {serie?.ratingId === 6 && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
+          <Image
+            src="/images/censored.png"
+            alt="Censurado"
+            height={70}
+            width={150}
+            className="absolute top-0 right-0"
+          />
+        </div>
+      )}
       <div className="overlayer"></div>
       <div className="absolute top-0 right-0 left-0 bottom-0 p-2 grid grid-cols-1 grid-rows-2 gap-2">
         <div className="categories text-right">
