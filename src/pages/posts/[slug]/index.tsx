@@ -75,6 +75,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
           <Head>
             <meta name="copyright" content="Copyright (C) 2006 Coanime.net" />
             <title>{title}</title>
+            <meta name="title" content={title} />
             <meta name="description" content={description} />
             <meta name="keywords" content={tags} />
             <link rel="feed_image" href={post.image} />
