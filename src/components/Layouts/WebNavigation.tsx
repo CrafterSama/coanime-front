@@ -308,7 +308,7 @@ const Navigation = ({ user }) => {
           </div>
         </div>
       )}
-      {/*(router?.pathname === '/' ||
+      {(router?.pathname === '/' ||
         router?.asPath.includes('/categorias/')) && (
         <div className="w-full bg-white sub-navbar">
           <div className="max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
@@ -319,6 +319,13 @@ const Navigation = ({ user }) => {
                 active={router.pathname === '/'}
               >
                 Principal
+              </NavLink>
+              <NavLink
+                className="py-4"
+                href="/categorias/cultura-otaku"
+                active={router.pathname === '/categorias/cultura-otaku'}
+              >
+                Cultura Otaku
               </NavLink>
               <NavLink
                 className="py-4"
@@ -343,36 +350,15 @@ const Navigation = ({ user }) => {
               </NavLink>
               <NavLink
                 className="py-4"
-                href="/categorias/peliculas"
-                active={router.pathname?.includes('/categorias/peliculas')}
-              >
-                Películas
-              </NavLink>
-              <NavLink
-                className="py-4"
-                href="/categorias/doramas"
-                active={router.pathname?.includes('/categorias/doramas')}
-              >
-                Doramas
-              </NavLink>
-              <NavLink
-                className="py-4"
                 href="/categorias/japon"
                 active={router.pathname?.includes('/categorias/japon')}
               >
                 Japón
               </NavLink>
-              <NavLink
-                className="py-4"
-                href="/categorias/curiosidades"
-                active={router.pathname?.includes('/categorias/curiosidades')}
-              >
-                Curiosidades
-              </NavLink>
             </div>
           </div>
         </div>
-        )*/}
+      )}
     </>
   );
 };
