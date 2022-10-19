@@ -94,7 +94,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="p-6 bg-white shadow-lg rounded-lg">
-                Hola <span className="font-bold">{user.username}</span>,
+                Hola <span className="font-bold">{user?.username}</span>,
                 bienvenido al dashboard de Coanime.net
               </div>
             </div>
