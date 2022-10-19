@@ -44,8 +44,21 @@ const SearchBox = () => {
                         src={title?.images?.name ?? DEFAULT_IMAGE}
                         alt={title?.name}
                         layout="fill"
-                        className="object-cover group-hover:object-scale-down"
+                        className={`object-cover group-hover:object-scale-down ${
+                          title?.ratingId === 6 ? 'blur-lg' : ''
+                        }`}
                       />
+                      {title?.ratingId === 6 && (
+                        <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
+                          <Image
+                            src="/images/censored.png"
+                            alt="Censurado"
+                            height={70}
+                            width={150}
+                            className="absolute top-0 right-0"
+                          />
+                        </div>
+                      )}
                     </div>
                     <span className="flex flex-col gap-1">
                       <span className="flex gap-1 group-hover:text-orange-400">
@@ -91,7 +104,7 @@ const SearchBox = () => {
                           {post?.title}
                         </span>
                       </span>
-                      <span>({post?.categories.name})</span>
+                      <span>({post?.categories?.name ?? '-'})</span>
                     </span>
                   </a>
                 </Link>

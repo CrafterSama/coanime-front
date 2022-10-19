@@ -729,7 +729,7 @@ p > .user-author {
 
 .title-header {
   overflow: hidden;
-  max-height: 300px;
+  max-height: 350px;
   position: relative;
 }
 

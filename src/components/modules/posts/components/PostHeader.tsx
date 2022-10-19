@@ -15,11 +15,13 @@ const PostHeader = ({ image, post }) => (
     )}
     <div className="full-header-title-bg">
       <div className="article__info-top">
-        <div className="categories">
-          <Link href={`/categorias/${post?.categories?.slug}`}>
-            <a>{post?.categories?.name}</a>
-          </Link>
-        </div>
+        {post?.categories?.name && (
+          <div className="categories">
+            <Link href={`/categorias/${post?.categories?.slug}`}>
+              <a>{post?.categories?.name}</a>
+            </Link>
+          </div>
+        )}
         <h1 className="info__article-title">{post?.title}</h1>
         <h2 className="info__article-subtitle">{post?.excerpt}</h2>
         <p>
