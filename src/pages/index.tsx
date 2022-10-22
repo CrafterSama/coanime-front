@@ -114,9 +114,8 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
       <Section className="bg-indigo-50 shadow-inner py-4">
         <Section withContainer>
           <SectionTitle
-            title="Japón y Cultura"
-            subtitle="Articulos relacionados con la Cultura de"
-            fancyText="Japón"
+            title="Cultura Otaku"
+            subtitle="Occidental y de Japón"
             subTitleBackground="bg-indigo-50"
           />
           <OtherNews articles={articlesJapan?.data} />
