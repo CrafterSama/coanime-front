@@ -6,8 +6,8 @@ const Tags = ({ tags }) => (
       {tags?.length > 0 &&
         tags?.map((tag) => (
           <li key={tag?.id}>
-            <Link href={`/tags/${tag?.slug}`}>
-              <a className="tag">{tag?.name}</a>
+            <Link href={`/tags/${tag?.slug}`} className="tag">
+              {tag?.name}
             </Link>
           </li>
         ))}

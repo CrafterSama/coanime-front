@@ -30,12 +30,9 @@ const ForgotPassword = () => {
       <AuthCard
         logo={
           <Link href="/">
-            <a>
-              <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-            </a>
+            <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
           </Link>
-        }
-      >
+        }>
         <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
           Forgot your password? No problem. Just let us know your email address
           and we will email you a password reset link that will allow you to
@@ -67,10 +64,10 @@ const ForgotPassword = () => {
           <div className="flex flex-col items-center justify-center mt-4 gap-4">
             <Button>Email Password Reset Link</Button>
             <div className="flex flex-row justify-around content-center w-full">
-              <Link href="/login">
-                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                  Return to login
-                </a>
+              <Link
+                href="/login"
+                className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                Return to login
               </Link>
             </div>
           </div>

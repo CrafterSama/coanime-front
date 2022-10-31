@@ -13,21 +13,22 @@ const Author = ({ users }) => (
           }
           alt={users?.name}
           className="w-full h-full"
-          objectFit="cover"
-          layout="fill"
+          fill
           quality={90}
         />
       </div>
       <div className="info__author">
         <p className="info__author-name">
-          <Link href={`/users/[slug]`} as={`/users/${users?.slug}`}>
-            <a className="text-gray-300">{users?.name}</a>
+          <Link
+            href={`/users/[slug]`}
+            as={`/users/${users?.slug}`}
+            className="text-gray-300">
+            {users?.name}
           </Link>
         </p>
         <p
           className="info__author-ocupation"
-          dangerouslySetInnerHTML={{ __html: users?.bio }}
-        ></p>
+          dangerouslySetInnerHTML={{ __html: users?.bio }}></p>
       </div>
     </div>
   </div>

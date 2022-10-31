@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
-import { useQuery } from 'react-query';
 
 import Head from 'next/head';
 
@@ -18,6 +17,7 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmIcon } from '@heroicons/react/outline';
+import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
   const { data, isLoading } = useQuery(['homeData'], getHomeData, {
@@ -29,7 +29,7 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
 
   useEffect(() => {
     if (articlesData) {
-      setArticles([...articles, ...articlesData?.data]);
+      setArticles([...articles, ...articlesData.data]);
     }
     if (errors) {
       toast.error(errors);
@@ -91,8 +91,7 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
         <div className="w-full flex justify-end items-center mt-2 px-4">
           <a
             className="flex flex-row items-center text-orange-500"
-            href="#news"
-          >
+            href="#news">
             <PlusSmIcon className="w-6 h-6 text-orange-400" />
             Mas Noticias
           </a>

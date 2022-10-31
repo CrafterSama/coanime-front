@@ -21,8 +21,7 @@ const Events = () => {
         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
           Events
         </h2>
-      }
-    >
+      }>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

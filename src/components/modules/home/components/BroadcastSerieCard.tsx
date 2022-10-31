@@ -13,19 +13,17 @@ const BroadcastSerieCard = ({ serie, position }) => (
           : DEFAULT_IMAGE
       }
       alt={serie?.title}
-      className="w-full h-full"
-      objectFit="contain"
-      layout="fill"
+      className="w-full h-full object-contain"
+      fill
       quality={90}
     />
     <div className="absolute left-0 right-0 bottom-0 h-auto p-2 bg-gray-900 bg-opacity-80 text-white flex justify-center items-center text-center text-xs rounded-b">
-      <Link href={getTitlesUrl(serie?.type, serie?.title)}>
-        <a className="text-sm">{serie?.title}</a>
+      <Link href={getTitlesUrl(serie?.type, serie?.title)} className="text-sm">
+        {serie?.title}
       </Link>
     </div>
     <div
-      className={`absolute top-0 right-0 h-4 w-4 p-1 rounded-full bg-white bg-opacity-80 text-orange-500 flex justify-center items-center text-center text-xs`}
-    >
+      className={`absolute top-0 right-0 h-4 w-4 p-1 rounded-full bg-white bg-opacity-80 text-orange-500 flex justify-center items-center text-center text-xs`}>
       {position}
     </div>
   </div>

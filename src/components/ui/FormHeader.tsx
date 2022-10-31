@@ -36,8 +36,7 @@ const FormHeader: FC<FormHeaderProps> = ({
     <header
       className={`flex flex-col md:flex-row justify-between content-center p-4 bg-gray-100 rounded-t-lg sticky top-0 ${
         overAll && 'z-20'
-      }`}
-    >
+      }`}>
       <h3 className="w-full md:w-3/4 text-xl font-semibold text-gray-400 leading-tight m-0 flex justify-center md:justify-start items-center mb-4 md:mb-0">
         {title} {subtitle && `| ${subtitle}`}
       </h3>

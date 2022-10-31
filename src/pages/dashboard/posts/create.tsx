@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation } from 'react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
@@ -27,6 +26,7 @@ import { useCategoriesList } from '@/hooks/categories';
 import { useSearchTitle } from '@/hooks/titles';
 import { postCreate } from '@/services/posts';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 
 dayjs.extend(utc);
 
@@ -105,10 +105,9 @@ const CreatePost = () => {
     router.push('/dashboard/posts');
   };
 
-  const {
-    mutate: createPost,
-    isLoading: savingLoading,
-  } = useMutation(({ params }: { params: any }) => postCreate(params));
+  const { mutate: createPost, isLoading: savingLoading } = useMutation(
+    ({ params }: { params: any }) => postCreate(params)
+  );
 
   const onSubmit = (data) => {
     const postponed = data.postponedTo
@@ -147,8 +146,7 @@ const CreatePost = () => {
           text="Creación de Articulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Creación de Articulo</title>
       </Head>
@@ -235,7 +233,7 @@ const CreatePost = () => {
                   name="categoryId"
                   value={watch('categoryId')}
                   callBack={(option) => setValue('categoryId', option)}
-                  errors={errors?.['categoryId']?.message}
+                  errors={errors?.['categoryId']?.message as string}
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
@@ -247,7 +245,7 @@ const CreatePost = () => {
                 <div className={`tags-box`}>
                   <TagsInput
                     onChange={(tags) => setValue('tags', tags)}
-                    seprators={['Enter', ',']}
+                    separators={['Enter', ',']}
                     isEditOnRemove={true}
                   />
                 </div>

@@ -2,13 +2,12 @@ import { useEffect, useState, useCallback } from 'react';
 import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
 import MultiSelect from 'react-widgets/Multiselect';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
@@ -28,6 +27,7 @@ import { useTitle } from '@/hooks/titles';
 import { titleUpdate } from '@/services/titles';
 import { CalendarIcon, XIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import 'react-widgets/styles.css';
 
 dayjs.extend(utc);
@@ -113,10 +113,8 @@ const UpdateTitle = ({ id }) => {
     toast.success(response.data.message.text);
   };
 
-  const {
-    mutate: updateTitle,
-  } = useMutation(({ id, params }: { id: string; params: any }) =>
-    titleUpdate(id, params)
+  const { mutate: updateTitle } = useMutation(
+    ({ id, params }: { id: string; params: any }) => titleUpdate(id, params)
   );
 
   const onHandleError = (error) => {
@@ -162,8 +160,7 @@ const UpdateTitle = ({ id }) => {
           text="Edición de Titulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Update Title: {title?.name}</title>
       </Head>
@@ -263,7 +260,7 @@ const UpdateTitle = ({ id }) => {
                     name="typeId"
                     value={watch('typeId')}
                     callBack={(option) => setValue('typeId', option)}
-                    errors={errors?.['typeId']?.message}
+                    errors={errors?.['typeId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -277,7 +274,7 @@ const UpdateTitle = ({ id }) => {
                     name="ratingId"
                     value={watch('ratingId')}
                     callBack={(option) => setValue('ratingId', option)}
-                    errors={errors?.['ratingId']?.message}
+                    errors={errors?.['ratingId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -331,7 +328,7 @@ const UpdateTitle = ({ id }) => {
                     name="status"
                     value={watch('status')}
                     callBack={(option) => setValue('status', option)}
-                    errors={errors?.['status']?.message}
+                    errors={errors?.['status']?.message as string}
                     disabled={!editMode}
                   />
                 </div>

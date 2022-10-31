@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import EntityCard from '@/components/modules/entities/components/EntityCard';
+import EventCard from '@/components/modules/events/components/EventCard';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEvents } from '@/services/events';
-import EventCard from '@/components/modules/events/components/EventCard';
 
 type eventsData = {
   title: string;

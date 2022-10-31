@@ -5,7 +5,8 @@ const ImageDetails = ({ src }) => (
     <Image
       className="w-[300px] h-[380px] object-scale-down object-center mx-auto"
       src={src}
-      layout="fill"
+      fill
+      alt="Details"
     />
   </figure>
 );

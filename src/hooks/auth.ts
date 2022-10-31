@@ -17,7 +17,11 @@ export const useAuth = ({
 }: useAuthProps = {}) => {
   const router = useRouter();
 
-  const { data: user, error, mutate } = useSWR('/api/user', () =>
+  const {
+    data: user,
+    error,
+    mutate,
+  } = useSWR('/api/user', () =>
     httpClientAuth
       .get('/api/user')
       .then((res) => res.data)

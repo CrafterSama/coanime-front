@@ -1,11 +1,11 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
+import { NewspaperIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useAuth } from '@/hooks/auth';
 import { useDashboard } from '@/hooks/dashboard';
-import Link from 'next/link';
-import { NewspaperIcon } from '@/components/icons';
 import { PhotographIcon, TagIcon } from '@heroicons/react/outline';
 
 const Dashboard = () => {
@@ -29,10 +29,8 @@ const Dashboard = () => {
                     <span className="font-bold">{data?.postsCount}</span> posts
                   </p>
                   <div className="absolute -top-2 -right-2 p-4 bg-orange-400 rounded-full shadow">
-                    <Link href="/dashboard/posts?page=1">
-                      <a className="text-white">
-                        <NewspaperIcon className="h-6 w-6" />
-                      </a>
+                    <Link href="/dashboard/posts?page=1" className="text-white">
+                      <NewspaperIcon className="h-6 w-6" />
                     </Link>
                   </div>
                 </div>
@@ -43,10 +41,10 @@ const Dashboard = () => {
                     <span className="font-bold">{data?.titlesCount}</span> posts
                   </p>
                   <div className="absolute -top-2 -right-2 p-4 bg-teal-600 rounded-full shadow">
-                    <Link href="/dashboard/titles?page=1">
-                      <a className="text-white">
-                        <PhotographIcon className="h-6 w-6" />
-                      </a>
+                    <Link
+                      href="/dashboard/titles?page=1"
+                      className="text-white">
+                      <PhotographIcon className="h-6 w-6" />
                     </Link>
                   </div>
                 </div>
@@ -63,10 +61,10 @@ const Dashboard = () => {
                     Vistas
                   </p>
                   <div className="absolute -top-2 -right-2 p-4 bg-violet-400 rounded-full shadow">
-                    <Link href={`/posts/${data?.mostVisitedPost?.slug}`}>
-                      <a className="text-white">
-                        <NewspaperIcon className="h-6 w-6" />
-                      </a>
+                    <Link
+                      href={`/posts/${data?.mostVisitedPost?.slug}`}
+                      className="text-white">
+                      <NewspaperIcon className="h-6 w-6" />
                     </Link>
                   </div>
                 </div>
@@ -85,10 +83,10 @@ const Dashboard = () => {
                     posts
                   </p>
                   <div className="absolute -top-2 -right-2 p-4 bg-blue-400 rounded-full shadow">
-                    <Link href={`/categorias/${data?.mostPostsCategory.slug}`}>
-                      <a className="text-white">
-                        <TagIcon className="h-6 w-6" />
-                      </a>
+                    <Link
+                      href={`/categorias/${data?.mostPostsCategory.slug}`}
+                      className="text-white">
+                      <TagIcon className="h-6 w-6" />
                     </Link>
                   </div>
                 </div>

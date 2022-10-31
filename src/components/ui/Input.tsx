@@ -79,8 +79,7 @@ const Input: FC<InputProps> = ({
           <div
             className={`${
               charactersCount > 75 ? 'text-red-400' : 'text-gray-400'
-            } text-xs`}
-          >
+            } text-xs`}>
             {`Cantidad de Caracteres: ${charactersCount}`}
           </div>
         </div>

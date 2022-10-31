@@ -124,18 +124,16 @@ const Profile = ({ slug }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={data?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
+                      fill
                     />
                   </figure>
                   <div className="overlayer"></div>
                   {user && user.id === data?.result?.id && (
                     <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                      <Link href={`/perfil/edit`}>
-                        <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
-                          <PencilIcon className="w-5 h-5" />
-                        </a>
+                      <Link
+                        href={`/perfil/edit`}
+                        className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                        <PencilIcon className="w-5 h-5" />
                       </Link>
                     </div>
                   )}
@@ -159,10 +157,10 @@ const Profile = ({ slug }) => {
                         />
                         {user && user.id === data?.result?.id && (
                           <div className="absolute bottom-0 left-[40%] px-2 py-2 flex flex-col gap-4">
-                            <Link href={`/perfil/edit`}>
-                              <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
-                                <PencilIcon className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={`/perfil/edit`}
+                              className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                              <PencilIcon className="w-5 h-5" />
                             </Link>
                           </div>
                         )}
@@ -195,53 +193,43 @@ const Profile = ({ slug }) => {
                         </div>
                         <div className="flex flex-row gap-2">
                           {data?.result?.website && (
-                            <Link href={data?.result?.website ?? ''}>
-                              <a
-                                target="_blank"
-                                className="text-orange-500 text-center"
-                              >
-                                <LinkIcon className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={data?.result?.website ?? ''}
+                              target="_blank"
+                              className="text-orange-500 text-center">
+                              <LinkIcon className="w-5 h-5" />
                             </Link>
                           )}
                           {data?.result?.facebook && (
-                            <Link href={data?.result?.facebook ?? ''}>
-                              <a
-                                target="_blank"
-                                className="text-blue-500 text-center"
-                              >
-                                <FaFacebookSquare className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={data?.result?.facebook ?? ''}
+                              target="_blank"
+                              className="text-blue-500 text-center">
+                              <FaFacebookSquare className="w-5 h-5" />
                             </Link>
                           )}
                           {data?.result?.twitter && (
-                            <Link href={data?.result?.twitter ?? ''}>
-                              <a
-                                target="_blank"
-                                className="text-cyan-500 text-center"
-                              >
-                                <FaTwitter className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={data?.result?.twitter ?? ''}
+                              target="_blank"
+                              className="text-cyan-500 text-center">
+                              <FaTwitter className="w-5 h-5" />
                             </Link>
                           )}
                           {data?.result?.instagram && (
-                            <Link href={data?.result?.instagram ?? ''}>
-                              <a
-                                target="_blank"
-                                className="text-fuchsia-400 text-center"
-                              >
-                                <FaInstagram className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={data?.result?.instagram ?? ''}
+                              target="_blank"
+                              className="text-fuchsia-400 text-center">
+                              <FaInstagram className="w-5 h-5" />
                             </Link>
                           )}
                           {data?.result?.pinterest && (
-                            <Link href={data?.result?.pinterest ?? ''}>
-                              <a
-                                target="_blank"
-                                className="text-red-500 text-center"
-                              >
-                                <FaPinterest className="w-5 h-5" />
-                              </a>
+                            <Link
+                              href={data?.result?.pinterest ?? ''}
+                              target="_blank"
+                              className="text-red-500 text-center">
+                              <FaPinterest className="w-5 h-5" />
                             </Link>
                           )}
                         </div>
@@ -255,8 +243,7 @@ const Profile = ({ slug }) => {
                       <Tabs
                         key={item.key}
                         active={activeTab === item.key}
-                        onClick={() => setActiveTab(item.key)}
-                      >
+                        onClick={() => setActiveTab(item.key)}>
                         {item.title}
                       </Tabs>
                     ))}
@@ -269,8 +256,7 @@ const Profile = ({ slug }) => {
                     {tabs.map((item) => (
                       <TabsContent
                         key={item.key}
-                        active={activeTab === item.key}
-                      >
+                        active={activeTab === item.key}>
                         {item.component}
                       </TabsContent>
                     ))}
