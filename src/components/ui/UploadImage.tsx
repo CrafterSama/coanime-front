@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
 
-import Image from 'next/future/image';
+import Image from 'next/image';
 
 import { CloudUploadIcon } from '@/components/icons';
 import { uploadImages } from '@/hooks/images';
@@ -47,8 +47,7 @@ const UploadImage = ({ disabled = false, name, model }) => {
           !disabled
             ? 'opacity-100 cursor-pointer'
             : 'opacity-50 cursor-not-allowed'
-        }`}
-      >
+        }`}>
         {loading ? (
           <CgSpinner className="animate-spin" />
         ) : (
@@ -77,6 +76,7 @@ const UploadImage = ({ disabled = false, name, model }) => {
             src={watch(name)}
             alt="New image"
             className="w-full rounded-lg"
+            fill
           />
         </>
       )}

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
@@ -12,27 +12,26 @@ export const headers = [
     accessor: (row: any) => row,
     cell: (row) => (
       <div className="flex flex-row gap-2 w-96 py-1">
-        <div className="w-5/12 flex items-center">
+        <div className="w-1/2 flex items-center relative">
           <Image
-            className="rounded-lg w-full h-3/4 min-h-[90px]"
+            className="rounded-lg w-full h-3/4 min-h-[90px] object-cover"
             src={row.image ?? DEFAULT_IMAGE}
             alt={row.title}
             loading="lazy"
-            width="100%"
-            height="100%"
+            fill
           />
         </div>
         <div className="w-7/12 text-orange-500 font-semibold">
           <div className="flex flex-row gap-2">
-            <Link href={`/dashboard/posts/${row.slug}`}>
-              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-2">
-                {row.title}
-              </a>
+            <Link
+              href={`/dashboard/posts/${row.slug}`}
+              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-2">
+              {row.title}
             </Link>
-            <Link href={`/posts/${row?.slug}`}>
-              <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-                <LinkIcon className="h-4 w-4" />
-              </a>
+            <Link
+              href={`/posts/${row?.slug}`}
+              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
+              <LinkIcon className="h-4 w-4" />
             </Link>
           </div>
           <p className="text-gray-600 text-xs">
@@ -67,10 +66,10 @@ export const headers = [
     accessor: (row: any) => row,
     cell: ({ categories }) => (
       <div className="w-40">
-        <Link href={`/categories/${categories.id}`}>
-          <a className="text-sm font-semibold text-gray-500 underline underline-offset-1">
-            {categories.name}
-          </a>
+        <Link
+          href={`/categories/${categories.id}`}
+          className="text-sm font-semibold text-gray-500 underline underline-offset-1">
+          {categories.name}
         </Link>
       </div>
     ),
@@ -81,11 +80,12 @@ export const headers = [
     cell: ({ tags }) => (
       <div className="w-40 flex flex-wrap gap-2">
         {tags.map((tag, index) => (
-          <Link key={tag.id} href={`/tags/${tag.id}`}>
-            <a className="text-xs font-semibold text-gray-500 underline italic">
-              {tag.name}
-              {index === tags.length - 1 ? '' : ', '}
-            </a>
+          <Link
+            key={tag.id}
+            href={`/tags/${tag.id}`}
+            className="text-xs font-semibold text-gray-500 underline italic">
+            {tag.name}
+            {index === tags.length - 1 ? '' : ', '}
           </Link>
         ))}
       </div>
@@ -96,13 +96,11 @@ export const headers = [
     accessor: (row: any) => row,
     cell: ({ users }) => (
       <div className="w-40">
-        <Link href={`/users/${users.id}`}>
-          <a
-            className="whitespace-nowrap text-sm font-semibold text-gray-500 underline underline-offset-1"
-            target="_blank"
-          >
-            {users.name}
-          </a>
+        <Link
+          href={`/users/${users.id}`}
+          className="whitespace-nowrap text-sm font-semibold text-gray-500 underline underline-offset-1"
+          target="_blank">
+          {users.name}
         </Link>
       </div>
     ),

@@ -8,9 +8,9 @@ const PostHeader = ({ image, post }) => (
       <Image
         src={image}
         className="w-full h-full"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={90}
+        alt={post?.title}
       />
     )}
     <div className="full-header-title-bg">
@@ -18,7 +18,7 @@ const PostHeader = ({ image, post }) => (
         {post?.categories?.name && (
           <div className="categories">
             <Link href={`/categorias/${post?.categories?.slug}`}>
-              <a>{post?.categories?.name}</a>
+              {post?.categories?.name}
             </Link>
           </div>
         )}
@@ -30,8 +30,11 @@ const PostHeader = ({ image, post }) => (
               format(new Date(post?.postponedTo), 'd LLLL, yyyy')}
           </span>{' '}
           por{' '}
-          <Link href={`/users/[slug]`} as={`/users/${post?.users?.slug}`}>
-            <a className="text-gray-300">{post?.users?.name}</a>
+          <Link
+            href={`/users/[slug]`}
+            as={`/users/${post?.users?.slug}`}
+            className="text-gray-300">
+            {post?.users?.name}
           </Link>
         </p>
       </div>

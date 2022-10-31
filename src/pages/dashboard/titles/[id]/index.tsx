@@ -2,12 +2,12 @@ import { useEffect, useState, useCallback } from 'react';
 import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MultiSelect from 'react-widgets/Multiselect';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Head from 'next/head';
 
 import AppLayout from '@/components/Layouts/AppLayout';
@@ -113,10 +113,8 @@ const UpdateTitle = ({ id }) => {
     toast.success(response.data.message.text);
   };
 
-  const {
-    mutate: updateTitle,
-  } = useMutation(({ id, params }: { id: string; params: any }) =>
-    titleUpdate(id, params)
+  const { mutate: updateTitle } = useMutation(
+    ({ id, params }: { id: string; params: any }) => titleUpdate(id, params)
   );
 
   const onHandleError = (error) => {
@@ -162,8 +160,7 @@ const UpdateTitle = ({ id }) => {
           text="Edición de Titulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Update Title: {title?.name}</title>
       </Head>

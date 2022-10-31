@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 
 import { useRouter } from 'next/router';
 import Script from 'next/script';

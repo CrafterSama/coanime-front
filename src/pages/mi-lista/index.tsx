@@ -62,8 +62,7 @@ const Titles = ({ titlesData }) => {
               <Image
                 src={user?.profileCoverPath || DEFAULT_IMAGE}
                 alt="profile-cover"
-                layout="fill"
-                objectFit="cover"
+                fill
                 className="rounded-b-xl"
               />
               <div className="overlayer"></div>
@@ -87,8 +86,7 @@ const Titles = ({ titlesData }) => {
                       {series?.map((serie) => (
                         <div
                           key={serie?.titles?.id}
-                          className="relative title-item rounded-lg overflow-hidden"
-                        >
+                          className="relative title-item rounded-lg overflow-hidden">
                           <SerieCard serie={serie?.titles} />
                           <div className="text-center text-sm font-semibold text-gray-700 py-1 px-2 rounded-b-lg bg-orange-100">
                             {serie?.statistics?.name}

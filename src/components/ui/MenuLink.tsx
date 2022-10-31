@@ -27,21 +27,22 @@ const MenuLink: FC<MenuLinkProps> = ({
         : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300'
     }`}
   >
-    <Link href={href} {...props}>
-      <a
-        className={`font-semibold text-base menu-text flex flex-row w-full gap-4 px-4 py-2 rounded-lg ${
-          active ? 'bg-orange-100' : 'hover:bg-orange-100'
-        } ${className}`}
-      >
-        {icon && (
-          <span className={`${isTiny ? '-ml-3' : 'md:ml-0'} -ml-3`}>
-            {icon}
-          </span>
-        )}
-        {!isTiny && (
-          <span className="hidden md:block menu-txt">{children}</span>
-        )}
-      </a>
+    <Link
+      href={href}
+      {...props}
+      className={`font-semibold text-base menu-text flex flex-row w-full gap-4 px-4 py-2 rounded-lg ${
+        active ? 'bg-orange-100' : 'hover:bg-orange-100'
+      } ${className}`}>
+
+      {icon && (
+        <span className={`${isTiny ? '-ml-3' : 'md:ml-0'} -ml-3`}>
+          {icon}
+        </span>
+      )}
+      {!isTiny && (
+        <span className="hidden md:block menu-txt">{children}</span>
+      )}
+
     </Link>
   </li>
 );

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
@@ -105,10 +105,9 @@ const CreatePost = () => {
     router.push('/dashboard/posts');
   };
 
-  const {
-    mutate: createPost,
-    isLoading: savingLoading,
-  } = useMutation(({ params }: { params: any }) => postCreate(params));
+  const { mutate: createPost, isLoading: savingLoading } = useMutation(
+    ({ params }: { params: any }) => postCreate(params)
+  );
 
   const onSubmit = (data) => {
     const postponed = data.postponedTo
@@ -147,8 +146,7 @@ const CreatePost = () => {
           text="Creación de Articulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Creación de Articulo</title>
       </Head>

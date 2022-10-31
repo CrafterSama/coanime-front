@@ -8,7 +8,7 @@ import {
   AiOutlineYoutube,
 } from 'react-icons/ai';
 import { FaTiktok, FaPinterest } from 'react-icons/fa';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -102,10 +102,9 @@ const Profile = () => {
     }
   }, [result, resetProfileData]);
 
-  const {
-    mutate: updateProfile,
-    isLoading: isSaving,
-  } = useMutation(({ params }: { params: any }) => updateMe(params));
+  const { mutate: updateProfile, isLoading: isSaving } = useMutation(
+    ({ params }: { params: any }) => updateMe(params)
+  );
 
   const onSubmit = (data) => {
     if (data.avatar && !data.profilePhotoPath) {
@@ -136,8 +135,7 @@ const Profile = () => {
         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
           Profile - {result?.name}
         </h2>
-      }
-    >
+      }>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -157,8 +155,7 @@ const Profile = () => {
                   <div className="flex flex-col w-full">
                     <FormWithContext
                       methods={methods}
-                      onSubmit={handleSubmit(onSubmit)}
-                    >
+                      onSubmit={handleSubmit(onSubmit)}>
                       <FormHeader
                         title={''}
                         cancelAction={() => setEditMode(false)}
@@ -178,8 +175,7 @@ const Profile = () => {
                                 <div className="mt-1 flex justify-center items-center">
                                   <label
                                     htmlFor="avatar"
-                                    className="text-sm font-medium text-gray-700 flex flex-row items-center justify-center cursor-pointer"
-                                  >
+                                    className="text-sm font-medium text-gray-700 flex flex-row items-center justify-center cursor-pointer">
                                     <input
                                       type="file"
                                       id="avatar"
@@ -191,7 +187,7 @@ const Profile = () => {
                                       {result?.profilePhotoPath && (
                                         <Image
                                           src={result?.profilePhotoPath}
-                                          layout="fill"
+                                          fill
                                           alt="avatar"
                                           className="rounded-full w-full h-full"
                                         />
@@ -238,9 +234,8 @@ const Profile = () => {
                                       <Image
                                         src={result?.profileCoverPath}
                                         className="w-full h-full"
-                                        layout="fill"
+                                        fill
                                         alt="cover"
-                                        objectFit="cover"
                                         objectPosition="center"
                                       />
                                       <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
@@ -253,8 +248,7 @@ const Profile = () => {
                                     <div className="space-y-1 text-center w-full">
                                       <label
                                         htmlFor="cover"
-                                        className="flex flex-col h-full relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 text-center"
-                                      >
+                                        className="flex flex-col h-full relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 text-center">
                                         <div className="flex justify-center items-center font-light text-gray-300">
                                           <PhotographIcon
                                             className="w-16 h-16"

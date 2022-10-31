@@ -44,8 +44,7 @@ const Magazine = ({ magazineData }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={magazineData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
                       objectPosition="center"
                     />
                   </figure>
@@ -64,8 +63,7 @@ const Magazine = ({ magazineData }) => {
                               ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
                               : DEFAULT_IMAGE
                           }
-                          layout="fill"
-                          objectFit="cover"
+                          fill
                         />
                       </figure>
                       <div className="title-info-box">
@@ -82,9 +80,8 @@ const Magazine = ({ magazineData }) => {
                                 <Link
                                   href={`/ecma/revistas/${strToSlug(
                                     magazineData?.result?.type?.name
-                                  )}`}
-                                >
-                                  <a>{magazineData?.result?.type?.name}</a>
+                                  )}`}>
+                                  {magazineData?.result?.type?.name}
                                 </Link>
                               </div>
                             }
@@ -124,8 +121,10 @@ const Magazine = ({ magazineData }) => {
                             title="Website"
                             value={
                               magazineData?.result?.website ? (
-                                <Link href={magazineData?.result?.website}>
-                                  <a target="_blank">Website</a>
+                                <Link
+                                  href={magazineData?.result?.website}
+                                  target="_blank">
+                                  Website
                                 </Link>
                               ) : (
                                 'Sin Información'
@@ -139,8 +138,7 @@ const Magazine = ({ magazineData }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: magazineData?.result?.about,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
               </div>

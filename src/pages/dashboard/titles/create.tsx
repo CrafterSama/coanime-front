@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import MultiSelect from 'react-widgets/Multiselect';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -140,8 +140,7 @@ const CreateTitle = () => {
           text="Creación de Titulos"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Create Title</title>
       </Head>

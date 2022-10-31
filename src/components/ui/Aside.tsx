@@ -18,18 +18,18 @@ const Aside = ({ isTiny = false }) => {
     >
       <div className="flex flex-col gap-4 m-auto">
         <div className="w-auto h-20 p-4 rounded-full self-center ">
-          <Link href="/">
-            <a
-              className={`${
-                isTiny ? 'w-14' : 'w-14 md:w-full'
-              } grid overflow-hidden text-left px-2`}
-            >
-              <Logotype
-                logoColor="#FE6A00"
-                lettersColor="#FE6A00"
-                className="h-10 fill-current"
-              />
-            </a>
+          <Link
+            href="/"
+            className={`${
+              isTiny ? 'w-14' : 'w-14 md:w-full'
+            } grid overflow-hidden text-left px-2`}>
+
+            <Logotype
+              logoColor="#FE6A00"
+              lettersColor="#FE6A00"
+              className="h-10 fill-current"
+            />
+
           </Link>
         </div>
         <ul className="w-full flex flex-col gap-4">

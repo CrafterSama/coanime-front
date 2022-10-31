@@ -44,8 +44,7 @@ const Entity = ({ entityData }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={entityData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
                       objectPosition="center"
                     />
                   </figure>
@@ -98,8 +97,10 @@ const Entity = ({ entityData }) => {
                             title="Website"
                             value={
                               entityData?.result?.website ? (
-                                <Link href={entityData?.result?.website}>
-                                  <a target="_blank">Ir al Website</a>
+                                <Link
+                                  href={entityData?.result?.website}
+                                  target="_blank">
+                                  Ir al Website
                                 </Link>
                               ) : (
                                 'Sin Información'
@@ -113,8 +114,7 @@ const Entity = ({ entityData }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: entityData?.result?.about,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
               </div>

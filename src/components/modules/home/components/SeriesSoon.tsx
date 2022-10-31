@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   A11y,
@@ -66,8 +66,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
                 slidesPerView: 6,
                 spaceBetween: 16,
               },
-            }}
-          >
+            }}>
             {series?.map((serie, index) => (
               <SwiperSlide key={index} virtualIndex={index}>
                 <SerieCard serie={serie} />

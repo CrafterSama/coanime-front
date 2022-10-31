@@ -42,8 +42,7 @@ const Person = ({ personData }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={personData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
                       objectPosition="center"
                     />
                   </figure>
@@ -62,8 +61,7 @@ const Person = ({ personData }) => {
                               ? `https://api.coanime.net/storage/images/encyclopedia/people/${personData?.result?.image}`
                               : DEFAULT_IMAGE
                           }
-                          layout="fill"
-                          objectFit="cover"
+                          fill
                         />
                       </figure>
                       <div className="title-info-box">
@@ -117,8 +115,7 @@ const Person = ({ personData }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: personData?.result?.bio,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
               </div>

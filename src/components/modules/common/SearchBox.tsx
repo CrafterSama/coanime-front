@@ -37,44 +37,42 @@ const SearchBox = () => {
                 <Link
                   key={title?.id}
                   href={`/ecma/titulos/${title?.type?.slug}/${title?.slug}`}
-                >
-                  <a className="flex gap-2 text-xs px-1 py-1 cursor-pointer group">
-                    <div className="relative w-16 h-10 group-hover:h-24 group-hover:w-16 transition-all">
-                      <Image
-                        src={title?.images?.name ?? DEFAULT_IMAGE}
-                        alt={title?.name}
-                        layout="fill"
-                        className={`object-cover group-hover:object-scale-down ${
-                          title?.ratingId === 6 ? 'blur-lg' : ''
-                        }`}
-                      />
-                      {title?.ratingId === 6 && (
-                        <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
-                          <Image
-                            src="/images/censored.png"
-                            alt="Censurado"
-                            height={70}
-                            width={150}
-                            className="absolute top-0 right-0"
-                          />
-                        </div>
-                      )}
-                    </div>
-                    <span className="flex flex-col gap-1">
-                      <span className="flex gap-1 group-hover:text-orange-400">
-                        <span className="max-w-[270px] overflow-hidden text-ellipsis">
-                          {title?.name}
-                        </span>
-                      </span>
-                      <span>
-                        ({title?.type?.name},{' '}
-                        {dayjs(title?.broadTime).format('YYYY')})
-                      </span>
-                      <span className="group-hover:flex hidden">
-                        Estatus: {title?.status}
+                  className="flex gap-2 text-xs px-1 py-1 cursor-pointer group">
+                  <div className="relative w-16 h-10 group-hover:h-24 group-hover:w-16 transition-all">
+                    <Image
+                      src={title?.images?.name ?? DEFAULT_IMAGE}
+                      alt={title?.name}
+                      fill
+                      className={`object-cover group-hover:object-scale-down ${
+                        title?.ratingId === 6 ? 'blur-lg' : ''
+                      }`}
+                    />
+                    {title?.ratingId === 6 && (
+                      <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
+                        <Image
+                          src="/images/censored.png"
+                          alt="Censurado"
+                          height={70}
+                          width={150}
+                          className="absolute top-0 right-0"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <span className="flex flex-col gap-1">
+                    <span className="flex gap-1 group-hover:text-orange-400">
+                      <span className="max-w-[270px] overflow-hidden text-ellipsis">
+                        {title?.name}
                       </span>
                     </span>
-                  </a>
+                    <span>
+                      ({title?.type?.name},{' '}
+                      {dayjs(title?.broadTime).format('YYYY')})
+                    </span>
+                    <span className="group-hover:flex hidden">
+                      Estatus: {title?.status}
+                    </span>
+                  </span>
                 </Link>
               ))}
             </div>
@@ -88,25 +86,26 @@ const SearchBox = () => {
             <div className="px-2">
               <SectionTitle title="" subtitle="Noticias" />
               {posts?.result?.data?.map((post) => (
-                <Link key={post?.id} href={`/posts/${post?.slug}`}>
-                  <a className="flex gap-2 text-xs px-1 py-1 cursor-pointer group">
-                    <div className="relative w-20 h-10 transition-all">
-                      <Image
-                        src={post?.image ?? DEFAULT_IMAGE}
-                        alt={post?.title}
-                        layout="fill"
-                        className="object-cover"
-                      />
-                    </div>
-                    <span className="flex flex-col gap-1">
-                      <span className="flex gap-1 group-hover:text-orange-400">
-                        <span className="max-w-[270px] overflow-hidden text-ellipsis">
-                          {post?.title}
-                        </span>
+                <Link
+                  key={post?.id}
+                  href={`/posts/${post?.slug}`}
+                  className="flex gap-2 text-xs px-1 py-1 cursor-pointer group">
+                  <div className="relative w-20 h-10 transition-all">
+                    <Image
+                      src={post?.image ?? DEFAULT_IMAGE}
+                      alt={post?.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="flex flex-col gap-1">
+                    <span className="flex gap-1 group-hover:text-orange-400">
+                      <span className="max-w-[270px] overflow-hidden text-ellipsis">
+                        {post?.title}
                       </span>
-                      <span>({post?.categories?.name ?? '-'})</span>
                     </span>
-                  </a>
+                    <span>({post?.categories?.name ?? '-'})</span>
+                  </span>
                 </Link>
               ))}
             </div>

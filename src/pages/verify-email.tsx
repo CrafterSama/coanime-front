@@ -20,9 +20,9 @@ const VerifyEmail = () => {
       <AuthCard
         logo={
           <Link href="/">
-            <a>
-              <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-            </a>
+
+            <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
+
           </Link>
         }
       >

@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -123,10 +123,8 @@ const UpdatePost = () => {
     toast.success(response.data.message.text);
   };
 
-  const {
-    mutate: updatePost,
-  } = useMutation(({ id, params }: { id: string; params: any }) =>
-    postUpdate(id, params)
+  const { mutate: updatePost } = useMutation(
+    ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
   );
 
   const onSubmit = (data) => {
@@ -167,8 +165,7 @@ const UpdatePost = () => {
           text="Edición de Articulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Update Post: {post?.title}</title>
       </Head>

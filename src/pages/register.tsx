@@ -44,9 +44,9 @@ const Register = () => {
       <AuthCard
         logo={
           <Link href="/">
-            <a>
-              <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-            </a>
+
+            <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
+
           </Link>
         }
       >
@@ -119,10 +119,12 @@ const Register = () => {
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
             <Button>Register</Button>
             <div className="flex w-full justify-center">
-              <Link href="/login">
-                <a className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
+              <Link
+                href="/login"
+                className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
+                
                   Already registered?
-                </a>
+                
               </Link>
             </div>
           </div>

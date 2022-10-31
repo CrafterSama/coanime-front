@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Head from 'next/head';
 
@@ -91,8 +91,7 @@ const Home = ({ homeData, articlesData, articlesJapan, errors }) => {
         <div className="w-full flex justify-end items-center mt-2 px-4">
           <a
             className="flex flex-row items-center text-orange-500"
-            href="#news"
-          >
+            href="#news">
             <PlusSmIcon className="w-6 h-6 text-orange-400" />
             Mas Noticias
           </a>

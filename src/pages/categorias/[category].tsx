@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Head from 'next/head';
 import { GetStaticProps } from 'next/types';

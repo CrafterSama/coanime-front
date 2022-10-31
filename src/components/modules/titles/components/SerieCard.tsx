@@ -12,9 +12,8 @@ const SerieCard = ({ serie }) => {
       <Image
         src={serie?.images?.name ?? defaultImage}
         alt={serie?.name}
-        layout="fill"
+        fill
         className={`w-full h-full ${serie?.ratingId === 6 ? 'blur-lg' : ''}`}
-        objectFit="cover"
       />
       {serie?.ratingId === 6 && (
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
@@ -31,14 +30,14 @@ const SerieCard = ({ serie }) => {
       <div className="absolute top-0 right-0 left-0 bottom-0 p-2 grid grid-cols-1 grid-rows-2 gap-2">
         <div className="categories text-right">
           <Link href={`/ecma/titulos/${serie?.type?.slug}`}>
-            <a>{serie?.type?.name}</a>
+            {serie?.type?.name}
           </Link>
         </div>
         <div className="flex flex-wrap justify-center content-end">
-          <Link href={`/ecma/titulos/${serie?.type?.slug}/${serie?.slug}`}>
-            <a className="text-white text-center text-xl font-semibold w-full">
-              {serie?.name}
-            </a>
+          <Link
+            href={`/ecma/titulos/${serie?.type?.slug}/${serie?.slug}`}
+            className="text-white text-center text-xl font-semibold w-full">
+            {serie?.name}
           </Link>
           <SerieGenres genres={serie?.genres} />
         </div>

@@ -70,23 +70,19 @@ const Titles = ({ title, titleData, errors }) => {
     }
   }, [errors]);
 
-  const {
-    data: userStatistics,
-    refetch: refetchStatistics,
-  } = useCheckUserStatistics({
-    user: user?.id,
-    title: titleData?.result?.id,
-  });
+  const { data: userStatistics, refetch: refetchStatistics } =
+    useCheckUserStatistics({
+      user: user?.id,
+      title: titleData?.result?.id,
+    });
 
   const { data: userRates, refetch: refetchRates } = useCheckUserRates({
     user: user?.id,
     title: titleData?.result?.id,
   });
 
-  const {
-    data: randomImage = {},
-    isLoading: imageLoading,
-  } = useRandomImageByTitle(title);
+  const { data: randomImage = {}, isLoading: imageLoading } =
+    useRandomImageByTitle(title);
 
   const tabs = [
     {
@@ -117,8 +113,7 @@ const Titles = ({ title, titleData, errors }) => {
             onClick={() => {
               setCensored(false);
               toggleModal();
-            }}
-          >
+            }}>
             Si
           </Button>
           <Button onClick={toggleModal}>No</Button>
@@ -154,8 +149,7 @@ const Titles = ({ title, titleData, errors }) => {
                           DEFAULT_IMAGE
                         }
                         alt={titleData?.result?.name}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
                         objectPosition="center"
                       />
                     )}
@@ -163,10 +157,10 @@ const Titles = ({ title, titleData, errors }) => {
                   <div className="overlayer"></div>
                   <Permissions>
                     <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                      <Link href={`/dashboard/titles/${titleData?.result?.id}`}>
-                        <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
-                          <PencilIcon className="w-5 h-5" />
-                        </a>
+                      <Link
+                        href={`/dashboard/titles/${titleData?.result?.id}`}
+                        className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                        <PencilIcon className="w-5 h-5" />
                       </Link>
                     </div>
                   </Permissions>
@@ -185,8 +179,7 @@ const Titles = ({ title, titleData, errors }) => {
                             src={
                               titleData?.result?.images?.name ?? DEFAULT_IMAGE
                             }
-                            layout="fill"
-                            objectFit="cover"
+                            fill
                           />
                           {censored && (
                             <>
@@ -201,8 +194,7 @@ const Titles = ({ title, titleData, errors }) => {
                               </div>
                               <button
                                 className="absolute group-hover:bottom-2 -bottom-12 right-3 transition-all px-4 py-1 bg-gray-400 rounded-md text-white"
-                                onClick={() => toggleModal()}
-                              >
+                                onClick={() => toggleModal()}>
                                 {censored ? 'Ver imagen' : 'Ocultar imagen'}
                               </button>
                             </>
@@ -235,27 +227,27 @@ const Titles = ({ title, titleData, errors }) => {
                           ) : (
                             <>
                               <div className="relative">
-                                <Link href="/login">
-                                  <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
-                                    <div className="mr-1">
-                                      <PlusSmIcon className="w-4 h-4" />
-                                    </div>
-                                    <div className="flex flex-row justify-start items-center gap-4 relative">
-                                      Watch Options
-                                    </div>
-                                  </a>
+                                <Link
+                                  href="/login"
+                                  className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                  <div className="mr-1">
+                                    <PlusSmIcon className="w-4 h-4" />
+                                  </div>
+                                  <div className="flex flex-row justify-start items-center gap-4 relative">
+                                    Watch Options
+                                  </div>
                                 </Link>
                               </div>
                               <div className="relative">
-                                <Link href="/login">
-                                  <a className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
-                                    <div className="mr-1">
-                                      <PlusSmIcon className="w-4 h-4" />
-                                    </div>
-                                    <div className="flex flex-row justify-start items-center gap-4 relative">
-                                      Rate Options
-                                    </div>
-                                  </a>
+                                <Link
+                                  href="/login"
+                                  className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                  <div className="mr-1">
+                                    <PlusSmIcon className="w-4 h-4" />
+                                  </div>
+                                  <div className="flex flex-row justify-start items-center gap-4 relative">
+                                    Rate Options
+                                  </div>
                                 </Link>
                               </div>
                             </>
@@ -274,9 +266,8 @@ const Titles = ({ title, titleData, errors }) => {
                             value={
                               <div className="info-details-type">
                                 <Link
-                                  href={`/ecma/titulos/${titleData?.result?.type?.slug}`}
-                                >
-                                  <a>{titleData?.result?.type?.name}</a>
+                                  href={`/ecma/titulos/${titleData?.result?.type?.slug}`}>
+                                  {titleData?.result?.type?.name}
                                 </Link>
                               </div>
                             }
@@ -319,7 +310,7 @@ const Titles = ({ title, titleData, errors }) => {
                             value={titleData?.result?.genres?.map((genre) => (
                               <span key={genre?.id} className="genre-tag">
                                 <Link href={`/ecma/generos/${genre?.slug}`}>
-                                  <a>{genre?.name}</a>
+                                  {genre?.name}
                                 </Link>
                               </span>
                             ))}
@@ -343,8 +334,7 @@ const Titles = ({ title, titleData, errors }) => {
                                     STATUS_COLORS[
                                       status[titleData?.result?.status]
                                     ]
-                                  }`}
-                                >
+                                  }`}>
                                   {titleData?.result?.status}
                                 </div>
                               ) : (
@@ -359,8 +349,7 @@ const Titles = ({ title, titleData, errors }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: titleData?.result?.sinopsis,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
                 <Section withContainer>
@@ -369,8 +358,7 @@ const Titles = ({ title, titleData, errors }) => {
                       <Tabs
                         key={item.key}
                         active={activeTab === item.key}
-                        onClick={() => setActiveTab(item.key)}
-                      >
+                        onClick={() => setActiveTab(item.key)}>
                         {item.title}
                       </Tabs>
                     ))}
@@ -383,8 +371,7 @@ const Titles = ({ title, titleData, errors }) => {
                     {tabs.map((item) => (
                       <TabsContent
                         key={item.key}
-                        active={activeTab === item.key}
-                      >
+                        active={activeTab === item.key}>
                         {item.component}
                       </TabsContent>
                     ))}

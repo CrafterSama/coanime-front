@@ -43,8 +43,7 @@ const Event = ({ eventData }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={eventData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
                       objectPosition="center"
                     />
                   </figure>
@@ -118,8 +117,7 @@ const Event = ({ eventData }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: eventData?.result?.description,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
               </div>
