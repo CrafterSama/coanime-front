@@ -13,7 +13,9 @@ const BroadcastSerieCard = ({ serie }) => {
       <Image
         src={serie?.images?.name ? serie?.images?.name : DEFAULT_IMAGE}
         alt={serie?.name}
-        className={`w-full h-full ${serie?.ratingId === 6 ? 'blur' : ''}`}
+        className={`w-full h-full object-contain ${
+          serie?.ratingId === 6 ? 'blur' : ''
+        }`}
         fill
         quality={90}
       />

@@ -13,7 +13,7 @@ const BroadcastSerieCard = ({ serie, position }) => (
           : DEFAULT_IMAGE
       }
       alt={serie?.title}
-      className="w-full h-full"
+      className="w-full h-full object-contain"
       fill
       quality={90}
     />
