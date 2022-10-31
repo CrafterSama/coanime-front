@@ -54,7 +54,7 @@ const SearchBox = () => {
                           alt="Censurado"
                           height={70}
                           width={150}
-                          className="absolute top-0 right-0"
+                          className="relative"
                         />
                       </div>
                     )}

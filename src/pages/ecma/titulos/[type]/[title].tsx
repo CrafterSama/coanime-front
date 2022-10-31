@@ -189,7 +189,7 @@ const Titles = ({ title, titleData, errors }) => {
                                   alt="Censurado"
                                   height={100}
                                   width={200}
-                                  className="absolute top-0 right-0"
+                                  className="relative"
                                 />
                               </div>
                               <button
