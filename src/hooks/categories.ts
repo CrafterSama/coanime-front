@@ -1,6 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { httpClientExternal } from '@/lib/http';
+import { useQuery } from '@tanstack/react-query';
 
 export const useCategoriesList = () => {
   return useQuery(['categories'], async () => {

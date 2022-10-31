@@ -23,8 +23,7 @@ const ToggleCheckbox: FC<ToggleCheckboxProps> = ({
     <div className="flex items-center justify-center">
       <label
         htmlFor="toggle"
-        className="inline-flex relative items-center mr-5 cursor-pointer"
-      >
+        className="inline-flex relative items-center mr-5 cursor-pointer">
         <input
           type="checkbox"
           value={watch(name)}

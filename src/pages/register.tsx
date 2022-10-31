@@ -44,12 +44,9 @@ const Register = () => {
       <AuthCard
         logo={
           <Link href="/">
-
             <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-
           </Link>
-        }
-      >
+        }>
         {/* Validation Errors */}
         <AuthValidationErrors className="mb-4" errors={errors} />
 
@@ -122,9 +119,7 @@ const Register = () => {
               <Link
                 href="/login"
                 className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
-                
-                  Already registered?
-                
+                Already registered?
               </Link>
             </div>
           </div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
 
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -22,6 +21,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/outline';
+import { useQuery } from '@tanstack/react-query';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();

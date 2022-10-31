@@ -14,25 +14,20 @@ const CloudLinks = ({ allLink, links }) => {
             !router?.query?.type &&
             'text-orange-600'
           } ml-1`}>
-          
-            Todas
-          
+          Todas
         </Link>
       </span>
       {links?.map((link) => (
         <span
           key={link?.id}
-          className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link"
-        >
+          className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link">
           <Link
             key={link?.id}
             href={`${allLink}/${link?.slug}`}
             className={`${
               router.asPath.includes(link?.slug) && 'text-orange-600'
             } ml-1`}>
-
             {link?.name}
-
           </Link>
         </span>
       ))}

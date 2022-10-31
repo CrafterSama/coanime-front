@@ -14,8 +14,7 @@ const Aside = ({ isTiny = false }) => {
     <aside
       className={`${
         isTiny ? 'w-14' : 'md:w-auto'
-      } w-14 border-r border-gray-200`}
-    >
+      } w-14 border-r border-gray-200`}>
       <div className="flex flex-col gap-4 m-auto">
         <div className="w-auto h-20 p-4 rounded-full self-center ">
           <Link
@@ -23,13 +22,11 @@ const Aside = ({ isTiny = false }) => {
             className={`${
               isTiny ? 'w-14' : 'w-14 md:w-full'
             } grid overflow-hidden text-left px-2`}>
-
             <Logotype
               logoColor="#FE6A00"
               lettersColor="#FE6A00"
               className="h-10 fill-current"
             />
-
           </Link>
         </div>
         <ul className="w-full flex flex-col gap-4">
@@ -39,8 +36,7 @@ const Aside = ({ isTiny = false }) => {
               href={item.href}
               active={path === item.breadcrumb}
               icon={item.icon}
-              isTiny={isTiny}
-            >
+              isTiny={isTiny}>
               {item.text}
             </MenuLink>
           ))}

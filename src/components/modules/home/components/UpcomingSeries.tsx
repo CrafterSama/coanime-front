@@ -58,8 +58,7 @@ const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
                 slidesPerView: 6,
                 spaceBetween: 16,
               },
-            }}
-          >
+            }}>
             {series?.map((serie, index) => (
               <SwiperSlide key={index} virtualIndex={index}>
                 <UpcomingSerieCard serie={serie} />

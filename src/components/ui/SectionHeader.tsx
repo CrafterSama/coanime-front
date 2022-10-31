@@ -23,9 +23,7 @@ const SectionHeader: FC<SectionHeaderProps> = ({
       <div className="flex flex-row gap-4">
         <div className="flex justify-center items-center">
           <Link href={backlink} className="bg-gray-200 text-orange-400 rounded">
-
             <ChevronLeftIcon className="w-6 h-6" />
-
           </Link>
         </div>
         <h2 className="font-semibold text-2xl text-gray-800 leading-tight">

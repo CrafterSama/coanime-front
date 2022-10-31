@@ -29,11 +29,10 @@ const SectionTitle = (
       </span>
       {actionLink && (
         <span
-          className={`flex justify-end w-[165px] h-6 ${subTitleBackground}`}
-        >
+          className={`flex justify-end w-[165px] h-6 ${subTitleBackground}`}>
           <Link href={actionLink} className="flex text-orange-400">
-
-            <PlusSmIcon className="w-6 h-6 text-orange-400" />Mas Estrenos
+            <PlusSmIcon className="w-6 h-6 text-orange-400" />
+            Mas Estrenos
           </Link>
         </span>
       )}

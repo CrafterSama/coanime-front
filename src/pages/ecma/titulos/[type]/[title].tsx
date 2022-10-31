@@ -15,8 +15,10 @@ import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 import Rates from '@/components/modules/titles/components/Rates';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Statistics from '@/components/modules/titles/components/Statistics';
+import Button from '@/components/ui/Button';
 import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
+import Modal from '@/components/ui/Modal';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { Tabs, TabsContent } from '@/components/ui/Tabs';
@@ -26,8 +28,6 @@ import { useRandomImageByTitle } from '@/hooks/random-images';
 import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
-import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
 
 dayjs.extend(utc);
 
@@ -179,6 +179,7 @@ const Titles = ({ title, titleData, errors }) => {
                               titleData?.result?.images?.name ?? DEFAULT_IMAGE
                             }
                             fill
+                            alt={titleData?.result?.name}
                           />
                           {censored && (
                             <>

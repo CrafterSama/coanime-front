@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-
 import axios from '@/lib/axios';
 import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
+import { useQuery } from '@tanstack/react-query';
 
 export const usePosts = ({ page = 1, name = '' }) => {
   const params = {};

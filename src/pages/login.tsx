@@ -60,12 +60,9 @@ const Login = () => {
       <AuthCard
         logo={
           <Link href="/">
-
             <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-
           </Link>
-        }
-      >
+        }>
         {/* Session Status */}
         <AuthSessionStatus className="mb-4" status={status} />
 
@@ -115,16 +112,12 @@ const Login = () => {
               <Link
                 href="/forgot-password"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                
-                  Forgot your password?
-                
+                Forgot your password?
               </Link>
               <Link
                 href="/register"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-
                 {`Don't have an account?`}
-
               </Link>
             </div>
           </div>

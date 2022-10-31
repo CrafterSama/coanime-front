@@ -61,6 +61,7 @@ const Person = ({ personData }) => {
                               : DEFAULT_IMAGE
                           }
                           fill
+                          alt={personData?.result?.name}
                         />
                       </figure>
                       <div className="title-info-box">

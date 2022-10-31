@@ -30,12 +30,9 @@ const ForgotPassword = () => {
       <AuthCard
         logo={
           <Link href="/">
-
             <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-
           </Link>
-        }
-      >
+        }>
         <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
           Forgot your password? No problem. Just let us know your email address
           and we will email you a password reset link that will allow you to
@@ -70,9 +67,7 @@ const ForgotPassword = () => {
               <Link
                 href="/login"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                
-                  Return to login
-                
+                Return to login
               </Link>
             </div>
           </div>

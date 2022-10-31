@@ -63,6 +63,7 @@ const Magazine = ({ magazineData }) => {
                               : DEFAULT_IMAGE
                           }
                           fill
+                          alt={magazineData?.result?.name}
                         />
                       </figure>
                       <div className="title-info-box">

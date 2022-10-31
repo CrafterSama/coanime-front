@@ -18,8 +18,7 @@ const Paginator = ({ page, setPage, data }) => {
       <button
         disabled={page === 1 || !page}
         className="px-1 py-4 flex justify-center items-center bg-orange-600 text-white rounded hover:shadow-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={back}
-      >
+        onClick={back}>
         <ChevronLeftIcon className="w-6 h-6" />
       </button>
       <div className="flex justify-center items-center gap-2 px-2">
@@ -31,8 +30,7 @@ const Paginator = ({ page, setPage, data }) => {
       <button
         disabled={page === data?.lastPage}
         className="px-1 py-4 flex justify-center items-center bg-orange-600 text-white rounded hover:shadow-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={next}
-      >
+        onClick={next}>
         <ChevronRightIcon className="w-6 h-6" />
       </button>
     </div>

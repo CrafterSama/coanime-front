@@ -92,8 +92,7 @@ const Titles = ({ titlesData }) => {
                           item.key === activeTab,
                       }
                     )}
-                    onClick={() => setActiveTab(item.key)}
-                  >
+                    onClick={() => setActiveTab(item.key)}>
                     {item.title}
                   </div>
                 );

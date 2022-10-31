@@ -8,7 +8,6 @@ import {
   AiOutlineYoutube,
 } from 'react-icons/ai';
 import { FaTiktok, FaPinterest } from 'react-icons/fa';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -34,6 +33,7 @@ import {
   PencilIcon,
   LockClosedIcon,
 } from '@heroicons/react/outline';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Profile = () => {
   const [editMode, setEditMode] = useState<boolean>(false);

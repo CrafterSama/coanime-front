@@ -5,7 +5,9 @@ const SerieGenres = ({ genres }) => (
     {genres?.map((genre, index) => (
       <span key={genre?.id}>
         <span>
-          <Link href={`/ecma/generos/${genre?.slug}`} className="text-xs font-semibold">
+          <Link
+            href={`/ecma/generos/${genre?.slug}`}
+            className="text-xs font-semibold">
             {genre?.name}
           </Link>
         </span>

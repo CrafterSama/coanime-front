@@ -2,13 +2,12 @@ import { useEffect, useState, useCallback } from 'react';
 import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MultiSelect from 'react-widgets/Multiselect';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/image';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
@@ -28,6 +27,7 @@ import { useTitle } from '@/hooks/titles';
 import { titleUpdate } from '@/services/titles';
 import { CalendarIcon, XIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import 'react-widgets/styles.css';
 
 dayjs.extend(utc);
