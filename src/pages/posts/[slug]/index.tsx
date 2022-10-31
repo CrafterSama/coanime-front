@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
 
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -22,6 +21,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/outline';
+import { useQuery } from '@tanstack/react-query';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -128,10 +128,10 @@ const ShowArticle = ({ slug, articleData, errors }) => {
             <PostHeader image={pathImage} post={post} />
             <Permissions>
               <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                <Link href={`/dashboard/posts/${post.slug}`}>
-                  <a className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
-                    <PencilIcon className="w-5 h-5" />
-                  </a>
+                <Link
+                  href={`/dashboard/posts/${post.slug}`}
+                  className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                  <PencilIcon className="w-5 h-5" />
                 </Link>
               </div>
             </Permissions>
@@ -141,8 +141,9 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                   <div className="article-wrapper">
                     <main
                       className="info__article-content"
-                      dangerouslySetInnerHTML={{ __html: post?.content }}
-                    ></main>
+                      dangerouslySetInnerHTML={{
+                        __html: post?.content,
+                      }}></main>
                   </div>
                   <div className="hidden lg:block article__side">
                     <div className="article-relatedTitles">

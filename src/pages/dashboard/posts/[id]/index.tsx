@@ -2,14 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation, useQueryClient } from 'react-query';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { CalendarIcon, XIcon } from '@/components/icons';
@@ -30,6 +29,7 @@ import { usePost } from '@/hooks/posts';
 import { useSearchTitle } from '@/hooks/titles';
 import { postUpdate } from '@/services/posts';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 dayjs.extend(utc);
 
@@ -123,10 +123,8 @@ const UpdatePost = () => {
     toast.success(response.data.message.text);
   };
 
-  const {
-    mutate: updatePost,
-  } = useMutation(({ id, params }: { id: string; params: any }) =>
-    postUpdate(id, params)
+  const { mutate: updatePost } = useMutation(
+    ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
   );
 
   const onSubmit = (data) => {
@@ -167,8 +165,7 @@ const UpdatePost = () => {
           text="Edición de Articulo"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Update Post: {post?.title}</title>
       </Head>
@@ -270,7 +267,7 @@ const UpdatePost = () => {
                     name="categoryId"
                     value={watch('categoryId')}
                     callBack={(option) => setValue('categoryId', option)}
-                    errors={errors?.['category_id']?.message}
+                    errors={errors?.['category_id']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -291,7 +288,7 @@ const UpdatePost = () => {
                   <Label>Tags</Label>
                   <div className={`tags-box ${!editMode && 'disabled'}`}>
                     <TagsInput
-                      seprators={['Enter', ',']}
+                      separators={['Enter', ',']}
                       isEditOnRemove={true}
                       value={post?.tags?.map((tag) => tag.name)}
                       onChange={(tags) => setValue('tags', tags)}

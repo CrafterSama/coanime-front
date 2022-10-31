@@ -2,15 +2,15 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import WebLayout from '@/components/Layouts/WebLayout';
+import ImageDetails from '@/components/ui/ImageDetails';
 import ItemInfo from '@/components/ui/ItemInfo';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEntity } from '@/services/entities';
-import ImageDetails from '@/components/ui/ImageDetails';
-import Link from 'next/link';
 
 const Entity = ({ entityData }) => {
   return (
@@ -44,9 +44,7 @@ const Entity = ({ entityData }) => {
                           : DEFAULT_IMAGE
                       }
                       alt={entityData?.result?.name}
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
+                      fill
                     />
                   </figure>
                   <div className="overlayer"></div>
@@ -98,8 +96,10 @@ const Entity = ({ entityData }) => {
                             title="Website"
                             value={
                               entityData?.result?.website ? (
-                                <Link href={entityData?.result?.website}>
-                                  <a target="_blank">Ir al Website</a>
+                                <Link
+                                  href={entityData?.result?.website}
+                                  target="_blank">
+                                  Ir al Website
                                 </Link>
                               ) : (
                                 'Sin Información'
@@ -113,8 +113,7 @@ const Entity = ({ entityData }) => {
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
                         __html: entityData?.result?.about,
-                      }}
-                    ></div>
+                      }}></div>
                   </div>
                 </Section>
               </div>

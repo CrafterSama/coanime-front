@@ -60,12 +60,9 @@ const Login = () => {
       <AuthCard
         logo={
           <Link href="/">
-            <a>
-              <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
-            </a>
+            <ApplicationLogo className="w-20 h-20 fill-current text-orange-500" />
           </Link>
-        }
-      >
+        }>
         {/* Session Status */}
         <AuthSessionStatus className="mb-4" status={status} />
 
@@ -112,15 +109,15 @@ const Login = () => {
             <Button className="ml-3">Login</Button>
 
             <div className="flex flex-row justify-around content-center w-full">
-              <Link href="/forgot-password">
-                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                  Forgot your password?
-                </a>
+              <Link
+                href="/forgot-password"
+                className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                Forgot your password?
               </Link>
-              <Link href="/register">
-                <a className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                  {`Don't have an account?`}
-                </a>
+              <Link
+                href="/register"
+                className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
+                {`Don't have an account?`}
               </Link>
             </div>
           </div>

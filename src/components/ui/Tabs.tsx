@@ -9,8 +9,7 @@ export const Tabs = ({ children, active, onClick }) => (
         'text-gray-700 border-orange-500': active,
       }
     )}
-    onClick={onClick}
-  >
+    onClick={onClick}>
     {children}
   </div>
 );

@@ -1,4 +1,5 @@
 import type { NextApiHandler } from 'next';
+
 import axios from '@/lib/axios';
 
 const credentialsAuth: NextApiHandler = (req, res) => {

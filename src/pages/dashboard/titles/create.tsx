@@ -2,13 +2,12 @@ import { useEffect } from 'react';
 import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useMutation } from 'react-query';
 import MultiSelect from 'react-widgets/Multiselect';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Image from 'next/future/image';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
@@ -29,8 +28,11 @@ import { useCreateTitle } from '@/hooks/titles';
 import { titleCreate } from '@/services/titles';
 import { CalendarIcon, PlusIcon, XIcon } from '@heroicons/react/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import 'react-widgets/styles.css';
 import Link from 'next/link';
+
+import { useMutation } from '@tanstack/react-query';
 
 dayjs.extend(utc);
 
@@ -140,8 +142,7 @@ const CreateTitle = () => {
           text="Creación de Titulos"
           errors={errors}
         />
-      }
-    >
+      }>
       <Head>
         <title>Coanime.net - Create Title</title>
       </Head>
@@ -224,7 +225,7 @@ const CreateTitle = () => {
                     name="typeId"
                     value={watch('typeId')}
                     callBack={(option) => setValue('typeId', option)}
-                    errors={errors?.['typeId']?.message}
+                    errors={errors?.['typeId']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-3">
@@ -237,7 +238,7 @@ const CreateTitle = () => {
                     name="ratingId"
                     value={watch('ratingId')}
                     callBack={(option) => setValue('ratingId', option)}
-                    errors={errors?.['ratingId']?.message}
+                    errors={errors?.['ratingId']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2 datepicker-box">
@@ -287,7 +288,7 @@ const CreateTitle = () => {
                     name="status"
                     value={watch('status')}
                     callBack={(option) => setValue('status', option)}
-                    errors={errors?.['status']?.message}
+                    errors={errors?.['status']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">

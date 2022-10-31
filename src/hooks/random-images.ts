@@ -1,8 +1,7 @@
-import { useMutation, useQuery } from 'react-query';
-
 import axios from 'axios';
 
 import { httpClientExternal } from '@/lib/http';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useRandomImageByTitle = (title) => {
   return useQuery(['randomImageByTitle', title], async () => {

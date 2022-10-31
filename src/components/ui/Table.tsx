@@ -68,8 +68,7 @@ export const Rows: FC<RowsProps> = ({
     <CollapsiblePrimitive.Root open={isOpen} onOpenChange={setIsOpen} asChild>
       <>
         <div
-          className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}
-        >
+          className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}>
           {columns.map((column, i) => (
             <div key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (
@@ -97,8 +96,7 @@ export const Rows: FC<RowsProps> = ({
               return (
                 <div
                   key={i}
-                  className={`grid grid-cols-${innerRowColumns?.length} grid-flow-col`}
-                >
+                  className={`grid grid-cols-${innerRowColumns?.length} grid-flow-col`}>
                   {innerRowColumns.map((column, j) => (
                     <div key={`${column.name}-${j}`} className="p-2">
                       {renderCell(item, column)}
@@ -147,8 +145,7 @@ export const Table: FC<TableProps> = ({
   const WrapperSorting = ({ index, sort, children }) => (
     <span
       className="flex items-center ml-2 cursor-pointer"
-      onClick={() => handleSortChange(index, sort)}
-    >
+      onClick={() => handleSortChange(index, sort)}>
       {children}
     </span>
   );
@@ -185,13 +182,11 @@ export const Table: FC<TableProps> = ({
     <div className="rounded-lg flex flex-col">
       <div className="rounded-lg overflow-hidden">
         <div
-          className={`grid grid-cols-${columns.length} grid-flow-col bg-gray-200 items-center px-4 py-2`}
-        >
+          className={`grid grid-cols-${columns.length} grid-flow-col bg-gray-200 items-center px-4 py-2`}>
           {columns.map((column, i) => (
             <div key={`${column.name}-${i}`} className={thStyles()}>
               <div
-                className={`flex flex-row items-center justify-center uppercase font-semibold ${column.headerClassName}`}
-              >
+                className={`flex flex-row items-center justify-center uppercase font-semibold ${column.headerClassName}`}>
                 {column?.sorting ? (
                   renderSorting(i, column)
                 ) : (

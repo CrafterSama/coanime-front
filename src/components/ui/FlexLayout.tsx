@@ -17,8 +17,7 @@ const FlexLayout: FC<LayoutProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-${direction} gap-${gap} justify-${justify} ${className}`}
-    >
+      className={`flex flex-${direction} gap-${gap} justify-${justify} ${className}`}>
       {children}
     </div>
   );

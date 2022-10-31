@@ -27,8 +27,7 @@ const AuthCard = ({ logo, children }) => {
     <div className="min-h-screen flex flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-white relative">
       <div
         className="image-side hidden lg:flex w-1/2 min-h-screen relative"
-        style={bgStyle}
-      >
+        style={bgStyle}>
         <div className="absolute inset-0 flex flex-col w-full h-full items-end justify-end bg-indigo-600 bg-opacity-50">
           <Logotype
             logoColor="#ffffff"

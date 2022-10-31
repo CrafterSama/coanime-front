@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
@@ -12,23 +12,20 @@ export const headers = [
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
           <Link href={`/dashboard/people/${row?.slug}`}>
-            <a>
-              <Image
-                className="rounded-lg w-full h-full"
-                src={`https://api.coanime.net/storage/images/encyclopedia/people/${row?.image}`}
-                alt={row?.name}
-                loading="lazy"
-                width="100%"
-                height="100%"
-              />
-            </a>
+            <Image
+              className="rounded-lg w-full h-full"
+              src={`https://api.coanime.net/storage/images/encyclopedia/people/${row?.image}`}
+              alt={row?.name}
+              loading="lazy"
+              fill
+            />
           </Link>
         </div>
         <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
-          <Link href={`/dashboard/people/${row?.slug}`}>
-            <a className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{row?.name}</h4>
-            </a>
+          <Link
+            href={`/dashboard/people/${row?.slug}`}
+            className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
+            <h4 className="text-sm">{row?.name}</h4>
           </Link>
           <p className="text-gray-500 text-xs">{row?.japaneseName}</p>
           <p className="text-gray-600 text-xs">

@@ -37,22 +37,19 @@ const Navigation = ({ user }) => {
       <nav
         className={`${
           router?.asPath?.includes('ecma') && 'border-b border-gray-200'
-        }`}
-      >
+        }`}>
         {/* Primary Navigation Menu */}
         <div className={`max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8`}>
           <div className="flex justify-between h-16">
             <div className="flex gap-4">
               {/* Logo */}
               <div className="flex-shrink-0 flex items-center">
-                <Link href="/">
-                  <a className="relative w-48">
-                    <Logotype
-                      logoColor="#FE6A00"
-                      lettersColor="#333333"
-                      className="h-15"
-                    />
-                  </a>
+                <Link href="/" className="relative w-48">
+                  <Logotype
+                    logoColor="#FE6A00"
+                    lettersColor="#333333"
+                    className="h-15"
+                  />
                 </Link>
               </div>
 
@@ -60,14 +57,12 @@ const Navigation = ({ user }) => {
               <div className="hidden space-x-8 sm:-my-px sm:ml-10 lg:flex">
                 <NavLink
                   href="/ecma/titulos"
-                  active={router.pathname.includes('/ecma')}
-                >
+                  active={router.pathname.includes('/ecma')}>
                   Enciclopedia
                 </NavLink>
                 <NavLink
                   href="/eventos"
-                  active={router.pathname.includes('/eventos')}
-                >
+                  active={router.pathname.includes('/eventos')}>
                   Eventos
                 </NavLink>
               </div>
@@ -106,49 +101,44 @@ const Navigation = ({ user }) => {
                         <ChevronDownIcon className="h-3 w-3 text-gray-400" />
                       </div>
                     </button>
-                  }
-                >
+                  }>
                   {/* Authentication */}
                   <Permissions>
                     <DropdownLink
                       href="/dashboard"
                       rel="nofollow"
-                      icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}
-                    >
+                      icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}>
                       Dashboard
                     </DropdownLink>
                   </Permissions>
                   <DropdownLink
                     href={`/users/${user.slug}`}
-                    icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}
-                  >
+                    icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}>
                     Perfil
                   </DropdownLink>
                   <DropdownLink
                     href="/mi-lista"
-                    icon={<CollectionIcon className="h-6 w-6 text-gray-700" />}
-                  >
+                    icon={<CollectionIcon className="h-6 w-6 text-gray-700" />}>
                     Mi Lista
                   </DropdownLink>
                   <DropdownButton
                     onClick={logout}
-                    icon={<LogoutIcon className="h-6 w-6 text-gray-700" />}
-                  >
+                    icon={<LogoutIcon className="h-6 w-6 text-gray-700" />}>
                     Logout
                   </DropdownButton>
                 </Dropdown>
               ) : (
                 <>
-                  <Link href="/login">
-                    <a className="text-sm font-medium text-gray-700 underline">
-                      Login
-                    </a>
+                  <Link
+                    href="/login"
+                    className="text-sm font-medium text-gray-700 underline">
+                    Login
                   </Link>
 
-                  <Link href="/register">
-                    <a className="ml-4 text-sm font-medium text-gray-700 underline">
-                      Register
-                    </a>
+                  <Link
+                    href="/register"
+                    className="ml-4 text-sm font-medium text-gray-700 underline">
+                    Register
                   </Link>
                 </>
               )}
@@ -158,8 +148,7 @@ const Navigation = ({ user }) => {
             <div className="-mr-2 flex items-center lg:hidden">
               <button
                 onClick={() => setOpen((open) => !open)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-              >
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                 {open ? (
                   <XIcon className="w-6 h-6" />
                 ) : (
@@ -174,25 +163,22 @@ const Navigation = ({ user }) => {
         <div
           className={`absolute top-16 ${
             open ? 'left-0' : '-left-[100%]'
-          } bg-white transition-all w-full`}
-        >
+          } bg-white transition-all w-full`}>
           <div className="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink
               href="/ecma/titulos"
-              active={router.pathname.includes('/ecma/titulos')}
-            >
+              active={router.pathname.includes('/ecma/titulos')}>
               Enciclopedia
             </ResponsiveNavLink>
             <ResponsiveNavLink
               href="/eventos"
-              active={router.pathname.includes('/eventos')}
-            >
+              active={router.pathname.includes('/eventos')}>
               Eventos
             </ResponsiveNavLink>
           </div>
           {/*<div className="lg:hidden flex justify-center items-center min-w-[300px] px-4 py-2">
-            <SearchBox />
-          </div>*/}
+          <SearchBox />
+        </div>*/}
 
           {/* Responsive Settings Options */}
           <div className="pt-4 pb-1 border-t border-gray-200">
@@ -209,8 +195,8 @@ const Navigation = ({ user }) => {
                         }
                         alt={user?.name}
                         className="rounded-full w-8 h-8"
-                        width="48px"
-                        height="48px"
+                        width={48}
+                        height={48}
                       />
                     )}
                   </div>
@@ -256,16 +242,16 @@ const Navigation = ({ user }) => {
               </>
             ) : (
               <div className="flex justify-end py-2 px-4">
-                <Link href="/login">
-                  <a className="text-sm font-medium text-gray-700 underline">
-                    Login
-                  </a>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-gray-700 underline">
+                  Login
                 </Link>
 
-                <Link href="/register">
-                  <a className="ml-4 text-sm font-medium text-gray-700 underline">
-                    Register
-                  </a>
+                <Link
+                  href="/register"
+                  className="ml-4 text-sm font-medium text-gray-700 underline">
+                  Register
                 </Link>
               </div>
             )}
@@ -279,29 +265,25 @@ const Navigation = ({ user }) => {
               <NavLink
                 className="py-4"
                 href="/ecma/titulos"
-                active={router.pathname?.includes('/ecma/titulos')}
-              >
+                active={router.pathname?.includes('/ecma/titulos')}>
                 Títulos
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/ecma/personas"
-                active={router.pathname?.includes('/ecma/personas')}
-              >
+                active={router.pathname?.includes('/ecma/personas')}>
                 Personas
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/ecma/revistas"
-                active={router.pathname?.includes('/ecma/revistas')}
-              >
+                active={router.pathname?.includes('/ecma/revistas')}>
                 Revistas
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/ecma/entidades"
-                active={router.pathname?.includes('/ecma/entidades')}
-              >
+                active={router.pathname?.includes('/ecma/entidades')}>
                 Entidades
               </NavLink>
             </div>
@@ -316,43 +298,37 @@ const Navigation = ({ user }) => {
               <NavLink
                 className="py-4"
                 href="/"
-                active={router.pathname === '/'}
-              >
+                active={router.pathname === '/'}>
                 Principal
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/categorias/cultura-otaku"
-                active={router.pathname === '/categorias/cultura-otaku'}
-              >
+                active={router.pathname === '/categorias/cultura-otaku'}>
                 Cultura Otaku
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/categorias/anime"
-                active={router.pathname?.includes('/categorias/anime')}
-              >
+                active={router.pathname?.includes('/categorias/anime')}>
                 Anime
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/categorias/manga"
-                active={router.pathname?.includes('/categorias/manga')}
-              >
+                active={router.pathname?.includes('/categorias/manga')}>
                 Manga
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/categorias/juegos"
-                active={router.pathname?.includes('/categorias/juegos')}
-              >
+                active={router.pathname?.includes('/categorias/juegos')}>
                 Juegos
               </NavLink>
               <NavLink
                 className="py-4"
                 href="/categorias/japon"
-                active={router.pathname?.includes('/categorias/japon')}
-              >
+                active={router.pathname?.includes('/categorias/japon')}>
                 Japón
               </NavLink>
             </div>

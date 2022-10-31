@@ -167,10 +167,8 @@ const Error = ({ code, error, text }) => {
               <hr />
               <p>
                 O simplemente regresa al{' '}
-                <Link href="/">
-                  <a className="text-orange-400 font-bold">
-                    Inicio y sigue navegando
-                  </a>
+                <Link href="/" className="text-orange-400 font-bold">
+                  Inicio y sigue navegando
                 </Link>
               </p>
             </div>

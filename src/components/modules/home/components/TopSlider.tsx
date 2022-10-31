@@ -22,8 +22,7 @@ const TopSlider = ({ relevants }) => (
         }}
         loop={true}
         autoplay={{ delay: 1500 }}
-        className="flex flex-row gap-8 w-full"
-      >
+        className="flex flex-row gap-8 w-full">
         {relevants?.map((relevant) => (
           <SwiperSlide key={relevant.id}>
             <div className="top-slider flex relative min-h-screen">
@@ -31,8 +30,7 @@ const TopSlider = ({ relevants }) => (
                 src={relevant.image ?? DEFAULT_IMAGE}
                 alt={`${relevant.title} - Coanime.net`}
                 className="w-full h-full"
-                objectFit="cover"
-                layout="fill"
+                fill
                 quality={90}
               />
               <div className="overlayer" />
@@ -41,10 +39,11 @@ const TopSlider = ({ relevants }) => (
                   Noticias Destacadas
                 </h3>
                 <h2 className="font-bold">
-                  <Link href={`/posts/[slug]`} as={`/posts/${relevant.slug}`}>
-                    <a className="text-white font-semibold">
-                      {relevant?.title}
-                    </a>
+                  <Link
+                    href={`/posts/[slug]`}
+                    as={`/posts/${relevant.slug}`}
+                    className="text-white font-semibold">
+                    {relevant?.title}
                   </Link>
                 </h2>
                 <div className="flex flex-col gap-2">
@@ -55,8 +54,8 @@ const TopSlider = ({ relevants }) => (
                       <Link
                         href={`/users/[slug]`}
                         as={`/users/${relevant?.users?.slug}`}
-                      >
-                        <a className="text-gray-300">{relevant?.users?.name}</a>
+                        className="text-gray-300">
+                        {relevant?.users?.name}
                       </Link>
                     </p>
                     <p className="flex flex-row gap-2 text-gray-400">

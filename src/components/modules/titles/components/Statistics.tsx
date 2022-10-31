@@ -44,13 +44,11 @@ const Statistics = ({ serie, statistics, userStatistics, refetch }) => {
               </>
             )}
           </button>
-        }
-      >
+        }>
         {statistics?.map((stats) => (
           <DropdownButton
             key={stats.id}
-            onClick={() => updateStatistics(serie.id, stats.id)}
-          >
+            onClick={() => updateStatistics(serie.id, stats.id)}>
             {stats.name}
           </DropdownButton>
         ))}

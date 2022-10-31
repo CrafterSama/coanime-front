@@ -64,8 +64,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
                 slidesPerView: 6,
                 spaceBetween: 16,
               },
-            }}
-          >
+            }}>
             {series?.map((serie, index) => (
               <SwiperSlide key={index} virtualIndex={index}>
                 <BroadcastSerieCard serie={serie} position={index + 1} />

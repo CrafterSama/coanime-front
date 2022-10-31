@@ -11,7 +11,6 @@ module.exports = {
     ],
   },
   experimental: {
-    images: { allowFutureImage: true },
     largePageDataBytes: 128 * 100000,
   },
 };

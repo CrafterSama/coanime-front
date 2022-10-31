@@ -15,8 +15,7 @@ const RecentPosts = ({ posts }) => (
               src={post.image ?? DEFAULT_IMAGE}
               alt={`${post.title} - Coanime.net`}
               className="w-full h-full"
-              objectFit="cover"
-              layout="fill"
+              fill
               quality={90}
             />
           </figure>
@@ -24,20 +23,23 @@ const RecentPosts = ({ posts }) => (
           <div className="item__info text-shadow bottom-attach flex flex-col gap-2">
             <div className="categories">
               <Link href={`/categorias/${post?.categories?.slug}`}>
-                <a>{post?.categories?.name}</a>
+                {post?.categories?.name}
               </Link>
             </div>
             <h2 className="info__news-title">
               <Link href={`/posts/[slug]`} as={`/posts/${post?.slug}`}>
-                <a>{post?.title}</a>
+                {post?.title}
               </Link>
             </h2>
             <h4 className=" ">{post?.excerpt}</h4>
             <p className="flex flex-row gap-4">
               <span className="flex flex-row gap-2">
                 <UserCircleIcon className="w-6 h-6" />
-                <Link href={`/users/[slug]`} as={`/users/${post?.users?.slug}`}>
-                  <a className="text-gray-300">{post?.users?.name}</a>
+                <Link
+                  href={`/users/[slug]`}
+                  as={`/users/${post?.users?.slug}`}
+                  className="text-gray-300">
+                  {post?.users?.name}
                 </Link>
               </span>
               <span className="flex flex-row gap-2">

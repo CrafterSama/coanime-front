@@ -19,8 +19,7 @@ const Magazine = () => {
         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
           Magazine
         </h2>
-      }
-    >
+      }>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

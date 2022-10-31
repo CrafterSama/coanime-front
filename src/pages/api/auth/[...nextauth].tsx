@@ -2,6 +2,7 @@ import { Method } from 'axios';
 import { METHODS } from 'http';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+
 import axios from '../../../lib/axios';
 
 //This is for getting the laravel-session cookie and the CSRF cookie

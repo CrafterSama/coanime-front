@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
-import { useQuery } from 'react-query';
 
 import Head from 'next/head';
 import { GetStaticProps } from 'next/types';
@@ -16,6 +15,7 @@ import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByCategories, getCategory } from '@/services/categories';
+import { useQuery } from '@tanstack/react-query';
 
 const Categories = ({ category, categoryData, articlesData, errors }) => {
   const { data = {}, isLoading } = useQuery(
@@ -36,7 +36,7 @@ const Categories = ({ category, categoryData, articlesData, errors }) => {
 
   useEffect(() => {
     if (articlesData) {
-      setArticles([...articles, ...articlesData?.data]);
+      setArticles([...articles, ...articlesData.data]);
     }
     if (errors) {
       toast.error(errors);
