@@ -267,7 +267,7 @@ const UpdatePost = () => {
                     name="categoryId"
                     value={watch('categoryId')}
                     callBack={(option) => setValue('categoryId', option)}
-                    errors={errors?.['category_id']?.message}
+                    errors={errors?.['category_id']?.message as string}
                     disabled={!editMode}
                   />
                 </div>

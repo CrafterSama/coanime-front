@@ -223,7 +223,7 @@ const CreateTitle = () => {
                     name="typeId"
                     value={watch('typeId')}
                     callBack={(option) => setValue('typeId', option)}
-                    errors={errors?.['typeId']?.message}
+                    errors={errors?.['typeId']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-3">
@@ -236,7 +236,7 @@ const CreateTitle = () => {
                     name="ratingId"
                     value={watch('ratingId')}
                     callBack={(option) => setValue('ratingId', option)}
-                    errors={errors?.['ratingId']?.message}
+                    errors={errors?.['ratingId']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2 datepicker-box">
@@ -286,7 +286,7 @@ const CreateTitle = () => {
                     name="status"
                     value={watch('status')}
                     callBack={(option) => setValue('status', option)}
-                    errors={errors?.['status']?.message}
+                    errors={errors?.['status']?.message as string}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">

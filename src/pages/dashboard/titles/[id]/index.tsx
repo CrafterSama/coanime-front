@@ -260,7 +260,7 @@ const UpdateTitle = ({ id }) => {
                     name="typeId"
                     value={watch('typeId')}
                     callBack={(option) => setValue('typeId', option)}
-                    errors={errors?.['typeId']?.message}
+                    errors={errors?.['typeId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -274,7 +274,7 @@ const UpdateTitle = ({ id }) => {
                     name="ratingId"
                     value={watch('ratingId')}
                     callBack={(option) => setValue('ratingId', option)}
-                    errors={errors?.['ratingId']?.message}
+                    errors={errors?.['ratingId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -328,7 +328,7 @@ const UpdateTitle = ({ id }) => {
                     name="status"
                     value={watch('status')}
                     callBack={(option) => setValue('status', option)}
-                    errors={errors?.['status']?.message}
+                    errors={errors?.['status']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
