@@ -236,7 +236,6 @@ const Profile = () => {
                                         className="w-full h-full"
                                         fill
                                         alt="cover"
-                                        objectPosition="center"
                                       />
                                       <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
                                         <PencilIcon className="w-6 h-6" />

@@ -45,7 +45,6 @@ const Entity = ({ entityData }) => {
                       }
                       alt={entityData?.result?.name}
                       fill
-                      objectPosition="center"
                     />
                   </figure>
                   <div className="overlayer"></div>

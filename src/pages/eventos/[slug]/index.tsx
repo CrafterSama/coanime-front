@@ -44,7 +44,6 @@ const Event = ({ eventData }) => {
                       }
                       alt={eventData?.result?.name}
                       fill
-                      objectPosition="center"
                     />
                   </figure>
                   <div className="overlayer"></div>

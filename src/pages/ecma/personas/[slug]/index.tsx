@@ -43,7 +43,6 @@ const Person = ({ personData }) => {
                       }
                       alt={personData?.result?.name}
                       fill
-                      objectPosition="center"
                     />
                   </figure>
                   <div className="overlayer"></div>

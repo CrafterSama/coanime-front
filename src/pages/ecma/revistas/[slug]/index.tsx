@@ -45,7 +45,6 @@ const Magazine = ({ magazineData }) => {
                       }
                       alt={magazineData?.result?.name}
                       fill
-                      objectPosition="center"
                     />
                   </figure>
                   <div className="overlayer"></div>

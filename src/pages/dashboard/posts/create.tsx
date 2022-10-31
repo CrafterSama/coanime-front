@@ -233,7 +233,7 @@ const CreatePost = () => {
                   name="categoryId"
                   value={watch('categoryId')}
                   callBack={(option) => setValue('categoryId', option)}
-                  errors={errors?.['categoryId']?.message}
+                  errors={errors?.['categoryId']?.message as string}
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
@@ -245,7 +245,7 @@ const CreatePost = () => {
                 <div className={`tags-box`}>
                   <TagsInput
                     onChange={(tags) => setValue('tags', tags)}
-                    seprators={['Enter', ',']}
+                    separators={['Enter', ',']}
                     isEditOnRemove={true}
                   />
                 </div>

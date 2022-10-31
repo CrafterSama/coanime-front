@@ -125,7 +125,6 @@ const Profile = ({ slug }) => {
                       }
                       alt={data?.result?.name}
                       fill
-                      objectPosition="center"
                     />
                   </figure>
                   <div className="overlayer"></div>

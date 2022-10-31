@@ -150,7 +150,6 @@ const Titles = ({ title, titleData, errors }) => {
                         }
                         alt={titleData?.result?.name}
                         fill
-                        objectPosition="center"
                       />
                     )}
                   </figure>
