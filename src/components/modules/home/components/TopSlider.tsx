@@ -29,9 +29,9 @@ const TopSlider = ({ relevants }) => (
               <Image
                 src={relevant.image ?? DEFAULT_IMAGE}
                 alt={`${relevant.title} - Coanime.net`}
-                className="w-full h-full"
-                fill
                 quality={90}
+                className="object-cover"
+                fill
               />
               <div className="overlayer" />
               <div className="carousel-caption text-shadow">
