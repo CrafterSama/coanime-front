@@ -237,11 +237,12 @@ const UpdateTitle = ({ id }) => {
                   </div>
                   <div className="mb-4 flex flex-col gap-2 w-full md:w-1/6">
                     <Label>Portada del Titulo</Label>
-                    <div className="flex relative mx-auto">
+                    <div className="flex relative mx-auto h-[280px] w-full">
                       <Image
                         src={title?.images?.name ?? DEFAULT_IMAGE}
                         alt={title?.name}
-                        className="w-full rounded-lg"
+                        fill
+                        className="rounded-lg object-scale-down bg-gray-200"
                       />
                     </div>
                     <UploadImage

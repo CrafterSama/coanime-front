@@ -16,7 +16,7 @@ export const headers = [
           <Link href={`/dashboard/titles/${row?.id}`}>
             <div className="relative h-[120px] w-[80%]">
               <Image
-                className="rounded-lg w-full h-full object-cover"
+                className="rounded-lg object-scale-down bg-gray-200"
                 src={row?.images?.name ?? DEFAULT_IMAGE}
                 alt={row?.name}
                 loading="lazy"

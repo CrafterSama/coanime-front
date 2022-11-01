@@ -11,9 +11,11 @@ export const headers = [
     cell: (row) => (
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
-          <Link href={`/dashboard/events/${row?.slug}`}>
+          <Link
+            href={`/dashboard/events/${row?.slug}`}
+            className="relative flex h-[130px] w-full">
             <Image
-              className="rounded-lg w-full h-full"
+              className="rounded-lg object-scale-down"
               src={`https://coanime.net/images/events/${row?.image}`}
               alt={row?.name}
               loading="lazy"
