@@ -6,11 +6,11 @@ const PostHeader = ({ image, post }) => (
   <header className="w-full min-h-[95vh] relative">
     {image && (
       <Image
-        src={image}
-        className="w-full h-full"
         fill
+        src={image}
         quality={90}
         alt={post?.title}
+        className="object-cover object-center"
       />
     )}
     <div className="full-header-title-bg">
