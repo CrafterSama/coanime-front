@@ -14,7 +14,7 @@ const RecentPosts = ({ posts }) => (
             <Image
               src={post.image ?? DEFAULT_IMAGE}
               alt={`${post.title} - Coanime.net`}
-              className="w-full h-full"
+              className="object-cover object-center"
               fill
               quality={90}
             />
