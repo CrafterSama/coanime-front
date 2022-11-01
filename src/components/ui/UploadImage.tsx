@@ -72,12 +72,14 @@ const UploadImage = ({ disabled = false, name, model }) => {
       {newImage && (
         <>
           <Label htmlFor="image">Nueva Imagen</Label>
-          <Image
-            src={watch(name)}
-            alt="New image"
-            className="w-full rounded-lg"
-            fill
-          />
+          <div className="relative w-full h-[280px]">
+            <Image
+              src={watch(name)}
+              alt="New image"
+              className="rounded-lg object-scale-down bg-gray-200"
+              fill
+            />
+          </div>
         </>
       )}
     </>

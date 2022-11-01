@@ -273,11 +273,14 @@ const UpdatePost = () => {
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
                   <Label>Imagen Principal del Post</Label>
-                  <Image
-                    src={post?.image ? post?.image : DEFAULT_IMAGE}
-                    alt={post?.title}
-                    className="w-full rounded-lg"
-                  />
+                  <div className="relative h-[300px]">
+                    <Image
+                      src={post?.image ? post?.image : DEFAULT_IMAGE}
+                      alt={post?.title}
+                      className="w-full rounded-lg object-cover"
+                      fill
+                    />
+                  </div>
                   <UploadImage
                     disabled={!editMode}
                     name="image"

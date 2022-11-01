@@ -63,7 +63,7 @@ const Titles = ({ titlesData }) => {
                 src={user?.profileCoverPath || DEFAULT_IMAGE}
                 alt="profile-cover"
                 fill
-                className="rounded-b-xl"
+                className="rounded-b-xl object-cover"
               />
               <div className="overlayer"></div>
               <div className="absolute bottom-0 flex flex-col gap-4 justify-start px-4 my-4 lg:my-10">
