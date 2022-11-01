@@ -13,7 +13,9 @@ const SerieCard = ({ serie }) => {
         src={serie?.images?.name ?? defaultImage}
         alt={serie?.name}
         fill
-        className={`w-full h-full ${serie?.ratingId === 6 ? 'blur-lg' : ''}`}
+        className={`object-scale-down ${
+          serie?.ratingId === 6 ? 'blur-lg' : ''
+        }`}
       />
       {serie?.ratingId === 6 && (
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">

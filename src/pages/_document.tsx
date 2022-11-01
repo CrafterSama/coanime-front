@@ -39,6 +39,7 @@ class MyDocument extends Document {
         </Head>
         <body className="antialiased">
           <Main />
+          <div id="portal" />
           <NextScript />
         </body>
       </Html>

@@ -142,7 +142,7 @@ const Titles = ({ title, titleData, errors }) => {
                       <Image
                         className={`${randomImage?.url ? '' : 'blur'} ${
                           censored ? 'blur-lg opacity-70' : ''
-                        } w-full h-full`}
+                        } object-cover`}
                         src={
                           randomImage?.url ??
                           titleData?.result?.images?.name ??
@@ -170,9 +170,9 @@ const Titles = ({ title, titleData, errors }) => {
                   <div className="title-info container mx-auto px-8 md:p-4">
                     <div className="title-top-box overlap-banner">
                       <div className="title-image-box overlap-banner relative">
-                        <figure className="title-image overlap-banner relative rounded group overflow-hidden">
+                        <figure className="title-image overlap-banner relative rounded group overflow-hidden w-[300px] h-[380px]">
                           <Image
-                            className={`w-[300px] h-[380px] object-cover object-center mx-auto ${
+                            className={`object-scale-down ${
                               censored ? 'blur' : ''
                             }`}
                             src={
