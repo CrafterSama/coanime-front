@@ -7,3 +7,18 @@ export const useCategoriesList = () => {
     return response.data;
   });
 };
+
+export const useCategory = (category: string) => {
+  return useQuery(
+    ['category', category],
+    async () => {
+      const response = await httpClientExternal.get(
+        `home?category=${category}`
+      );
+      return response.data;
+    },
+    {
+      enabled: !!category,
+    }
+  );
+};
