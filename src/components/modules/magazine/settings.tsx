@@ -13,9 +13,9 @@ export const headers = [
         <div className="w-4/12 h-46">
           <Link
             href={`/dashboard/magazine/${row?.slug}`}
-            className="relative flex h-[130px] w-full">
+            className="relative flex h-[170px] w-full">
             <Image
-              className="rounded-lg object-scale-down"
+              className="rounded-lg object-scale-down bg-gray-200"
               src={`https://coanime.net/images/encyclopedia/magazine/${row?.image?.name}`}
               alt={row?.name}
               loading="lazy"

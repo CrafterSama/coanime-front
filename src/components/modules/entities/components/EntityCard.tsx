@@ -20,7 +20,8 @@ const EntityCard = ({ entity }) => (
     <div className="absolute top-0 right-0 left-0 bottom-0 p-2 grid grid-cols-1 grid-rows-2 gap-2">
       <div className="categories flex justify-between items-start py-1">
         <span className="text-2xl">{entity?.country?.emoji}</span>
-        <Link href={`/ecma/entidades/${entity?.country?.name}`}>
+        <Link
+          href={`/ecma/entidades/pais/${entity?.country?.name.toLowerCase()}`}>
           {entity?.country?.name}
         </Link>
       </div>

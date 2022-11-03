@@ -14,13 +14,14 @@ const PersonCard = ({ person }) => (
       }
       alt={person?.name}
       fill
-      className="w-full h-full"
+      className="object-cover object-center"
     />
     <div className="overlayer"></div>
     <div className="absolute top-0 right-0 left-0 bottom-0 p-2 grid grid-cols-1 grid-rows-2 gap-2">
       <div className="categories flex justify-between items-start py-1">
         <span className="text-2xl">{person?.country?.emoji}</span>
-        <Link href={`/ecma/personas/${person?.country?.name}`}>
+        <Link
+          href={`/ecma/personas/pais/${person?.country?.name.toLowerCase()}`}>
           {person?.country?.name}
         </Link>
       </div>
