@@ -1,0 +1,31 @@
+export interface User {
+  behance: string | null;
+  bio: string | null;
+  birthday: string | null;
+  coverPhotoPath: string | null;
+  createdAt: string | null;
+  currentTeamId: number;
+  deletedAt: string | null;
+  devianart: string | null;
+  email: string | null;
+  emailVerifiedAt: string | null;
+  facebook: string | null;
+  genre: number;
+  googleplus: string | null;
+  id: number;
+  instagram: string | null;
+  name: string | null;
+  pinterest: string | null;
+  profileCoverPath: string | null;
+  profilePhotoPath: string | null;
+  slug: string | null;
+  tiktok: string | null;
+  tumblr: string | null;
+  twitter: string | null;
+  twoFactorRecoveryCodes: string | null;
+  twoFactorSecret: string | null;
+  updatedAt: string | null;
+  username: string | null;
+  website: string | null;
+  youtube: string | null;
+}

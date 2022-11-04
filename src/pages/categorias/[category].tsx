@@ -16,14 +16,15 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByCategories, getCategory } from '@/services/categories';
 import { useQuery } from '@tanstack/react-query';
+import { Article } from '@/interface/articles';
 
-const Categories = ({ category, categoryData, articlesData, errors }) => {
-  const { data = {}, isLoading } = useQuery(
-    ['categories', categoryData],
+const Categories = ({ category, data, articles, errors }) => {
+  const { data: categories = {}, isLoading } = useQuery(
+    ['categories', category],
     getCategory,
-    { initialData: categoryData }
+    { initialData: data, enabled: !!data }
   );
-  const [articles, setArticles] = useState([]);
+  const [news, setNews] = useState<Article[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
   const {
@@ -32,24 +33,28 @@ const Categories = ({ category, categoryData, articlesData, errors }) => {
     keywords = '',
     relevants = [],
     broadcast = [],
-  } = data;
+  } = categories;
 
   useEffect(() => {
-    if (articlesData) {
-      setArticles([...articles, ...articlesData.data]);
+    if (articles) {
+      setNews(
+        articles.data?.[0]?.categoryId === news?.[0]?.categoryId
+          ? [...news, ...articles.data]
+          : articles.data
+      );
     }
     if (errors) {
       toast.error(errors);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [category]);
 
   const moreArticles = async () => {
     setLoadArticles(true);
     const response = await getArticlesByCategories({ page, category });
-    const oldArticles: any[] = articles;
+    const oldArticles: any[] = news;
     const newArticles: any[] = response?.data?.data;
-    setArticles([...oldArticles, ...newArticles]);
+    setNews([...oldArticles, ...newArticles]);
     setLoadArticles(false);
   };
 
@@ -84,7 +89,7 @@ const Categories = ({ category, categoryData, articlesData, errors }) => {
       </Section>
       <Section withContainer>
         <SectionTitle title="News" subtitle="Otras Noticias" />
-        <OtherNews articles={articles} />
+        <OtherNews articles={news} />
         <div className="flex justify-center">
           <Button onClick={() => setPage(page + 1)}>
             {loadArticles ? (
@@ -127,8 +132,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       category,
-      categoryData: response?.data,
-      articlesData: articles?.data,
+      data: response?.data,
+      articles: articles?.data,
       errors,
       revalidate: 5 * 60,
     },

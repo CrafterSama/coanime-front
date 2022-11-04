@@ -18,17 +18,17 @@ const Author = ({ users }) => (
         />
       </div>
       <div className="info__author">
-        <p className="info__author-name">
+        <div className="info__author-name">
           <Link
             href={`/users/[slug]`}
             as={`/users/${users?.slug}`}
             className="text-gray-300">
             {users?.name}
           </Link>
-        </p>
-        <p
+        </div>
+        <div
           className="info__author-ocupation"
-          dangerouslySetInnerHTML={{ __html: users?.bio }}></p>
+          dangerouslySetInnerHTML={{ __html: users?.bio ?? '-' }}></div>
       </div>
     </div>
   </div>
