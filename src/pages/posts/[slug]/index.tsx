@@ -176,7 +176,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                   />
                   <OtherArticles articles={otherArticles} />
                   <SectionTitle title="" subtitle="¿nos dejas un comentario?" />
-                  <DisqusComments post={post} />
+                  {post && <DisqusComments post={post} />}
                 </Section>
               </Section>
             </div>

@@ -1016,7 +1016,7 @@ p > .user-author {
   font-size: 14px;
 }
 
-.info__article-author p a {
+.info__article-author a {
   font-weight: 500;
   color: var(--orange);
   font-size: 1.5em;
