@@ -16,7 +16,7 @@ export const headers = [
             className="relative flex h-[170px] w-full">
             <Image
               className="rounded-lg object-scale-down bg-gray-200"
-              src={`https://coanime.net/images/encyclopedia/magazine/${row?.image?.name}`}
+              src={`https://api.coanime.net/storage/images/encyclopedia/magazine/${row?.image?.name}`}
               alt={row?.name}
               loading="lazy"
               fill

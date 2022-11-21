@@ -114,7 +114,7 @@ const Person = ({ personData }) => {
                     <div
                       className="title-sinopsis"
                       dangerouslySetInnerHTML={{
-                        __html: personData?.result?.bio,
+                        __html: personData?.result?.about,
                       }}></div>
                   </div>
                 </Section>

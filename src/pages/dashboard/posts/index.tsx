@@ -16,23 +16,23 @@ import { PlusIcon } from '@heroicons/react/outline';
 
 const Posts = () => {
   const router = useRouter();
-  const { page: queryPage } = router.query;
-  const [page, setPage] = useState<any>(queryPage);
-  const [name, setName] = useState<any>('');
+  const [page, setPage] = useState<number>();
+  const [name, setName] = useState<any>();
   const { data = {}, isLoading } = usePosts({ page, name });
   const { data: posts = [] } = data;
 
   useEffect(() => {
-    if (queryPage) {
-      setPage(queryPage);
+    if (router?.query?.page) {
+      return setPage(Number(router?.query?.page));
     }
-  }, [queryPage]);
+    return setPage(1);
+  }, [router?.query?.page]);
 
   const onPageChange = async () => {
     await router.push({
       pathname: '/dashboard/posts',
       query: {
-        page,
+        page: page,
       },
     });
   };

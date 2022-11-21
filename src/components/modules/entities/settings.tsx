@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { extractText, strLimit } from '@/utils/string';
+import { DEFAULT_IMAGE } from '@/constants/common';
 
 export const headers = [
   {
@@ -12,11 +13,15 @@ export const headers = [
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
           <Link
-            href={`/dashboard/people/${row?.slug}`}
+            href={`/dashboard/companies/${row?.id}`}
             className="relative flex h-[170px] w-full">
             <Image
               className="rounded-lg object-scale-down bg-gray-200"
-              src={`https://api.coanime.net/storage/images/encyclopedia/people/${row?.image}`}
+              src={
+                row?.image?.name
+                  ? `https://api.coanime.net/storage/images/encyclopedia/companies/${row?.image?.name}`
+                  : DEFAULT_IMAGE
+              }
               alt={row?.name}
               loading="lazy"
               fill
@@ -25,11 +30,10 @@ export const headers = [
         </div>
         <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
           <Link
-            href={`/dashboard/people/${row?.slug}`}
+            href={`/dashboard/magazine/${row?.slug}`}
             className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
             <h4 className="text-sm">{row?.name}</h4>
           </Link>
-          <p className="text-gray-500 text-xs">{row?.japaneseName}</p>
           <p className="text-gray-600 text-xs">
             {strLimit(extractText(row?.about), 150)}
           </p>
@@ -39,15 +43,6 @@ export const headers = [
     firstItem: true,
     fixed: true,
     headerClassName: 'w-72',
-  },
-  {
-    name: 'Areas que trabaja/Hobbies',
-    accessor: (row: any) => row,
-    cell: ({ areasSkillsHobbies }) => (
-      <div className="w-60 flex justify-center items-center text-sm">
-        {areasSkillsHobbies}
-      </div>
-    ),
   },
   {
     name: 'Ciudad/Pais',
