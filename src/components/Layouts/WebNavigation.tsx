@@ -28,7 +28,7 @@ import {
 const Navigation = ({ user }) => {
   const router = useRouter();
 
-  const { logout } = useAuth();
+  const { logout, user: checkUser } = useAuth();
 
   const [open, setOpen] = useState(false);
 
@@ -105,7 +105,7 @@ const Navigation = ({ user }) => {
                   {/* Authentication */}
                   <Permissions>
                     <DropdownLink
-                      href="/dashboard"
+                      href={checkUser ? '/dashboard' : '/login'}
                       rel="nofollow"
                       icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}>
                       Dashboard

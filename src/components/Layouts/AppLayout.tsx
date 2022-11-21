@@ -19,7 +19,7 @@ const AppLayout = ({ header, children }) => {
       toast.error('You do not have permission to access this page');
       router.push('/');
     }
-  }, [user]);
+  }, []);
 
   return (
     <>
