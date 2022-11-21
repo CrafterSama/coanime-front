@@ -17,7 +17,6 @@ import { FilterIcon, PlusIcon } from '@heroicons/react/outline';
 const Titles = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>();
-  console.log('🚀 ~ file: index.tsx ~ line 20 ~ Titles ~ page', page);
   const [name, setName] = useState<any>();
   const { data = {}, isLoading } = useTitles({ page, name });
   const { result, title, description } = data;
