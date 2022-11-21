@@ -16,17 +16,18 @@ import { FilterIcon, PlusIcon } from '@heroicons/react/outline';
 
 const Titles = () => {
   const router = useRouter();
-  const { page: queryPage } = router.query;
-  const [page, setPage] = useState<any>(queryPage);
-  const [name, setName] = useState<any>(null);
+  const [page, setPage] = useState<number>();
+  console.log('🚀 ~ file: index.tsx ~ line 20 ~ Titles ~ page', page);
+  const [name, setName] = useState<any>();
   const { data = {}, isLoading } = useTitles({ page, name });
   const { result, title, description } = data;
 
   useEffect(() => {
-    if (queryPage) {
-      setPage(queryPage);
+    if (router?.query?.page) {
+      return setPage(Number(router?.query?.page));
     }
-  }, [queryPage]);
+    return setPage(1);
+  }, [router?.query?.page]);
 
   const onPageChange = async () => {
     await router.push({
@@ -39,7 +40,6 @@ const Titles = () => {
 
   useEffect(() => {
     onPageChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const clearFilter = () => {
