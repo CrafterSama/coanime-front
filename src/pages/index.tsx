@@ -41,7 +41,7 @@ const Home = () => {
 
   useEffect(() => {
     if (articlesData && page) {
-      setArticles([...articles, ...articlesData?.data?.data]);
+      setArticles([...articles, ...articlesData.data.data]);
     }
     if (error || errorArticles || errorJapan) {
       toast.error(error || errorArticles || errorJapan);
