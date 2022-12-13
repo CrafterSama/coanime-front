@@ -148,14 +148,14 @@ export async function getServerSideProps() {
     articles = await getArticlesData({ page });
     japan = await getArticlesJapan({ page });
   } catch (error) {
-    errors = error.response.data.message.text;
+    errors = error?.response?.data?.message?.text || error?.message || error;
   }
 
   return {
     props: {
-      homeData: response?.data,
-      articlesData: articles?.data,
-      articlesJapan: japan?.data,
+      homeData: response?.data || null,
+      articlesData: articles?.data || null,
+      articlesJapan: japan?.data || null,
       errors,
     },
   };
