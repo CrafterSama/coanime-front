@@ -34,10 +34,8 @@ const TopSlider = ({ relevants }) => (
                 fill
               />
               <div className="overlayer" />
-              <div className="carousel-caption text-shadow">
-                <h3 className="text-white text-2xl font-semibold">
-                  Noticias Destacadas
-                </h3>
+              <div className="carousel-caption text-shadow flex flex-col gap-2">
+                <h4 className="text-white text-xl">Noticias Destacadas</h4>
                 <h2 className="font-bold">
                   <Link
                     href={`/posts/[slug]`}
@@ -47,7 +45,7 @@ const TopSlider = ({ relevants }) => (
                   </Link>
                 </h2>
                 <div className="flex flex-col gap-2">
-                  <p>{relevant.excerpt}</p>
+                  <h3 className="sub-title">{relevant.excerpt}</h3>
                   <div className="flex flex-row gap-4">
                     <p className="flex flex-row gap-2 text-gray-400">
                       <UserCircleIcon className="w-6 h-6" />
