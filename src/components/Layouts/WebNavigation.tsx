@@ -300,13 +300,8 @@ const Navigation = ({ user }) => {
                 className="py-4 whitespace-nowrap w-fit desktop"
                 href="/"
                 active={router.pathname === '/'}>
-                Principal
-              </NavLink>
-              <NavLink
-                className="py-4 whitespace-nowrap w-fit mobile"
-                href="/"
-                active={router.pathname === '/'}>
-                <HomeIcon className="w-6 h-6 text-gray-800" />
+                <span className="desktop">Principal</span>
+                <HomeIcon className="w-6 h-6 text-gray-800 mobile" />
               </NavLink>
               <NavLink
                 className="py-4 whitespace-nowrap w-fit"
