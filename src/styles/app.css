@@ -444,6 +444,9 @@ body {
 .mobile {
   display: none;
 }
+.desktop {
+  display: flex;
+}
 
 @media (min-width: 320px) and (max-width: 480px) {
   .top-slider .sub-title {
@@ -452,6 +455,10 @@ body {
 
   .mobile {
     display: flex;
+  }
+
+  .desktop { 
+    display: none;
   }
 
   .recent-posts .box {
