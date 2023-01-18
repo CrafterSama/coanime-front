@@ -23,6 +23,7 @@ import {
   ChevronDownIcon,
   UserCircleIcon,
   CollectionIcon,
+  HomeIcon,
 } from '@heroicons/react/outline';
 
 const Navigation = ({ user }) => {
@@ -263,25 +264,25 @@ const Navigation = ({ user }) => {
           <div className="max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
             <div className="space-x-8 sm:ml-10 sm:flex">
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap"
                 href="/ecma/titulos"
                 active={router.pathname?.includes('/ecma/titulos')}>
                 Títulos
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap"
                 href="/ecma/personas"
                 active={router.pathname?.includes('/ecma/personas')}>
                 Personas
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap"
                 href="/ecma/revistas"
                 active={router.pathname?.includes('/ecma/revistas')}>
                 Revistas
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap"
                 href="/ecma/entidades"
                 active={router.pathname?.includes('/ecma/entidades')}>
                 Entidades
@@ -293,40 +294,46 @@ const Navigation = ({ user }) => {
       {(router?.pathname === '/' ||
         router?.asPath.includes('/categorias/')) && (
         <div className="w-full bg-white sub-navbar">
-          <div className="max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white">
-            <div className="flex justify-around items-center">
+          <div className="max-w-7xl container mx-auto px-2 sm:px-4 lg:px-6 bg-white">
+            <div className="flex flex-row gap-1 justify-around items-center">
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit"
                 href="/"
                 active={router.pathname === '/'}>
                 Principal
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit mobile"
+                href="/"
+                active={router.pathname === '/'}>
+                <HomeIcon className="w-6 h-6 text-gray-800" />
+              </NavLink>
+              <NavLink
+                className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/cultura-otaku"
                 active={router.pathname === '/categorias/cultura-otaku'}>
                 Cultura Otaku
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/anime"
                 active={router.pathname?.includes('/categorias/anime')}>
                 Anime
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/manga"
                 active={router.pathname?.includes('/categorias/manga')}>
                 Manga
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/juegos"
                 active={router.pathname?.includes('/categorias/juegos')}>
                 Juegos
               </NavLink>
               <NavLink
-                className="py-4"
+                className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/japon"
                 active={router.pathname?.includes('/categorias/japon')}>
                 Japón

@@ -441,7 +441,19 @@ body {
   }
 }
 
+.mobile {
+  display: none;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
+  .top-slider .sub-title {
+    display: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
+
   .recent-posts .box {
     margin-bottom: 10px;
   }
@@ -457,6 +469,11 @@ body {
   .recent-posts .box .item__info {
     padding: 10px;
   }
+
+  .recent-posts .box .item__info > h4 {
+    display: none;
+  }
+
   .recent-posts .box:first-child {
     margin-top: 10px;
   }
