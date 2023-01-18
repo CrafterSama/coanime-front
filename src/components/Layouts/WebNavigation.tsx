@@ -297,7 +297,7 @@ const Navigation = ({ user }) => {
           <div className="max-w-7xl container mx-auto px-2 sm:px-4 lg:px-6 bg-white">
             <div className="flex flex-row gap-1 justify-around items-center">
               <NavLink
-                className="py-4 whitespace-nowrap w-fit"
+                className="py-4 whitespace-nowrap w-fit desktop"
                 href="/"
                 active={router.pathname === '/'}>
                 Principal
