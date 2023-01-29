@@ -20,7 +20,6 @@ import { PlusSmIcon } from '@heroicons/react/outline';
 import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }) => {
-  console.log('🚀 ~ file: index.tsx:23 ~ Home ~ homeDataSSR', homeDataSSR);
   const [page, setPage] = useState(1);
   const {
     data: homeData,
