@@ -174,9 +174,9 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                     subtitle="Algo mas relacionado a"
                     fancyText={post?.categories?.name}
                   />
+                  {post && <DisqusComments post={post} />}
                   <OtherArticles articles={otherArticles} />
                   <SectionTitle title="" subtitle="¿nos dejas un comentario?" />
-                  {post && <DisqusComments post={post} />}
                 </Section>
               </Section>
             </div>
