@@ -20,6 +20,7 @@ export const headers = [
                 src={row?.images?.name ?? DEFAULT_IMAGE}
                 alt={row?.name}
                 loading="lazy"
+                unoptimized
                 fill
               />
             </div>

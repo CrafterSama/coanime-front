@@ -27,6 +27,7 @@ const OtherArticles = ({ articles, total = null }) => (
                   alt={article.title}
                   className="w-full h-full"
                   fill
+                  unoptimized
                 />
               </Link>
               <Permissions>

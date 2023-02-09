@@ -17,6 +17,7 @@ const RecentPosts = ({ posts }) => (
               className="object-cover object-center"
               fill
               quality={90}
+              unoptimized
             />
           </figure>
           <div className="overlayer"></div>

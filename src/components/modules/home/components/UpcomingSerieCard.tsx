@@ -27,6 +27,7 @@ const BroadcastSerieCard = ({ serie }) => {
             height={70}
             width={150}
             className="relative"
+            unoptimized
           />
         </div>
       )}

@@ -16,6 +16,7 @@ export const headers = [
             href={`/dashboard/companies/${row?.id}`}
             className="relative flex h-[170px] w-full">
             <Image
+              unoptimized
               className="rounded-lg object-scale-down bg-gray-200"
               src={
                 row?.image?.name

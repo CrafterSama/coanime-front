@@ -16,6 +16,7 @@ const BroadcastSerieCard = ({ serie, position }) => (
       className="w-full h-full object-contain"
       fill
       quality={90}
+      unoptimized
     />
     <div className="absolute left-0 right-0 bottom-0 h-auto p-2 bg-gray-900 bg-opacity-80 text-white flex justify-center items-center text-center text-xs rounded-b">
       <Link href={getTitlesUrl(serie?.type, serie?.title)} className="text-sm">

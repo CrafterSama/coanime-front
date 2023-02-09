@@ -150,6 +150,7 @@ const Titles = ({ title, titleData, errors }) => {
                         }
                         alt={titleData?.result?.name}
                         fill
+                        unoptimized
                       />
                     )}
                   </figure>
@@ -180,6 +181,7 @@ const Titles = ({ title, titleData, errors }) => {
                             }
                             fill
                             alt={titleData?.result?.name}
+                            unoptimized
                           />
                           {censored && (
                             <>
@@ -190,6 +192,7 @@ const Titles = ({ title, titleData, errors }) => {
                                   height={100}
                                   width={200}
                                   className="relative"
+                                  unoptimized
                                 />
                               </div>
                               <button

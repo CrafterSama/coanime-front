@@ -45,6 +45,7 @@ const Entity = ({ entityData }) => {
                       }
                       alt={entityData?.result?.name}
                       fill
+                      unoptimized
                     />
                   </figure>
                   <div className="overlayer"></div>

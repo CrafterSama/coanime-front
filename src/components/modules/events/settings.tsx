@@ -15,6 +15,7 @@ export const headers = [
             href={`/dashboard/events/${row?.slug}`}
             className="relative flex h-[130px] w-full">
             <Image
+              unoptimized
               className="rounded-lg object-scale-down"
               src={`https://coanime.net/images/events/${row?.image}`}
               alt={row?.name}
