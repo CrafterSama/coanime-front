@@ -20,6 +20,7 @@ export const headers = [
               alt={row?.name}
               loading="lazy"
               fill
+              unoptimized
             />
           </Link>
         </div>

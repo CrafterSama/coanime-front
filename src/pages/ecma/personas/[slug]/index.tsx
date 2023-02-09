@@ -43,6 +43,7 @@ const Person = ({ personData }) => {
                       }
                       alt={personData?.result?.name}
                       fill
+                      unoptimized
                     />
                   </figure>
                   <div className="overlayer"></div>
@@ -62,6 +63,7 @@ const Person = ({ personData }) => {
                           }
                           fill
                           alt={personData?.result?.name}
+                          unoptimized
                         />
                       </figure>
                       <div className="title-info-box">

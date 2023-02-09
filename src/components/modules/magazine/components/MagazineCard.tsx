@@ -15,6 +15,7 @@ const MagazineCard = ({ magazine }) => (
       alt={magazine?.name}
       fill
       className="object-cover object-center"
+      unoptimized
     />
     <div className="overlayer"></div>
     <div className="absolute top-0 right-0 left-0 bottom-0 p-2 grid grid-cols-1 grid-rows-2 gap-2">

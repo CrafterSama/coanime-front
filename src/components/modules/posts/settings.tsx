@@ -19,6 +19,7 @@ export const headers = [
             alt={row.title}
             loading="lazy"
             fill
+            unoptimized
           />
         </div>
         <div className="w-7/12 text-orange-500 font-semibold">

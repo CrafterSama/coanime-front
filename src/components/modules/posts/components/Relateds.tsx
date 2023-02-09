@@ -24,6 +24,7 @@ const Relateds = ({ relateds }) => {
                       alt={related?.title}
                       className="w-full h-full"
                       fill
+                      unoptimized
                     />
                   </div>
                 </Link>

@@ -15,6 +15,7 @@ const Author = ({ users }) => (
           className="w-full h-full"
           fill
           quality={90}
+          unoptimized
         />
       </div>
       <div className="info__author">

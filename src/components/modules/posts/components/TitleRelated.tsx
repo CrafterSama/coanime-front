@@ -19,6 +19,7 @@ const TitleRelated = ({ titles }) => (
                 src={titles?.[0]?.images?.name ?? DEFAULT_IMAGE}
                 alt={titles?.[0]?.name}
                 fill
+                unoptimized
               />
               <Permissions>
                 <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">

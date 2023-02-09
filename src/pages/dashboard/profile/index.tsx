@@ -190,6 +190,7 @@ const Profile = () => {
                                           fill
                                           alt="avatar"
                                           className="rounded-full w-full h-full"
+                                          unoptimized
                                         />
                                       )}
                                       <span className="bg-transparent group-hover:bg-slate-800 group-hover:bg-opacity-60 flex justify-center items-center w-full h-full absolute top-0 left-0 transition-all opacity-0 group-hover:opacity-50 text-white">

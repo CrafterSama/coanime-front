@@ -11,6 +11,7 @@ const PostHeader = ({ image, post }) => (
         quality={90}
         alt={post?.title}
         className="object-cover object-center"
+        unoptimized
       />
     )}
     <div className="full-header-title-bg">

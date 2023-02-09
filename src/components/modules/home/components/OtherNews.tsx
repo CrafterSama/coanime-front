@@ -22,6 +22,7 @@ const OtherNews = ({ articles }) => {
                 alt={`${article.title} - Coanime.net`}
                 className="w-full h-auto object-cover"
                 fill
+                unoptimized
               />
               <div className="overlayer"></div>
               <div className="absolute bottom-0 left-0 px-4 py-4 flex flex-col gap-1">

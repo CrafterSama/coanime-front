@@ -45,6 +45,7 @@ const Magazine = ({ magazineData }) => {
                       }
                       alt={magazineData?.result?.name}
                       fill
+                      unoptimized
                     />
                   </figure>
                   <div className="overlayer"></div>
