@@ -10,6 +10,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEvents } from '@/services/events';
+import { Show } from '@/components/ui/Show';
 
 type eventsData = {
   title: string;
@@ -48,21 +49,21 @@ const Events = ({ eventsData }) => {
         <meta name="keywords" content={eventsData?.keywords} />
       </Head>
       <WebLayout>
-        {!events && (
+        <Show condition={!events}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {events && (
+        </Show>
+        <Show condition={events}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {events?.data?.map((event) => (
-                <EventCard key={event?.id} event={event} />
+              {events?.data?.map((event, index) => (
+                <EventCard key={event?.id ? event?.id : index} event={event} />
               ))}
             </div>
             <Paginator page={page} setPage={setPage} data={events} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

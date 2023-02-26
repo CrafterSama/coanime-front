@@ -11,6 +11,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitlesByGenre } from '@/services/titles';
+import { Show } from '@/components/ui/Show';
 
 type TitleData = {
   title: string;
@@ -71,12 +72,12 @@ const Titles = ({ titlesData }) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        {!data && (
+        <Show condition={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {data && (
+        </Show>
+        <Show condition={!!data as boolean}>
           <Section withContainer>
             <div className="flex flex-row gap-4 justify-center">
               {tabs.map((item) => {
@@ -98,25 +99,25 @@ const Titles = ({ titlesData }) => {
                 );
               })}
             </div>
-            {activeTab === 'types' && (
+            <Show condition={activeTab === 'types'}>
               <CloudLinks allLink="/ecma/titulos" links={data?.types} />
-            )}
-            {activeTab === 'genres' && (
+            </Show>
+            <Show condition={activeTab === 'genres'}>
               <CloudLinks allLink="/ecma/generos" links={data?.genres} />
-            )}
+            </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
               {data?.result?.data?.map((serie) => (
                 <SerieCard key={serie?.id} serie={serie} />
               ))}
-              {data?.result?.data?.length < 1 && (
+              <Show condition={data?.result?.data?.length < 1}>
                 <div className="text-center text-gray-600">
                   No hay Series para mostrar en este apartado.
                 </div>
-              )}
+              </Show>
             </div>
             <Paginator page={page} setPage={setPage} data={data?.result} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

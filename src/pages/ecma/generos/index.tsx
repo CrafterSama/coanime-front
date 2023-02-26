@@ -11,6 +11,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitles } from '@/services/titles';
+import { Show } from '@/components/ui/Show';
 
 type TitleData = {
   title: string;
@@ -58,12 +59,12 @@ const Titles = ({ titlesData }) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        {!data && (
+        <Show condition={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {series && (
+        </Show>
+        <Show condition={series}>
           <Section withContainer>
             <div className="flex flex-row gap-4 justify-center">
               {tabs.map((item) => {
@@ -85,12 +86,12 @@ const Titles = ({ titlesData }) => {
                 );
               })}
             </div>
-            {activeTab === 'types' && (
+            <Show condition={activeTab === 'types'}>
               <CloudLinks allLink="/ecma/titulos" links={types} />
-            )}
-            {activeTab === 'genres' && (
+            </Show>
+            <Show condition={activeTab === 'genres'}>
               <CloudLinks allLink="/ecma/generos" links={genres} />
-            )}
+            </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
               {series?.data?.map((serie) => (
                 <SerieCard key={serie?.id} serie={serie} />
@@ -98,7 +99,7 @@ const Titles = ({ titlesData }) => {
             </div>
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

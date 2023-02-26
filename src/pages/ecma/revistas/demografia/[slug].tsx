@@ -9,6 +9,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getMagazinesByDemography } from '@/services/magazine';
+import { Show } from '@/components/ui/Show';
 
 type MagazineData = {
   title: string;
@@ -48,12 +49,12 @@ const Demography = ({ magazinesData }) => {
         <meta name="keywords" content={magazinesData?.keywords} />
       </Head>
       <WebLayout>
-        {!data && (
+        <Show condition={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {magazines && (
+        </Show>
+        <Show condition={magazines}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
               {magazines?.data?.map((magazine) => (
@@ -62,7 +63,7 @@ const Demography = ({ magazinesData }) => {
             </div>
             <Paginator page={page} setPage={setPage} data={magazines} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

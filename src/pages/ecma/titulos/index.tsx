@@ -14,6 +14,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { Tabs, TabsContent } from '@/components/ui/Tabs';
 import { getTitles } from '@/services/titles';
+import { Show } from '@/components/ui/Show';
 
 type TitleData = {
   title: string;
@@ -75,12 +76,12 @@ const Titles = ({ titlesData }) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        {!data && (
+        <Show condition={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {series && (
+        </Show>
+        <Show condition={series}>
           <Section withContainer>
             <FlexLayout justify="center" gap={1}>
               <FlexLayout direction="row" justify="center">
@@ -102,7 +103,7 @@ const Titles = ({ titlesData }) => {
             <SeriesList series={series?.data} />
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

@@ -9,6 +9,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEntities } from '@/services/entities';
+import { Show } from '@/components/ui/Show';
 
 type EntitiesData = {
   title: string;
@@ -47,12 +48,12 @@ const Entities = ({ entitiesData }) => {
         <meta name="keywords" content={entitiesData?.keywords} />
       </Head>
       <WebLayout>
-        {!entities && (
+        <Show condition={!entities}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {entities && (
+        </Show>
+        <Show condition={entities}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
               {entities?.data?.map((entity) => (
@@ -61,7 +62,7 @@ const Entities = ({ entitiesData }) => {
             </div>
             <Paginator page={page} setPage={setPage} data={entities} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );
