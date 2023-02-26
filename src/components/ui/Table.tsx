@@ -53,8 +53,8 @@ export const Rows: FC<RowsProps> = ({
       }
     );
 
-  const renderCell = (row, column) => {
-    const { accessor, cell } = column;
+  const renderCell = (row: any, column: any) => {
+    const { accessor, cell }: any = column;
     return typeof accessor === 'string' && !cell
       ? row[accessor]
       : typeof accessor === 'string'

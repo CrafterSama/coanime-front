@@ -5,21 +5,30 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
-import { headers } from '@/components/modules/posts/settings';
+import { usePostsSettings } from '@/components/modules/posts/settings';
 import { InputWithoutContext } from '@/components/ui/Input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { usePosts } from '@/hooks/posts';
-import { PlusIcon } from '@heroicons/react/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { useAuth } from '@/hooks/auth';
+import { postDelete } from '@/services/posts';
+import { toast } from 'react-hot-toast';
+import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
 
 const Posts = () => {
   const router = useRouter();
-  const [page, setPage] = useState<number>();
-  const [name, setName] = useState<any>();
-  const { data = {}, isLoading } = usePosts({ page, name });
+  const { user } = useAuth();
+  const [page, setPage] = useState<number>(null);
+  const [name, setName] = useState<any>(null);
+  const [postId, setPostId] = useState<string>(null);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const { data = {}, isLoading, refetch } = usePosts({ page, name });
   const { data: posts = [] } = data;
+  const { headers } = usePostsSettings({ user, setPostId, setOpenDeleteModal });
 
   useEffect(() => {
     if (router?.query?.page) {
@@ -35,6 +44,23 @@ const Posts = () => {
         page: page,
       },
     });
+  };
+
+  const deletePost = (id) => {
+    setPostId(id);
+    postDelete(id)
+      .then(() => {
+        toast.success('Post eliminado');
+        refetch();
+        onPageChange();
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => {
+        refetch();
+        setOpenDeleteModal(false);
+      });
   };
 
   useEffect(() => {
@@ -62,6 +88,30 @@ const Posts = () => {
             }
           />
         }>
+        <Modal
+          title="Borrar Post"
+          isOpen={openDeleteModal}
+          toggleModal={() => setOpenDeleteModal(!openDeleteModal)}>
+          <div className="flex flex-col gap-8">
+            <p>
+              ¿Estas seguro de borrar este post? ¡Esta acción no se puede
+              deshacer!
+            </p>
+            <div className="flex flex-row justify-end gap-4">
+              <Button
+                variant="text"
+                onClick={() => setOpenDeleteModal(!openDeleteModal)}>
+                No
+              </Button>
+              <Button
+                onClick={() => deletePost(postId)}
+                className="flex flex-row items-center gap-2">
+                <span>Si</span>
+                <TrashIcon className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </Modal>
         <div className="py-12">
           <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-start py-4">

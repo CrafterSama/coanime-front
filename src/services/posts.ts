@@ -3,6 +3,9 @@ import httpClient, { httpClientExternal } from '@/lib/http';
 export const postUpdate = async (id: string | string[], params: any) =>
   await httpClient.put(`posts/${id}`, params);
 
+export const postDelete = async (id: string | string[]) =>
+  await httpClient.put(`posts/${id}/delete`);
+
 export const postCreate = async (params: any) =>
   await httpClient.post(`posts`, params);
 

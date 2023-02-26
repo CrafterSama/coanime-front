@@ -330,7 +330,9 @@ const Navigation = ({ user }) => {
               <NavLink
                 className="py-4 whitespace-nowrap w-fit"
                 href="/categorias/japon"
-                active={router.pathname?.includes('/categorias/japon')}>
+                active={router.pathname?.includes(
+                  '/categorias/analisis-reviews'
+                )}>
                 Japón
               </NavLink>
             </div>

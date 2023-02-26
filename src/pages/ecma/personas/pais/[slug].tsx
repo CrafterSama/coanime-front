@@ -9,6 +9,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getPeopleByCountry } from '@/services/people';
+import { Show } from '@/components/ui/Show';
 
 type PeopleData = {
   title: string;
@@ -48,12 +49,12 @@ const Country = ({ peopleData }) => {
         <meta name="keywords" content={peopleData?.keywords} />
       </Head>
       <WebLayout>
-        {!people && (
+        <Show condition={!people}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {people && (
+        </Show>
+        <Show condition={people}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
               {people?.data?.map((person) => (
@@ -62,7 +63,7 @@ const Country = ({ peopleData }) => {
             </div>
             <Paginator page={page} setPage={setPage} data={people} />
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

@@ -28,6 +28,7 @@ import { useRandomImageByTitle } from '@/hooks/random-images';
 import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { Show } from '@/components/ui/Show';
 
 dayjs.extend(utc);
 
@@ -127,269 +128,263 @@ const Titles = ({ title, titleData, errors }) => {
         </Head>
       )}
       <WebLayout>
-        {!titleData && (
+        <Show condition={!titleData}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {titleData && (
-          <>
-            <div id="title">
-              <Section>
-                <div className="title-header">
-                  <figure className="title-header-image relative">
-                    {!imageLoading && (
-                      <Image
-                        className={`${randomImage?.url ? '' : 'blur'} ${
-                          censored ? 'blur-lg opacity-70' : ''
-                        } object-cover`}
-                        src={
-                          randomImage?.url ??
-                          titleData?.result?.images?.name ??
-                          DEFAULT_IMAGE
-                        }
-                        alt={titleData?.result?.name}
-                        fill
-                        unoptimized
-                      />
-                    )}
-                  </figure>
-                  <div className="overlayer"></div>
-                  <Permissions>
-                    <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
-                      <Link
-                        href={`/dashboard/titles/${titleData?.result?.id}`}
-                        className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
-                        <PencilIcon className="w-5 h-5" />
-                      </Link>
+        </Show>
+        <Show condition={titleData}>
+          <div id="title">
+            <Section>
+              <div className="title-header">
+                <figure className="title-header-image relative">
+                  {!imageLoading && (
+                    <Image
+                      className={`${randomImage?.url ? '' : 'blur'} ${
+                        censored ? 'blur-lg opacity-70' : ''
+                      } object-cover`}
+                      src={
+                        randomImage?.url ??
+                        titleData?.result?.images?.name ??
+                        DEFAULT_IMAGE
+                      }
+                      alt={titleData?.result?.name}
+                      fill
+                      unoptimized
+                    />
+                  )}
+                </figure>
+                <div className="overlayer"></div>
+                <Permissions>
+                  <div className="absolute bottom-0 right-0 px-2 py-2 flex flex-col gap-4">
+                    <Link
+                      href={`/dashboard/titles/${titleData?.result?.id}`}
+                      className="text-white text-xl font-bold p-1 rounded bg-gray-600 bg-opacity-70">
+                      <PencilIcon className="w-5 h-5" />
+                    </Link>
+                  </div>
+                </Permissions>
+              </div>
+            </Section>
+            <div className="title-content">
+              <Section withContainer>
+                <div className="title-info container mx-auto px-8 md:p-4">
+                  <div className="title-top-box overlap-banner">
+                    <div className="title-image-box overlap-banner relative">
+                      <figure className="title-image overlap-banner relative rounded group overflow-hidden w-[300px] h-[380px]">
+                        <Image
+                          className={`object-scale-down ${
+                            censored ? 'blur' : ''
+                          }`}
+                          src={titleData?.result?.images?.name ?? DEFAULT_IMAGE}
+                          fill
+                          alt={titleData?.result?.name}
+                          unoptimized
+                        />
+                        {censored && (
+                          <>
+                            <div className="absolute top-0 left-0 w-full h-full bg-black/40 flex flex-col justify-center items-center">
+                              <Image
+                                src="/images/censored.png"
+                                alt="Censurado"
+                                height={100}
+                                width={200}
+                                className="relative"
+                                unoptimized
+                              />
+                            </div>
+                            <button
+                              className="absolute group-hover:bottom-2 -bottom-12 right-3 transition-all px-4 py-1 bg-gray-400 rounded-md text-white"
+                              onClick={() => toggleModal()}>
+                              {censored ? 'Ver imagen' : 'Ocultar imagen'}
+                            </button>
+                          </>
+                        )}
+                      </figure>
+                      <div className="w-[290px] flex justify-between mx-auto mt-4">
+                        {user ? (
+                          <>
+                            {titleData?.result?.type?.id !== 8 && (
+                              <div className="relative">
+                                <Statistics
+                                  serie={titleData?.result}
+                                  statistics={titleData?.statistics}
+                                  userStatistics={
+                                    userStatistics?.data?.statistics
+                                  }
+                                  refetch={refetchStatistics}
+                                />
+                              </div>
+                            )}
+                            <div className="relative">
+                              <Rates
+                                serie={titleData?.result}
+                                rates={titleData?.rates}
+                                userRates={userRates?.data?.rates}
+                                refetch={refetchRates}
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="relative">
+                              <Link
+                                href="/login"
+                                className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                <div className="mr-1">
+                                  <PlusSmIcon className="w-4 h-4" />
+                                </div>
+                                <div className="flex flex-row justify-start items-center gap-4 relative">
+                                  Watch Options
+                                </div>
+                              </Link>
+                            </div>
+                            <div className="relative">
+                              <Link
+                                href="/login"
+                                className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
+                                <div className="mr-1">
+                                  <PlusSmIcon className="w-4 h-4" />
+                                </div>
+                                <div className="flex flex-row justify-start items-center gap-4 relative">
+                                  Rate Options
+                                </div>
+                              </Link>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </Permissions>
+                    <div className="title-info-box mt-10 lg:mt-0">
+                      <div className="title-name-box">
+                        <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center lg:text-left">
+                          {titleData?.result?.name}
+                        </h1>
+                      </div>
+                      <ul className="title-info-details overlap-banner">
+                        <SerieItemInfo
+                          title="Tipo"
+                          value={
+                            <div className="info-details-type">
+                              <Link
+                                href={`/ecma/titulos/${titleData?.result?.type?.slug}`}>
+                                {titleData?.result?.type?.name}
+                              </Link>
+                            </div>
+                          }
+                        />
+                        <SerieItemInfo
+                          title="Otros Títulos"
+                          value={
+                            titleData?.result?.otherTitles || 'Sin Información'
+                          }
+                        />
+                        <SerieItemInfo
+                          title="Primera Emisión"
+                          value={
+                            <span className="post-date">
+                              {titleData?.result?.broadTime
+                                ? dayjs(titleData?.result?.broadTime)
+                                    .utc()
+                                    .locale(es)
+                                    .format('MMMM DD, YYYY')
+                                : 'Sin Información'}
+                            </span>
+                          }
+                        />
+                        <SerieItemInfo
+                          title="Ultima Emisión"
+                          value={
+                            <span className="post-date">
+                              {titleData?.result?.broadFinish
+                                ? dayjs(titleData?.result?.broadFinish)
+                                    .utc()
+                                    .locale(es)
+                                    .format('MMMM DD, YYYY')
+                                : 'Sin Información'}
+                            </span>
+                          }
+                        />
+                        <SerieItemInfo
+                          title="Géneros"
+                          value={titleData?.result?.genres?.map((genre) => (
+                            <span key={genre?.id} className="genre-tag">
+                              <Link href={`/ecma/generos/${genre?.slug}`}>
+                                {genre?.name}
+                              </Link>
+                            </span>
+                          ))}
+                        />
+                        <SerieItemInfo
+                          title="Episodios"
+                          value={
+                            titleData?.result?.episodies || 'Sin Información'
+                          }
+                        />
+                        <SerieItemInfo
+                          title="Clasificación"
+                          value={`${titleData?.result?.rating?.name} (${titleData?.result?.rating?.description})`}
+                        />
+                        <SerieItemInfo
+                          title="Estatus"
+                          value={
+                            titleData?.result?.status ? (
+                              <div
+                                className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
+                                  STATUS_COLORS[
+                                    status[titleData?.result?.status]
+                                  ]
+                                }`}>
+                                {titleData?.result?.status}
+                              </div>
+                            ) : (
+                              'Sin Información'
+                            )
+                          }
+                        />
+                      </ul>
+                    </div>
+                  </div>
+                  <div
+                    className="title-sinopsis"
+                    dangerouslySetInnerHTML={{
+                      __html: titleData?.result?.sinopsis,
+                    }}></div>
                 </div>
               </Section>
-              <div className="title-content">
-                <Section withContainer>
-                  <div className="title-info container mx-auto px-8 md:p-4">
-                    <div className="title-top-box overlap-banner">
-                      <div className="title-image-box overlap-banner relative">
-                        <figure className="title-image overlap-banner relative rounded group overflow-hidden w-[300px] h-[380px]">
-                          <Image
-                            className={`object-scale-down ${
-                              censored ? 'blur' : ''
-                            }`}
-                            src={
-                              titleData?.result?.images?.name ?? DEFAULT_IMAGE
-                            }
-                            fill
-                            alt={titleData?.result?.name}
-                            unoptimized
-                          />
-                          {censored && (
-                            <>
-                              <div className="absolute top-0 left-0 w-full h-full bg-black/40 flex flex-col justify-center items-center">
-                                <Image
-                                  src="/images/censored.png"
-                                  alt="Censurado"
-                                  height={100}
-                                  width={200}
-                                  className="relative"
-                                  unoptimized
-                                />
-                              </div>
-                              <button
-                                className="absolute group-hover:bottom-2 -bottom-12 right-3 transition-all px-4 py-1 bg-gray-400 rounded-md text-white"
-                                onClick={() => toggleModal()}>
-                                {censored ? 'Ver imagen' : 'Ocultar imagen'}
-                              </button>
-                            </>
-                          )}
-                        </figure>
-                        <div className="w-[290px] flex justify-between mx-auto mt-4">
-                          {user ? (
-                            <>
-                              {titleData?.result?.type?.id !== 8 && (
-                                <div className="relative">
-                                  <Statistics
-                                    serie={titleData?.result}
-                                    statistics={titleData?.statistics}
-                                    userStatistics={
-                                      userStatistics?.data?.statistics
-                                    }
-                                    refetch={refetchStatistics}
-                                  />
-                                </div>
-                              )}
-                              <div className="relative">
-                                <Rates
-                                  serie={titleData?.result}
-                                  rates={titleData?.rates}
-                                  userRates={userRates?.data?.rates}
-                                  refetch={refetchRates}
-                                />
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="relative">
-                                <Link
-                                  href="/login"
-                                  className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
-                                  <div className="mr-1">
-                                    <PlusSmIcon className="w-4 h-4" />
-                                  </div>
-                                  <div className="flex flex-row justify-start items-center gap-4 relative">
-                                    Watch Options
-                                  </div>
-                                </Link>
-                              </div>
-                              <div className="relative">
-                                <Link
-                                  href="/login"
-                                  className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
-                                  <div className="mr-1">
-                                    <PlusSmIcon className="w-4 h-4" />
-                                  </div>
-                                  <div className="flex flex-row justify-start items-center gap-4 relative">
-                                    Rate Options
-                                  </div>
-                                </Link>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <div className="title-info-box mt-10 lg:mt-0">
-                        <div className="title-name-box">
-                          <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center lg:text-left">
-                            {titleData?.result?.name}
-                          </h1>
-                        </div>
-                        <ul className="title-info-details overlap-banner">
-                          <SerieItemInfo
-                            title="Tipo"
-                            value={
-                              <div className="info-details-type">
-                                <Link
-                                  href={`/ecma/titulos/${titleData?.result?.type?.slug}`}>
-                                  {titleData?.result?.type?.name}
-                                </Link>
-                              </div>
-                            }
-                          />
-                          <SerieItemInfo
-                            title="Otros Títulos"
-                            value={
-                              titleData?.result?.otherTitles ||
-                              'Sin Información'
-                            }
-                          />
-                          <SerieItemInfo
-                            title="Primera Emisión"
-                            value={
-                              <span className="post-date">
-                                {titleData?.result?.broadTime
-                                  ? dayjs(titleData?.result?.broadTime)
-                                      .utc()
-                                      .locale(es)
-                                      .format('MMMM DD, YYYY')
-                                  : 'Sin Información'}
-                              </span>
-                            }
-                          />
-                          <SerieItemInfo
-                            title="Ultima Emisión"
-                            value={
-                              <span className="post-date">
-                                {titleData?.result?.broadFinish
-                                  ? dayjs(titleData?.result?.broadFinish)
-                                      .utc()
-                                      .locale(es)
-                                      .format('MMMM DD, YYYY')
-                                  : 'Sin Información'}
-                              </span>
-                            }
-                          />
-                          <SerieItemInfo
-                            title="Géneros"
-                            value={titleData?.result?.genres?.map((genre) => (
-                              <span key={genre?.id} className="genre-tag">
-                                <Link href={`/ecma/generos/${genre?.slug}`}>
-                                  {genre?.name}
-                                </Link>
-                              </span>
-                            ))}
-                          />
-                          <SerieItemInfo
-                            title="Episodios"
-                            value={
-                              titleData?.result?.episodies || 'Sin Información'
-                            }
-                          />
-                          <SerieItemInfo
-                            title="Clasificación"
-                            value={`${titleData?.result?.rating?.name} (${titleData?.result?.rating?.description})`}
-                          />
-                          <SerieItemInfo
-                            title="Estatus"
-                            value={
-                              titleData?.result?.status ? (
-                                <div
-                                  className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
-                                    STATUS_COLORS[
-                                      status[titleData?.result?.status]
-                                    ]
-                                  }`}>
-                                  {titleData?.result?.status}
-                                </div>
-                              ) : (
-                                'Sin Información'
-                              )
-                            }
-                          />
-                        </ul>
-                      </div>
-                    </div>
-                    <div
-                      className="title-sinopsis"
-                      dangerouslySetInnerHTML={{
-                        __html: titleData?.result?.sinopsis,
-                      }}></div>
-                  </div>
-                </Section>
-                <Section withContainer>
-                  <FlexLayout direction="row" justify="start" className="px-4">
-                    {tabs.map((item) => (
-                      <Tabs
-                        key={item.key}
-                        active={activeTab === item.key}
-                        onClick={() => setActiveTab(item.key)}>
-                        {item.title}
-                      </Tabs>
-                    ))}
-                  </FlexLayout>
-                </Section>
-              </div>
               <Section withContainer>
-                {titleData?.result?.posts?.length > 0 ? (
-                  <FlexLayout gap={2}>
-                    {tabs.map((item) => (
-                      <TabsContent
-                        key={item.key}
-                        active={activeTab === item.key}>
-                        {item.component}
-                      </TabsContent>
-                    ))}
-                  </FlexLayout>
-                ) : (
-                  <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-400">
-                      Sin Publicaciones
-                    </h2>
-                  </div>
-                )}
+                <FlexLayout direction="row" justify="start" className="px-4">
+                  {tabs.map((item) => (
+                    <Tabs
+                      key={item.key}
+                      active={activeTab === item.key}
+                      onClick={() => setActiveTab(item.key)}>
+                      {item.title}
+                    </Tabs>
+                  ))}
+                </FlexLayout>
               </Section>
             </div>
-          </>
-        )}
+            <Section withContainer>
+              <Show condition={titleData?.result?.posts?.length >= 1}>
+                <FlexLayout gap={2}>
+                  {tabs.map((item) => (
+                    <TabsContent key={item.key} active={activeTab === item.key}>
+                      {item.component}
+                    </TabsContent>
+                  ))}
+                </FlexLayout>
+              </Show>
+              <Show condition={titleData?.result?.posts?.length < 1}>
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-gray-400">
+                    Sin Publicaciones
+                  </h2>
+                </div>
+              </Show>
+            </Section>
+          </div>
+        </Show>
       </WebLayout>
     </>
   );
