@@ -58,7 +58,7 @@ const Country = ({ eventsData }) => {
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
               {events?.data?.map((event) => (
-                <EventCard event={event} />
+                <EventCard key={event?.id} event={event} />
               ))}
             </div>
             <Paginator page={page} setPage={setPage} data={events} />
