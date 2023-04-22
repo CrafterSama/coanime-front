@@ -20,9 +20,7 @@ const getCookiesFromResponse = (res) => {
 //so you can edit for get independent of position
 const getXXsrfToken = (res) => {
   return decodeURIComponent(
-    res?.headers?.['set-cookie']?.[0]
-      ?.split(';')?.[0]
-      ?.replace('XSRF-TOKEN=', '')
+    res.headers['set-cookie'][0].split(';')[0]?.replace('XSRF-TOKEN=', '')
   );
 };
 

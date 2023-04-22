@@ -30,6 +30,8 @@ import { useSearchTitle } from '@/hooks/titles';
 import { postUpdate } from '@/services/posts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Show } from '@/components/ui/Show';
+import { getServerError } from '@/utils/string';
 
 dayjs.extend(utc);
 
@@ -130,8 +132,8 @@ const UpdatePost = () => {
   const onSubmit = (data) => {
     const id = post?.id;
     const postponed = data.postponedTo
-      ? dayjs(data.postponedTo).utc().format('DD-MM-YYYY HH:mm')
-      : dayjs().utc().format('DD-MM-YYYY HH:mm');
+      ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
+      : dayjs().utc().format('YYYY-MM-DD HH:mm:ss');
     const params = {
       title: data.title,
       content: data.content,
@@ -151,7 +153,8 @@ const UpdatePost = () => {
           queryClient.invalidateQueries(['post']);
         },
         onError: (error) => {
-          toast.error(error as string);
+          console.log(getServerError(error));
+          toast.error(getServerError(error) as string);
         },
       }
     );
@@ -301,13 +304,14 @@ const UpdatePost = () => {
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
                   <Label htmlFor="title_id">Serie Relacionada</Label>
-                  {post?.titles?.length > 0 ? (
+                  <Show condition={post?.titles?.length > 0}>
                     <div className="flex flex-row gap-4">
                       <div className="relative w-20 h-32">
                         <Image
                           src={post?.titles?.[0]?.images?.name ?? DEFAULT_IMAGE}
                           alt={post?.titles?.[0]?.name}
                           className="w-full relative"
+                          fill
                         />
                       </div>
                       <div className="">
@@ -317,9 +321,10 @@ const UpdatePost = () => {
                         </h3>
                       </div>
                     </div>
-                  ) : (
+                  </Show>
+                  <Show condition={post?.titles?.length === 0}>
                     'No tiene Serie Relacionada'
-                  )}
+                  </Show>
                   <Select
                     options={serieList}
                     isLoading={isLoadingSeries}

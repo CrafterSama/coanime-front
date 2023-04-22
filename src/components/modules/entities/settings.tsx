@@ -31,7 +31,7 @@ export const headers = [
         </div>
         <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
           <Link
-            href={`/dashboard/magazine/${row?.slug}`}
+            href={`/dashboard/companies/${row?.slug}`}
             className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
             <h4 className="text-sm">{row?.name}</h4>
           </Link>

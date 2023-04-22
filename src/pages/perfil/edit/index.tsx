@@ -198,7 +198,7 @@ const Profile = () => {
                                             src={result?.profilePhotoPath}
                                             fill
                                             alt="avatar"
-                                            className="rounded-full w-full h-full"
+                                            className="rounded-full w-full h-full object-cover"
                                           />
                                         )}
                                         <span className="bg-transparent group-hover:bg-slate-800 group-hover:bg-opacity-60 flex justify-center items-center w-full h-full absolute top-0 left-0 transition-all opacity-0 group-hover:opacity-50 text-white">
@@ -275,7 +275,7 @@ const Profile = () => {
                                       <div className="mt-1 flex justify-center min-h-[180px] rounded-md overflow-hidden relative">
                                         <Image
                                           src={result?.profileCoverPath}
-                                          className="w-full h-full"
+                                          className="w-full h-full object-cover"
                                           fill
                                           alt={result?.name}
                                         />
