@@ -25,6 +25,8 @@ import {
   CollectionIcon,
   HomeIcon,
 } from '@heroicons/react/outline';
+import { Show } from '@/components/ui/Show';
+import cn from 'classnames';
 
 const Navigation = ({ user }) => {
   const router = useRouter();
@@ -33,12 +35,20 @@ const Navigation = ({ user }) => {
 
   const [open, setOpen] = useState(false);
 
+  const navStyles = cn({
+    'border-b border-gray-200': router?.asPath?.includes('ecma'),
+  });
+  const navigationStyles = cn(
+    'absolute top-16 bg-white transition-all w-full',
+    {
+      'left-0': open,
+      '-left-[100%]': !open,
+    }
+  );
+
   return (
     <>
-      <nav
-        className={`${
-          router?.asPath?.includes('ecma') && 'border-b border-gray-200'
-        }`}>
+      <nav className={navStyles}>
         {/* Primary Navigation Menu */}
         <div className={`max-w-7xl container mx-auto px-4 sm:px-6 lg:px-8`}>
           <div className="flex justify-between h-16">
@@ -73,16 +83,16 @@ const Navigation = ({ user }) => {
               <SearchBox />
             </div>
             {/* Settings Dropdown */}
-            <div className="hidden lg:flex sm:gap-8 sm:items-center sm:ml-6 z-10">
+            <div className="hidden lg:flex sm:gap-8 sm:items-center sm:ml-6 z-10 w-[230px]">
               {/* Search Input */}
-              {user ? (
+              <Show condition={user}>
                 <Dropdown
                   align="right"
                   width={48}
                   trigger={
-                    <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                      <div className="flex flex-row justify-start items-center gap-4 relative">
-                        {user && (
+                    <div className="flex flex-row gap-1 text-sm font-semibold items-center text-gray-500 cursor-pointer">
+                      <div className="flex items-center relative w-10 h-10">
+                        <Show condition={user}>
                           <Image
                             src={
                               user?.profilePhotoPath
@@ -90,18 +100,18 @@ const Navigation = ({ user }) => {
                                 : DEFAULT_IMAGE
                             }
                             alt={user?.name}
-                            className="rounded-full w-8 h-8"
-                            width={48}
-                            height={48}
+                            className="rounded-full w-8 h-8 object-cover"
+                            unoptimized
+                            width={36}
+                            height={36}
                           />
-                        )}
-                        <span>{user?.name}</span>
+                        </Show>
                       </div>
-
-                      <div className="ml-1">
-                        <ChevronDownIcon className="h-3 w-3 text-gray-400" />
+                      <span className="whitespace-nowrap">{user?.name}</span>
+                      <div className="ml-1 col-span-1">
+                        <ChevronDownIcon className="h-4 w-4 text-gray-400" />
                       </div>
-                    </button>
+                    </div>
                   }>
                   {/* Authentication */}
                   <Permissions>
@@ -113,7 +123,7 @@ const Navigation = ({ user }) => {
                     </DropdownLink>
                   </Permissions>
                   <DropdownLink
-                    href={`/users/${user.slug}`}
+                    href={`/users/${user?.slug}`}
                     icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}>
                     Perfil
                   </DropdownLink>
@@ -128,21 +138,20 @@ const Navigation = ({ user }) => {
                     Logout
                   </DropdownButton>
                 </Dropdown>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="text-sm font-medium text-gray-700 underline">
-                    Login
-                  </Link>
+              </Show>
+              <Show condition={!user}>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-gray-700 underline">
+                  Login
+                </Link>
 
-                  <Link
-                    href="/register"
-                    className="ml-4 text-sm font-medium text-gray-700 underline">
-                    Register
-                  </Link>
-                </>
-              )}
+                <Link
+                  href="/register"
+                  className="ml-4 text-sm font-medium text-gray-700 underline">
+                  Register
+                </Link>
+              </Show>
             </div>
 
             {/* Hamburger */}
@@ -150,21 +159,19 @@ const Navigation = ({ user }) => {
               <button
                 onClick={() => setOpen((open) => !open)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                {open ? (
+                <Show condition={open}>
                   <XIcon className="w-6 h-6" />
-                ) : (
+                </Show>
+                <Show condition={!open}>
                   <MenuIcon className="w-6 h-6" />
-                )}
+                </Show>
               </button>
             </div>
           </div>
         </div>
 
         {/* Responsive Navigation Menu */}
-        <div
-          className={`absolute top-16 ${
-            open ? 'left-0' : '-left-[100%]'
-          } bg-white transition-all w-full`}>
+        <div className={navigationStyles}>
           <div className="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink
               href="/ecma/titulos"
@@ -186,7 +193,7 @@ const Navigation = ({ user }) => {
             {user?.name ? (
               <>
                 <div className="flex items-center px-4">
-                  <div className="flex-shrink-0 relative">
+                  <div className="flex-shrink-0 relative w-12 h-12">
                     {user?.name && (
                       <Image
                         src={
@@ -195,9 +202,9 @@ const Navigation = ({ user }) => {
                             : DEFAULT_IMAGE
                         }
                         alt={user?.name}
-                        className="rounded-full w-8 h-8"
-                        width={48}
-                        height={48}
+                        className="rounded-full w-full h-full object-cover"
+                        fill
+                        unoptimized
                       />
                     )}
                   </div>

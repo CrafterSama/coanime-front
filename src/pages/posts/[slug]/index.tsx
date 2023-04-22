@@ -22,6 +22,7 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/outline';
 import { useQuery } from '@tanstack/react-query';
+import { Show } from '@/components/ui/Show';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -169,12 +170,14 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                   </div>
                 </Section>
                 <Section withContainer id="features">
+                  <Show condition={post}>
+                    <DisqusComments post={post} />
+                  </Show>
                   <SectionTitle
                     title="Categorías"
                     subtitle="Algo mas relacionado a"
                     fancyText={post?.categories?.name}
                   />
-                  {post && <DisqusComments post={post} />}
                   <OtherArticles articles={otherArticles} />
                   <SectionTitle title="" subtitle="¿nos dejas un comentario?" />
                 </Section>

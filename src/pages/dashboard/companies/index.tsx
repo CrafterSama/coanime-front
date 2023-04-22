@@ -7,11 +7,23 @@ import { headers } from '@/components/modules/entities/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
 import { useCompanies } from '@/hooks/companies';
+import { Map } from '@/components/ui/Map';
+import { Show } from '@/components/ui/Show';
 
+const Test = (props) => {
+  console.log(props);
+  const { name } = props;
+  return (
+    <ul className="flex flex-col gap-2 justify-start items-start">
+      <li>{name}</li>
+    </ul>
+  );
+};
 const Companies = () => {
   const [page, setPage] = useState('');
   const { data = {}, isLoading } = useCompanies({ page });
   const { result, title, description } = data;
+  const results = { ...result, columns: headers };
 
   return (
     <AppLayout
@@ -33,13 +45,11 @@ const Companies = () => {
                 <Loading size={16} />
               </div>
             )}
-            {result?.data && (
+            <Show condition={Boolean(result?.data)}>
               <Table columns={headers}>
-                {result?.data?.map((row) => (
-                  <Rows key={row.id} columns={headers} row={row} />
-                ))}
+                <Map data={result?.data} columns={headers} component={Rows} />
               </Table>
-            )}
+            </Show>
           </div>
         </div>
       </div>

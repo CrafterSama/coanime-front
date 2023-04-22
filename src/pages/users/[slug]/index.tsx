@@ -125,6 +125,7 @@ const Profile = ({ slug }) => {
                       }
                       alt={data?.result?.name}
                       fill
+                      unoptimized
                     />
                   </figure>
                   <div className="overlayer"></div>

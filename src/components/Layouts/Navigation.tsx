@@ -12,6 +12,8 @@ import ResponsiveNavLink, {
 } from '@/components/ui/ResponsiveNavLink';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
+import { Show } from '@/components/ui/Show';
+import { ChevronDownIcon } from '@heroicons/react/outline';
 
 const Navigation = ({
   user,
@@ -37,12 +39,11 @@ const Navigation = ({
           </div>
           {/* Settings Dropdown */}
           <div className="hidden sm:flex sm:items-center sm:ml-6">
-            {user && (
+            <Show condition={user}>
               <Dropdown
                 align="right"
-                width={48}
                 trigger={
-                  <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                  <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out w-12 h-12">
                     <div className="flex flex-row justify-start items-center gap-4">
                       {
                         <Image
@@ -52,16 +53,15 @@ const Navigation = ({
                               : DEFAULT_IMAGE
                           }
                           alt={user?.name}
-                          className="rounded-full w-8 h-8"
-                          width={48}
-                          height={48}
+                          className="rounded-full w-full h-full object-cover"
+                          fill
                         />
                       }
                       <span>{user?.name}</span>
                     </div>
 
                     <div className="ml-1">
-                      <FaChevronDown className="h-3 w-3 text-gray-400" />
+                      <ChevronDownIcon className="h-3 w-3 text-gray-400" />
                     </div>
                   </button>
                 }>
@@ -78,7 +78,7 @@ const Navigation = ({
                   Logout
                 </DropdownButton>
               </Dropdown>
-            )}
+            </Show>
           </div>
 
           {/* Hamburger */}

@@ -35,8 +35,8 @@ const ChevronTrigger = ({ innerRowItems, isOpen }) => (
 );
 
 export const Rows: FC<RowsProps> = ({
-  columns,
-  row,
+  columns = [],
+  row = [],
   innerRowColumns = [],
   innerRowItems = [],
   rowExpandable = false,
@@ -69,7 +69,7 @@ export const Rows: FC<RowsProps> = ({
       <>
         <div
           className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}>
-          {columns.map((column, i) => (
+          {columns?.map((column, i) => (
             <div key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (
                 <div className="pl-4 border-l-4 border-transparent group-hover:border-orange-400">
@@ -97,7 +97,7 @@ export const Rows: FC<RowsProps> = ({
                 <div
                   key={i}
                   className={`grid grid-cols-${innerRowColumns?.length} grid-flow-col`}>
-                  {innerRowColumns.map((column, j) => (
+                  {innerRowColumns?.map((column, j) => (
                     <div key={`${column.name}-${j}`} className="p-2">
                       {renderCell(item, column)}
                     </div>
@@ -120,7 +120,7 @@ type TableProps = {
 
 export const Table: FC<TableProps> = ({
   children,
-  columns,
+  columns = [],
   fixedHeader = true,
 }) => {
   const thStyles = () =>
@@ -183,7 +183,7 @@ export const Table: FC<TableProps> = ({
       <div className="rounded-lg overflow-hidden">
         <div
           className={`grid grid-cols-${columns.length} grid-flow-col bg-gray-200 items-center px-4 py-2`}>
-          {columns.map((column, i) => (
+          {columns?.map((column, i) => (
             <div key={`${column.name}-${i}`} className={thStyles()}>
               <div
                 className={`flex flex-row items-center justify-center uppercase font-semibold ${column.headerClassName}`}>

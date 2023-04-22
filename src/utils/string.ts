@@ -38,3 +38,10 @@ export const defaultImage = (string) =>
 export const getTitlesUrl = (type, title) => {
   return `/ecma/titulos/${strToSlug(String(type))}/${strToSlug(String(title))}`;
 };
+
+export const getServerError = (error) => {
+  if (error?.response?.data?.message) {
+    return error.response.data.message.text;
+  }
+  return error?.response?.data?.message;
+};
