@@ -131,7 +131,7 @@ const UpdatePost = () => {
 
   const onSubmit = (data) => {
     const id = post?.id;
-    const postponed = data.postponedTo
+    const postponedTo = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
       : dayjs().utc().format('YYYY-MM-DD HH:mm:ss');
     const params = {
@@ -142,7 +142,7 @@ const UpdatePost = () => {
       tagId: data.tags,
       titleId: data.titleId,
       categoryId: data.categoryId.value,
-      postponedTo: postponed,
+      postponedTo: postponedTo,
     };
 
     updatePost(

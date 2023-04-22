@@ -10,7 +10,6 @@ import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { TabsContent } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';

@@ -1,7 +1,5 @@
 import httpClient, { httpClientExternal } from '@/lib/http';
 
-import { getJikanAnime, getJikanManga } from './jikan';
-
 export const getAllTitles = async () => {
   const response = await httpClientExternal.get(`get-titles`);
   return response.data;
@@ -51,7 +49,7 @@ export const getTitlesByGenre = async ({ genre, page = 1 }) => {
   return response;
 };
 
-const jikanAnime = ['tv', 'pelicula', 'ova', 'especial', 'ona', 'music'];
+/*const jikanAnime = ['tv', 'pelicula', 'ova', 'especial', 'ona', 'music'];
 const jikanManga = [
   'manga',
   'manhua',
@@ -59,7 +57,7 @@ const jikanManga = [
   'novela-ligera',
   'one-shot',
   'doujinshi',
-];
+];*/
 
 export const getTitle = async ({ type, title }) => {
   const response = await httpClientExternal.get(`titles/${type}/${title}`);

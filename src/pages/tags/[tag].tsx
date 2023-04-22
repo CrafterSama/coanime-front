@@ -14,8 +14,8 @@ import Button from '@/components/ui/Button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { useQuery } from '@tanstack/react-query';
 import { getArticlesByTags, getTags } from '@/services/tags';
+import { useQuery } from '@tanstack/react-query';
 
 const Tags = ({ tag, tagData, articlesData, errors }) => {
   const { data = {}, isLoading } = useQuery(['tags', tagData], getTags, {
