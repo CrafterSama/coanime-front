@@ -433,7 +433,7 @@ const Profile = () => {
 
 export default Profile;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {},
   };

@@ -11,7 +11,7 @@ import { PhotographIcon, TagIcon } from '@heroicons/react/outline';
 const Dashboard = () => {
   const { user } = useAuth({ middleware: 'auth' });
   const { data, isLoading } = useDashboard();
-  console.log('🚀 ~ file: index.tsx ~ line 11 ~ Dashboard ~ data', data);
+
   return (
     <>
       <Head>

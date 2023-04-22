@@ -11,7 +11,6 @@ import dayjs from 'dayjs';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import OtherArticles from '@/components/modules/posts/components/OtherArticles';
