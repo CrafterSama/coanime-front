@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
+import DatePicker from 'react-datetime-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -220,21 +220,6 @@ const UpdateTitle = ({ id }) => {
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-4">
-                  <div className="mb-4 flex flex-col gap-2 w-full md:w-5/6">
-                    <Label htmlFor="sinopsis">Sinopsis</Label>
-                    <Controller
-                      control={control}
-                      name="sinopsis"
-                      render={() => (
-                        <TextEditor
-                          disabled={!editMode}
-                          defaultValue={title?.sinopsis}
-                          errors={errors?.['sinopsis']?.message}
-                          onChange={(value) => setValue('sinopsis', value)}
-                        />
-                      )}
-                    />
-                  </div>
                   <div className="mb-4 flex flex-col gap-2 w-full md:w-1/6">
                     <Label>Portada del Titulo</Label>
                     <div className="flex relative mx-auto h-[280px] w-full">
@@ -249,6 +234,21 @@ const UpdateTitle = ({ id }) => {
                       disabled={!editMode}
                       name="images"
                       model="titles"
+                    />
+                  </div>
+                  <div className="mb-4 flex flex-col gap-2 w-full md:w-5/6">
+                    <Label htmlFor="sinopsis">Sinopsis</Label>
+                    <Controller
+                      control={control}
+                      name="sinopsis"
+                      render={() => (
+                        <TextEditor
+                          disabled={!editMode}
+                          defaultValue={title?.sinopsis}
+                          errors={errors?.['sinopsis']?.message}
+                          onChange={(value) => setValue('sinopsis', value)}
+                        />
+                      )}
                     />
                   </div>
                 </div>
@@ -290,7 +290,11 @@ const UpdateTitle = ({ id }) => {
                         <CalendarIcon className="w-6 h-6" />
                       </span>
                     }
-                    clearIcon={false}
+                    clearIcon={
+                      <span className="text-orange-400">
+                        <XIcon className="w-6 h-6" />
+                      </span>
+                    }
                     disabled={!editMode}
                   />
                 </div>

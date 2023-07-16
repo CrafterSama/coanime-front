@@ -127,12 +127,13 @@ export const usePostsSettings = ({
                 hasRole(authUser?.roles, 'writer')
               }>
               <Button
+                prefix={<TrashIcon className="w-4 h-4" />}
+                color="red"
                 className="flex flex-row gap-2 items-center justify-center"
                 onClick={() => {
                   setPostId(row?.id);
                   setOpenDeleteModal(true);
                 }}>
-                <TrashIcon className="w-4 h-4" />
                 <span>Borrar</span>
               </Button>
             </Show>

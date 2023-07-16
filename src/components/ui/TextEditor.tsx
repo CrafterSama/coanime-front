@@ -2,9 +2,9 @@ import toast from 'react-hot-toast';
 
 import dynamic from 'next/dynamic';
 
+import { uploadImages } from '@/hooks/images';
 import { sunEditorOptions } from '@/constants/suneditor';
 import 'suneditor/dist/css/suneditor.min.css';
-import { uploadImages } from '@/hooks/images';
 
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,

@@ -99,15 +99,15 @@ const Posts = () => {
             </p>
             <div className="flex flex-row justify-end gap-4">
               <Button
-                variant="text"
+                variant="link"
                 onClick={() => setOpenDeleteModal(!openDeleteModal)}>
                 No
               </Button>
               <Button
+                suffix={<TrashIcon className="w-4 h-4" />}
                 onClick={() => deletePost(postId)}
                 className="flex flex-row items-center gap-2">
                 <span>Si</span>
-                <TrashIcon className="w-4 h-4" />
               </Button>
             </div>
           </div>

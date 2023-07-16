@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
+import DateTimePicker from 'react-datetime-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
@@ -22,16 +22,16 @@ import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
+import { Show } from '@/components/ui/Show';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { usePost } from '@/hooks/posts';
 import { useSearchTitle } from '@/hooks/titles';
 import { postUpdate } from '@/services/posts';
+import { getServerError } from '@/utils/string';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Show } from '@/components/ui/Show';
-import { getServerError } from '@/utils/string';
 
 dayjs.extend(utc);
 

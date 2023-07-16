@@ -154,23 +154,42 @@ const Error = ({ code, error, text }) => {
         <title>{`${code} - ${error}`}</title>
         <meta name="robots" content="noindex" />
       </Head>
-      <div className="relative flex items-top justify-center min-h-screen bg-white sm:items-center sm:pt-0">
+      <div className="relative flex items-top justify-center min-h-[80vh] bg-white sm:items-center sm:pt-0">
         <div className="container">
-          <div className="text-center w-full flex flex-col gap-4 justify-center items-center text-lg">
-            <div className="relative w-[100%] sm:w-[380px] h-auto rounded-lg overflow-hidden bg-gray-50 shadow">
-              <img src={image?.url} alt="404" className="w-full h-auto" />
-              <small className="text-xs text-gray-400">{image?.text}</small>
+          <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
+            <div className="w-full xl:w-1/2 relative pb-12 lg:pb-0">
+              <div className="relative">
+                <div className="absolute">
+                  <div>
+                    <h1 className="my-2 text-gray-800 font-bold text-3xl">
+                      {`${code} - ${error}`}
+                    </h1>
+                    <p className="my-2 text-gray-800">{text}</p>
+                    <p className="my-2 text-gray-600">
+                      ~ Vuelve al Inicio y sigue navegando 😇
+                    </p>
+                    <br />
+                    <Link
+                      href="/"
+                      className="font-semibold py-2 px-4 rounded-lg transition-colors border text-white bg-orange-500 border-orange-500">
+                      ¡Sacame de aqui!
+                    </Link>
+                  </div>
+                </div>
+                <div className="w-full flex justify-center">
+                  <p className="text-[10rem] font-bold text-orange-50">
+                    {code}
+                  </p>
+                </div>
+              </div>
             </div>
-            <h1 className="text-2xl">{`${code} - ${error}`}</h1>
-            <div className="container max-w-6xl">
-              <h3>{text}</h3>
-              <hr />
-              <p>
-                O simplemente regresa al{' '}
-                <Link href="/" className="text-orange-400 font-bold">
-                  Inicio y sigue navegando
-                </Link>
-              </p>
+            <div>
+              <div className="relative w-[100%] sm:w-[380px] h-auto rounded-lg overflow-hidden bg-gray-50 shadow">
+                <img src={image?.url} alt={code} className="w-full h-auto" />
+                <p className="text-xs text-gray-400 p-2  text-center">
+                  {image?.text}
+                </p>
+              </div>
             </div>
           </div>
         </div>

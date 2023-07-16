@@ -9,6 +9,7 @@ import {
 import Select, { StylesConfig } from 'react-select';
 
 type FormSelectProps = {
+  id?: string;
   placeholder?: string;
   options: any[];
   callBack?: any;
@@ -22,9 +23,11 @@ type FormSelectProps = {
   name?: string;
   getOptionLabel?: any;
   isClearable?: boolean;
+  inputValue?: string;
 };
 
 const FormSelect = ({
+  id = '',
   placeholder = '',
   options,
   callBack,
@@ -38,6 +41,7 @@ const FormSelect = ({
   name = '',
   getOptionLabel,
   isClearable = true,
+  inputValue = '',
 }: FormSelectProps) => {
   const { control } = useFormContext();
 
@@ -49,11 +53,11 @@ const FormSelect = ({
         backgroundColor: disabled ? 'rgb(249 250 251)' : '#fff',
         borderRadius: '6px',
         borderWidth: '2px',
-        borderColor: errors ? 'red' : 'rgb(253 186 116)',
+        borderColor: errors ? '#ce0000' : 'rgb(116, 253, 235)',
         boxShadow: 'none',
-        '&:hover': { borderColor: 'rgb(253 186 116)' },
+        '&:hover': { borderColor: 'rgb(116, 253, 235)' },
         '&:focus': {
-          borderColor: 'rgb(253 186 116)',
+          borderColor: 'rgb(116, 253, 235)',
           boxShadow: 'none',
         },
         color: disabled ? '#666' : '#333',
@@ -69,6 +73,7 @@ const FormSelect = ({
         name={name}
         render={() => (
           <Select
+            id={id || name}
             value={value}
             defaultValue={defaultValue}
             isSearchable
@@ -83,6 +88,7 @@ const FormSelect = ({
             menuPlacement="auto"
             placeholder={placeholder}
             getOptionLabel={getOptionLabel}
+            inputValue={inputValue}
           />
         )}
       />

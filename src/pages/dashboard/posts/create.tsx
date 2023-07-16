@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
+import DateTimePicker from 'react-datetime-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
@@ -257,15 +257,19 @@ const CreatePost = () => {
                   isLoading={isLoadingSeries}
                   placeholder="Asignar una serie"
                   onInputChange={(value) => setSerieName(value)}
-                  onChange={(option: { value: any; label: any; type: any }) =>
-                    setValue('titleId', option?.value)
-                  }
-                  menuPlacement="auto"
+                  onChange={(option: {
+                    label: string;
+                    value: number;
+                    type: string;
+                  }) => setValue('titleId', option?.value)}
                   getOptionLabel={(option: {
-                    value: any;
-                    label: any;
-                    type: any;
-                  }) => `${option?.label} (${option?.type})`}
+                    label: string;
+                    value: number;
+                    type: string;
+                  }) => {
+                    console.log(option);
+                    return `${option?.label} (${option?.type})`;
+                  }}
                 />
                 <input
                   {...register}

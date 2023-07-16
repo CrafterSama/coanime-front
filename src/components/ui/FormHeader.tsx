@@ -50,7 +50,7 @@ const FormHeader: FC<FormHeaderProps> = ({
           </RoundedButton>
         ) : (
           <>
-            <Button type="button" variant="text" onClick={cancelAction}>
+            <Button type="button" variant="link" onClick={cancelAction}>
               {secondaryActionText}
             </Button>
             <Button type="submit" disabled={isSaving}>
