@@ -15,10 +15,10 @@
     "eslint:fix": "npm run eslint -- --fix"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.14",
+    "@headlessui/react": "1.7.15",
     "@heroicons/react": "1.0.6",
-    "@hookform/resolvers": "2.9.10",
-    "@radix-ui/react-collapsible": "1.0.2",
+    "@hookform/resolvers": "3.1.1",
+    "@radix-ui/react-collapsible": "1.0.3",
     "@react-google-maps/api": "2.19.0",
     "@react-icons/all-files": "4.1.0",
     "@tanstack/react-query": "4.29.25",
@@ -49,7 +49,7 @@
     "snakecase-keys": "5.4.6",
     "suneditor": "2.45.1",
     "suneditor-react": "3.6.1",
-    "swiper": "10.0.4",
+    "swiper": "9.2.4",
     "swr": "2.2.0",
     "use-client-router": "1.0.4",
     "yup": "1.2.0",

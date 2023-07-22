@@ -1,10 +1,27 @@
-import { FC } from 'react';
+import { InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import Label from '@/components/ui/Label';
 import { Show } from './Show';
 
-type InputProps = {
+type ExposedNativeInputProps =
+  | 'autoComplete'
+  | 'id'
+  | 'name'
+  | 'onChange'
+  | 'onKeyUp'
+  | 'onKeyDown'
+  | 'onKeyPress'
+  | 'placeholder'
+  | 'type'
+  | 'value'
+  | 'defaultValue'
+  | 'disabled'
+  | 'readOnly'
+  | 'className';
+
+export interface InputProps
+  extends Pick<InputHTMLAttributes<HTMLInputElement>, ExposedNativeInputProps> {
   id?: string;
   type?: string;
   label?: string;
@@ -19,9 +36,9 @@ type InputProps = {
   hint?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   charactersCount?: any;
-};
+}
 
-const Input: FC<InputProps> = ({
+const Input = ({
   name,
   id = name,
   type = 'text',
@@ -39,7 +56,7 @@ const Input: FC<InputProps> = ({
   },
   charactersCount = null,
   ...props
-}) => {
+}: InputProps) => {
   const { register } = useFormContext();
   return (
     <div className="flex flex-col gap-2">
@@ -96,19 +113,54 @@ const Input: FC<InputProps> = ({
   );
 };
 
+export interface InputWithoutContextProps
+  extends Pick<InputHTMLAttributes<HTMLInputElement>, ExposedNativeInputProps> {
+  id?: string;
+  name?: string;
+  disabled?: boolean;
+  left?: React.ReactNode | any;
+  right?: React.ReactNode | any;
+  className?: string;
+  hint?: string | number;
+  required?: boolean;
+  autoFocus?: boolean;
+}
+
 export const InputWithoutContext = ({
+  name,
+  id = name,
   disabled = false,
+  left = null,
+  right = null,
   className = '',
   hint = '',
+  required,
+  autoFocus,
   ...props
-}) => {
+}: InputWithoutContextProps) => {
   return (
     <div className="flex flex-col gap-2">
-      <input
-        disabled={disabled}
-        className={`rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 p-2 w-full ${className}`}
-        {...props}
-      />
+      <div className="mt-1 relative rounded-md shadow-sm">
+        <Show condition={Boolean(left)}>
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">{left}</span>
+          </div>
+        </Show>
+        <input
+          id={id}
+          name={name}
+          disabled={disabled}
+          className={`rounded-md shadow-sm border-2 outline-2 border-orange-300 disabled:bg-gray-50 disabled:text-gray-400 focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 p-2 w-full ${className}`}
+          required={required}
+          autoFocus={autoFocus}
+          {...props}
+        />
+        <Show condition={Boolean(right)}>
+          <div className="absolute inset-y-0 right-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">{right}</span>
+          </div>
+        </Show>
+      </div>
       <Show condition={Boolean(hint)}>
         <div className="flex flex-row justify-between mt-1">
           <div className="text-gray-400">{hint}</div>

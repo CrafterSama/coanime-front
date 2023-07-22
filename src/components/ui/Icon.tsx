@@ -1,4 +1,3 @@
-import { type FC } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 import { type SymbolCodepoints } from 'react-material-symbols/dist/types';
 
@@ -12,7 +11,7 @@ interface IconProps {
   className?: string;
 }
 
-const Icon: FC<IconProps> = ({ icon, size = 24, className = '' }) => {
+const Icon = ({ icon, size = 24, className = '' }: IconProps) => {
   return <MaterialSymbol icon={icon} size={size} className={className} />;
 };
 

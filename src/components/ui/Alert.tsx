@@ -32,7 +32,7 @@ const intentStyle = {
   },
 };
 
-export const Alert: FC<AlertProps> = ({ message, variant = 'success' }) => {
+export const Alert = ({ message, variant = 'positive' }: AlertProps) => {
   const { bg, text, icon } = intentStyle[variant];
 
   const alertBoxStyles = cn(

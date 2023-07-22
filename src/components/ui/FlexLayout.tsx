@@ -9,14 +9,14 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const FlexLayout: FC<LayoutProps> = ({
+const FlexLayout = ({
   direction = 'col',
   justify = 'start',
   align = 'start',
   gap = 4,
   className = '',
   children,
-}) => {
+}: LayoutProps) => {
   return (
     <div
       className={`flex flex-${direction} gap-${gap} justify-${justify} items-${align} ${className}`}>

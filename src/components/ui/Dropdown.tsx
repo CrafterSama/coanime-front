@@ -10,13 +10,13 @@ type DropdownProps = {
   align?: 'left' | 'right' | 'top';
 };
 
-const Dropdown: FC<DropdownProps> = ({
+const Dropdown = ({
   align = 'right',
   width = 48,
   contentClasses = 'py-1 bg-white',
   trigger,
   children,
-}) => {
+}: DropdownProps) => {
   const alignmentClasses = {
     top: 'origin-top',
     left: 'origin-top-left left-0',

@@ -14,6 +14,7 @@ import Checkbox from '@/components/ui/Checkbox';
 import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import { useAuth } from '@/hooks/auth';
+import Icon from '@/components/ui/Icon';
 
 const Login = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const Login = () => {
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
   const [redirect, setRedirect] = useState<string | string[]>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const redirectionIfLoggedIn = () => {
     if (router.query.redirect) setRedirect(router.query.redirect as string);
@@ -97,6 +99,15 @@ const Login = () => {
               onChange={(event) => setPassword(event.target.value)}
               required
               autoComplete="current-password"
+              right={
+                <button onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? (
+                    <Icon icon="visibility_off" />
+                  ) : (
+                    <Icon icon="visibility" />
+                  )}
+                </button>
+              }
             />
           </div>
 
