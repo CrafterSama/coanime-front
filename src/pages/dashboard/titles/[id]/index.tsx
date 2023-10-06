@@ -184,6 +184,7 @@ const UpdateTitle = ({ id }) => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Nombre del Titulo"
+                    {...methods.register('name')}
                     id="name"
                     name="name"
                     errors={errors?.['name']?.message}
@@ -196,6 +197,7 @@ const UpdateTitle = ({ id }) => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Otros Titulos"
+                    {...methods.register('otherTitles')}
                     hint="Separar con ','"
                     id="otherTitles"
                     name="otherTitles"
@@ -340,6 +342,7 @@ const UpdateTitle = ({ id }) => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Episodios"
+                    {...methods.register('episodies')}
                     id="episodies"
                     name="episodies"
                     errors={errors?.['episodies']?.message}
@@ -352,6 +355,7 @@ const UpdateTitle = ({ id }) => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Url del Trailer"
+                    {...methods.register('trailerUrl')}
                     hint="work better with a youtube url"
                     id="trailerUrl"
                     name="trailerUrl"
