@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -13,7 +12,7 @@ import ResponsiveNavLink, {
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { Show } from '@/components/ui/Show';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 type NavigationProps = {
   user?: any;
@@ -38,7 +37,7 @@ const Navigation: FC<NavigationProps> = ({
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div
-            className="flex cursor-pointer hidden sm:block"
+            className="flex cursor-pointer sm:block"
             onClick={menuActionButton}>
             <MenuIcon className="h-6 w-6 text-gray-400" />
           </div>

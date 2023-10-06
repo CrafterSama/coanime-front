@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import Dropdown from '@/components/ui/Dropdown';
 import { DropdownButton } from '@/components/ui/DropdownLink';
 import { httpClientExternal } from '@/lib/http';
-import { CheckCircleIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Rates = ({ serie, rates, userRates, refetch }) => {
   const updateRates = async (serie, rate) => {
@@ -36,7 +36,7 @@ const Rates = ({ serie, rates, userRates, refetch }) => {
             ) : (
               <>
                 <div className="mr-1">
-                  <PlusSmIcon className="w-4 h-4" />
+                  <PlusIcon className="w-4 h-4" />
                 </div>
                 <div className="flex flex-row justify-start items-center gap-4 relative">
                   Rate Options

@@ -10,12 +10,12 @@ import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
+import { Show } from '@/components/ui/Show';
+import { Tabs } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';
 import { getUserTitleList } from '@/services/titles';
-import { Show } from '@/components/ui/Show';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
 
 const Titles = ({ titlesData }) => {
   const { user } = useAuth({ middleware: 'auth' });
@@ -45,9 +45,10 @@ const Titles = ({ titlesData }) => {
         )
       : response?.results?.data;
 
-  const statistics: any[] = response?.meta?.statistics && [
+  const respStatistics = response?.meta?.statistics;
+  const statistics: any[] = respStatistics && [
     { id: '0', name: 'Todas' },
-    ...response?.meta?.statistics,
+    ...respStatistics,
   ];
 
   useEffect(() => {

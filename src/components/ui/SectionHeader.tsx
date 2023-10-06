@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 import Errors from '@/components/ui/Errors';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 type SectionHeaderProps = {
   backlink: string;

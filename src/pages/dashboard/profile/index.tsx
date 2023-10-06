@@ -25,11 +25,11 @@ import {
   LinkIcon,
   UserIcon,
   CameraIcon,
-  PhotographIcon,
+  PhotoIcon,
   UserCircleIcon,
-  MailIcon,
+  EnvelopeIcon,
   PencilIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Profile = () => {
@@ -214,7 +214,7 @@ const Profile = () => {
                                   disabled={!editMode}
                                 />
                                 <Input
-                                  prefix={<MailIcon className="w-6 h-6" />}
+                                  prefix={<EnvelopeIcon className="w-6 h-6" />}
                                   label="Email"
                                   name="email"
                                   defaultValue={result?.email}
@@ -256,7 +256,7 @@ const Profile = () => {
                                         htmlFor="cover"
                                         className="flex flex-col h-full relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 text-center">
                                         <div className="flex justify-center items-center font-light text-gray-300">
-                                          <PhotographIcon
+                                          <PhotoIcon
                                             className="w-16 h-16"
                                             strokeWidth={1}
                                           />
