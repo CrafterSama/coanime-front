@@ -31,9 +31,9 @@ const TextEditor = ({
             readOnly={disabled}
             disable={disabled}
             onChange={(value) => onChange(value)}
-            onImageUploadBefore={async (files, info, uploadHandler) => {
+            onImageUploadBefore={(files, info, uploadHandler) => {
               let res = null;
-              await uploadImages(files, 'posts')
+              uploadImages(files, 'posts')
                 .then((response) => {
                   res = response;
                 })

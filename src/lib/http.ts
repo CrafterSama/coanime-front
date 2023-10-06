@@ -79,7 +79,7 @@ export const httpClientAuth = getInstance({
 
 export const setFormDataHeader = () => {
   httpClient.interceptors.request.use(
-    async (config) => {
+    async (config: any) => {
       config.headers = {
         ...config.headers,
         'X-Requested-With': 'XMLHttpRequest',

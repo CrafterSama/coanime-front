@@ -16,7 +16,7 @@ import { GetServerSideProps } from 'next/types';
 import WebLayout from '@/components/Layouts/WebLayout';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
@@ -115,7 +115,9 @@ const Profile = () => {
       );
       return;
     }
-    return toast.error(error?.response?.data?.message || error?.message);
+    return toast.error(
+      (error?.response?.data?.message as string) || (error?.message as string)
+    );
   };
 
   const onSubmit = (data) => {
@@ -210,27 +212,29 @@ const Profile = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                   <Input
-                                    left={<UserIcon className="w-6 h-6" />}
+                                    prefix={<UserIcon className="w-6 h-6" />}
                                     label="Full Name"
                                     name="name"
                                     defaultValue={result?.name}
                                     placeholder="coanime..."
-                                    errors={errors?.['name']?.message}
+                                    errors={errors?.['name']?.message as string}
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={<MailIcon className="w-6 h-6" />}
+                                    prefix={<MailIcon className="w-6 h-6" />}
                                     label="Email"
                                     name="email"
                                     defaultValue={result?.email}
                                     placeholder="coanime..."
-                                    errors={errors?.['email']?.message}
+                                    errors={
+                                      errors?.['email']?.message as string
+                                    }
                                     hint="You can't change your email, we never send spam to your email or share your personal info."
                                     disabled
                                   />
                                   <Input
                                     type="password"
-                                    left={
+                                    prefix={
                                       <LockClosedIcon className="w-6 h-6" />
                                     }
                                     label="Password"
@@ -238,13 +242,15 @@ const Profile = () => {
                                     onChange={(e) =>
                                       setValue('password', e.target.value)
                                     }
-                                    errors={errors?.['password']?.message}
+                                    errors={
+                                      errors?.['password']?.message as string
+                                    }
                                     hint="Tu contraseña solo cambia si ingresa una nueva aquí. Importante: Su contraseña debe tener al menos 8 caracteres y contener al menos un número y una letra mayúscula y minúscula y un símbolo."
                                     disabled={!editMode}
                                   />
                                   <Input
                                     type="password"
-                                    left={
+                                    prefix={
                                       <LockClosedIcon className="w-6 h-6" />
                                     }
                                     label="Password Confirmation"
@@ -256,7 +262,8 @@ const Profile = () => {
                                       )
                                     }
                                     errors={
-                                      errors?.['passwordConfirmation']?.message
+                                      errors?.['passwordConfirmation']
+                                        ?.message as string
                                     }
                                     hint="You need a password confirmation"
                                     disabled={!editMode}
@@ -319,85 +326,101 @@ const Profile = () => {
                                 </div>
                                 <div className="grid grid-cols-3 gap-6">
                                   <Input
-                                    left={
+                                    prefix={
                                       <UserCircleIcon className="w-6 h-6" />
                                     }
                                     label="Username"
                                     name="username"
                                     defaultValue={result?.username}
                                     placeholder="coanime..."
-                                    errors={errors?.['username']?.message}
+                                    errors={
+                                      errors?.['username']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={<LinkIcon className="w-6 h-6" />}
+                                    prefix={<LinkIcon className="w-6 h-6" />}
                                     label="Website"
                                     name="website"
                                     defaultValue={result?.website}
                                     placeholder="http://..."
-                                    errors={errors?.['website']?.message}
+                                    errors={
+                                      errors?.['website']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={
+                                    prefix={
                                       <AiOutlineTwitter className="w-6 h-6" />
                                     }
                                     label="Twitter"
                                     name="twitter"
                                     defaultValue={result?.twitter}
                                     placeholder="http://..."
-                                    errors={errors?.['twitter']?.message}
+                                    errors={
+                                      errors?.['twitter']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={
+                                    prefix={
                                       <AiOutlineInstagram className="w-6 h-6" />
                                     }
                                     label="Instagram"
                                     name="instagram"
                                     defaultValue={result?.instagram}
                                     placeholder="http://..."
-                                    errors={errors?.['instagam']?.message}
+                                    errors={
+                                      errors?.['instagam']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={
+                                    prefix={
                                       <AiOutlineFacebook className="w-6 h-6" />
                                     }
                                     label="Facebook"
                                     name="facebook"
                                     defaultValue={result?.facebook}
                                     placeholder="http://..."
-                                    errors={errors?.['facebook']?.message}
+                                    errors={
+                                      errors?.['facebook']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={
+                                    prefix={
                                       <AiOutlineYoutube className="w-6 h-6" />
                                     }
                                     label="Youtube"
                                     name="youtube"
                                     defaultValue={result?.youtube}
                                     placeholder="http://..."
-                                    errors={errors?.['youtube']?.message}
+                                    errors={
+                                      errors?.['youtube']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={<FaTiktok className="w-6 h-6" />}
+                                    prefix={<FaTiktok className="w-6 h-6" />}
                                     label="TikTok"
                                     name="tiktok"
                                     defaultValue={result?.tiktok}
                                     placeholder="http://..."
-                                    errors={errors?.['tiktok']?.message}
+                                    errors={
+                                      errors?.['tiktok']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                   <Input
-                                    left={<FaPinterest className="w-6 h-6" />}
+                                    prefix={<FaPinterest className="w-6 h-6" />}
                                     label="Pinterest"
                                     name="pinterest"
                                     defaultValue={result?.pinterest}
                                     placeholder="http://..."
-                                    errors={errors?.['pinterest']?.message}
+                                    errors={
+                                      errors?.['pinterest']?.message as string
+                                    }
                                     disabled={!editMode}
                                   />
                                 </div>
@@ -405,7 +428,7 @@ const Profile = () => {
                                   <Label>About</Label>
                                   <TextEditor
                                     defaultValue={result?.bio}
-                                    errors={errors?.['bio']?.message}
+                                    errors={errors?.['bio']?.message as string}
                                     onChange={(value) => setValue('bio', value)}
                                     disabled={!editMode}
                                     height="200px"
