@@ -28,7 +28,7 @@ import {
   useProfileByUser,
   useTitlesByUser,
 } from '@/hooks/users';
-import { LinkIcon, PencilIcon } from '@heroicons/react/outline';
+import { LinkIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 const imageFalse = 'https://api.coanime.net/storage/images/profiles/';
 

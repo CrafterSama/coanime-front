@@ -10,6 +10,8 @@ import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
+import { Show } from '@/components/ui/Show';
+import { Tabs } from '@/components/ui/Tabs';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';
@@ -21,10 +23,11 @@ const Titles = ({ titlesData }) => {
   const [page, setPage] = useState(titlesData);
   const { data: response } = useGetUserTitleList({ page });
   const [data, setData] = useState(response?.results);
+  const [statisticType, setStatisticType] = useState<number | string>('0');
   const [loading, setLoading] = useState(false);
 
   const onPageChange = async () => {
-    await router.push({
+    await router?.push({
       pathname: '/mi-lista',
       query: {
         page,
@@ -35,7 +38,18 @@ const Titles = ({ titlesData }) => {
     setLoading(false);
   };
 
-  const series = response?.results?.data;
+  const series: any[] =
+    statisticType !== '0'
+      ? response?.results?.data.filter(
+          (item) => item?.statistics?.id === statisticType
+        )
+      : response?.results?.data;
+
+  const respStatistics = response?.meta?.statistics;
+  const statistics: any[] = respStatistics && [
+    { id: '0', name: 'Todas' },
+    ...respStatistics,
+  ];
 
   useEffect(() => {
     onPageChange();
@@ -50,12 +64,12 @@ const Titles = ({ titlesData }) => {
         <meta name="keywords" content={response?.keywords} />
       </Head>
       <WebLayout>
-        {loading && (
+        <Show condition={loading}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
-        )}
-        {data && (
+        </Show>
+        <Show condition={data}>
           <Section withContainer>
             <div className="relative flex flex-col gap-4 justify-start px-4 h-72 overflow-hidden rounded-b-xl">
               <Image
@@ -79,37 +93,46 @@ const Titles = ({ titlesData }) => {
             </div>
             <div className="py-4">
               <FlexLayout gap={2}>
-                {series?.length > 0 ? (
-                  <>
-                    <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
-                      {series?.map((serie) => (
-                        <div
-                          key={serie?.titles?.id}
-                          className="relative title-item rounded-lg overflow-hidden">
-                          <SerieCard serie={serie?.titles} />
-                          <div className="text-center text-sm font-semibold text-gray-700 py-1 px-2 rounded-b-lg bg-orange-100">
-                            {serie?.statistics?.name}
-                          </div>
+                <FlexLayout direction="row" justify="center">
+                  {statistics?.map((item) => (
+                    <Tabs
+                      key={item?.id}
+                      active={statisticType === item?.id}
+                      onClick={() => setStatisticType(item?.id)}>
+                      {item?.name}
+                    </Tabs>
+                  ))}
+                </FlexLayout>
+                <Show condition={series?.length >= 1}>
+                  <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
+                    {series?.map((serie) => (
+                      <div
+                        key={serie?.titles?.id}
+                        className="relative title-item rounded-lg overflow-hidden">
+                        <SerieCard serie={serie?.titles} />
+                        <div className="text-center text-sm font-semibold text-gray-700 py-1 px-2 rounded-b-lg bg-orange-100">
+                          {serie?.statistics?.name}
                         </div>
-                      ))}
-                    </div>
-                    <Paginator
-                      page={page}
-                      setPage={setPage}
-                      data={response?.results}
-                    />
-                  </>
-                ) : (
+                      </div>
+                    ))}
+                  </div>
+                  <Paginator
+                    page={page}
+                    setPage={setPage}
+                    data={response?.results}
+                  />
+                </Show>
+                <Show condition={series?.length === 0}>
                   <div className="text-center py-4">
                     <h3 className="text-xl font-bold text-gray-400">
                       Sin Titulos
                     </h3>
                   </div>
-                )}
+                </Show>
               </FlexLayout>
             </div>
           </Section>
-        )}
+        </Show>
       </WebLayout>
     </>
   );

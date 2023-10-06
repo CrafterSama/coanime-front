@@ -4,8 +4,8 @@ const NotFoundError = () => {
   return (
     <Error
       code="404"
-      error="Not Found"
-      text="El Contenido que estas buscando no existe o no esta guardado aun en nuestra Base de Datos, si fuiste redirigido a esta pagina tratando de acceder a algún titulo de la enciclopedia, puedes escribirnos en nuestras redes sociales, pidiendo el titulo en si o escribiendo a traves de nuestro correo contacto@coanime.net"
+      error="¡Creemos que te perdiste!"
+      text="Si estas buscando algún contenido que no existe o no esta guardado aun en nuestra Base de Datos, puedes escribirnos en nuestras redes sociales solicitando su inclusión"
     />
   );
 };

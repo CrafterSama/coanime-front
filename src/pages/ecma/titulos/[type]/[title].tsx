@@ -27,7 +27,7 @@ import { useAuth } from '@/hooks/auth';
 import { useRandomImageByTitle } from '@/hooks/random-images';
 import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
-import { PencilIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Show } from '@/components/ui/Show';
 
 dayjs.extend(utc);
@@ -232,7 +232,7 @@ const Titles = ({ title, titleData, errors }) => {
                                 href="/login"
                                 className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
                                 <div className="mr-1">
-                                  <PlusSmIcon className="w-4 h-4" />
+                                  <PlusIcon className="w-4 h-4" />
                                 </div>
                                 <div className="flex flex-row justify-start items-center gap-4 relative">
                                   Watch Options
@@ -244,7 +244,7 @@ const Titles = ({ title, titleData, errors }) => {
                                 href="/login"
                                 className="flex items-center text-sm font-medium rounded-lg py-1 px-2 bg-orange-100 text-gray-500 hover:text-gray-700">
                                 <div className="mr-1">
-                                  <PlusSmIcon className="w-4 h-4" />
+                                  <PlusIcon className="w-4 h-4" />
                                 </div>
                                 <div className="flex flex-row justify-start items-center gap-4 relative">
                                   Rate Options

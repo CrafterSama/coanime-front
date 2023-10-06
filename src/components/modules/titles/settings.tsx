@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { extractText, strLimit } from '@/utils/string';
-import { LinkIcon } from '@heroicons/react/outline';
+import { LinkIcon } from '@heroicons/react/24/outline';
 
 export const headers = [
   {

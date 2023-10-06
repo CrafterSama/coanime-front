@@ -83,7 +83,7 @@ const Titles = ({ titlesData }) => {
         </Show>
         <Show condition={series}>
           <Section withContainer>
-            <FlexLayout justify="center" gap={1}>
+            <FlexLayout justify="center" align="center" gap={1}>
               <FlexLayout direction="row" justify="center">
                 {tabs.map((item) => (
                   <Tabs

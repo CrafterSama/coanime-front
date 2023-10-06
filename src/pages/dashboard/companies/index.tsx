@@ -7,7 +7,7 @@ import { headers } from '@/components/modules/entities/settings';
 import Loading from '@/components/ui/Loading';
 import { Rows, Table } from '@/components/ui/Table';
 import { useCompanies } from '@/hooks/companies';
-import { Map } from '@/components/ui/Map';
+import { RowRender } from '@/components/ui/RowRender';
 import { Show } from '@/components/ui/Show';
 
 const Test = (props) => {
@@ -47,7 +47,11 @@ const Companies = () => {
             )}
             <Show condition={Boolean(result?.data)}>
               <Table columns={headers}>
-                <Map data={result?.data} columns={headers} component={Rows} />
+                <RowRender
+                  data={result?.data}
+                  columns={headers}
+                  component={Rows}
+                />
               </Table>
             </Show>
           </div>

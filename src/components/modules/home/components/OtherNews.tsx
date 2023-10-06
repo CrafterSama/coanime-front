@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Permissions } from '@/components/modules/common/Permissions';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { ClockIcon, PencilIcon } from '@heroicons/react/outline';
+import { ClockIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 const OtherNews = ({ articles }) => {
   return (

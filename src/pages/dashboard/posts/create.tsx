@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
-import { Controller, useForm } from 'react-hook-form';
+import DateTimePicker from 'react-datetime-picker';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
@@ -16,7 +16,7 @@ import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
@@ -65,8 +65,8 @@ const CreatePost = () => {
     }
   }, [serieName, series]);
 
-  const methods = useForm<Posts>({
-    resolver: yupResolver(postSchema),
+  const methods = useForm<Partial<Posts>>({
+    resolver: yupResolver(postSchema) as Resolver<Partial<Posts>, any>,
     mode: 'onChange',
   });
 
@@ -168,7 +168,7 @@ const CreatePost = () => {
                   errors={errors?.['title']?.message}
                   placeholder="Title"
                   className="w-full block text-lg"
-                  charactersCount={titleCount}
+                  lowerHint={titleCount}
                   onChange={(e) => onChangeTitle(e.target.value.length)}
                 />
               </div>
@@ -180,7 +180,7 @@ const CreatePost = () => {
                   errors={errors?.['excerpt']?.message}
                   placeholder="excerpt"
                   className="w-full block text-base"
-                  charactersCount={excerptCount}
+                  lowerHint={excerptCount}
                   onChange={(e) => onChangeExcerpt(e.target.value.length)}
                 />
               </div>
@@ -257,15 +257,19 @@ const CreatePost = () => {
                   isLoading={isLoadingSeries}
                   placeholder="Asignar una serie"
                   onInputChange={(value) => setSerieName(value)}
-                  onChange={(option: { value: any; label: any; type: any }) =>
-                    setValue('titleId', option?.value)
-                  }
-                  menuPlacement="auto"
+                  onChange={(option: {
+                    label: string;
+                    value: number;
+                    type: string;
+                  }) => setValue('titleId', option?.value)}
                   getOptionLabel={(option: {
-                    value: any;
-                    label: any;
-                    type: any;
-                  }) => `${option?.label} (${option?.type})`}
+                    label: string;
+                    value: number;
+                    type: string;
+                  }) => {
+                    console.log(option);
+                    return `${option?.label} (${option?.type})`;
+                  }}
                 />
                 <input
                   {...register}

@@ -16,9 +16,7 @@ const SeriesList: FC<SeriesListProps> = ({ series, total = null }) => (
         </h2>
       </div>
     )}
-    {series?.map((serie) => (
-      <SerieCard key={serie?.id} serie={serie} />
-    ))}
+    {series?.map((serie) => <SerieCard key={serie?.id} serie={serie} />)}
   </div>
 );
 

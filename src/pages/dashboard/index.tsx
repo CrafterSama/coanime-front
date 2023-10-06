@@ -6,7 +6,7 @@ import AppLayout from '@/components/Layouts/AppLayout';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useAuth } from '@/hooks/auth';
 import { useDashboard } from '@/hooks/dashboard';
-import { PhotographIcon, TagIcon } from '@heroicons/react/outline';
+import { PhotoIcon, TagIcon } from '@heroicons/react/24/outline';
 
 const Dashboard = () => {
   const { user } = useAuth({ middleware: 'auth' });
@@ -44,7 +44,7 @@ const Dashboard = () => {
                     <Link
                       href="/dashboard/titles?page=1"
                       className="text-white">
-                      <PhotographIcon className="h-6 w-6" />
+                      <PhotoIcon className="h-6 w-6" />
                     </Link>
                   </div>
                 </div>

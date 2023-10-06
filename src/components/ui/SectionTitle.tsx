@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { PlusSmIcon } from '@heroicons/react/outline';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 const SectionTitle = (
   {
@@ -31,7 +31,7 @@ const SectionTitle = (
         <span
           className={`flex justify-end w-[165px] h-6 ${subTitleBackground}`}>
           <Link href={actionLink} className="flex text-orange-400">
-            <PlusSmIcon className="w-6 h-6 text-orange-400" />
+            <PlusIcon className="w-6 h-6 text-orange-400" />
             Mas Estrenos
           </Link>
         </span>

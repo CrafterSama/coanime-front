@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/titles/settings';
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { useTitles } from '@/hooks/titles';
-import { FilterIcon, PlusIcon } from '@heroicons/react/outline';
+import { FunnelIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Titles = () => {
   const router = useRouter();
@@ -70,14 +70,14 @@ const Titles = () => {
         <div className="py-12">
           <div className="max-w-9xl mx-auto px-4  sm:px-6 lg:px-8">
             <div className="flex gap-2 justify-start items-center py-4">
-              <InputWithoutContext
+              <Input
                 type="search"
                 placeholder="Buscar"
                 className="w-[300px]"
                 defaultValue={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <FilterIcon
+              <FunnelIcon
                 className="w-6 h-6 text-orange-500 cursor-pointer"
                 onClick={clearFilter}
               />

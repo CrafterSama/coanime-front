@@ -9,6 +9,7 @@ import { CloudUploadIcon } from '@/components/icons';
 import { uploadImages } from '@/hooks/images';
 
 import Label from './Label';
+import { Show } from './Show';
 
 const UploadImage = ({ disabled = false, name, model }) => {
   const { register, watch, setValue } = useFormContext();
@@ -43,7 +44,7 @@ const UploadImage = ({ disabled = false, name, model }) => {
     <>
       <label
         htmlFor={name}
-        className={`w-full max-w-md border-2 border-orange-400 bg-orange-50 hover:bg-orange-100  mx-auto rounded-lg px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none ${
+        className={`w-full max-w-md border-2 border-orange-400 bg-orange-50 hover:bg-orange-100 mx-auto rounded-lg px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none ${
           !disabled
             ? 'opacity-100 cursor-pointer'
             : 'opacity-50 cursor-not-allowed'
@@ -69,19 +70,17 @@ const UploadImage = ({ disabled = false, name, model }) => {
           onChange={uploadPostImages}
         />
       </label>
-      {newImage && (
-        <>
-          <Label htmlFor="image">Nueva Imagen</Label>
-          <div className="relative w-full h-[280px]">
-            <Image
-              src={watch(name)}
-              alt="New image"
-              className="rounded-lg object-scale-down bg-gray-200"
-              fill
-            />
-          </div>
-        </>
-      )}
+      <Show condition={newImage}>
+        <Label htmlFor="image">Nueva Imagen</Label>
+        <div className="relative w-full h-[280px]">
+          <Image
+            src={watch(name)}
+            alt="New image"
+            className="rounded-lg object-scale-down bg-gray-200"
+            fill
+          />
+        </div>
+      </Show>
     </>
   );
 };

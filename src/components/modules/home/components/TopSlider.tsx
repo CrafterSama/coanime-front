@@ -5,7 +5,7 @@ import { Navigation, Pagination, A11y, Thumbs, EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { ClockIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

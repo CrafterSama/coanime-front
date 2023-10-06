@@ -6,7 +6,7 @@ type CheckboxProps = {
   text: string;
 };
 
-const Checkbox: FC<CheckboxProps> = ({ id, name, text }) => (
+const Checkbox = ({ id, name, text }: CheckboxProps) => (
   <label htmlFor={id} className="inline-flex items-center">
     <input
       id={id}

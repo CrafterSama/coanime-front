@@ -8,7 +8,7 @@ import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import { useAuth } from '@/hooks/auth';
 
@@ -55,7 +55,7 @@ const Register = () => {
           <div>
             <Label htmlFor="name">Name</Label>
 
-            <InputWithoutContext
+            <Input
               id="name"
               type="text"
               name="name"
@@ -71,7 +71,7 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="email">Email</Label>
 
-            <InputWithoutContext
+            <Input
               id="email"
               type="email"
               name="email"
@@ -86,7 +86,7 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <InputWithoutContext
+            <Input
               id="password"
               type="password"
               name="password"
@@ -102,7 +102,7 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <InputWithoutContext
+            <Input
               id="passwordConfirmation"
               type="password"
               name="passwordConfirmation"

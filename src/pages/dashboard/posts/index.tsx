@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { usePostsSettings } from '@/components/modules/posts/settings';
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { usePosts } from '@/hooks/posts';
-import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/hooks/auth';
 import { postDelete } from '@/services/posts';
 import { toast } from 'react-hot-toast';
@@ -99,15 +99,15 @@ const Posts = () => {
             </p>
             <div className="flex flex-row justify-end gap-4">
               <Button
-                variant="text"
+                variant="link"
                 onClick={() => setOpenDeleteModal(!openDeleteModal)}>
                 No
               </Button>
               <Button
+                suffix={<TrashIcon className="w-4 h-4" />}
                 onClick={() => deletePost(postId)}
                 className="flex flex-row items-center gap-2">
                 <span>Si</span>
-                <TrashIcon className="w-4 h-4" />
               </Button>
             </div>
           </div>
@@ -115,7 +115,7 @@ const Posts = () => {
         <div className="py-12">
           <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-start py-4">
-              <InputWithoutContext
+              <Input
                 placeholder="Buscar"
                 className="w-[300px]"
                 defaultValue={name}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import DatePicker from 'react-datetime-picker/dist/entry.nostyle';
+import DatePicker from 'react-datetime-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -7,7 +7,6 @@ import MultiSelect from 'react-widgets/Multiselect';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
@@ -15,7 +14,7 @@ import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -23,16 +22,15 @@ import FormSelect from '@/components/ui/Select';
 import TextEditor from '@/components/ui/TextEditor';
 import ToggleCheckbox from '@/components/ui/ToggleCheckbox';
 import UploadImage from '@/components/ui/UploadImage';
-import { DEFAULT_IMAGE } from '@/constants/common';
 import { useCreateTitle } from '@/hooks/titles';
 import { titleCreate } from '@/services/titles';
-import { CalendarIcon, PlusIcon, XIcon } from '@heroicons/react/outline';
+import { CalendarIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 
 import 'react-widgets/styles.css';
-import Link from 'next/link';
-
-import { useMutation } from '@tanstack/react-query';
+import { Show } from '@/components/ui/Show';
+import FlexLayout from '@/components/ui/FlexLayout';
 
 dayjs.extend(utc);
 
@@ -40,8 +38,8 @@ const CreateTitle = () => {
   const router = useRouter();
   const { data = {}, isLoading } = useCreateTitle();
   const { genres, types, ratings } = data;
-  const methods = useForm<Titles>({
-    resolver: yupResolver(titleSchema),
+  const methods = useForm<Partial<Titles>>({
+    resolver: yupResolver(titleSchema) as any,
     mode: 'onChange',
   });
 
@@ -147,12 +145,12 @@ const CreateTitle = () => {
         <title>Coanime.net - Create Title</title>
       </Head>
       <article className="p-4">
-        {isLoading && (
+        <Show condition={isLoading}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading size={16} />
           </div>
-        )}
-        {data && (
+        </Show>
+        <Show condition={data}>
           <FormWithContext methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <FormHeader
               title="Nuevo Titulo"
@@ -196,26 +194,30 @@ const CreateTitle = () => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="mb-4 flex flex-col gap-2 w-full md:w-5/6">
-                    <Label htmlFor="sinopsis">Sinopsis</Label>
-                    <Controller
-                      control={control}
-                      name="sinopsis"
-                      render={() => (
-                        <TextEditor
-                          defaultValue={watch('sinopsis')}
-                          errors={errors?.['sinopsis']?.message}
-                          onChange={(value) => setValue('sinopsis', value)}
-                        />
-                      )}
-                    />
-                  </div>
+                <FlexLayout justify="start" direction="row" align="start">
                   <div className="mb-4 flex flex-col gap-2 w-full md:w-1/6">
                     <Label>Portada del Titulo</Label>
                     <UploadImage name="images" model="titles" />
                   </div>
-                </div>
+                  <div className="w-full md:w-5/6">
+                    <div className="flex flex-col md:flex-row gap-4">
+                      <div className="mb-4 flex flex-col gap-2 w-full">
+                        <Label htmlFor="sinopsis">Sinopsis</Label>
+                        <Controller
+                          control={control}
+                          name="sinopsis"
+                          render={() => (
+                            <TextEditor
+                              defaultValue={watch('sinopsis')}
+                              errors={errors?.['sinopsis']?.message}
+                              onChange={(value) => setValue('sinopsis', value)}
+                            />
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </FlexLayout>
               </div>
               <div className="w-full md:w-3/12">
                 <div className="mb-4 flex flex-col gap-3">
@@ -252,7 +254,11 @@ const CreateTitle = () => {
                         <CalendarIcon className="w-6 h-6" />
                       </span>
                     }
-                    clearIcon={false}
+                    clearIcon={
+                      <span className="text-orange-400">
+                        <XMarkIcon className="w-6 h-6" />
+                      </span>
+                    }
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2 datepicker-box">
@@ -268,7 +274,7 @@ const CreateTitle = () => {
                     }
                     clearIcon={
                       <span className="text-orange-400">
-                        <XIcon className="w-6 h-6" />
+                        <XMarkIcon className="w-6 h-6" />
                       </span>
                     }
                   />
@@ -317,7 +323,7 @@ const CreateTitle = () => {
               </div>
             </div>
           </FormWithContext>
-        )}
+        </Show>
       </article>
     </AppLayout>
   );
