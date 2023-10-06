@@ -17,7 +17,7 @@ type FormHeaderProps = {
   overAll?: boolean;
 };
 
-const FormHeader: FC<FormHeaderProps> = ({
+const FormHeader = ({
   title,
   subtitle = '',
   cancelAction = () => {
@@ -31,7 +31,7 @@ const FormHeader: FC<FormHeaderProps> = ({
   secondaryActionText = 'Cancelar',
   isSaving = false,
   overAll = true,
-}) => {
+}: FormHeaderProps) => {
   return (
     <header
       className={`flex flex-col md:flex-row justify-between content-center p-4 bg-gray-100 rounded-t-lg sticky top-0 ${
@@ -50,7 +50,7 @@ const FormHeader: FC<FormHeaderProps> = ({
           </RoundedButton>
         ) : (
           <>
-            <Button type="button" variant="text" onClick={cancelAction}>
+            <Button type="button" variant="link" onClick={cancelAction}>
               {secondaryActionText}
             </Button>
             <Button type="submit" disabled={isSaving}>

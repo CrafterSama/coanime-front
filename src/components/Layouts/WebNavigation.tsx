@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { Permissions } from '@/components/modules/common/Permissions';
 import SearchBox from '@/components/modules/common/SearchBox';
-import { Logotype } from '@/components/ui/ApplicationLogo';
+import { CoanimeIcon, Logotype } from '@/components/ui/ApplicationLogo';
 import Dropdown from '@/components/ui/Dropdown';
 import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
 import NavLink from '@/components/ui/NavLink';
@@ -55,12 +55,11 @@ const Navigation = ({ user }) => {
             <div className="flex gap-4">
               {/* Logo */}
               <div className="flex-shrink-0 flex items-center">
-                <Link href="/" className="relative w-48">
-                  <Logotype
-                    logoColor="#FE6A00"
-                    lettersColor="#333333"
-                    className="h-15"
-                  />
+                <Link
+                  href="/"
+                  className="relative w-48 flex flex-row items-center gap-2">
+                  <CoanimeIcon className="h-24 text-orange-600" />
+                  <Logotype className="h-16 text-gray-800" />
                 </Link>
               </div>
 
@@ -307,8 +306,7 @@ const Navigation = ({ user }) => {
                 className="py-4 whitespace-nowrap w-fit desktop"
                 href="/"
                 active={router.pathname === '/'}>
-                <span className="desktop">Principal</span>
-                <HomeIcon className="w-6 h-6 text-gray-800 mobile" />
+                <HomeIcon className="w-6 h-6 text-gray-800" />
               </NavLink>
               <NavLink
                 className="py-4 whitespace-nowrap w-fit"

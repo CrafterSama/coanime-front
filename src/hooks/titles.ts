@@ -62,6 +62,6 @@ export const useSearchTitle = ({ name = '' }) => {
       const response = await httpClientExternal.get(`search/titles/${name}`);
       return response.data;
     },
-    { enabled: isLongEnough }
+    { enabled: Boolean(isLongEnough && name) }
   );
 };

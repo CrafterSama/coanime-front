@@ -1,12 +1,12 @@
 import { FC, Fragment } from 'react';
 
-type MapProps = {
+type RowRenderProps = {
   data?: any[];
   columns?: any[];
   component: React.ReactNode | any;
 };
 
-export const Map: FC<MapProps> = ({
+export const RowRender: FC<RowRenderProps> = ({
   data = [],
   columns = [],
   component: Component,

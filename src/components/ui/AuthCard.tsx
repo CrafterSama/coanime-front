@@ -4,9 +4,12 @@ import { useRandomImageByTitle } from '@/hooks/random-images';
 const ANIME_NAME = [
   'kimetsu-no-yaiba',
   'one-piece',
+  'shingeki-no-kyojin',
   'naruto',
   'bleach',
+  'boku-no-hero-academia',
   'one-punch-man',
+  'dragon-ball-super',
 ];
 
 const AuthCard = ({ logo, children }) => {

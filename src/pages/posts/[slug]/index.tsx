@@ -171,6 +171,10 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                 </Section>
                 <Section withContainer id="features">
                   <Show condition={post}>
+                    <SectionTitle
+                      title=""
+                      subtitle="¿nos dejas un comentario?"
+                    />
                     <DisqusComments post={post} />
                   </Show>
                   <SectionTitle
@@ -179,7 +183,6 @@ const ShowArticle = ({ slug, articleData, errors }) => {
                     fancyText={post?.categories?.name}
                   />
                   <OtherArticles articles={otherArticles} />
-                  <SectionTitle title="" subtitle="¿nos dejas un comentario?" />
                 </Section>
               </Section>
             </div>

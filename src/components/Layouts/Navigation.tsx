@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 import Image from 'next/image';
@@ -15,8 +15,13 @@ import { useAuth } from '@/hooks/auth';
 import { Show } from '@/components/ui/Show';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 
-const Navigation = ({
-  user,
+type NavigationProps = {
+  user?: any;
+  menuActionButton: () => void;
+};
+
+const Navigation: FC<NavigationProps> = ({
+  user = {},
   menuActionButton = () => {
     //
   },
