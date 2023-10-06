@@ -165,12 +165,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </button>
           </Show>
         </div>
-        <Show condition={Boolean(lowerHint)}>
-          <div className="text-xs text-gray-400">{lowerHint}</div>
-        </Show>
-        <Show condition={Boolean(errors)}>
-          <div className="text-xs text-gray-400">{errors}</div>
-        </Show>
+        <div className="flex flex-row gap-4">
+          <Show condition={Boolean(lowerHint)}>
+            <div className="text-xs text-gray-400">{lowerHint}</div>
+          </Show>
+          <Show condition={Boolean(errors)}>
+            <div className="text-xs text-gray-400">{errors}</div>
+          </Show>
+        </div>
       </div>
     );
   }
