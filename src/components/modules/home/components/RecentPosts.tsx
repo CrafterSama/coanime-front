@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { ClockIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 const RecentPosts = ({ posts }) => (
   <div className="recent-posts px-4 xl:px-0">

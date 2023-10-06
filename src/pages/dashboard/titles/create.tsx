@@ -24,7 +24,7 @@ import ToggleCheckbox from '@/components/ui/ToggleCheckbox';
 import UploadImage from '@/components/ui/UploadImage';
 import { useCreateTitle } from '@/hooks/titles';
 import { titleCreate } from '@/services/titles';
-import { CalendarIcon, XIcon } from '@heroicons/react/outline';
+import { CalendarIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 
@@ -256,7 +256,7 @@ const CreateTitle = () => {
                     }
                     clearIcon={
                       <span className="text-orange-400">
-                        <XIcon className="w-6 h-6" />
+                        <XMarkIcon className="w-6 h-6" />
                       </span>
                     }
                   />
@@ -274,7 +274,7 @@ const CreateTitle = () => {
                     }
                     clearIcon={
                       <span className="text-orange-400">
-                        <XIcon className="w-6 h-6" />
+                        <XMarkIcon className="w-6 h-6" />
                       </span>
                     }
                   />

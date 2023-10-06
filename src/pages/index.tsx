@@ -16,7 +16,7 @@ import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
-import { PlusSmIcon } from '@heroicons/react/outline';
+import { PlusSmallIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }) => {
@@ -99,7 +99,7 @@ const Home = ({ homeDataSSR }) => {
           <a
             className="flex flex-row items-center text-orange-500"
             href="#news">
-            <PlusSmIcon className="w-6 h-6 text-orange-400" />
+            <PlusSmallIcon className="w-6 h-6 text-orange-400" />
             Mas Noticias
           </a>
         </div>

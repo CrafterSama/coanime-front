@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Permissions } from '@/components/modules/common/Permissions';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { PencilIcon } from '@heroicons/react/outline';
+import { PencilIcon } from '@heroicons/react/24/outline';
 
 const OtherArticles = ({ articles, total = null }) => (
   <div className="features">

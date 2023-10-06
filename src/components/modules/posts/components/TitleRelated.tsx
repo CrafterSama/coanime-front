@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Permissions } from '@/components/modules/common/Permissions';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
-import { PencilIcon } from '@heroicons/react/outline';
+import { PencilIcon } from '@heroicons/react/24/outline';
 
 const TitleRelated = ({ titles }) => (
   <div id="relatedTitle" className="px-4">

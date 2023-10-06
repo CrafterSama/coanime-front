@@ -16,15 +16,15 @@ import ResponsiveNavLink, {
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import {
-  LogoutIcon,
-  MenuIcon,
-  TemplateIcon,
-  XIcon,
+  ArrowLeftOnRectangleIcon,
+  Bars3Icon,
+  RectangleGroupIcon,
+  XMarkIcon,
   ChevronDownIcon,
   UserCircleIcon,
-  CollectionIcon,
+  QueueListIcon,
   HomeIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { Show } from '@/components/ui/Show';
 import cn from 'classnames';
 
@@ -117,7 +117,9 @@ const Navigation = ({ user }) => {
                     <DropdownLink
                       href={checkUser ? '/dashboard' : '/login'}
                       rel="nofollow"
-                      icon={<TemplateIcon className="h-6 w-6 text-gray-700" />}>
+                      icon={
+                        <RectangleGroupIcon className="h-6 w-6 text-gray-700" />
+                      }>
                       Dashboard
                     </DropdownLink>
                   </Permissions>
@@ -128,12 +130,14 @@ const Navigation = ({ user }) => {
                   </DropdownLink>
                   <DropdownLink
                     href="/mi-lista"
-                    icon={<CollectionIcon className="h-6 w-6 text-gray-700" />}>
+                    icon={<QueueListIcon className="h-6 w-6 text-gray-700" />}>
                     Mi Lista
                   </DropdownLink>
                   <DropdownButton
                     onClick={logout}
-                    icon={<LogoutIcon className="h-6 w-6 text-gray-700" />}>
+                    icon={
+                      <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />
+                    }>
                     Logout
                   </DropdownButton>
                 </Dropdown>
@@ -159,10 +163,10 @@ const Navigation = ({ user }) => {
                 onClick={() => setOpen((open) => !open)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                 <Show condition={open}>
-                  <XIcon className="w-6 h-6" />
+                  <XMarkIcon className="w-6 h-6" />
                 </Show>
                 <Show condition={!open}>
-                  <MenuIcon className="w-6 h-6" />
+                  <Bars3Icon className="w-6 h-6" />
                 </Show>
               </button>
             </div>
@@ -223,7 +227,7 @@ const Navigation = ({ user }) => {
                   <Permissions>
                     <ResponsiveNavLink href="/dashboard">
                       <span className="flex gap-2 justify-end items-center">
-                        <TemplateIcon className="h-6 w-6 text-gray-700" />{' '}
+                        <RectangleGroupIcon className="h-6 w-6 text-gray-700" />{' '}
                         Dashboard
                       </span>
                     </ResponsiveNavLink>
@@ -236,13 +240,14 @@ const Navigation = ({ user }) => {
                   </ResponsiveNavLink>
                   <ResponsiveNavLink href="/mi-lista">
                     <span className="flex gap-2 justify-end items-center">
-                      <CollectionIcon className="h-6 w-6 text-gray-700" /> Mi
+                      <QueueListIcon className="h-6 w-6 text-gray-700" /> Mi
                       Lista
                     </span>
                   </ResponsiveNavLink>
                   <ResponsiveNavButton onClick={logout}>
                     <span className="flex gap-2 justify-end items-center">
-                      <LogoutIcon className="h-6 w-6 text-gray-700" /> Logout
+                      <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />{' '}
+                      Logout
                     </span>
                   </ResponsiveNavButton>
                 </div>

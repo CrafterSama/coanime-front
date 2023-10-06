@@ -35,7 +35,7 @@ export interface InputProps
   extends Pick<InputHTMLAttributes<HTMLInputElement>, ExposedNativeInputProps> {
   invalid?: boolean;
   label?: string;
-  prefix?: string;
+  prefix?: string | ReactElement;
   suffix?: string | ReactElement;
   onSuffixClick?: () => void;
   suffixClassName?: string;

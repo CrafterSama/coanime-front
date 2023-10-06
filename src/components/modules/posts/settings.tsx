@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { extractText, strLimit } from '@/utils/string';
-import { EyeIcon, LinkIcon, TrashIcon } from '@heroicons/react/outline';
+import { EyeIcon, LinkIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { hasRole } from '@/utils/common';
 import { Show } from '@/components/ui/Show';
 import Button from '@/components/ui/Button';

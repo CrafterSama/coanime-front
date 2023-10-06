@@ -1,9 +1,21 @@
-import { Fragment } from 'react';
+import { Fragment, ReactElement, ReactNode } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import Portal from '@/hoc/Portal';
 
-const Modal = ({ isOpen, toggleModal, title, children }) => {
+type ModalProps = {
+  isOpen: boolean;
+  toggleModal: () => void;
+  title: string;
+  children: ReactNode;
+};
+
+const Modal = ({
+  isOpen,
+  toggleModal,
+  title,
+  children,
+}: ModalProps): ReactElement => {
   return (
     <Portal>
       <Transition appear show={isOpen} as={Fragment}>

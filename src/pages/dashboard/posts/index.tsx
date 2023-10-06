@@ -12,7 +12,7 @@ import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { usePosts } from '@/hooks/posts';
-import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/hooks/auth';
 import { postDelete } from '@/services/posts';
 import { toast } from 'react-hot-toast';

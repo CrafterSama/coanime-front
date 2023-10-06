@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { Show, ShowAdvanced } from './Show';
 import { ReactElement } from 'react';
-import { DotsCircleHorizontalIcon } from '@heroicons/react/outline';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 
 type ButtonProps = {
   prefix?: any | ReactElement;
@@ -140,7 +140,7 @@ const Button = ({
           condition={loading}
           conditionTrue={
             <span className="flex items-center animate-pulse">
-              <DotsCircleHorizontalIcon className="w-6 h-6" />
+              <EllipsisVerticalIcon className="w-6 h-6" />
             </span>
           }
           conditionFalse={

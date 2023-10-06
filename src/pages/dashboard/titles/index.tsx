@@ -12,7 +12,7 @@ import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { Rows, Table } from '@/components/ui/Table';
 import { useTitles } from '@/hooks/titles';
-import { FilterIcon, PlusIcon } from '@heroicons/react/outline';
+import { FunnelIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Titles = () => {
   const router = useRouter();
@@ -77,7 +77,7 @@ const Titles = () => {
                 defaultValue={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <FilterIcon
+              <FunnelIcon
                 className="w-6 h-6 text-orange-500 cursor-pointer"
                 onClick={clearFilter}
               />
