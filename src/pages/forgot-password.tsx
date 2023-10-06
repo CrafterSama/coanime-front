@@ -8,7 +8,7 @@ import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import { useAuth } from '@/hooks/auth';
 
@@ -49,7 +49,7 @@ const ForgotPassword = () => {
           {/* Email Address */}
           <div>
             <Label htmlFor="email">Email</Label>
-            <InputWithoutContext
+            <Input
               id="email"
               type="email"
               name="email"

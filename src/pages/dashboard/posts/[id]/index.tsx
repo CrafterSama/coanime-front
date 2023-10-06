@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
@@ -17,7 +17,7 @@ import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -72,8 +72,8 @@ const UpdatePost = () => {
     }
   }, [serieName, series]);
 
-  const methods = useForm<Posts>({
-    resolver: yupResolver(postSchema),
+  const methods = useForm<Partial<Posts>>({
+    resolver: yupResolver(postSchema) as Resolver<Partial<Posts>, any>,
     mode: 'onChange',
   });
 
@@ -91,10 +91,7 @@ const UpdatePost = () => {
     setValue('excerpt', post?.excerpt);
     setValue('content', post?.content);
     setValue('image', post?.image);
-    setValue(
-      'tags',
-      post?.tags?.map((tag) => tag.name)
-    );
+    setValue('tags', post?.tags?.map((tag) => tag.name));
     setValue('categoryId', {
       value: post?.categories?.id,
       label: post?.categories?.name,

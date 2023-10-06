@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { usePostsSettings } from '@/components/modules/posts/settings';
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -115,7 +115,7 @@ const Posts = () => {
         <div className="py-12">
           <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-start py-4">
-              <InputWithoutContext
+              <Input
                 placeholder="Buscar"
                 className="w-[300px]"
                 defaultValue={name}

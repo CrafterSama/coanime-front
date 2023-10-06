@@ -11,10 +11,10 @@ import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import Button from '@/components/ui/Button';
 import Checkbox from '@/components/ui/Checkbox';
-import { InputWithoutContext } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import { useAuth } from '@/hooks/auth';
-import Icon from '@/components/ui/Icon';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { Input } from '@/components/ui/Input';
 
 const Login = () => {
   const router = useRouter();
@@ -76,14 +76,12 @@ const Login = () => {
           <div>
             <Label htmlFor="email">Email</Label>
 
-            <InputWithoutContext
+            <Input
               id="email"
               type="email"
               value={email}
               className="block mt-1 w-full"
               onChange={(event) => setEmail(event.target.value)}
-              required
-              autoFocus
             />
           </div>
 
@@ -91,23 +89,21 @@ const Login = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <InputWithoutContext
+            <Input
               id="password"
               type="password"
               value={password}
               className="block mt-1 w-full"
               onChange={(event) => setPassword(event.target.value)}
-              required
               autoComplete="current-password"
-              right={
-                <button onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? (
-                    <Icon icon="visibility_off" />
-                  ) : (
-                    <Icon icon="visibility" />
-                  )}
-                </button>
+              endIcon={
+                showPassword ? (
+                  <AiOutlineEyeInvisible size={24} />
+                ) : (
+                  <AiOutlineEye size={24} />
+                )
               }
+              endIconAction={() => setShowPassword(!showPassword)}
             />
           </div>
 
@@ -123,12 +119,12 @@ const Login = () => {
               <Link
                 href="/forgot-password"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                Forgot your password?
+                ¿Olvidaste tu Contraseña?
               </Link>
               <Link
                 href="/register"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                {`Don't have an account?`}
+                ¿No tienes cuenta?
               </Link>
             </div>
           </div>

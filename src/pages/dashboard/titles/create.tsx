@@ -14,7 +14,7 @@ import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import Label from '@/components/ui/Label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -38,8 +38,8 @@ const CreateTitle = () => {
   const router = useRouter();
   const { data = {}, isLoading } = useCreateTitle();
   const { genres, types, ratings } = data;
-  const methods = useForm<Titles>({
-    resolver: yupResolver(titleSchema),
+  const methods = useForm<Partial<Titles>>({
+    resolver: yupResolver(titleSchema) as any,
     mode: 'onChange',
   });
 

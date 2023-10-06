@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { InputWithoutContext } from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useSearchPosts } from '@/hooks/posts';
@@ -17,9 +17,8 @@ const SearchBox = () => {
 
   return (
     <div className="grid relative w-[290px]">
-      <InputWithoutContext
+      <Input
         placeholder="Search"
-        className="block w-full px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-orange-300 focus:shadow-outline-orange sm:text-sm transition duration-150 ease-in-out"
         onChange={(e) => setName(e.target.value)}
         onBlur={(e) => {
           setTimeout(() => {

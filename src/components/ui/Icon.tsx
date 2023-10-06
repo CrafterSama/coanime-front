@@ -3,7 +3,7 @@ import { type SymbolCodepoints } from 'react-material-symbols/dist/types';
 
 type Icons = SymbolCodepoints;
 
-type Sizes = 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48;
+type Sizes = 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60;
 
 interface IconProps {
   icon: Icons;
