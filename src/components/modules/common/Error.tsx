@@ -185,6 +185,7 @@ const Error = ({ code, error, text }) => {
             </div>
             <div>
               <div className="relative w-[100%] sm:w-[380px] h-auto rounded-lg overflow-hidden bg-gray-50 shadow">
+                {/* @ts-ignore */}
                 <img src={image?.url} alt={code} className="w-full h-auto" />
                 <p className="text-xs text-gray-400 p-2  text-center">
                   {image?.text}

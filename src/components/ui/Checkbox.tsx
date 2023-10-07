@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 type CheckboxProps = {
   id: string;
   name?: string;

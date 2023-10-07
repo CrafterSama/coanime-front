@@ -9,6 +9,7 @@ import { Rows, Table } from '@/components/ui/Table';
 import { useEvents } from '@/hooks/events';
 
 const Events = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState('');
   const { data = {}, isLoading } = useEvents({ page });
   const { result, title, description } = data;

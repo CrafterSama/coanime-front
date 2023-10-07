@@ -118,7 +118,10 @@ export const useAuth = ({
 
   const logout = async (redirect = null) => {
     if (!error) {
-      await axios.post('/logout').then(() => mutate());
+      await axios.post('/logout').then(() => {
+        mutate();
+        router.push(redirect ?? '/login');
+      });
     }
 
     return (window.location.pathname = `/login`);

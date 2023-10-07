@@ -21,11 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }) => {
   const [page, setPage] = useState(1);
-  const {
-    data: homeData,
-    isLoading,
-    error,
-  }: any = useQuery(['homeData'], getHomeData);
+  const { isLoading, error }: any = useQuery(['homeData'], getHomeData);
   const {
     data: articlesData,
     isLoading: articlesLoading,
