@@ -1,4 +1,4 @@
-import httpClient, { httpClientAuth } from '@/lib/http';
+import httpClient from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
 export const usePeople = ({ page = '' }) => {

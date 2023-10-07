@@ -43,9 +43,8 @@ const Profile = () => {
 
   const {
     handleSubmit,
-    control,
     setValue,
-    watch,
+    register,
     formState: { errors },
   } = methods;
 
@@ -67,8 +66,8 @@ const Profile = () => {
     [result, setValue]
   );
 
-  const avatar = watch('avatar');
-  const cover = watch('cover');
+  // const avatar = watch('avatar');
+  // const cover = watch('cover');
 
   const uploadAvatar = async (e) => {
     setUploadingImages(true);
@@ -204,6 +203,7 @@ const Profile = () => {
                                 <Input
                                   prefix={<UserIcon className="w-6 h-6" />}
                                   label="Full Name"
+                                  {...register('name')}
                                   name="name"
                                   defaultValue={result?.name}
                                   placeholder="coanime..."
@@ -216,6 +216,7 @@ const Profile = () => {
                                 <Input
                                   prefix={<EnvelopeIcon className="w-6 h-6" />}
                                   label="Email"
+                                  {...register('email')}
                                   name="email"
                                   defaultValue={result?.email}
                                   placeholder="coanime..."
@@ -288,6 +289,7 @@ const Profile = () => {
                                     <UserCircleIcon className="w-6 h-6" />
                                   }
                                   label="Username"
+                                  {...register('username')}
                                   name="username"
                                   defaultValue={result?.username}
                                   placeholder="coanime..."
@@ -299,6 +301,7 @@ const Profile = () => {
                                 <Input
                                   prefix={<LinkIcon className="w-6 h-6" />}
                                   label="Website"
+                                  {...register('website')}
                                   name="website"
                                   defaultValue={result?.website}
                                   placeholder="http://..."
@@ -312,6 +315,7 @@ const Profile = () => {
                                     <AiOutlineTwitter className="w-6 h-6" />
                                   }
                                   label="Twitter"
+                                  {...register('twitter')}
                                   name="twitter"
                                   defaultValue={result?.twitter}
                                   placeholder="http://..."
@@ -325,6 +329,7 @@ const Profile = () => {
                                     <AiOutlineInstagram className="w-6 h-6" />
                                   }
                                   label="Instagram"
+                                  {...register('instagram')}
                                   name="instagram"
                                   defaultValue={result?.instagram}
                                   placeholder="http://..."
@@ -338,6 +343,7 @@ const Profile = () => {
                                     <AiOutlineFacebook className="w-6 h-6" />
                                   }
                                   label="Facebook"
+                                  {...register('facebook')}
                                   name="facebook"
                                   defaultValue={result?.facebook}
                                   placeholder="http://..."
@@ -351,6 +357,7 @@ const Profile = () => {
                                     <AiOutlineYoutube className="w-6 h-6" />
                                   }
                                   label="Youtube"
+                                  {...register('youtube')}
                                   name="youtube"
                                   defaultValue={result?.youtube}
                                   placeholder="http://..."
@@ -362,6 +369,7 @@ const Profile = () => {
                                 <Input
                                   prefix={<FaTiktok className="w-6 h-6" />}
                                   label="TikTok"
+                                  {...register('tiktok')}
                                   name="tiktok"
                                   defaultValue={result?.tiktok}
                                   placeholder="http://..."
@@ -371,6 +379,7 @@ const Profile = () => {
                                 <Input
                                   prefix={<FaPinterest className="w-6 h-6" />}
                                   label="Pinterest"
+                                  {...register('pinterest')}
                                   name="pinterest"
                                   defaultValue={result?.pinterest}
                                   placeholder="http://..."

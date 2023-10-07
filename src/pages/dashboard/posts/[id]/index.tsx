@@ -189,6 +189,7 @@ const UpdatePost = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Titulo"
+                    {...register('title')}
                     id="title"
                     name="title"
                     errors={errors?.['title']?.message}
@@ -203,6 +204,7 @@ const UpdatePost = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Excerpt"
+                    {...register('excerpt')}
                     id="excerpt"
                     name="excerpt"
                     errors={errors?.['excerpt']?.message}

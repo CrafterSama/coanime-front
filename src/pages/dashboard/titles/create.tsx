@@ -162,6 +162,7 @@ const CreateTitle = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Nombre del Titulo"
+                    {...register('name')}
                     id="name"
                     name="name"
                     errors={errors?.['name']?.message}
@@ -173,6 +174,7 @@ const CreateTitle = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Otros Titulos"
+                    {...register('otherTitles')}
                     hint="Separar con ','"
                     id="otherTitles"
                     name="otherTitles"
@@ -300,6 +302,7 @@ const CreateTitle = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Episodios"
+                    {...register('episodies')}
                     id="episodies"
                     name="episodies"
                     errors={errors?.['episodies']?.message}
@@ -311,6 +314,7 @@ const CreateTitle = () => {
                 <div className="mb-4 flex flex-col gap-2">
                   <Input
                     label="Url del Trailer"
+                    {...register('trailerUrl')}
                     hint="work better with a youtube url"
                     id="trailerUrl"
                     name="trailerUrl"

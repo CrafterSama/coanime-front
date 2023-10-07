@@ -10,7 +10,7 @@ import { PhotoIcon, TagIcon } from '@heroicons/react/24/outline';
 
 const Dashboard = () => {
   const { user } = useAuth({ middleware: 'auth' });
-  const { data, isLoading } = useDashboard();
+  const { data } = useDashboard();
 
   return (
     <>

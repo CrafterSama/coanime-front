@@ -116,7 +116,7 @@ const Profile = ({ slug }) => {
                     <Image
                       className={`${
                         data?.result?.profileCoverPath ? '' : 'blur'
-                      } w-full h-full`}
+                      } w-full h-full object-cover`}
                       src={
                         data?.result?.profileCoverPath
                           ? data?.result?.profileCoverPath
@@ -144,7 +144,7 @@ const Profile = ({ slug }) => {
                   <div className="w-full flex flex-col gap-4">
                     <div className="flex flex-col lg:flex-row gap-10">
                       <figure className="title-content-image mx-auto lg:mx-0 relative w-64 h-64 rounded-full overflow-hidden p-2 bg-white -mt-20 box-border">
-                        <img
+                        <Image
                           src={
                             !data?.result?.profilePhotoPath
                               ? DEFAULT_IMAGE
@@ -153,7 +153,9 @@ const Profile = ({ slug }) => {
                               : data?.result?.profilePhotoPath
                           }
                           alt={data?.result?.name}
-                          className="rounded-full m-auto w-60 h-60"
+                          className="rounded-full w-full h-full object-cover"
+                          fill
+                          unoptimized
                         />
                         {user && user.id === data?.result?.id && (
                           <div className="absolute bottom-0 left-[40%] px-2 py-2 flex flex-col gap-4">

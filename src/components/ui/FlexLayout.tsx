@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 type LayoutProps = {
   direction?: 'col' | 'row';
   justify?: 'center' | 'start' | 'end' | 'between' | 'around';

@@ -9,9 +9,9 @@ import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
+import { Show } from '@/components/ui/Show';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
-import { Show } from '@/components/ui/Show';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 type NavigationProps = {
