@@ -1,31 +1,31 @@
-import { Method } from 'axios';
+// import { Method } from 'axios';
 //import Credentials from 'next-auth/providers/credentials';
 
-import axios from '../../../lib/axios';
+// import axios from '../../../lib/axios';
 
 //This is for getting the laravel-session cookie and the CSRF cookie
 //from any response of Sanctum or API Breeze
 //In my case, the cookies returned are always two and I only need this,
 //so you can edit for get independent of position and cookies.
-const getCookiesFromResponse = (res) => {
+/*const getCookiesFromResponse = (res) => {
   let cookies = res.headers['set-cookie'][0].split(';')[0] + '; ';
   cookies += res.headers['set-cookie'][1].split(';')[0] + '; ';
   return cookies;
-};
+};*/
 
 //This is to get the X-XSRF-TOKEN from any response of Sanctum or API Breeze,
 //In my case, the token is always returned first,
 //so you can edit for get independent of position
-const getXXsrfToken = (res) => {
+/*const getXXsrfToken = (res) => {
   return decodeURIComponent(
     res.headers['set-cookie'][0].split(';')[0]?.replace('XSRF-TOKEN=', '')
   );
-};
+};*/
 
 //This method works to make any request to your Laravel API
 //res_cookies are the cookies of the response of last request you do
 //obviously res_cookies is null in your first request that is "/sanctum/csrf-cookie"
-const makeRequest = async (
+/*const makeRequest = async (
   method: Method = 'get',
   url,
   dataForm = null,
@@ -43,10 +43,10 @@ const makeRequest = async (
       'X-XSRF-TOKEN': res_cookies ? getXXsrfToken(res_cookies) : null,
     },
     withCredentials: true,
-    /*credentials: true,*/
+    credentials: true,
   });
   return res;
-};
+};*/
 
 /*const nextAuthOptions = (req, res) => {
   return {

@@ -26,7 +26,7 @@ const Titles = ({ titlesData }) => {
   const [data, setData] = useState<TitleData>(titlesData);
   // const [activeTab, setActiveTab] = useState('types');
 
-  const { result: series = [], types, genres } = data;
+  const { result: series = [] /*, types, genres*/ } = data;
 
   useEffect(() => {
     if (router?.query?.page) {

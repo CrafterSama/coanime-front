@@ -44,7 +44,6 @@ const Profile = () => {
   const {
     handleSubmit,
     setValue,
-    watch,
     register,
     formState: { errors },
   } = methods;
