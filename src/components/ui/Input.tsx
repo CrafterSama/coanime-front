@@ -119,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <Label htmlFor={props.name}>{label}</Label>
           </Show>
           <Show condition={Boolean(hint)}>
-            <div className="flex items-center">{hint}</div>
+            <div className="flex items-center text-[.7rem]">{hint}</div>
           </Show>
         </div>
         <div
