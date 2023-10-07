@@ -1,7 +1,5 @@
 import { Method } from 'axios';
-import { METHODS } from 'http';
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
+//import Credentials from 'next-auth/providers/credentials';
 
 import axios from '../../../lib/axios';
 
@@ -50,7 +48,7 @@ const makeRequest = async (
   return res;
 };
 
-const nextAuthOptions = (req, res) => {
+/*const nextAuthOptions = (req, res) => {
   return {
     providers: [
       Credentials({
@@ -79,4 +77,4 @@ const nextAuthOptions = (req, res) => {
       }),
     ],
   };
-};
+};*/

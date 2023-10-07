@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import cn from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import SerieCard from '@/components/modules/titles/components/SerieCard';
 import SeriesList from '@/components/modules/titles/components/SeriesList';
 import CloudLinks from '@/components/ui/CloudLinks';
 import FlexLayout from '@/components/ui/FlexLayout';

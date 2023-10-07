@@ -10,7 +10,7 @@ import { useCompanies } from '@/hooks/companies';
 import { RowRender } from '@/components/ui/RowRender';
 import { Show } from '@/components/ui/Show';
 
-const Test = (props) => {
+/*const Test = (props) => {
   console.log(props);
   const { name } = props;
   return (
@@ -18,12 +18,13 @@ const Test = (props) => {
       <li>{name}</li>
     </ul>
   );
-};
+};*/
 const Companies = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState('');
   const { data = {}, isLoading } = useCompanies({ page });
   const { result, title, description } = data;
-  const results = { ...result, columns: headers };
+  //const results = { ...result, columns: headers };
 
   return (
     <AppLayout

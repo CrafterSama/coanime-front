@@ -4,8 +4,8 @@ const ServerError = () => {
   return (
     <Error
       code="500"
-      error="Server Error"
-      text="It's not you, It's me!, Por Alguna razón no pudimos cargar el contenido que estas buscando, por favor intenta de nuevo."
+      error="Uuuppps! Algo salio mal, nuestro server esta dormido."
+      text="Por Alguna razón no pudimos cargar el contenido que estas buscando, yaque el server no la pudo buscar por su actual condición, por favor intenta de nuevo en unos minutos."
     />
   );
 };

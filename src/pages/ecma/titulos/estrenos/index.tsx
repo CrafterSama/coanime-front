@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import cn from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import SerieCard from '@/components/modules/titles/components/SerieCard';
 import SeriesList from '@/components/modules/titles/components/SeriesList';
-import CloudLinks from '@/components/ui/CloudLinks';
-import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
-import { getTitles, getUpcomingTitles } from '@/services/titles';
+import { getUpcomingTitles } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
 
 type TitleData = {
@@ -29,7 +24,7 @@ const Titles = ({ titlesData }) => {
   const router = useRouter();
   const [page, setPage] = useState<any>(1);
   const [data, setData] = useState<TitleData>(titlesData);
-  const [activeTab, setActiveTab] = useState('types');
+  // const [activeTab, setActiveTab] = useState('types');
 
   const { result: series = [], types, genres } = data;
 

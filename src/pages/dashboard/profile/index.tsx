@@ -43,7 +43,6 @@ const Profile = () => {
 
   const {
     handleSubmit,
-    control,
     setValue,
     watch,
     register,
@@ -68,8 +67,8 @@ const Profile = () => {
     [result, setValue]
   );
 
-  const avatar = watch('avatar');
-  const cover = watch('cover');
+  // const avatar = watch('avatar');
+  // const cover = watch('cover');
 
   const uploadAvatar = async (e) => {
     setUploadingImages(true);

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import cn from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,6 +14,7 @@ import NavLink from '@/components/ui/NavLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
+import { Show } from '@/components/ui/Show';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import {
@@ -25,8 +27,6 @@ import {
   QueueListIcon,
   HomeIcon,
 } from '@heroicons/react/24/outline';
-import { Show } from '@/components/ui/Show';
-import cn from 'classnames';
 
 const Navigation = ({ user }) => {
   const router = useRouter();

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
 import { PencilIcon } from '@/components/icons';
