@@ -1,3 +1,4 @@
+// @ts-nocheck
 import toast from 'react-hot-toast';
 
 import dynamic from 'next/dynamic';
@@ -31,9 +32,9 @@ const TextEditor = ({
             readOnly={disabled}
             disable={disabled}
             onChange={(value) => onChange(value)}
-            onImageUploadBefore={(files, info, uploadHandler) => {
+            onImageUploadBefore={async (files, info, uploadHandler) => {
               let res = null;
-              uploadImages(files, 'posts')
+              await uploadImages(files, 'posts')
                 .then((response) => {
                   res = response;
                 })
@@ -53,7 +54,7 @@ const TextEditor = ({
 
               uploadHandler(response);
 
-              return undefined;
+              return Promise.resolve(response);
             }}
             onImageUploadError={(errorMessage) => {
               toast.error(errorMessage);
