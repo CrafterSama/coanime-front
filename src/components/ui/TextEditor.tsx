@@ -36,25 +36,22 @@ const TextEditor = ({
               let res = null;
               await uploadImages(files, 'posts')
                 .then((response) => {
-                  res = response;
+                  res = {
+                    result: [
+                      {
+                        url: response?.data?.url,
+                        name: files[0].name,
+                        size: files[0].size,
+                      },
+                    ],
+                  };
+                  uploadHandler(res);
                 })
                 .catch((error) => {
                   toast.error(error.message);
                 });
 
-              const response = {
-                result: [
-                  {
-                    url: res?.data?.url,
-                    name: files[0].name,
-                    size: files[0].size,
-                  },
-                ],
-              };
-
-              uploadHandler(response);
-
-              return Promise.resolve(response);
+              return undefined;
             }}
             onImageUploadError={(errorMessage) => {
               toast.error(errorMessage);
