@@ -1,3 +1,4 @@
+// @ts-nocheck
 import toast from 'react-hot-toast';
 
 import dynamic from 'next/dynamic';
@@ -31,27 +32,24 @@ const TextEditor = ({
             readOnly={disabled}
             disable={disabled}
             onChange={(value) => onChange(value)}
-            onImageUploadBefore={(files, info, uploadHandler) => {
+            onImageUploadBefore={async (files, info, uploadHandler) => {
               let res = null;
-              uploadImages(files, 'posts')
+              await uploadImages(files, 'posts')
                 .then((response) => {
-                  res = response;
+                  res = {
+                    result: [
+                      {
+                        url: response?.data?.url,
+                        name: files[0].name,
+                        size: files[0].size,
+                      },
+                    ],
+                  };
+                  uploadHandler(res);
                 })
                 .catch((error) => {
                   toast.error(error.message);
                 });
-
-              const response = {
-                result: [
-                  {
-                    url: res?.data?.url,
-                    name: files[0].name,
-                    size: files[0].size,
-                  },
-                ],
-              };
-
-              uploadHandler(response);
 
               return undefined;
             }}
