@@ -14,7 +14,6 @@ import { strToSlug } from '@/utils/string';
 import { Show } from '@/components/ui/Show';
 
 const Magazine = ({ magazineData }) => {
-  console.log('magazineData', magazineData);
   return (
     <>
       {magazineData && (
@@ -161,14 +160,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  console.log('context', context);
-
   const params = context.params;
   const { slug } = params;
   const response = await getMagazine({
     slug,
   });
-  console.log('response', response);
 
   const magazineData = response.data;
 
