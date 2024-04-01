@@ -13,9 +13,12 @@ export const usePosts = ({ page = 1, name = '' }) => {
     params['name'] = name;
   }
 
-  return useQuery(['posts', page, name], async () => {
-    const response = await httpClient.get(`posts-dashboard`, { params });
-    return response.data;
+  return useQuery({
+    queryKey: ['posts', page, name],
+    queryFn: async () => {
+      const response = await httpClient.get(`posts`, { params });
+      return response.data;
+    },
   });
 };
 
@@ -27,27 +30,33 @@ export const useSearchPosts = ({ name = '' }) => {
   }
 
   const isLongEnough = name.length >= 2;
-  return useQuery(
-    ['posts-search', name],
-    async () => {
+  return useQuery({
+    queryKey: ['posts-search', name],
+    queryFn: async () => {
       const response = await httpClientExternal.get(`posts-search`, { params });
       return response.data;
     },
-    { enabled: isLongEnough }
-  );
+    enabled: isLongEnough,
+  });
 };
 
 export const usePost = (slug: string) => {
-  return useQuery(['post', slug], async () => {
-    const response = await httpClient.get(`posts/${slug}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['post', slug],
+    queryFn: async () => {
+      const response = await httpClient.get(`posts/${slug}`);
+      return response.data;
+    },
   });
 };
 
 export const useGetArticle = (slug: string) => {
-  return useQuery(['useArticle', slug], async () => {
-    const response = await httpClientExternal.get(`articles/${slug}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['useArticle', slug],
+    queryFn: async () => {
+      const response = await httpClientExternal.get(`articles/${slug}`);
+      return response.data;
+    },
   });
 };
 

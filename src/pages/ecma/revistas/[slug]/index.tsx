@@ -14,6 +14,7 @@ import { strToSlug } from '@/utils/string';
 import { Show } from '@/components/ui/Show';
 
 const Magazine = ({ magazineData }) => {
+  console.log('magazineData', magazineData);
   return (
     <>
       {magazineData && (
@@ -69,7 +70,7 @@ const Magazine = ({ magazineData }) => {
                     </figure>
                     <div className="title-info-box">
                       <div className="title-name-box">
-                        <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-center">
+                        <h1 className="title-name md:text-lg lg:text-2xl xl:text-4xl text-start">
                           {magazineData?.result?.name}
                         </h1>
                       </div>
@@ -98,7 +99,9 @@ const Magazine = ({ magazineData }) => {
                           title="Fecha de Fundación"
                           value={
                             <span className="post-date">
-                              {magazineData?.result?.foundationDate
+                              {magazineData?.result?.foundationDate &&
+                              magazineData?.result?.foundationDate !==
+                                '0000-00-00 00:00:00'
                                 ? format(
                                     new Date(
                                       magazineData?.result?.foundationDate
@@ -158,11 +161,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
+  console.log('context', context);
+
   const params = context.params;
   const { slug } = params;
   const response = await getMagazine({
     slug,
   });
+  console.log('response', response);
 
   const magazineData = response.data;
 

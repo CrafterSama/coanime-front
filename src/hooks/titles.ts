@@ -12,30 +12,42 @@ export const useTitles = ({ page, name }) => {
     params['name'] = name;
   }
 
-  return useQuery(['titles', page, name], async () => {
-    const response = await httpClient.get(`titles`, { params });
-    return response.data;
+  return useQuery({
+    queryKey: ['titles', page, name],
+    queryFn: async () => {
+      const response = await httpClient.get(`titles`, { params });
+      return response.data;
+    },
   });
 };
 
 export const useTitle = ({ id }) => {
-  return useQuery(['title', id], async () => {
-    const response = await httpClient.get(`titles/${id}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['title', id],
+    queryFn: async () => {
+      const response = await httpClient.get(`titles/${id}`);
+      return response.data;
+    },
   });
 };
 
 export const useCreateTitle = () => {
-  return useQuery(['createTitle'], async () => {
-    const response = await httpClient.get(`titles/create`);
-    return response.data;
+  return useQuery({
+    queryKey: ['createTitle'],
+    queryFn: async () => {
+      const response = await httpClient.get(`titles/create`);
+      return response.data;
+    },
   });
 };
 
 export const useGetTitle = (type: string, title: string) => {
-  return useQuery(['title', type, title], async () => {
-    const response = await httpClientExternal.get(`titles/${type}/${title}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['title', type, title],
+    queryFn: async () => {
+      const response = await httpClientExternal.get(`titles/${type}/${title}`);
+      return response.data;
+    },
   });
 };
 
@@ -46,22 +58,25 @@ export const useGetUserTitleList = ({ page = 1 }) => {
     params['page'] = page;
   }
 
-  return useQuery(['user-list', page], async () => {
-    const response = await httpClientExternal.get(`/user/title-list`, {
-      params,
-    });
-    return response.data;
+  return useQuery({
+    queryKey: ['user-list', page],
+    queryFn: async () => {
+      const response = await httpClientExternal.get(`/user/title-list`, {
+        params,
+      });
+      return response.data;
+    },
   });
 };
 
 export const useSearchTitle = ({ name = '' }) => {
   const isLongEnough = name.length >= 2;
-  return useQuery(
-    ['externalSearchTitle', name],
-    async () => {
+  return useQuery({
+    queryKey: ['externalSearchTitle', name],
+    queryFn: async () => {
       const response = await httpClientExternal.get(`search/titles/${name}`);
       return response.data;
     },
-    { enabled: Boolean(isLongEnough && name) }
-  );
+    enabled: Boolean(isLongEnough && name),
+  });
 };
