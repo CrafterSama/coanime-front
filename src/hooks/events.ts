@@ -8,15 +8,21 @@ export const useEvents = ({ page = '' }) => {
     params['page'] = page;
   }
 
-  return useQuery(['events', page], async () => {
-    const response = await httpClient.get(`events`, params);
-    return response.data;
+  return useQuery({
+    queryKey: ['events', page],
+    queryFn: async () => {
+      const response = await httpClient.get(`events`, params);
+      return response.data;
+    },
   });
 };
 
 export const useEvent = (slug: string) => {
-  return useQuery(['event', slug], async () => {
-    const response = await httpClient.get(`events/${slug}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['event', slug],
+    queryFn: async () => {
+      const response = await httpClient.get(`events/${slug}`);
+      return response.data;
+    },
   });
 };

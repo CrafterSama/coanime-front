@@ -8,15 +8,21 @@ export const useEntities = ({ page = '' }) => {
     params['page'] = page;
   }
 
-  return useQuery(['entities', page], async () => {
-    const response = await httpClient.get(`companies`, params);
-    return response.data;
+  return useQuery({
+    queryKey: ['entities', page],
+    queryFn: async () => {
+      const response = await httpClient.get(`companies`, params);
+      return response.data;
+    },
   });
 };
 
 export const useEntity = ({ slug }) => {
-  return useQuery(['entity', slug], async () => {
-    const response = await httpClient.get(`companies/${slug}`);
-    return response.data;
+  return useQuery({
+    queryKey: ['entity', slug],
+    queryFn: async () => {
+      const response = await httpClient.get(`companies/${slug}`);
+      return response.data;
+    },
   });
 };
