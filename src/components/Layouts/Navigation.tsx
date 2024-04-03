@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { MenuIcon, LogoutIcon, UserCircleIcon } from '@/components/icons';
 import Dropdown from '@/components/ui/Dropdown';
-import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
+import { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
