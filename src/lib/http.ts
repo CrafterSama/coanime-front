@@ -1,3 +1,4 @@
+import { useAuth } from '@/hooks/auth';
 import axios, { AxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
@@ -78,6 +79,7 @@ export const httpClientAuth = getInstance({
 });
 
 export const setFormDataHeader = () => {
+  const { logout } = useAuth();
   httpClient.interceptors.request.use(
     async (config: any) => {
       config.headers = {
@@ -89,6 +91,17 @@ export const setFormDataHeader = () => {
     },
     (error: any) => {
       Promise.reject(error);
+    }
+  );
+  httpClient.interceptors.response.use(
+    (response) => {
+      if (response.status === 401) {
+        logout();
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
   );
 };

@@ -70,12 +70,12 @@ const Navigation: FC<NavigationProps> = ({
                   </button>
                 }>
                 {/* Authentication */}
-                <DropdownLink
+                {/*<DropdownLink
                   href="/dashboard/profile"
                   scroll={true}
                   icon={<UserCircleIcon className="h-6 w-6 text-gray-400" />}>
                   Profile
-                </DropdownLink>
+                </DropdownLink>*/}
                 <DropdownButton
                   icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
                   onClick={logout}>
