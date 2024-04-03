@@ -78,7 +78,7 @@ export const httpClientAuth = getInstance({
   baseURL: getAuthApiUrl(),
 });
 
-export const setFormDataHeader = () => {
+export const SetFormDataHeader = () => {
   const { logout } = useAuth();
   httpClient.interceptors.request.use(
     async (config: any) => {
