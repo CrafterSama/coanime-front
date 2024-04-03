@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { MenuIcon, LogoutIcon, UserCircleIcon } from '@/components/icons';
+import { MenuIcon, LogoutIcon } from '@/components/icons';
 import Dropdown from '@/components/ui/Dropdown';
 import { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
