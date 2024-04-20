@@ -3,9 +3,9 @@ import { FC, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { MenuIcon, LogoutIcon, UserCircleIcon } from '@/components/icons';
+import { MenuIcon, LogoutIcon } from '@/components/icons';
 import Dropdown from '@/components/ui/Dropdown';
-import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
+import { DropdownButton } from '@/components/ui/DropdownLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
@@ -70,12 +70,12 @@ const Navigation: FC<NavigationProps> = ({
                   </button>
                 }>
                 {/* Authentication */}
-                <DropdownLink
+                {/*<DropdownLink
                   href="/dashboard/profile"
                   scroll={true}
                   icon={<UserCircleIcon className="h-6 w-6 text-gray-400" />}>
                   Profile
-                </DropdownLink>
+                </DropdownLink>*/}
                 <DropdownButton
                   icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
                   onClick={logout}>
