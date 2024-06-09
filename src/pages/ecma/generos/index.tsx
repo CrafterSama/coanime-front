@@ -12,6 +12,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitles } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
+import LoadingSeries from '@/components/modules/titles/components/LoadingSeries';
 
 type TitleData = {
   title: string;
@@ -29,6 +30,7 @@ const tabs = [
 
 const Titles = ({ titlesData }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
   const [activeTab, setActiveTab] = useState('genres');
@@ -36,6 +38,7 @@ const Titles = ({ titlesData }) => {
   const { result: series = [], types, genres } = data;
 
   const onPageChange = async () => {
+    setLoading(true);
     await router.push({
       pathname: '/ecma/generos/',
       query: {
@@ -44,6 +47,7 @@ const Titles = ({ titlesData }) => {
     });
     const response = await getTitles({ page });
     setData(response.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -93,9 +97,15 @@ const Titles = ({ titlesData }) => {
               <CloudLinks allLink="/ecma/generos" links={genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">
-              {series?.data?.map((serie) => (
-                <SerieCard key={serie?.id} serie={serie} />
-              ))}
+              {loading ? (
+                <LoadingSeries />
+              ) : (
+                <>
+                  {series?.data?.map((serie) => (
+                    <SerieCard key={serie?.id} serie={serie} />
+                  ))}
+                </>
+              )}
             </div>
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>

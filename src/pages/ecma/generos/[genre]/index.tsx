@@ -12,6 +12,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitlesByGenre } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
+import LoadingSeries from '@/components/modules/titles/components/LoadingSeries';
 
 type TitleData = {
   title: string;
@@ -30,6 +31,7 @@ const tabs = [
 const Titles = ({ titlesData }) => {
   const router = useRouter();
   const { genre } = router.query;
+  const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState(1);
   const [data, setData] = useState<TitleData>(titlesData);
   const [kind, setKind] = useState<string>(genre as string);
@@ -41,6 +43,7 @@ const Titles = ({ titlesData }) => {
   }, []);
 
   const onPageChange = async () => {
+    setLoading(true);
     if (genre) {
       if (kind !== genre) {
         setKind(genre as string);
@@ -54,8 +57,10 @@ const Titles = ({ titlesData }) => {
       });
       const response = await getTitlesByGenre({ genre, page });
       setData(response.data);
+      setLoading(false);
       return;
     }
+    setLoading(false);
     return;
   };
 
@@ -106,9 +111,15 @@ const Titles = ({ titlesData }) => {
               <CloudLinks allLink="/ecma/generos" links={data?.genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
-              {data?.result?.data?.map((serie) => (
-                <SerieCard key={serie?.id} serie={serie} />
-              ))}
+              {loading ? (
+                <LoadingSeries />
+              ) : (
+                <>
+                  {data?.result?.data?.map((serie) => (
+                    <SerieCard key={serie?.id} serie={serie} />
+                  ))}
+                </>
+              )}
               <Show condition={data?.result?.data?.length < 1}>
                 <div className="text-center text-gray-600">
                   No hay Series para mostrar en este apartado.

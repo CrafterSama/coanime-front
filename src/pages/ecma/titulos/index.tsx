@@ -25,19 +25,21 @@ type TitleData = {
 
 const Titles = ({ titlesData }) => {
   const router = useRouter();
-  const [page, setPage] = useState<any>(1);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<TitleData>(titlesData);
-  const [activeTab, setActiveTab] = useState('types');
+  const [activeTab, setActiveTab] = useState<any>('types');
 
   const { result: series = [], types, genres } = data;
 
   useEffect(() => {
-    if (router?.query?.page) {
-      setPage(router?.query?.page);
+    if (Boolean(router?.query?.page)) {
+      setPage(Number(router?.query?.page));
     }
   }, [router?.query?.page]);
 
   const onPageChange = async () => {
+    setLoading(true);
     await router.push({
       pathname: '/ecma/titulos/',
       query: {
@@ -46,6 +48,7 @@ const Titles = ({ titlesData }) => {
     });
     const response = await getTitles({ page });
     setData(response.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -98,7 +101,7 @@ const Titles = ({ titlesData }) => {
                 </TabsContent>
               ))}
             </FlexLayout>
-            <SeriesList series={series?.data} />
+            <SeriesList series={series?.data} loading={loading} />
             <Paginator page={page} setPage={setPage} data={series} />
           </Section>
         </Show>

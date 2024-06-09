@@ -11,7 +11,9 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getTitlesByType } from '@/services/titles';
-import { Show } from '@/components/ui/Show';
+import { Show, ShowAdvanced } from '@/components/ui/Show';
+import { set } from 'date-fns';
+import LoadingSeries from '@/components/modules/titles/components/LoadingSeries';
 
 type TitleData = {
   title: string;
@@ -30,7 +32,8 @@ const tabs = [
 const Titles = ({ titlesData }) => {
   const router = useRouter();
   const { type } = router.query;
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(1);
   const [data, setData] = useState<TitleData>(titlesData);
   const [kind, setKind] = useState<string>(type as string);
   const [activeTab, setActiveTab] = useState('types');
@@ -40,6 +43,7 @@ const Titles = ({ titlesData }) => {
   }, []);
 
   const onPageChange = async () => {
+    setLoading(true);
     if (type) {
       if (kind !== type) {
         setKind(type as string);
@@ -53,8 +57,10 @@ const Titles = ({ titlesData }) => {
       });
       const response = await getTitlesByType({ type, page });
       setData(response.data);
+      setLoading(false);
       return;
     }
+    setLoading(false);
     return;
   };
 
@@ -104,11 +110,17 @@ const Titles = ({ titlesData }) => {
               <CloudLinks allLink="/ecma/generos" links={data?.genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
-              <Show condition={data?.result?.data?.length >= 1}>
-                {data?.result?.data?.map((serie) => (
-                  <SerieCard key={serie?.id} serie={serie} />
-                ))}
-              </Show>
+              <ShowAdvanced
+                condition={loading}
+                conditionTrue={<LoadingSeries />}
+                conditionFalse={
+                  <Show condition={data?.result?.data?.length >= 1}>
+                    {data?.result?.data?.map((serie) => (
+                      <SerieCard key={serie?.id} serie={serie} />
+                    ))}
+                  </Show>
+                }
+              />
               <Show condition={data?.result?.data?.length < 1}>
                 <div className="text-center text-gray-600">
                   No hay Series para mostrar en este apartado.
