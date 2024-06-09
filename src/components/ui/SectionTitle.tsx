@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { PlusIcon } from '@heroicons/react/24/outline';
+import FancyText from '@/components/ui/FancyText';
 
 const SectionTitle = (
   {
@@ -18,14 +19,7 @@ const SectionTitle = (
     <div className={`mini-header-separator relative ${justify}`}>
       <span className={`mr-2 flex text-orange-400 ${subTitleBackground}`}>
         <span className="mr-4">{subtitle}</span>
-        {fancyText ? (
-          <>
-            {' '}
-            <span className="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-orange-400 relative flex justify-center mr-4">
-              <span className="relative px-2 text-white">{fancyText}</span>
-            </span>
-          </>
-        ) : null}
+        {fancyText ? <FancyText fancyText={fancyText} /> : null}
       </span>
       {actionLink && (
         <span

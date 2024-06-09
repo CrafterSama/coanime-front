@@ -76,9 +76,9 @@ const Categories = ({ category, data, articles, errors }) => {
         <meta name="keywords" content={keywords} />
       </Head>
 
-      <Section>
+      {/*<Section>
         <TopSlider relevants={relevants} />
-      </Section>
+      </Section>*/}
       <Section withContainer>
         <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
         <RecentPosts posts={data?.result} />

@@ -399,6 +399,7 @@ export async function getServerSideProps({ params }) {
     res = await getTitle({ type, title });
     titleData = res.data;
   } catch (error) {
+    console.log('error', error);
     if (error?.response?.data?.message?.text) {
       errors = error.response.data.message.text;
     } else if (error.message) {

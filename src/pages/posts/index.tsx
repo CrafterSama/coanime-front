@@ -20,12 +20,14 @@ type ArticlesProps = {
 
 const Posts = ({ articlesData }) => {
   const router = useRouter();
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(1);
   const [data, setData] = useState<ArticlesProps>(articlesData);
 
   const { data: articles = [] } = data;
 
   const onPageChange = async () => {
+    setLoading(true);
     await router.push({
       pathname: '/posts',
       query: {
@@ -34,6 +36,7 @@ const Posts = ({ articlesData }) => {
     });
     const response = await getArticlesData({ page });
     setData(response.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Posts = ({ articlesData }) => {
       <div className="py-12">
         <Section withContainer>
           <SectionTitle title="Hot News" subtitle={`Pagina ${page}`} />
-          <OtherNews articles={articles} />
+          <OtherNews articles={articles} loading={loading} />
           <div className="flex justify-center">
             <Button onClick={() => setPage(page + 1)}>
               {!articles ? (

@@ -61,6 +61,7 @@ const jikanManga = [
 
 export const getTitle = async ({ type, title }) => {
   const response = await httpClientExternal.get(`titles/${type}/${title}`);
+  console.log('response', response);
   return response;
 };
 
