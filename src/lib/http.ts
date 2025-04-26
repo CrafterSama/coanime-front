@@ -1,7 +1,8 @@
-import { useAuth } from '@/hooks/auth';
 import axios, { AxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
+
+import { useAuth } from '@/hooks/auth';
 
 export const HTTP_METHODS = {
   post: 'POST',

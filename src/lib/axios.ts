@@ -12,4 +12,18 @@ const axios = Axios.create({
 
 axios.defaults.withCredentials = true;
 
+// Interceptor para agregar el token CSRF a cada solicitud
+axios.interceptors.request.use((config) => {
+  const token = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('XSRF-TOKEN='))
+    ?.split('=')[1];
+
+  if (token) {
+    config.headers['XSRF-TOKEN'] = token;
+  }
+
+  return config;
+});
+
 export default axios;
