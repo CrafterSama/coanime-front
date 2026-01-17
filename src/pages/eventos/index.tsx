@@ -71,7 +71,9 @@ const Events = ({ eventsData }) => {
 
 export const getStaticProps = async ({ params }) => {
   try {
-    const response = await withRetry(() => getEvents({ page: Number(params?.page) ?? 1 }));
+    const response = await withRetry(() =>
+      getEvents({ page: Number(params?.page) ?? 1 })
+    );
 
     if (response?.data?.code === 404) {
       return {

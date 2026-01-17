@@ -48,7 +48,11 @@ export const withRetry = async <T>(
     onError?: (error: any, attempt: number) => void;
   } = {}
 ): Promise<T> => {
-  const { maxRetries = MAX_RETRIES, retryDelay = RETRY_DELAY, onError } = options;
+  const {
+    maxRetries = MAX_RETRIES,
+    retryDelay = RETRY_DELAY,
+    onError,
+  } = options;
 
   let lastError: any;
 
@@ -57,7 +61,10 @@ export const withRetry = async <T>(
       const result = await Promise.race([
         fn(),
         new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Request timeout')), REQUEST_TIMEOUT)
+          setTimeout(
+            () => reject(new Error('Request timeout')),
+            REQUEST_TIMEOUT
+          )
         ),
       ]);
       return result;

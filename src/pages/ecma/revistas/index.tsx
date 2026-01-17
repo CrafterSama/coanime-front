@@ -71,7 +71,9 @@ const Magazines = ({ magazinesData }) => {
 
 export const getStaticProps = async ({ params }) => {
   try {
-    const response = await withRetry(() => getMagazines({ page: Number(params?.page) ?? 1 }));
+    const response = await withRetry(() =>
+      getMagazines({ page: Number(params?.page) ?? 1 })
+    );
 
     if (response?.data?.code === 404) {
       return {
