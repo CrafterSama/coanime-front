@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEntities } from '@/services/entities';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type EntitiesData = {
   title: string;
@@ -69,22 +70,30 @@ const Entities = ({ entitiesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const response = await getEntities({ page: Number(params?.page) ?? 1 });
+  try {
+    const response = await withRetry(() => getEntities({ page: Number(params?.page) ?? 1 }));
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const entitiesData = response.data;
+
+    return {
+      props: {
+        entitiesData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener entidades:', error);
     return {
       notFound: true,
     };
   }
-
-  const entitiesData = response.data;
-
-  return {
-    props: {
-      entitiesData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Entities;

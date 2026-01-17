@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getUpcomingTitles } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type TitleData = {
   title: string;
@@ -75,22 +76,32 @@ const Titles = ({ titlesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const response = await getUpcomingTitles({ page: Number(params?.page) ?? 1 });
+  try {
+    const response = await withRetry(() =>
+      getUpcomingTitles({ page: Number(params?.page) ?? 1 })
+    );
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const titlesData = response.data;
+
+    return {
+      props: {
+        titlesData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener títulos próximos:', error);
     return {
       notFound: true,
     };
   }
-
-  const titlesData = response.data;
-
-  return {
-    props: {
-      titlesData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Titles;

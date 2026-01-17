@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEvents } from '@/services/events';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type eventsData = {
   title: string;
@@ -69,22 +70,30 @@ const Events = ({ eventsData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const response = await getEvents({ page: Number(params?.page) ?? 1 });
+  try {
+    const response = await withRetry(() => getEvents({ page: Number(params?.page) ?? 1 }));
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const eventsData = response.data;
+
+    return {
+      props: {
+        eventsData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener eventos:', error);
     return {
       notFound: true,
     };
   }
-
-  const eventsData = response.data;
-
-  return {
-    props: {
-      eventsData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Events;
