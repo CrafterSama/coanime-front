@@ -19,6 +19,7 @@ import '@/styles/Clock.css';
 import '@/styles/app.css';
 
 // CSS de librerías de terceros - importados aquí para evitar problemas de transpilado con Sucrase
+// IMPORTANTE: Estos CSS deben estar importados aquí, no en componentes individuales
 import 'react-widgets/styles.css';
 import 'suneditor/dist/css/suneditor.min.css';
 import 'swiper/css';
