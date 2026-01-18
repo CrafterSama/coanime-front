@@ -5,14 +5,15 @@
   "scripts": {
     "devHttps": "node server.js",
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/copy-vendor-css.js && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write ./**/*.{js,ts,tsx,css,md,json} --config ./.prettierrc",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "eslint": "eslint src --ext .ts,.tsx",
-    "eslint:fix": "npm run eslint -- --fix"
+    "eslint:fix": "npm run eslint -- --fix",
+    "copy-vendor-css": "node scripts/copy-vendor-css.js"
   },
   "dependencies": {
     "@headlessui/react": "1.7.17",
@@ -30,7 +31,7 @@
     "date-fns": "2.30.0",
     "dayjs": "1.11.10",
     "disqus-react": "1.1.5",
-    "next": "^14.2.18",
+    "next": "^14.2.35",
     "next-auth": "4.23.2",
     "nextjs-progressbar": "0.0.16",
     "react": "18.2.0",
@@ -64,7 +65,7 @@
     "@types/react": "18.2.15",
     "@typescript-eslint/eslint-plugin": "6.0.0",
     "@typescript-eslint/parser": "6.0.0",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "^10.4.14",
     "babel-eslint": "10.1.0",
     "eslint": "8.45.0",
     "eslint-config-prettier": "8.8.0",
@@ -76,9 +77,9 @@
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "postcss": "8.4.26",
+    "postcss": "^8.4.26",
     "prettier": "3.0.0",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.1.6"
   }
 }

@@ -18,14 +18,13 @@ import '@/styles/Calendar.css';
 import '@/styles/Clock.css';
 import '@/styles/app.css';
 
-// CSS de librerías de terceros - importados aquí para evitar problemas de transpilado con Sucrase
-// IMPORTANTE: Estos CSS deben estar importados aquí, no en componentes individuales
-import 'react-widgets/styles.css';
-import 'suneditor/dist/css/suneditor.min.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+// CSS de librerías de terceros - copiados localmente para evitar problemas de transpilado con Sucrase
+import '@/styles/vendor/react-widgets.css';
+import '@/styles/vendor/suneditor.css';
+import '@/styles/vendor/swiper.css';
+import '@/styles/vendor/swiper-navigation.css';
+import '@/styles/vendor/swiper-pagination.css';
+import '@/styles/vendor/swiper-scrollbar.css';
 
 const App = ({ Component, pageProps: { ...pageProps } }) => {
   const router = useRouter();

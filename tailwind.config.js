@@ -8,14 +8,13 @@ module.exports = {
     './src/components/layouts/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    typography: {
-      extend: {
-        fontFamily: {
-          sans: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
-        },
+    extend: {
+      fontFamily: {
+        sans: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
       },
     },
   },
+  plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms')({
       strategy: 'class',
