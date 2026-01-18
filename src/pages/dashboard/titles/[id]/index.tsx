@@ -28,7 +28,6 @@ import { titleUpdate } from '@/services/titles';
 import { CalendarIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import 'react-widgets/styles.css';
 
 dayjs.extend(utc);
 

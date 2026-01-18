@@ -6,10 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
 const TopSlider = ({ relevants }) => (
   <div className="top-slider">

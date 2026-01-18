@@ -28,7 +28,6 @@ import { CalendarIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 
-import 'react-widgets/styles.css';
 import { Show } from '@/components/ui/Show';
 import FlexLayout from '@/components/ui/FlexLayout';
 

@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 
 import { uploadImages } from '@/hooks/images';
 import { sunEditorOptions } from '@/constants/suneditor';
-import 'suneditor/dist/css/suneditor.min.css';
 
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
