@@ -67,7 +67,11 @@ const Posts = ({ articlesData }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const response = await getArticlesData({ page: Number(params?.page) ?? 1 });
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const response = await getArticlesData({
+    page: Number(resolvedParams?.page) ?? 1,
+  });
 
   if (response.data.code === 404) {
     return {

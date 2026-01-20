@@ -131,10 +131,12 @@ export function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { type } = params;
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const { type } = resolvedParams;
   const response = await getTitlesByType({
     type,
-    page: Number(params?.page) ?? 1,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.status === 404) {

@@ -276,7 +276,9 @@ const Profile = ({ slug }) => {
 export default Profile;
 
 export const getServerSideProps = async ({ params }) => {
-  const slug = params?.slug;
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
   return {
     props: {
       slug,

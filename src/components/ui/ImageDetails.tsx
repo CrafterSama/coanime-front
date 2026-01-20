@@ -7,6 +7,7 @@ const ImageDetails = ({ src }) => (
       src={src}
       fill
       alt="Details"
+      unoptimized
     />
   </figure>
 );

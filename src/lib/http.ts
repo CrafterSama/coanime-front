@@ -2,8 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
 
-import { useAuth } from '@/hooks/auth';
-
 export const HTTP_METHODS = {
   post: 'POST',
   get: 'GET',
@@ -78,33 +76,5 @@ export const httpClientExternal = getInstance({
 export const httpClientAuth = getInstance({
   baseURL: getAuthApiUrl(),
 });
-
-export const SetFormDataHeader = () => {
-  const { logout } = useAuth();
-  httpClient.interceptors.request.use(
-    async (config: any) => {
-      config.headers = {
-        ...config.headers,
-        'X-Requested-With': 'XMLHttpRequest',
-      };
-
-      return config;
-    },
-    (error: any) => {
-      Promise.reject(error);
-    }
-  );
-  httpClient.interceptors.response.use(
-    (response) => {
-      if (response.status === 401) {
-        logout();
-      }
-      return response;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-};
 
 export default httpClient;

@@ -18,6 +18,7 @@ const BroadcastSerieCard = ({ serie }) => {
         }`}
         fill
         quality={90}
+        unoptimized
       />
       {serie?.ratingId === 6 && (
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">

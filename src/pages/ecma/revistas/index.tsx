@@ -70,9 +70,11 @@ const Magazines = ({ magazinesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   try {
     const response = await withRetry(() =>
-      getMagazines({ page: Number(params?.page) ?? 1 })
+      getMagazines({ page: Number(resolvedParams?.page) ?? 1 })
     );
 
     if (response?.data?.code === 404) {

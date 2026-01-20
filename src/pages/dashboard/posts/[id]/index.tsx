@@ -150,7 +150,9 @@ const UpdatePost = () => {
           queryClient.invalidateQueries(['post']);
         },
         onError: (error) => {
-          console.log(getServerError(error));
+          if (process.env.NODE_ENV === 'development') {
+            console.error('[Update Post Error]', getServerError(error));
+          }
           toast.error(getServerError(error) as string);
         },
       }
@@ -281,6 +283,7 @@ const UpdatePost = () => {
                       alt={post?.title}
                       className="w-full rounded-lg object-cover"
                       fill
+                      unoptimized
                     />
                   </div>
                   <UploadImage
@@ -311,6 +314,7 @@ const UpdatePost = () => {
                           alt={post?.titles?.[0]?.name}
                           className="w-full relative"
                           fill
+                          unoptimized
                         />
                       </div>
                       <div className="">

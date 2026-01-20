@@ -19,10 +19,10 @@ import TitleRelated from '@/components/modules/posts/components/TitleRelated';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { Show } from '@/components/ui/Show';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
-import { Show } from '@/components/ui/Show';
 
 const ShowArticle = ({ slug, articleData, errors }) => {
   const router = useRouter();
@@ -194,7 +194,9 @@ const ShowArticle = ({ slug, articleData, errors }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const { slug } = params;
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   let errors = null;
   let response = null;
   let articleData = null;

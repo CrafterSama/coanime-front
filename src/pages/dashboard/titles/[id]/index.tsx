@@ -136,7 +136,6 @@ const UpdateTitle = ({ id }) => {
       status: data.status.value,
       justYear: data.justYear === false ? 'false' : 'true',
     };
-    //console.log('🚀 ~ file: index.tsx ~ line 114 ~ onSubmit ~ params', params);
     updateTitle(
       { id, params },
       {
@@ -229,6 +228,7 @@ const UpdateTitle = ({ id }) => {
                         alt={title?.name}
                         fill
                         className="rounded-lg object-scale-down bg-gray-200"
+                        unoptimized
                       />
                     </div>
                     <UploadImage
@@ -376,9 +376,11 @@ const UpdateTitle = ({ id }) => {
 export default UpdateTitle;
 
 export async function getServerSideProps({ params }) {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   return {
     props: {
-      id: params.id,
+      id: resolvedParams.id,
     },
   };
 }

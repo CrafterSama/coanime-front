@@ -70,9 +70,11 @@ const Events = ({ eventsData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   try {
     const response = await withRetry(() =>
-      getEvents({ page: Number(params?.page) ?? 1 })
+      getEvents({ page: Number(resolvedParams?.page) ?? 1 })
     );
 
     if (response?.data?.code === 404) {

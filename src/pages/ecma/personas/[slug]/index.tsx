@@ -136,7 +136,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const params = context.params;
+  // Next.js 15: params puede ser una Promise
+  const params = await context.params;
   const { slug } = params;
   const response = await getPerson({
     slug,

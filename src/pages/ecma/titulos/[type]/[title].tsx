@@ -391,10 +391,12 @@ const Titles = ({ title, titleData, errors }) => {
 };
 
 export async function getServerSideProps({ params }) {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   let res = null;
   let errors = null;
   let titleData = null;
-  const { type, title } = params;
+  const { type, title } = resolvedParams;
   try {
     res = await getTitle({ type, title });
     titleData = res.data;

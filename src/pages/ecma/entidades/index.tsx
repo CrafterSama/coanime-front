@@ -70,9 +70,11 @@ const Entities = ({ entitiesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   try {
     const response = await withRetry(() =>
-      getEntities({ page: Number(params?.page) ?? 1 })
+      getEntities({ page: Number(resolvedParams?.page) ?? 1 })
     );
 
     if (response?.data?.code === 404) {

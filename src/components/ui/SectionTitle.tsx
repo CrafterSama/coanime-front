@@ -2,17 +2,15 @@ import Link from 'next/link';
 
 import { PlusIcon } from '@heroicons/react/24/outline';
 
-const SectionTitle = (
-  {
-    title,
-    subtitle,
-    fancyText = null,
-    justify = 'justify-start',
-    actionLink = '',
-    subTitleBackground = 'bg-white',
-  },
-  props
-) => (
+const SectionTitle = ({
+  title,
+  subtitle,
+  fancyText = null,
+  justify = 'justify-start',
+  actionLink = '',
+  subTitleBackground = 'bg-white',
+  ...props
+}) => (
   <div className="section-title mt-4 px-4 xl:px-0" {...props}>
     <h2 className="lg:text-4xl md:text-2xl text-xl font-bold">{title}</h2>
     <div className={`mini-header-separator relative ${justify}`}>

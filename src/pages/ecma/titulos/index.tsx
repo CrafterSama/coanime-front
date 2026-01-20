@@ -109,9 +109,11 @@ const Titles = ({ titlesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   try {
     const response = await withRetry(() =>
-      getTitles({ page: Number(params?.page) ?? 1 })
+      getTitles({ page: Number(resolvedParams?.page) ?? 1 })
     );
 
     if (response?.data?.code === 404) {

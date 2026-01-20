@@ -59,6 +59,7 @@ const Navigation: FC<NavigationProps> = ({
                           alt={user?.name}
                           className="rounded-full w-full h-full object-cover"
                           fill
+                          unoptimized
                         />
                       }
                       <span>{user?.name}</span>

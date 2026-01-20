@@ -77,6 +77,7 @@ const Titles = ({ titlesData }) => {
                 alt="profile-cover"
                 fill
                 className="rounded-b-xl object-cover"
+                unoptimized
               />
               <div className="overlayer"></div>
               <div className="absolute bottom-0 flex flex-col gap-4 justify-start px-4 my-4 lg:my-10">
@@ -139,7 +140,9 @@ const Titles = ({ titlesData }) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const page = params?.page || 1;
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const page = resolvedParams?.page || 1;
   return {
     props: {
       titlesData: page,

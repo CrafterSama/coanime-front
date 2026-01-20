@@ -45,6 +45,7 @@ const SearchBox = () => {
                       className={`object-cover group-hover:object-scale-down ${
                         title?.ratingId === 6 ? 'blur-lg' : ''
                       }`}
+                      unoptimized
                     />
                     {title?.ratingId === 6 && (
                       <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
@@ -54,6 +55,7 @@ const SearchBox = () => {
                           height={70}
                           width={150}
                           className="relative"
+                          unoptimized
                         />
                       </div>
                     )}
@@ -95,6 +97,7 @@ const SearchBox = () => {
                       alt={post?.title}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   </div>
                   <span className="flex flex-col gap-1">

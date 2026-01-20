@@ -70,9 +70,11 @@ const Demography = ({ magazinesData }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   const response = await getMagazinesByDemography({
-    demography: params?.slug,
-    page: Number(params?.page) ?? 1,
+    demography: resolvedParams?.slug,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.data?.code === 404) {

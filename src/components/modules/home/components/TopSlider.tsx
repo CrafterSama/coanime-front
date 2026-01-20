@@ -28,6 +28,7 @@ const TopSlider = ({ relevants }) => (
                 quality={90}
                 className="object-cover"
                 fill
+                unoptimized
               />
               <div className="overlayer" />
               <div className="carousel-caption text-shadow flex flex-col gap-2">

@@ -78,6 +78,7 @@ const UploadImage = ({ disabled = false, name, model }) => {
             alt="New image"
             className="rounded-lg object-scale-down bg-gray-200"
             fill
+            unoptimized
           />
         </div>
       </Show>

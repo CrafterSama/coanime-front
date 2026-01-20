@@ -269,7 +269,6 @@ const CreatePost = () => {
                     value: number;
                     type: string;
                   }) => {
-                    console.log(option);
                     return `${option?.label} (${option?.type})`;
                   }}
                 />

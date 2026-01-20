@@ -117,7 +117,6 @@ const CreateTitle = () => {
       status: data.status.value,
       justYear: data.justYear === false ? 'false' : 'true',
     };
-    //console.log('🚀 ~ file: index.tsx ~ line 114 ~ onSubmit ~ params', params);
     createTitle(
       { params },
       {

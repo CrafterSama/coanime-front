@@ -14,8 +14,6 @@ const Events = () => {
   const { data = {}, isLoading } = useEvents({ page });
   const { result, title, description } = data;
 
-  console.log(result);
-
   return (
     <AppLayout
       header={

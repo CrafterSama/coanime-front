@@ -105,12 +105,14 @@ export function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   let response = null;
   let articles = null;
   let errors = null;
   try {
-    response = await getTags(params?.tag);
-    articles = await getArticlesByTags({ tag: params?.tag, page: 1 });
+    response = await getTags(resolvedParams?.tag);
+    articles = await getArticlesByTags({ tag: resolvedParams?.tag, page: 1 });
   } catch (error) {
     errors = error.response.data.message.text;
   }
@@ -123,7 +125,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      tag: params?.tag,
+      tag: resolvedParams?.tag,
       tagData: response?.data,
       articlesData: articles?.data,
       errors,
