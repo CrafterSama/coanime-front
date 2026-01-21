@@ -126,8 +126,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   let articles = null;
   let errors = null;
   try {
+    if (!category) {
+      return {
+        notFound: true,
+      };
+    }
     response = await getCategory(String(category) as string);
-    articles = await getArticlesByCategories({ category, page: 1 });
+    articles = await getArticlesByCategories({ category: String(category), page: 1 });
   } catch (error) {
     errors = error.response.data.message.text;
   }

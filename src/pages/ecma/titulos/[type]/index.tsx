@@ -27,7 +27,7 @@ const tabs = [
   { key: 'genres', title: 'Géneros' },
 ];
 
-const Titles = ({ titlesData }) => {
+const Titles = ({ titlesData }: { titlesData: TitleData }) => {
   const router = useRouter();
   const { type } = router.query;
   const [page, setPage] = useState(1);

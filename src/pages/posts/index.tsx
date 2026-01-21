@@ -18,7 +18,7 @@ type ArticlesProps = {
   data: any;
 };
 
-const Posts = ({ articlesData }) => {
+const Posts = ({ articlesData }: { articlesData: ArticlesProps }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<ArticlesProps>(articlesData);
