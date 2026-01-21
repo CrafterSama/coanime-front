@@ -1,12 +1,18 @@
 import { httpClientExternal } from '@/lib/http';
 
-export const getTags = async (tag) => {
+export const getTags = async (tag: string) => {
   const response = await httpClientExternal.get(`home/tags/${tag}`);
   return response;
 };
 
-export const getArticlesByTags = async ({ tag, page = 1 }) => {
-  const params = {};
+export const getArticlesByTags = async ({
+  tag,
+  page = 1,
+}: {
+  tag: string;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;

@@ -6,9 +6,11 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { PencilIcon } from '@heroicons/react/24/outline';
 
-const TitleRelated = ({ titles }) => (
+import React from 'react';
+
+const TitleRelated = ({ titles }: { titles?: any[] }) => (
   <div id="relatedTitle" className="px-4">
-    {titles?.length > 0 && (
+    {titles && titles.length !== undefined && titles.length > 0 && (
       <>
         <SectionTitle title="Series" subtitle="Serie Relacionada" />
         <div className="relatedTitle">

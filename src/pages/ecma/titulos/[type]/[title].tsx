@@ -44,7 +44,13 @@ const status = {
   Estreno: 'estreno',
 };
 
-const Titles = ({ title, titleData, errors }) => {
+interface TitlesProps {
+  title: any;
+  titleData: any;
+  errors: any;
+}
+
+const Titles = ({ title, titleData, errors }: TitlesProps) => {
   const [activeTab, setActiveTab] = useState('posts');
   const { user } = useAuth({ middleware: 'auth' });
   const [censored, setCensored] = useState(false);
@@ -307,7 +313,7 @@ const Titles = ({ title, titleData, errors }) => {
                         />
                         <SerieItemInfo
                           title="Géneros"
-                          value={titleData?.result?.genres?.map((genre) => (
+                          value={titleData?.result?.genres?.map((genre: any) => (
                             <span key={genre?.id} className="genre-tag">
                               <Link href={`/ecma/generos/${genre?.slug}`}>
                                 {genre?.name}
@@ -331,9 +337,11 @@ const Titles = ({ title, titleData, errors }) => {
                             titleData?.result?.status ? (
                               <div
                                 className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
-                                  STATUS_COLORS[
-                                    status[titleData?.result?.status]
-                                  ]
+                                  (() => {
+                                    const statusKey = titleData?.result?.status as keyof typeof status;
+                                    const colorKey = status[statusKey] as keyof typeof STATUS_COLORS;
+                                    return STATUS_COLORS[colorKey] || '';
+                                  })()
                                 }`}>
                                 {titleData?.result?.status}
                               </div>
@@ -390,7 +398,7 @@ const Titles = ({ title, titleData, errors }) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params }: { params?: any }) {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   let res = null;

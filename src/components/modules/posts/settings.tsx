@@ -13,12 +13,16 @@ export const usePostsSettings = ({
   user: authUser,
   setPostId,
   setOpenDeleteModal,
+}: {
+  user: any;
+  setPostId: (id: string) => void;
+  setOpenDeleteModal: (open: boolean) => void;
 }) => {
   const headers = [
     {
       name: 'Imagen y Titulo',
       accessor: (row: any) => row,
-      cell: (row) => (
+      cell: (row: any) => (
         <div className="flex flex-row gap-2 w-96 py-1">
           <div className="w-1/2 flex items-center relative">
             <Image
@@ -44,7 +48,7 @@ export const usePostsSettings = ({
               </Link>
             </div>
             <p className="text-gray-600 text-xs">
-              {strLimit(extractText(row?.content), 100)}
+              {strLimit(extractText(row?.content ?? '') || '', 100)}
             </p>
           </div>
         </div>
@@ -56,7 +60,7 @@ export const usePostsSettings = ({
     {
       name: 'Visible el',
       accessor: (row: any) => row,
-      cell: (row) => (
+      cell: (row: any) => (
         <div className="w-40">
           <div className="flex flex-col justify-center items-center">
             <span className="text-sm text-gray-700 mr-2">
@@ -73,7 +77,7 @@ export const usePostsSettings = ({
     {
       name: 'Categoria',
       accessor: (row: any) => row,
-      cell: ({ categories }) => (
+      cell: ({ categories }: { categories: any }) => (
         <div className="w-40">
           <Link
             href={`/categories/${categories.id}`}
@@ -86,9 +90,9 @@ export const usePostsSettings = ({
     {
       name: 'Tags',
       accessor: (row: any) => row,
-      cell: ({ tags }) => (
+      cell: ({ tags }: { tags: any[] }) => (
         <div className="w-40 flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
+          {tags.map((tag: any, index: number) => (
             <Link
               key={tag.id}
               href={`/tags/${tag.id}`}
@@ -103,7 +107,7 @@ export const usePostsSettings = ({
     {
       name: 'Autor',
       accessor: (row: any) => row,
-      cell: ({ users }) => (
+      cell: ({ users }: { users: any }) => (
         <div className="w-40">
           <Link
             href={`/users/${users.id}`}
@@ -117,7 +121,7 @@ export const usePostsSettings = ({
     {
       name: 'Acciones',
       accessor: (row: any) => row,
-      cell: (row) => (
+      cell: (row: any) => (
         <div className="w-40">
           <div className="flex flex-row gap-2">
             <Show

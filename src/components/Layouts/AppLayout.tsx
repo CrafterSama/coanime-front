@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import Head from 'next/head';
@@ -8,7 +8,12 @@ import Navigation from '@/components/Layouts/Navigation';
 import Aside from '@/components/ui/Aside';
 import { hasRole } from '@/utils/common';
 
-const AppLayout = ({ header, children }) => {
+interface AppLayoutProps {
+  header: ReactNode;
+  children: ReactNode;
+}
+
+const AppLayout = ({ header, children }: AppLayoutProps) => {
   const router = useRouter();
   const [isTiny, setIsTiny] = useState(false);
   const user: any = {};

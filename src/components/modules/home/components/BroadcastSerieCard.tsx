@@ -4,7 +4,15 @@ import Link from 'next/link';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { defaultImage, getTitlesUrl } from '@/utils/string';
 
-const BroadcastSerieCard = ({ serie, position }) => (
+import React from 'react';
+
+const BroadcastSerieCard = ({
+  serie,
+  position,
+}: {
+  serie: any;
+  position: number;
+}) => (
   <div className="h-72 w-52 relative rounded overflow-hidden bg-gray-100 p-2">
     <Image
       src={

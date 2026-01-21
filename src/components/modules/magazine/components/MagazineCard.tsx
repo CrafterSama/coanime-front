@@ -4,7 +4,9 @@ import Link from 'next/link';
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
 
-const MagazineCard = ({ magazine }) => (
+import React from 'react';
+
+const MagazineCard = ({ magazine }: { magazine: any }) => (
   <div className="title-item overflow-hidden py-4">
     <Image
       src={

@@ -18,10 +18,17 @@ import { getArticlesByCategories, getCategory } from '@/services/categories';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '@/interface/articles';
 
-const Categories = ({ category, data, articles, errors }) => {
+interface CategoriesProps {
+  category: string;
+  data: any;
+  articles: any;
+  errors: any;
+}
+
+const Categories = ({ category, data, articles, errors }: CategoriesProps) => {
   const { data: categories = {}, isLoading } = useQuery(
     ['categories', category],
-    getCategory,
+    () => getCategory(category),
     { initialData: data, enabled: !!data }
   );
   const [news, setNews] = useState<Article[]>([]);
@@ -33,7 +40,7 @@ const Categories = ({ category, data, articles, errors }) => {
     keywords = '',
     relevants = [],
     broadcast = [],
-  } = categories;
+  } = (categories as any) || {};
 
   useEffect(() => {
     if (articles) {
@@ -114,7 +121,7 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async (context) => {
   // Next.js 15: params puede ser una Promise
   const params = await context.params;
-  const { category } = params;
+  const category = params?.category as string | undefined;
   let response = null;
   let articles = null;
   let errors = null;

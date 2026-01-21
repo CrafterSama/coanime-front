@@ -1,7 +1,14 @@
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const CloudLinks = ({ allLink, links }) => {
+const CloudLinks = ({
+  allLink,
+  links,
+}: {
+  allLink: string;
+  links?: Array<{ id: number; slug: string; name: string }>;
+}) => {
   const router = useRouter();
 
   return (
@@ -17,7 +24,7 @@ const CloudLinks = ({ allLink, links }) => {
           Todas
         </Link>
       </span>
-      {links?.map((link) => (
+      {links?.map((link: { id: number; slug: string; name: string }) => (
         <span
           key={link?.id}
           className="text-center text-gray-600 hover:text-orange-600 font-semibold cloud-link">

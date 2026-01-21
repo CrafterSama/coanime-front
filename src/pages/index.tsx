@@ -19,7 +19,7 @@ import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmallIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 
-const Home = ({ homeDataSSR }) => {
+const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
   const [page, setPage] = useState(1);
   const { isLoading, error }: any = useQuery(['homeData'], getHomeData);
   const {
@@ -32,7 +32,7 @@ const Home = ({ homeDataSSR }) => {
     isLoading: loadingJapan,
     error: errorJapan,
   } = useQuery(['japanData', page], () => getArticlesJapan({ page }));
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
 
   useEffect(() => {

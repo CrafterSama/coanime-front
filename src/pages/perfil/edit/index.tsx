@@ -14,7 +14,7 @@ import Image from 'next/image';
 import { GetServerSideProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -51,7 +51,7 @@ const Profile = () => {
   } = methods;
 
   const resetProfileData = useCallback(
-    (result) => {
+    (result: any) => {
       setValue('name', result?.name);
       setValue('username', result?.username);
       setValue('email', result?.email);
@@ -69,10 +69,15 @@ const Profile = () => {
     [result, setValue]
   );
 
-  const uploadAvatar = async (e) => {
+  const uploadAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profilePhotoPath', response?.data?.url);
       toast.success('Profile photo uploaded successfully');
     } catch (error) {
@@ -82,10 +87,15 @@ const Profile = () => {
     }
   };
 
-  const uploadCover = async (e) => {
+  const uploadCover = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profileCoverPath', response?.data?.url);
       toast.success('Cover photo uploaded successfully');
     } catch (error) {
@@ -105,13 +115,13 @@ const Profile = () => {
     ({ params }: { params: any }) => updateMe(params)
   );
 
-  const onHandleError = (error) => {
+  const onHandleError = (error: any) => {
     if (
       error?.response?.status === 422 &&
       error?.response?.data?.errors?.password
     ) {
-      error?.response?.data?.errors?.password?.map((error) =>
-        toast.error(error)
+      error?.response?.data?.errors?.password?.map((err: string) =>
+        toast.error(err)
       );
       return;
     }
@@ -120,7 +130,7 @@ const Profile = () => {
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     if (data.avatar && !data.profilePhotoPath) {
       data.profilePhotoPath = data.avatar;
     }
@@ -245,9 +255,9 @@ const Profile = () => {
                                     label="Password"
                                     {...methods.register('password')}
                                     name="password"
-                                    onChange={(e) =>
-                                      setValue('password', e.target.value)
-                                    }
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => setValue('password', e.target.value)}
                                     errors={
                                       errors?.['password']?.message as string
                                     }
@@ -264,7 +274,9 @@ const Profile = () => {
                                     }
                                     label="Password Confirmation"
                                     name="passwordConfirmation"
-                                    onChange={(e) =>
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) =>
                                       setValue(
                                         'passwordConfirmation',
                                         e.target.value
@@ -447,7 +459,9 @@ const Profile = () => {
                                   <TextEditor
                                     defaultValue={result?.bio}
                                     errors={errors?.['bio']?.message as string}
-                                    onChange={(value) => setValue('bio', value)}
+                                    onChange={(value: string) =>
+                                      setValue('bio', value)
+                                    }
                                     disabled={!editMode}
                                     height="200px"
                                   />

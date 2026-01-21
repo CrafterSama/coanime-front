@@ -22,9 +22,9 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const submitForm = (event) => {
+  const submitForm = (event: React.FormEvent) => {
     event.preventDefault();
 
     register({
@@ -32,7 +32,7 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      setErrors,
+      setErrors: (errors: string[]) => setErrors(errors),
     });
   };
 
@@ -61,7 +61,9 @@ const Register = () => {
               name="name"
               value={name}
               className="block mt-1 w-full"
-              onChange={(event) => setName(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setName(event.target.value)
+              }
               required
               autoFocus
             />
@@ -77,7 +79,9 @@ const Register = () => {
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
               required
             />
           </div>
@@ -92,7 +96,9 @@ const Register = () => {
               name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
               required
               autoComplete="new-password"
             />
@@ -108,7 +114,9 @@ const Register = () => {
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={(event) => setPasswordConfirmation(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordConfirmation(event.target.value)
+              }
               required
             />
           </div>

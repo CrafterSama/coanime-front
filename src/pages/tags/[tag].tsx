@@ -17,11 +17,18 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesByTags, getTags } from '@/services/tags';
 import { useQuery } from '@tanstack/react-query';
 
-const Tags = ({ tag, tagData, articlesData, errors }) => {
-  const { data = {}, isLoading } = useQuery(['tags', tagData], getTags, {
+interface TagsProps {
+  tag: string;
+  tagData: any;
+  articlesData: any;
+  errors: any;
+}
+
+const Tags = ({ tag, tagData, articlesData, errors }: TagsProps) => {
+  const { data = {}, isLoading } = useQuery(['tags', tagData], () => getTags(tag), {
     initialData: tagData,
   });
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
   const {
@@ -30,7 +37,7 @@ const Tags = ({ tag, tagData, articlesData, errors }) => {
     keywords = '',
     relevants = [],
     broadcast = [],
-  } = data;
+  } = (data as any) || {};
 
   useEffect(() => {
     if (articlesData) {
@@ -104,15 +111,19 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
+  const tag = resolvedParams?.tag as string | undefined;
+  if (!tag) {
+    return { notFound: true };
+  }
   let response = null;
   let articles = null;
   let errors = null;
   try {
-    response = await getTags(resolvedParams?.tag);
-    articles = await getArticlesByTags({ tag: resolvedParams?.tag, page: 1 });
+    response = await getTags(tag);
+    articles = await getArticlesByTags({ tag, page: 1 });
   } catch (error) {
     errors = error.response.data.message.text;
   }

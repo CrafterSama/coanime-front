@@ -18,7 +18,11 @@ type MagazineData = {
   result: any;
 };
 
-const Demography = ({ magazinesData }) => {
+interface DemographyProps {
+  magazinesData: any;
+}
+
+const Demography = ({ magazinesData }: DemographyProps) => {
   const router = useRouter();
   const { slug } = router.query;
   const [page, setPage] = useState(1);
@@ -33,7 +37,7 @@ const Demography = ({ magazinesData }) => {
         page,
       },
     });
-    const response = await getMagazinesByDemography({ demography: slug, page });
+    const response = await getMagazinesByDemography({ demography: slug as string, page });
     setData(response.data);
   };
 
@@ -57,7 +61,7 @@ const Demography = ({ magazinesData }) => {
         <Show condition={magazines}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {magazines?.data?.map((magazine) => (
+              {magazines?.data?.map((magazine: any) => (
                 <MagazineCard key={magazine?.id} magazine={magazine} />
               ))}
             </div>
@@ -69,7 +73,7 @@ const Demography = ({ magazinesData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const response = await getMagazinesByDemography({

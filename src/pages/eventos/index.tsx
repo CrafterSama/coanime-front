@@ -19,7 +19,11 @@ type eventsData = {
   result: any;
 };
 
-const Events = ({ eventsData }) => {
+interface EventsProps {
+  eventsData: any;
+}
+
+const Events = ({ eventsData }: EventsProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<eventsData>(eventsData);
@@ -57,7 +61,7 @@ const Events = ({ eventsData }) => {
         <Show condition={events}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {events?.data?.map((event, index) => (
+              {events?.data?.map((event: any, index: number) => (
                 <EventCard key={event?.id ? event?.id : index} event={event} />
               ))}
             </div>
@@ -69,7 +73,7 @@ const Events = ({ eventsData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   try {

@@ -5,7 +5,15 @@ import { Permissions } from '@/components/modules/common/Permissions';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { PencilIcon } from '@heroicons/react/24/outline';
 
-const OtherArticles = ({ articles, total = null }) => (
+import React from 'react';
+
+const OtherArticles = ({
+  articles,
+  total = null,
+}: {
+  articles: any[];
+  total?: number | null;
+}) => (
   <div className="features">
     {total === 0 && (
       <div className="flex flex-col items-center justify-center w-full h-full">
@@ -16,7 +24,7 @@ const OtherArticles = ({ articles, total = null }) => (
     )}
     {articles?.length > 0 && (
       <div className="info__features">
-        {articles?.map((article) => (
+        {articles?.map((article: any) => (
           <div
             key={article?.id}
             className="info__features-box flex flex-col gap-2">

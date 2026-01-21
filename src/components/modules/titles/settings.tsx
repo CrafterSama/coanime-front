@@ -10,7 +10,7 @@ export const headers = [
   {
     name: 'Imagen y Nombre',
     accessor: (row: any) => row,
-    cell: (row) => (
+    cell: (row: any) => (
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
           <Link href={`/dashboard/titles/${row?.id}`}>
@@ -40,7 +40,7 @@ export const headers = [
             </Link>
           </div>
           <p className="text-gray-600 text-xs">
-            {strLimit(extractText(row?.sinopsis), 150)}
+            {strLimit(extractText(row?.sinopsis ?? '') || '', 150)}
           </p>
           <p className="text-gray-500 text-xs">
             Otros Titulos: {row?.otherTitles}
@@ -55,7 +55,7 @@ export const headers = [
   {
     name: 'Tipo de Titulo',
     accessor: (row: any) => row,
-    cell: ({ type }) => (
+    cell: ({ type }: { type: any }) => (
       <div className="w-40 flex justify-center items-center text-sm">
         {type?.name}
       </div>
@@ -64,7 +64,7 @@ export const headers = [
   {
     name: 'Clasificación',
     accessor: (row: any) => row,
-    cell: ({ rating }) => (
+    cell: ({ rating }: { rating: any }) => (
       <div className="w-40 flex flex-row gap-2 text-sm">
         <span>{`${rating?.name}: ${rating?.description}`}</span>
       </div>
@@ -73,9 +73,9 @@ export const headers = [
   {
     name: 'Generos',
     accessor: (row: any) => row,
-    cell: ({ genres }) => (
+    cell: ({ genres }: { genres: any[] }) => (
       <div className="w-40 flex flex-wrap gap-2">
-        {genres.map((genre, index) => (
+        {genres.map((genre: any, index: number) => (
           <Link
             key={genre.id}
             href={`/genres/${genre.id}`}
@@ -90,7 +90,7 @@ export const headers = [
   {
     name: 'Agregada por',
     accessor: (row: any) => row,
-    cell: ({ users }) => (
+    cell: ({ users }: { users: any }) => (
       <div className="w-40">
         <Link
           href={`/users/${users.id}`}
@@ -104,7 +104,7 @@ export const headers = [
   {
     name: 'Agregada el',
     accessor: (row: any) => row,
-    cell: ({ createdAt }) => (
+    cell: ({ createdAt }: { createdAt: string }) => (
       <div className="w-40">
         {dayjs(createdAt).format('DD/MM/YYYY HH:mm a')}
       </div>

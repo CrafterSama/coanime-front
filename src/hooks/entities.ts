@@ -1,8 +1,8 @@
 import httpClient from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const useEntities = ({ page = '' }) => {
-  const params = {};
+export const useEntities = ({ page = '' }: { page?: string }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -17,7 +17,7 @@ export const useEntities = ({ page = '' }) => {
   });
 };
 
-export const useEntity = ({ slug }) => {
+export const useEntity = ({ slug }: { slug: string }) => {
   return useQuery({
     queryKey: ['entity', slug],
     queryFn: async () => {

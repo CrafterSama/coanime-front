@@ -1,6 +1,6 @@
 import React, { Component, type ReactNode } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button-legacy';
 
 interface Props {
   children: ReactNode;
@@ -59,8 +59,8 @@ class ErrorBoundary extends Component<Props, State> {
 
       // UI de fallback por defecto
       return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-          <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+        <div className="flex justify-center items-center px-4 min-h-screen bg-gray-50">
+          <div className="p-8 w-full max-w-md bg-white rounded-lg shadow-lg">
             <div className="text-center">
               <h1 className="mb-4 text-2xl font-bold text-gray-900">
                 Algo salió mal
@@ -71,7 +71,7 @@ class ErrorBoundary extends Component<Props, State> {
               </p>
 
               {process.env.NODE_ENV === 'development' && this.state.error && (
-                <div className="mb-6 rounded-md bg-red-50 p-4 text-left">
+                <div className="p-4 mb-6 text-left bg-red-50 rounded-md">
                   <p className="mb-2 text-sm font-semibold text-red-800">
                     Error (solo en desarrollo):
                   </p>
@@ -80,10 +80,10 @@ class ErrorBoundary extends Component<Props, State> {
                   </p>
                   {this.state.errorInfo && (
                     <details className="mt-2">
-                      <summary className="cursor-pointer text-xs text-red-600">
+                      <summary className="text-xs text-red-600 cursor-pointer">
                         Stack trace
                       </summary>
-                      <pre className="mt-2 overflow-auto text-xs text-red-600">
+                      <pre className="overflow-auto mt-2 text-xs text-red-600">
                         {this.state.errorInfo.componentStack}
                       </pre>
                     </details>

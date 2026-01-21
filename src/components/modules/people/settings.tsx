@@ -8,7 +8,7 @@ export const headers = [
   {
     name: 'Imagen y Nombre',
     accessor: (row: any) => row,
-    cell: (row) => (
+    cell: (row: any) => (
       <div className="flex flex-row gap-2 w-96">
         <div className="w-4/12 h-46">
           <Link
@@ -32,7 +32,7 @@ export const headers = [
           </Link>
           <p className="text-gray-500 text-xs">{row?.japaneseName}</p>
           <p className="text-gray-600 text-xs">
-            {strLimit(extractText(row?.about), 150)}
+            {strLimit(extractText(row?.about ?? '') || '', 150)}
           </p>
         </div>
       </div>
@@ -44,7 +44,7 @@ export const headers = [
   {
     name: 'Areas que trabaja/Hobbies',
     accessor: (row: any) => row,
-    cell: ({ areasSkillsHobbies }) => (
+    cell: ({ areasSkillsHobbies }: { areasSkillsHobbies: string }) => (
       <div className="w-60 flex justify-center items-center text-sm">
         {areasSkillsHobbies}
       </div>
@@ -53,7 +53,7 @@ export const headers = [
   {
     name: 'Ciudad/Pais',
     accessor: (row: any) => row,
-    cell: (row) => {
+    cell: (row: any) => {
       const name = JSON.parse(row?.country?.translations);
       return (
         <div className="w-40 flex flex-row gap-2 text-sm">
@@ -65,7 +65,13 @@ export const headers = [
   {
     name: 'Agregado el',
     accessor: (row: any) => row,
-    cell: ({ createdAt, updatedAt }) => (
+    cell: ({
+      createdAt,
+      updatedAt,
+    }: {
+      createdAt?: string;
+      updatedAt?: string;
+    }) => (
       <div className="w-40 flex">
         {createdAt
           ? dayjs(createdAt).format('DD/MM/YYYY HH:mm a')

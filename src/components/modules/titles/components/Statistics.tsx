@@ -5,8 +5,20 @@ import { DropdownButton } from '@/components/ui/DropdownLink';
 import { httpClientExternal } from '@/lib/http';
 import { CheckCircleIcon, PlusIcon } from '@heroicons/react/24/outline';
 
-const Statistics = ({ serie, statistics, userStatistics, refetch }) => {
-  const updateStatistics = async (serie, statistics) => {
+import React from 'react';
+
+const Statistics = ({
+  serie,
+  statistics,
+  userStatistics,
+  refetch,
+}: {
+  serie: any;
+  statistics?: any[];
+  userStatistics?: any;
+  refetch: () => void;
+}) => {
+  const updateStatistics = async (serie: any, statistics: any) => {
     try {
       const response = await httpClientExternal.post(
         `titles/${serie}/${statistics}/stats`
@@ -45,7 +57,7 @@ const Statistics = ({ serie, statistics, userStatistics, refetch }) => {
             )}
           </button>
         }>
-        {statistics?.map((stats) => (
+        {statistics?.map((stats: any) => (
           <DropdownButton
             key={stats.id}
             onClick={() => updateStatistics(serie.id, stats.id)}>

@@ -11,7 +11,11 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { getPerson } from '@/services/people';
 import { Show } from '@/components/ui/Show';
 
-const Person = ({ personData }) => {
+interface PersonProps {
+  personData: any;
+}
+
+const Person = ({ personData }: PersonProps) => {
   return (
     <>
       {personData && (
@@ -133,7 +137,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: any) {
   // Next.js 15: params puede ser una Promise
   const params = await context.params;
   const { slug } = params;

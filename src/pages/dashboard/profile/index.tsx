@@ -13,7 +13,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import AppLayout from '@/components/Layouts/AppLayout';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -49,7 +49,7 @@ const Profile = () => {
   } = methods;
 
   const resetProfileData = useCallback(
-    (result) => {
+    (result: any) => {
       setValue('name', result?.name);
       setValue('username', result?.username);
       setValue('email', result?.email);
@@ -69,10 +69,15 @@ const Profile = () => {
   // const avatar = watch('avatar');
   // const cover = watch('cover');
 
-  const uploadAvatar = async (e) => {
+  const uploadAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profilePhotoPath', response?.data?.url);
       toast.success('Profile photo uploaded successfully');
     } catch (error) {
@@ -82,10 +87,15 @@ const Profile = () => {
     }
   };
 
-  const uploadCover = async (e) => {
+  const uploadCover = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profileCoverPath', response?.data?.url);
       toast.success('Cover photo uploaded successfully');
     } catch (error) {
@@ -105,7 +115,7 @@ const Profile = () => {
     ({ params }: { params: any }) => updateMe(params)
   );
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     if (data.avatar && !data.profilePhotoPath) {
       data.profilePhotoPath = data.avatar;
     }
@@ -395,7 +405,9 @@ const Profile = () => {
                                 <TextEditor
                                   defaultValue={result?.bio}
                                   errors={errors?.['bio']?.message as string}
-                                  onChange={(value) => setValue('bio', value)}
+                                  onChange={(value: string) =>
+                                    setValue('bio', value)
+                                  }
                                   disabled={!editMode}
                                   height="200px"
                                 />

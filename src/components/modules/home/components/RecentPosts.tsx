@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
-const RecentPosts = ({ posts }) => (
+import React from 'react';
+
+const RecentPosts = ({ posts }: { posts?: any[] }) => (
   <div className="recent-posts px-4 xl:px-0">
-    {posts?.map((post) => (
+    {posts?.map((post: any) => (
       <div key={post.id} className="box">
         <div className="box__item">
           <figure className="item__image">

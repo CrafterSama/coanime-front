@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -77,21 +77,21 @@ const CreateTitle = () => {
     resetTitleInfo();
   }, []);
 
-  const genresOptions = genres?.map((genre) => ({
+  const genresOptions = genres?.map((genre: any) => ({
     value: genre.id,
     label: genre.name,
   }));
-  const typesOptions = types?.map((type) => ({
+  const typesOptions = types?.map((type: any) => ({
     value: type.id,
     label: type.name,
   }));
-  const ratingsOptions = ratings?.map((rating) => ({
+  const ratingsOptions = ratings?.map((rating: any) => ({
     value: rating.id,
     label: rating.name,
     description: rating.description,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     router.push('/dashboard/titles');
     toast.success(response.data.message.text);
   };
@@ -100,18 +100,18 @@ const CreateTitle = () => {
     titleCreate(params)
   );
 
-  const onHandleError = (error) => {
+  const onHandleError = (error: any) => {
     return toast.error(
       error?.response?.data?.message?.text || error?.response?.data?.message
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const params = {
       ...data,
       ratingId: data.ratingId.value,
       typeId: data.typeId.value,
-      genreId: data.genreId.map((g) => g.value),
+      genreId: data.genreId.map((g: any) => g.value),
       broadTime: dayjs(data.broadTime).format('YYYY-MM-DD'),
       broadFinish: dayjs(data.broadFinish).format('YYYY-MM-DD'),
       status: data.status.value,
@@ -210,7 +210,9 @@ const CreateTitle = () => {
                             <TextEditor
                               defaultValue={watch('sinopsis')}
                               errors={errors?.['sinopsis']?.message}
-                              onChange={(value) => setValue('sinopsis', value)}
+                              onChange={(value: string) =>
+                                setValue('sinopsis', value)
+                              }
                             />
                           )}
                         />
@@ -226,7 +228,7 @@ const CreateTitle = () => {
                     options={typesOptions}
                     name="typeId"
                     value={watch('typeId')}
-                    callBack={(option) => setValue('typeId', option)}
+                    callBack={(option: any) => setValue('typeId', option)}
                     errors={errors?.['typeId']?.message as string}
                   />
                 </div>
@@ -234,12 +236,12 @@ const CreateTitle = () => {
                   <Label htmlFor="ratingId">Rating</Label>
                   <FormSelect
                     options={ratingsOptions}
-                    getOptionLabel={(option) =>
+                    getOptionLabel={(option: any) =>
                       `${option?.label} (${option?.description})`
                     }
                     name="ratingId"
                     value={watch('ratingId')}
-                    callBack={(option) => setValue('ratingId', option)}
+                    callBack={(option: any) => setValue('ratingId', option)}
                     errors={errors?.['ratingId']?.message as string}
                   />
                 </div>
@@ -293,7 +295,7 @@ const CreateTitle = () => {
                     options={statusOptions}
                     name="status"
                     value={watch('status')}
-                    callBack={(option) => setValue('status', option)}
+                    callBack={(option: any) => setValue('status', option)}
                     errors={errors?.['status']?.message as string}
                   />
                 </div>

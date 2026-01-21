@@ -28,18 +28,29 @@ const getAuthApiUrl = () => {
 };
 
 const getInstance = (config?: AxiosRequestConfig) => {
-  const transformRequest = [].concat(function (data) {
-    if (!data) {
-      return;
-    }
+  const transformRequest = [
+    function (data: any): any {
+      if (!data) {
+        return;
+      }
 
-    return snakecaseKeys(data, {
-      exclude: ['_destroy'],
-    });
-  }, axios.defaults.transformRequest);
-  const transformResponse = [].concat(
-    axios.defaults.transformResponse,
-    function (data) {
+      return snakecaseKeys(data, {
+        exclude: ['_destroy'],
+      });
+    },
+    ...(Array.isArray(axios.defaults.transformRequest)
+      ? axios.defaults.transformRequest
+      : axios.defaults.transformRequest
+      ? [axios.defaults.transformRequest]
+      : []),
+  ];
+  const transformResponse = [
+    ...(Array.isArray(axios.defaults.transformResponse)
+      ? axios.defaults.transformResponse
+      : axios.defaults.transformResponse
+      ? [axios.defaults.transformResponse]
+      : []),
+    function (data: any): any {
       if (!data) {
         return;
       }
@@ -49,8 +60,8 @@ const getInstance = (config?: AxiosRequestConfig) => {
       if (!meta) return camelcaseKeys(rest, { deep: true });
 
       return { meta, ...camelcaseKeys(rest, { deep: true }) };
-    }
-  );
+    },
+  ];
 
   axios.defaults.withCredentials = true;
 

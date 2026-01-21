@@ -24,10 +24,16 @@ import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 
-const ShowArticle = ({ slug, articleData, errors }) => {
+interface ShowArticleProps {
+  slug: string;
+  articleData: any;
+  errors: any;
+}
+
+const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
-  const { data = {} } = useQuery(['viewArticles', slug], getArticleData, {
+  const { data = {} } = useQuery(['viewArticles', slug], () => getArticleData(slug), {
     initialData: articleData,
   });
   const {
@@ -38,7 +44,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     pathImage,
     otherArticles,
     relateds,
-  } = data;
+  } = (data as any) || {};
 
   useEffect(() => {
     if (errors) {
@@ -193,7 +199,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const { slug } = resolvedParams;

@@ -1,6 +1,16 @@
 import { DiscussionEmbed } from 'disqus-react';
 
-const DisqusComments = ({ post }) => {
+interface Post {
+  id: number | string;
+  slug: string;
+  title: string;
+}
+
+interface DisqusCommentsProps {
+  post: Post;
+}
+
+const DisqusComments = ({ post }: DisqusCommentsProps) => {
   const disqusShortname = 'coanimenet';
   const disqusConfig = {
     url: `https://coanime.net/posts/${post.slug}`,

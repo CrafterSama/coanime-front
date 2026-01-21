@@ -24,7 +24,11 @@ type TitleData = {
   types: any;
 };
 
-const Titles = ({ titlesData }) => {
+interface TitlesProps {
+  titlesData: any;
+}
+
+const Titles = ({ titlesData }: TitlesProps) => {
   const router = useRouter();
   const [page, setPage] = useState<any>(1);
   const [data, setData] = useState<TitleData>(titlesData);
@@ -108,7 +112,7 @@ const Titles = ({ titlesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   try {

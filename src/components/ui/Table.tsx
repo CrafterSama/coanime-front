@@ -18,7 +18,13 @@ type RowsProps = {
   rowExpandable?: boolean;
 };
 
-const ChevronTrigger = ({ innerRowItems, isOpen }) => (
+const ChevronTrigger = ({
+  innerRowItems,
+  isOpen,
+}: {
+  innerRowItems: any[];
+  isOpen: boolean;
+}) => (
   <div className="flex justify-end">
     <CollapsiblePrimitive.Trigger asChild>
       {innerRowItems.length > 0 && (
@@ -42,7 +48,7 @@ export const Rows: FC<RowsProps> = ({
   rowExpandable = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const tdStyles = (column) =>
+  const tdStyles = (column: any) =>
     cn(
       `col-span-1 first:flex hidden md:flex py-2 first:justify-start justify-center items-center w-full  ${
         column.cellClass ?? ''
@@ -127,7 +133,7 @@ export const Table: FC<TableProps> = ({
     cn('first:flex hidden md:flex justify-center items-center', {
       'sticky top-0': fixedHeader,
     });
-  const handleSortChange = (index, currentSort) => {
+  const handleSortChange = (index: number, currentSort: string) => {
     const column = columns[index];
     let sort = SORTING_TYPES.none;
 
@@ -142,7 +148,15 @@ export const Table: FC<TableProps> = ({
     column.sorting(sort);
   };
 
-  const WrapperSorting = ({ index, sort, children }) => (
+  const WrapperSorting = ({
+    index,
+    sort,
+    children,
+  }: {
+    index: number;
+    sort: string;
+    children: React.ReactNode;
+  }) => (
     <span
       className="flex items-center ml-2 cursor-pointer"
       onClick={() => handleSortChange(index, sort)}>
@@ -150,7 +164,7 @@ export const Table: FC<TableProps> = ({
     </span>
   );
 
-  const renderSorting = (index, column) => {
+  const renderSorting = (index: number, column: any) => {
     if (!column?.sorting) return null;
 
     const currentSort = column?.sort ?? 'none';

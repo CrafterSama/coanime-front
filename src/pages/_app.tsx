@@ -21,10 +21,15 @@ import '@/styles/vendor/swiper-navigation.css';
 import '@/styles/vendor/swiper-pagination.css';
 import '@/styles/vendor/swiper-scrollbar.css';
 
-const App = ({ Component, pageProps: { session, ...pageProps } }) => {
+import { AppProps } from 'next/app';
+
+const App = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps & { pageProps: { session?: any; [key: string]: any } }) => {
   const router = useRouter();
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {
       pageview(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);

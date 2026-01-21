@@ -21,18 +21,18 @@ const PasswordReset = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
 
-  const submitForm = (event) => {
+  const submitForm = (event: React.FormEvent) => {
     event.preventDefault();
 
     resetPassword({
       email,
       password,
       password_confirmation: passwordConfirmation,
-      setErrors,
-      setStatus,
+      setErrors: (errors: string[]) => setErrors(errors),
+      setStatus: (status: string | null) => setStatus(status),
     });
   };
 
@@ -65,7 +65,9 @@ const PasswordReset = () => {
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
               required
               autoFocus
             />
@@ -80,7 +82,9 @@ const PasswordReset = () => {
               name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
               required
             />
           </div>
@@ -95,7 +99,9 @@ const PasswordReset = () => {
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={(event) => setPasswordConfirmation(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordConfirmation(event.target.value)
+              }
               required
             />
           </div>

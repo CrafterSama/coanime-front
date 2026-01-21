@@ -9,13 +9,13 @@ export const postDelete = async (id: string | string[]) =>
 export const postCreate = async (params: any) =>
   await httpClient.post(`posts`, params);
 
-export const getArticleData = async (slug) => {
+export const getArticleData = async (slug: string) => {
   const response = await httpClientExternal.get(`articles/${slug}`);
   return response;
 };
 
-export const getArticlesData = async ({ page = 1 }) => {
-  const params = {};
+export const getArticlesData = async ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -25,8 +25,8 @@ export const getArticlesData = async ({ page = 1 }) => {
   return response;
 };
 
-export const getArticlesJapan = async ({ page = 1 }) => {
-  const params = {};
+export const getArticlesJapan = async ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -36,8 +36,8 @@ export const getArticlesJapan = async ({ page = 1 }) => {
   return response;
 };
 
-export const getPosts = async ({ page = 1 }) => {
-  const params = {};
+export const getPosts = async ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;

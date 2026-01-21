@@ -3,7 +3,9 @@ import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 
-const Author = ({ users }) => (
+import React from 'react';
+
+const Author = ({ users }: { users: any }) => (
   <div className="author">
     <div className="info__article-author">
       <div className="flex flex-col w-32 h-32 relative">

@@ -1,6 +1,17 @@
+import React from 'react';
 import Link from 'next/link';
 
-const NavLink = ({ active = false, children, href, ...props }) => (
+const NavLink = ({
+  active = false,
+  children,
+  href,
+  ...props
+}: {
+  active?: boolean;
+  children: React.ReactNode;
+  href: string;
+  [key: string]: any;
+}) => (
   <Link
     href={href}
     {...props}

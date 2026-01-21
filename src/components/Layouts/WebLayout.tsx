@@ -14,7 +14,10 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     const handleRouteChange = () => {
-      document.getElementById('top').scrollIntoView();
+      const topElement = document.getElementById('top');
+      if (topElement) {
+        topElement.scrollIntoView();
+      }
     };
     router.events.on('routeChangeComplete', handleRouteChange);
   }, [router]);

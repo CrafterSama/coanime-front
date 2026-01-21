@@ -1,4 +1,14 @@
-const AuthSessionStatus = ({ status, className, ...props }) => (
+import React from 'react';
+
+const AuthSessionStatus = ({
+  status,
+  className,
+  ...props
+}: {
+  status?: string | null;
+  className?: string;
+  [key: string]: any;
+}) => (
   <>
     {status && (
       <div

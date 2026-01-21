@@ -1,4 +1,6 @@
-const CalendarIcon = (props) => (
+import React from 'react';
+
+const CalendarIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"

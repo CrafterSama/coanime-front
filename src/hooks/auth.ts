@@ -32,7 +32,17 @@ export const useAuth = ({
 
   const pathname = router.pathname.split('/')[1];
 
-  const login = async ({ setErrors, setStatus, email, password }) => {
+  const login = async ({
+    setErrors,
+    setStatus,
+    email,
+    password,
+  }: {
+    setErrors: (errors: string[]) => void;
+    setStatus: (status: string | null) => void;
+    email: string;
+    password: string;
+  }) => {
     setErrors([]);
     setStatus(null);
 
@@ -52,7 +62,13 @@ export const useAuth = ({
   };
 
   // Registro: Auth.js no tiene registro nativo, así que llamamos directamente a Laravel
-  const register = async ({ setErrors, ...props }) => {
+  const register = async ({
+    setErrors,
+    ...props
+  }: {
+    setErrors: (errors: string[]) => void;
+    [key: string]: any;
+  }) => {
     setErrors([]);
 
     try {
@@ -78,14 +94,14 @@ export const useAuth = ({
       if (error?.response?.status === 422) {
         // Errores de validación de Laravel
         const errors = error.response.data.errors;
-        setErrors(Object.values(errors).flat());
+        setErrors(Object.values(errors).flat() as string[]);
       } else {
         setErrors(['Error al registrar. Por favor, intenta de nuevo.']);
       }
     }
   };
 
-  const logout = async (redirect = null) => {
+  const logout = async (redirect: string | null = null) => {
     await signOut({
       callbackUrl: redirect ?? '/login',
     });
@@ -99,7 +115,15 @@ export const useAuth = ({
     return logout();
   };
 
-  const forgotPassword = async ({ setErrors, setStatus, email }) => {
+  const forgotPassword = async ({
+    setErrors,
+    setStatus,
+    email,
+  }: {
+    setErrors: (errors: string[]) => void;
+    setStatus: (status: string | null) => void;
+    email: string;
+  }) => {
     setErrors([]);
     setStatus(null);
 
@@ -114,7 +138,7 @@ export const useAuth = ({
       if (error?.response?.status === 422) {
         // Errores de validación de Laravel
         const errors = error.response.data.errors;
-        setErrors(Object.values(errors).flat());
+        setErrors(Object.values(errors).flat() as string[]);
       } else if (
         error?.code === 'ERR_NETWORK' ||
         error?.message === 'Network Error'
@@ -134,7 +158,15 @@ export const useAuth = ({
     }
   };
 
-  const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+  const resetPassword = async ({
+    setErrors,
+    setStatus,
+    ...props
+  }: {
+    setErrors: (errors: string[]) => void;
+    setStatus: (status: string | null) => void;
+    [key: string]: any;
+  }) => {
     setErrors([]);
     setStatus(null);
 
@@ -155,7 +187,7 @@ export const useAuth = ({
       if (error?.response?.status === 422) {
         // Errores de validación de Laravel
         const errors = error.response.data.errors;
-        setErrors(Object.values(errors).flat());
+        setErrors(Object.values(errors).flat() as string[]);
       } else if (
         error?.code === 'ERR_NETWORK' ||
         error?.message === 'Network Error'
@@ -173,7 +205,11 @@ export const useAuth = ({
     }
   };
 
-  const resendEmailVerification = ({ setStatus }) => {
+  const resendEmailVerification = ({
+    setStatus,
+  }: {
+    setStatus: (status: string | null) => void;
+  }) => {
     axios
       .post('/email/verification-notification')
       .then((response) => setStatus(response.data.status))

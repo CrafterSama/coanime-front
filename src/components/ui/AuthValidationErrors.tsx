@@ -1,4 +1,9 @@
-const AuthValidationErrors = ({ errors = [], ...props }) => (
+interface AuthValidationErrorsProps {
+  errors?: string[];
+  [key: string]: any;
+}
+
+const AuthValidationErrors = ({ errors = [], ...props }: AuthValidationErrorsProps) => (
   <>
     {errors.length > 0 && (
       <div {...props}>

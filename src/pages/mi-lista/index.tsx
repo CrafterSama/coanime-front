@@ -17,7 +17,11 @@ import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';
 import { getUserTitleList } from '@/services/titles';
 
-const Titles = ({ titlesData }) => {
+interface TitlesProps {
+  titlesData: any;
+}
+
+const Titles = ({ titlesData }: TitlesProps) => {
   const { user } = useAuth({ middleware: 'auth' });
   const router = useRouter();
   const [page, setPage] = useState(titlesData);
@@ -41,7 +45,7 @@ const Titles = ({ titlesData }) => {
   const series: any[] =
     statisticType !== '0'
       ? response?.results?.data.filter(
-          (item) => item?.statistics?.id === statisticType
+          (item: any) => item?.statistics?.id === statisticType
         )
       : response?.results?.data;
 
@@ -139,7 +143,7 @@ const Titles = ({ titlesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const page = resolvedParams?.page || 1;

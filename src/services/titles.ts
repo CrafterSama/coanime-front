@@ -5,8 +5,8 @@ export const getAllTitles = async () => {
   return response.data;
 };
 
-export const getTitles = async ({ page }) => {
-  const params = {};
+export const getTitles = async ({ page }: { page?: number | string }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -16,8 +16,12 @@ export const getTitles = async ({ page }) => {
   return response;
 };
 
-export const getUpcomingTitles = async ({ page }) => {
-  const params = {};
+export const getUpcomingTitles = async ({
+  page,
+}: {
+  page?: number | string;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -27,8 +31,14 @@ export const getUpcomingTitles = async ({ page }) => {
   return response;
 };
 
-export const getTitlesByType = async ({ type, page = 1 }) => {
-  const params = {};
+export const getTitlesByType = async ({
+  type,
+  page = 1,
+}: {
+  type: string;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -38,8 +48,14 @@ export const getTitlesByType = async ({ type, page = 1 }) => {
   return response;
 };
 
-export const getTitlesByGenre = async ({ genre, page = 1 }) => {
-  const params = {};
+export const getTitlesByGenre = async ({
+  genre,
+  page = 1,
+}: {
+  genre: string;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -59,12 +75,18 @@ const jikanManga = [
   'doujinshi',
 ];*/
 
-export const getTitle = async ({ type, title }) => {
+export const getTitle = async ({
+  type,
+  title,
+}: {
+  type: string;
+  title: string;
+}) => {
   const response = await httpClientExternal.get(`titles/${type}/${title}`);
   return response;
 };
 
-export const getRandomImageByTitle = async ({ title }) => {
+export const getRandomImageByTitle = async ({ title }: { title: string }) => {
   const { data } = await httpClientExternal.get(`random-image-title/${title}`);
   return data;
 };
@@ -75,8 +97,8 @@ export const titleUpdate = async (id: string | string[], params: any) =>
 export const titleCreate = async (params: any) =>
   await httpClient.post(`titles`, params);
 
-export const getUserTitleList = async ({ page = 1 }) => {
-  const params = {};
+export const getUserTitleList = async ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;

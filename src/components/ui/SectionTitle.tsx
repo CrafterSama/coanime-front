@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -10,6 +11,14 @@ const SectionTitle = ({
   actionLink = '',
   subTitleBackground = 'bg-white',
   ...props
+}: {
+  title: string;
+  subtitle: string;
+  fancyText?: string | null;
+  justify?: string;
+  actionLink?: string;
+  subTitleBackground?: string;
+  [key: string]: any;
 }) => (
   <div className="section-title mt-4 px-4 xl:px-0" {...props}>
     <h2 className="lg:text-4xl md:text-2xl text-xl font-bold">{title}</h2>

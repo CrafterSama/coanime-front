@@ -8,7 +8,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
-const TopSlider = ({ relevants }) => (
+import React from 'react';
+
+const TopSlider = ({ relevants }: { relevants?: any[] }) => (
   <div className="top-slider">
     <div className="flex flex-col gap-4 relative">
       <Swiper
@@ -20,7 +22,7 @@ const TopSlider = ({ relevants }) => (
         loop={true}
         autoplay={{ delay: 1500 }}
         className="flex flex-row gap-8 w-full">
-        {relevants?.map((relevant) => (
+        {relevants?.map((relevant: any) => (
           <SwiperSlide key={relevant.id}>
             <div className="top-slider flex relative min-h-screen">
               <Image

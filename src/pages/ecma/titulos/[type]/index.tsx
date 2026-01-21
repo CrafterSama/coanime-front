@@ -51,7 +51,7 @@ const Titles = ({ titlesData }) => {
           page,
         },
       });
-      const response = await getTitlesByType({ type, page });
+      const response = await getTitlesByType({ type: type as string, page });
       setData(response.data);
       return;
     }
@@ -105,7 +105,7 @@ const Titles = ({ titlesData }) => {
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
               <Show condition={data?.result?.data?.length >= 1}>
-                {data?.result?.data?.map((serie) => (
+                {data?.result?.data?.map((serie: any) => (
                   <SerieCard key={serie?.id} serie={serie} />
                 ))}
               </Show>
@@ -130,7 +130,7 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const { type } = resolvedParams;

@@ -1,4 +1,6 @@
-const GuestLayout = ({ children }) => {
+import React from 'react';
+
+const GuestLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div id="top">
       <div className="font-sans text-gray-900 antialiased">{children}</div>

@@ -14,7 +14,7 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -45,18 +45,18 @@ const CreatePost = () => {
 
   const { result: series } = serieData;
 
-  const onChangeTitle = (length) => {
+  const onChangeTitle = (length: number) => {
     setTitleCount(length);
   };
 
-  const onChangeExcerpt = (length) => {
+  const onChangeExcerpt = (length: number) => {
     setExcerptCount(length);
   };
 
   useEffect(() => {
     if (series?.data?.length > 0) {
       setSerieList(
-        series?.data?.map((serie) => ({
+        series?.data?.map((serie: any) => ({
           label: serie.name,
           value: serie.id,
           type: serie.type?.name,
@@ -95,12 +95,12 @@ const CreatePost = () => {
     resetPostInfo();
   }, []);
 
-  const categories = categoriesData?.map((category) => ({
+  const categories = categoriesData?.map((category: any) => ({
     value: category.id,
     label: category.name,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     toast.success(response.data.message.text);
     router.push('/dashboard/posts');
   };
@@ -109,7 +109,7 @@ const CreatePost = () => {
     ({ params }: { params: any }) => postCreate(params)
   );
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const postponed = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
       : dayjs().format('YYYY-MM-DD HH:mm:ss');
@@ -170,7 +170,9 @@ const CreatePost = () => {
                   placeholder="Title"
                   className="w-full block text-lg"
                   lowerHint={titleCount}
-                  onChange={(e) => onChangeTitle(e.target.value.length)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChangeTitle(e.target.value.length)
+                  }
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
@@ -183,7 +185,9 @@ const CreatePost = () => {
                   placeholder="excerpt"
                   className="w-full block text-base"
                   lowerHint={excerptCount}
-                  onChange={(e) => onChangeExcerpt(e.target.value.length)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChangeExcerpt(e.target.value.length)
+                  }
                 />
               </div>
               <div className="mb-4 flex flex-col gap-2">
@@ -194,7 +198,7 @@ const CreatePost = () => {
                   render={() => (
                     <TextEditor
                       errors={errors?.['content']?.message}
-                      onChange={(value) => setValue('content', value)}
+                      onChange={(value: string) => setValue('content', value)}
                       defaultValue=""
                     />
                   )}
@@ -234,7 +238,7 @@ const CreatePost = () => {
                   options={categories}
                   name="categoryId"
                   value={watch('categoryId')}
-                  callBack={(option) => setValue('categoryId', option)}
+                  callBack={(option: any) => setValue('categoryId', option)}
                   errors={errors?.['categoryId']?.message as string}
                 />
               </div>
@@ -258,7 +262,7 @@ const CreatePost = () => {
                   options={serieList}
                   isLoading={isLoadingSeries}
                   placeholder="Asignar una serie"
-                  onInputChange={(value) => setSerieName(value)}
+                  onInputChange={(value: string) => setSerieName(value)}
                   onChange={(option: {
                     label: string;
                     value: number;

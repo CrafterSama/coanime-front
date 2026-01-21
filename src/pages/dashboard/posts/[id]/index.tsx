@@ -15,7 +15,7 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -53,17 +53,17 @@ const UpdatePost = () => {
 
   const { result: series } = serieData;
 
-  const onChangeTitle = (length) => {
+  const onChangeTitle = (length: number) => {
     setTitleCount(length);
   };
-  const onChangeExcerpt = (length) => {
+  const onChangeExcerpt = (length: number) => {
     setExcerptCount(length);
   };
 
   useEffect(() => {
     if (series?.data?.length > 0) {
       setSerieList(
-        series?.data?.map((serie) => ({
+        series?.data?.map((serie: any) => ({
           label: serie.name,
           value: serie.id,
           type: serie.type?.name,
@@ -91,7 +91,7 @@ const UpdatePost = () => {
     setValue('excerpt', post?.excerpt);
     setValue('content', post?.content);
     setValue('image', post?.image);
-    setValue('tags', post?.tags?.map((tag) => tag.name));
+    setValue('tags', post?.tags?.map((tag: any) => tag.name));
     setValue('categoryId', {
       value: post?.categories?.id,
       label: post?.categories?.name,
@@ -111,12 +111,12 @@ const UpdatePost = () => {
     }
   }, [post, resetPostInfo]);
 
-  const categories = categoriesData?.map((category) => ({
+  const categories = categoriesData?.map((category: any) => ({
     value: category.id,
     label: category.name,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     setEditMode(false);
     refetch();
     toast.success(response.data.message.text);
@@ -126,7 +126,7 @@ const UpdatePost = () => {
     ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
   );
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const id = post?.id;
     const postponedTo = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
@@ -200,7 +200,9 @@ const UpdatePost = () => {
                     defaultValue={post?.title}
                     disabled={!editMode}
                     charactersCount={titleCount}
-                    onChange={(e) => onChangeTitle(e.target.value.length)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChangeTitle(e.target.value.length)
+                    }
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -215,7 +217,9 @@ const UpdatePost = () => {
                     defaultValue={post?.excerpt}
                     disabled={!editMode}
                     charactersCount={excerptCount}
-                    onChange={(e) => onChangeExcerpt(e.target.value.length)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChangeExcerpt(e.target.value.length)
+                    }
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -228,7 +232,7 @@ const UpdatePost = () => {
                         disabled={!editMode}
                         defaultValue={post?.content}
                         errors={errors?.['content']?.message}
-                        onChange={(value) => setValue('content', value)}
+                        onChange={(value: string) => setValue('content', value)}
                       />
                     )}
                   />
@@ -271,8 +275,8 @@ const UpdatePost = () => {
                     options={categories}
                     name="categoryId"
                     value={watch('categoryId')}
-                    callBack={(option) => setValue('categoryId', option)}
-                    errors={errors?.['category_id']?.message as string}
+                    callBack={(option: any) => setValue('categoryId', option)}
+                    errors={errors?.['categoryId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -299,8 +303,8 @@ const UpdatePost = () => {
                     <TagsInput
                       separators={['Enter', ',']}
                       isEditOnRemove={true}
-                      value={post?.tags?.map((tag) => tag.name)}
-                      onChange={(tags) => setValue('tags', tags)}
+                      value={post?.tags?.map((tag: any) => tag.name)}
+                      onChange={(tags: string[]) => setValue('tags', tags)}
                       disabled={!editMode}
                     />
                   </div>
@@ -334,13 +338,13 @@ const UpdatePost = () => {
                     isLoading={isLoadingSeries}
                     defaultValue={post?.titles?.[0]?.id}
                     placeholder="Asignar una serie"
-                    onInputChange={(value) => setSerieName(value)}
+                    onInputChange={(value: string) => setSerieName(value)}
                     onChange={(option: { value: any; label: any }) =>
                       setValue('titleId', option?.value)
                     }
                     isDisabled={!editMode}
                     menuPlacement="auto"
-                    getOptionLabel={(option) =>
+                    getOptionLabel={(option: any) =>
                       `${option?.label} (${option?.type})`
                     }
                   />

@@ -19,7 +19,11 @@ type MagazineData = {
   result: any;
 };
 
-const Magazines = ({ magazinesData }) => {
+interface MagazinesProps {
+  magazinesData: any;
+}
+
+const Magazines = ({ magazinesData }: MagazinesProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<MagazineData>(magazinesData);
@@ -57,7 +61,7 @@ const Magazines = ({ magazinesData }) => {
         <Show condition={magazines}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {magazines?.data?.map((magazine) => (
+              {magazines?.data?.map((magazine: any) => (
                 <MagazineCard key={magazine?.id} magazine={magazine} />
               ))}
             </div>
@@ -69,7 +73,7 @@ const Magazines = ({ magazinesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   try {

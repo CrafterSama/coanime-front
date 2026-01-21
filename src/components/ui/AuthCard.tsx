@@ -12,7 +12,15 @@ const ANIME_NAME = [
   'dragon-ball-super',
 ];
 
-const AuthCard = ({ logo, children }) => {
+import React from 'react';
+
+const AuthCard = ({
+  logo,
+  children,
+}: {
+  logo: React.ReactNode;
+  children: React.ReactNode;
+}) => {
   const { data, isLoading } = useRandomImageByTitle(
     ANIME_NAME[Math.floor(Math.random() * ANIME_NAME.length)]
   );
@@ -36,6 +44,7 @@ const AuthCard = ({ logo, children }) => {
             logoColor="#ffffff"
             lettersColor="#ffffff"
             className="text-white text-center opacity-70 fill-white h-20 mr-32 mb-2"
+            {...({} as any)}
           />
         </div>
       </div>

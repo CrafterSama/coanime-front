@@ -12,7 +12,11 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEvent } from '@/services/events';
 import { Show } from '@/components/ui/Show';
 
-const Event = ({ eventData }) => {
+interface EventProps {
+  eventData: any;
+}
+
+const Event = ({ eventData }: EventProps) => {
   return (
     <>
       {eventData && (
@@ -131,7 +135,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: any) {
   // Next.js 15: params puede ser una Promise
   const params = await context.params;
   const { slug } = params;

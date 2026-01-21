@@ -28,7 +28,7 @@ import {
   HomeIcon,
 } from '@heroicons/react/24/outline';
 
-const Navigation = ({ user }) => {
+const Navigation = ({ user }: { user: any }) => {
   const router = useRouter();
 
   const { logout, user: checkUser } = useAuth();
@@ -244,7 +244,7 @@ const Navigation = ({ user }) => {
                       Lista
                     </span>
                   </ResponsiveNavLink>
-                  <ResponsiveNavButton onClick={logout}>
+                  <ResponsiveNavButton onClick={() => logout()}>
                     <span className="flex gap-2 justify-end items-center">
                       <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />{' '}
                       Logout

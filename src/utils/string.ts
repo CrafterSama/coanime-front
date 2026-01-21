@@ -1,16 +1,18 @@
-export const strLimit = (str, limit) => {
-  if (str?.length > limit) {
+export const strLimit = (str: string | undefined | null, limit: number) => {
+  if (str && str.length > limit) {
     return str?.substring(0, limit) + '...';
   }
   return str;
 };
 
-export const extractText = (html) => {
-  return new DOMParser().parseFromString(html, 'text/html').documentElement
-    .textContent;
+export const extractText = (html: string | null | undefined): string => {
+  if (!html) return '';
+  const result = new DOMParser().parseFromString(html, 'text/html')
+    .documentElement.textContent;
+  return result || '';
 };
 
-export const strToSlug = (str) => {
+export const strToSlug = (str: string | undefined) => {
   str = str?.replace(/^\s+|\s+$/g, ''); // trim
   str = str?.toLowerCase();
 
@@ -30,16 +32,16 @@ export const strToSlug = (str) => {
   return str;
 };
 
-export const defaultImage = (string) =>
+export const defaultImage = (string: string) =>
   string === 'https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'
     ? 'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg'
     : string;
 
-export const getTitlesUrl = (type, title) => {
+export const getTitlesUrl = (type: string | number, title: string | number) => {
   return `/ecma/titulos/${strToSlug(String(type))}/${strToSlug(String(title))}`;
 };
 
-export const getServerError = (error) => {
+export const getServerError = (error: any) => {
   if (error?.response?.data?.message) {
     return error.response.data.message.text;
   }

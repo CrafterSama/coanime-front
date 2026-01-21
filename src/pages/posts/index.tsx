@@ -66,7 +66,7 @@ const Posts = ({ articlesData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const response = await getArticlesData({

@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 
 type ShowProps = {
-  condition?: boolean;
+  condition?: boolean | string | null | undefined;
   children: React.ReactNode | any;
 };
 

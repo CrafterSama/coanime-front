@@ -161,7 +161,9 @@ const Navigation: FC<NavigationProps> = ({
 
             <div className="mt-3 space-y-1">
               {/* Authentication */}
-              <ResponsiveNavButton onClick={logout}>Logout</ResponsiveNavButton>
+              <ResponsiveNavButton onClick={() => logout()}>
+                Logout
+              </ResponsiveNavButton>
             </div>
           </div>
         </div>

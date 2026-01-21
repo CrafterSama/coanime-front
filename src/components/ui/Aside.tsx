@@ -6,7 +6,9 @@ import MenuLink from '@/components/ui/MenuLink';
 import { menu } from '@/constants/menu';
 import { Show } from './Show';
 
-const Aside = ({ isTiny }) => {
+import React from 'react';
+
+const Aside = ({ isTiny }: { isTiny?: boolean }) => {
   const router = useRouter();
   const path = router.asPath.split('/')[router.asPath.split('/').length - 1];
 

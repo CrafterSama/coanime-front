@@ -27,7 +27,7 @@ const MenuLink: FC<MenuLinkProps> = ({
         : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300'
     }`}>
     <Link
-      href={href}
+      href={href || '#'}
       {...props}
       className={`font-semibold text-base menu-text flex flex-row w-full gap-4 px-4 py-2 rounded-lg ${
         active ? 'bg-orange-100' : 'hover:bg-orange-100'

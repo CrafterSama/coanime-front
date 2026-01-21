@@ -13,7 +13,7 @@ const VerifyEmail = () => {
     middleware: 'auth',
   });
 
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState<string | null>(null);
 
   return (
     <GuestLayout>
@@ -37,14 +37,19 @@ const VerifyEmail = () => {
         )}
 
         <div className="mt-4 flex items-center justify-between">
-          <Button onClick={() => resendEmailVerification({ setStatus })}>
+          <Button
+            onClick={() =>
+              resendEmailVerification({
+                setStatus: (status: string | null) => setStatus(status),
+              })
+            }>
             Resend Verification Email
           </Button>
 
           <button
             type="button"
             className="underline text-sm text-gray-600 hover:text-gray-900"
-            onClick={logout}>
+            onClick={() => logout()}>
             Logout
           </button>
         </div>

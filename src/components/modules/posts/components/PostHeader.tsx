@@ -3,7 +3,9 @@ import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const PostHeader = ({ image, post }) => (
+import React from 'react';
+
+const PostHeader = ({ image, post }: { image?: string; post: any }) => (
   <header className="w-full min-h-[95vh] relative">
     {image && (
       <Image

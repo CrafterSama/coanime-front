@@ -8,12 +8,14 @@ import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, PencilIcon } from '@heroicons/react/24/outline';
 
-const OtherNews = ({ articles }) => {
+import React from 'react';
+
+const OtherNews = ({ articles }: { articles?: any[] }) => {
   return (
     <div className="other-news px-4 xl:px-0">
       <Section withContainer>
         <div className="flex flex-wrap gap-4 justify-center">
-          {articles?.map((article, index) => (
+          {articles?.map((article: any, index: number) => (
             <div
               key={index}
               className="article w-full sm:w-[300px] h-[300px] relative overflow-hidden rounded">

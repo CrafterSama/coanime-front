@@ -4,7 +4,9 @@ import Link from 'next/link';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
 
-const Relateds = ({ relateds }) => {
+import React from 'react';
+
+const Relateds = ({ relateds }: { relateds: any[] }) => {
   return (
     <div id="relateds" className="px-4">
       {relateds?.length > 0 && (
@@ -14,8 +16,8 @@ const Relateds = ({ relateds }) => {
             subtitle="Relacionadas al Titulo"
           />
           {relateds
-            ?.filter((related) => related !== null)
-            .map((related) => (
+            ?.filter((related: any) => related !== null)
+            .map((related: any) => (
               <div key={related?.id} className="flex flex-row gap-4">
                 <Link href={`/posts/${related?.slug}`}>
                   <div className="info__relateds-image w-24 h-24 relative">

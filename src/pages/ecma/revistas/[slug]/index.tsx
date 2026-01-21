@@ -13,7 +13,11 @@ import { getMagazine } from '@/services/magazine';
 import { strToSlug } from '@/utils/string';
 import { Show } from '@/components/ui/Show';
 
-const Magazine = ({ magazineData }) => {
+interface MagazineProps {
+  magazineData: any;
+}
+
+const Magazine = ({ magazineData }: MagazineProps) => {
   return (
     <>
       {magazineData && (
@@ -155,7 +159,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: any) {
   // Next.js 15: params puede ser una Promise
   const params = await context.params;
   const { slug } = params;

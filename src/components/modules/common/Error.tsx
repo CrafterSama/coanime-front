@@ -141,8 +141,16 @@ const IMAGES_404 = [
   },
 ];
 
-const Error = ({ code, error, text }) => {
-  const [image, setImage] = useState(null);
+type ErrorProps = {
+  code?: number;
+  error?: any;
+  text?: string;
+};
+
+const Error = ({ code, error, text }: ErrorProps) => {
+  const [image, setImage] = useState<{ url: string; text: string } | null>(
+    null
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -189,7 +197,7 @@ const Error = ({ code, error, text }) => {
                 {image?.url && (
                   <Image
                     src={image.url}
-                    alt={code}
+                    alt={String(code ?? 'Error')}
                     width={380}
                     height={380}
                     className="w-full h-auto"

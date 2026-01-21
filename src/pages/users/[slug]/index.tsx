@@ -32,7 +32,11 @@ import { LinkIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 const imageFalse = 'https://api.coanime.net/storage/images/profiles/';
 
-const Profile = ({ slug }) => {
+interface ProfileProps {
+  slug: string;
+}
+
+const Profile = ({ slug }: ProfileProps) => {
   const [activeTab, setActiveTab] = useState('posts');
   const [postsPage, setPostsPage] = useState(1);
   const [titlesPage, setTitlesPage] = useState(1);
@@ -275,7 +279,7 @@ const Profile = ({ slug }) => {
 
 export default Profile;
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const slug = resolvedParams?.slug;

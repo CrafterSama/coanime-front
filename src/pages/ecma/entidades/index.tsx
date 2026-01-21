@@ -19,7 +19,11 @@ type EntitiesData = {
   result: any;
 };
 
-const Entities = ({ entitiesData }) => {
+interface EntitiesProps {
+  entitiesData: any;
+}
+
+const Entities = ({ entitiesData }: EntitiesProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<EntitiesData>(entitiesData);
@@ -57,7 +61,7 @@ const Entities = ({ entitiesData }) => {
         <Show condition={entities}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {entities?.data?.map((entity) => (
+              {entities?.data?.map((entity: any) => (
                 <EntityCard key={entity?.id} entity={entity} />
               ))}
             </div>
@@ -69,7 +73,7 @@ const Entities = ({ entitiesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: { params?: any }) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   try {

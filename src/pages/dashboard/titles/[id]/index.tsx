@@ -12,7 +12,7 @@ import Image from 'next/image';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,7 +31,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 dayjs.extend(utc);
 
-const UpdateTitle = ({ id }) => {
+const UpdateTitle = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const [editMode, setEditMode] = useState(false);
   const { data = {}, isLoading, refetch } = useTitle({ id });
@@ -71,7 +71,10 @@ const UpdateTitle = ({ id }) => {
     });
     setValue(
       'genreId',
-      title.genres.map((genre) => ({ value: genre.id, label: genre.name }))
+      title.genres.map((genre: any) => ({
+        value: genre.id,
+        label: genre.name,
+      }))
     );
     setValue(
       'broadTime',
@@ -92,21 +95,21 @@ const UpdateTitle = ({ id }) => {
     }
   }, [title, resetTitleInfo]);
 
-  const genresOptions = genres?.map((genre) => ({
+  const genresOptions = genres?.map((genre: any) => ({
     value: genre.id,
     label: genre.name,
   }));
-  const typesOptions = types?.map((type) => ({
+  const typesOptions = types?.map((type: any) => ({
     value: type.id,
     label: type.name,
   }));
-  const ratingsOptions = ratings?.map((rating) => ({
+  const ratingsOptions = ratings?.map((rating: any) => ({
     value: rating.id,
     label: rating.name,
     description: rating.description,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     setEditMode(false);
     refetch();
     toast.success(response.data.message.text);
@@ -116,19 +119,19 @@ const UpdateTitle = ({ id }) => {
     ({ id, params }: { id: string; params: any }) => titleUpdate(id, params)
   );
 
-  const onHandleError = (error) => {
+  const onHandleError = (error: any) => {
     return toast.error(
       error?.response?.data?.message?.text || error?.response?.data?.message
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const id = title?.id;
     const params = {
       ...data,
       ratingId: data.ratingId.value,
       typeId: data.typeId.value,
-      genreId: data.genreId.map((g) => g.value),
+      genreId: data.genreId.map((g: any) => g.value),
       broadTime: dayjs(data.broadTime).format('YYYY-MM-DD'),
       broadFinish: data.broadFinish
         ? dayjs(data.broadFinish).format('YYYY-MM-DD')
@@ -143,7 +146,7 @@ const UpdateTitle = ({ id }) => {
           onSavedSuccess(response);
           queryClient.invalidateQueries(['title']);
         },
-        onError: (error: { response }) => {
+        onError: (error: any) => {
           onHandleError(error);
         },
       }
@@ -247,7 +250,9 @@ const UpdateTitle = ({ id }) => {
                           disabled={!editMode}
                           defaultValue={title?.sinopsis}
                           errors={errors?.['sinopsis']?.message}
-                          onChange={(value) => setValue('sinopsis', value)}
+                          onChange={(value: string) =>
+                            setValue('sinopsis', value)
+                          }
                         />
                       )}
                     />
@@ -261,7 +266,7 @@ const UpdateTitle = ({ id }) => {
                     options={typesOptions}
                     name="typeId"
                     value={watch('typeId')}
-                    callBack={(option) => setValue('typeId', option)}
+                    callBack={(option: any) => setValue('typeId', option)}
                     errors={errors?.['typeId']?.message as string}
                     disabled={!editMode}
                   />
@@ -270,12 +275,12 @@ const UpdateTitle = ({ id }) => {
                   <Label htmlFor="ratingId">Rating</Label>
                   <FormSelect
                     options={ratingsOptions}
-                    getOptionLabel={(option) =>
+                    getOptionLabel={(option: any) =>
                       `${option?.label} (${option?.description})`
                     }
                     name="ratingId"
                     value={watch('ratingId')}
-                    callBack={(option) => setValue('ratingId', option)}
+                    callBack={(option: any) => setValue('ratingId', option)}
                     errors={errors?.['ratingId']?.message as string}
                     disabled={!editMode}
                   />
@@ -333,7 +338,7 @@ const UpdateTitle = ({ id }) => {
                     options={statusOptions}
                     name="status"
                     value={watch('status')}
-                    callBack={(option) => setValue('status', option)}
+                    callBack={(option: any) => setValue('status', option)}
                     errors={errors?.['status']?.message as string}
                     disabled={!editMode}
                   />
@@ -375,7 +380,11 @@ const UpdateTitle = ({ id }) => {
 };
 export default UpdateTitle;
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({
+  params,
+}: {
+  params: { id: string };
+}) {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   return {
