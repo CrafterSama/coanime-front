@@ -1,4 +1,3 @@
-import type { Config } from 'tailwindcss';
 
 const config = {
   content: [
@@ -45,6 +44,37 @@ const config = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+        },
+        // Colores personalizados para botones
+        orange: {
+          50: '#fff7ed',
+          500: '#f97316',
+          600: '#ea580c',
+        },
+        purple: {
+          50: '#faf5ff',
+          500: '#a855f7',
+          600: '#9333ea',
+        },
+        teal: {
+          50: '#f0fdfa',
+          500: '#14b8a6',
+          600: '#0d9488',
+        },
+        red: {
+          50: '#fef2f2',
+          500: '#ef4444',
+          600: '#dc2626',
+        },
+        yellow: {
+          50: '#fefce8',
+          500: '#eab308',
+          600: '#ca8a04',
+        },
+        blue: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          600: '#2563eb',
         },
       },
       borderRadius: {

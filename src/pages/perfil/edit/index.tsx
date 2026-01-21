@@ -17,6 +17,7 @@ import WebLayout from '@/components/Layouts/WebLayout';
 import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
@@ -247,8 +248,7 @@ const Profile = () => {
                                     hint="You can't change your email, we never send spam to your email or share your personal info."
                                     disabled
                                   />
-                                  <Input
-                                    type="password"
+                                  <PasswordInput
                                     prefix={
                                       <LockClosedIcon className="w-6 h-6" />
                                     }
@@ -264,8 +264,7 @@ const Profile = () => {
                                     hint="Tu contraseña solo cambia si ingresa una nueva aquí. Importante: Su contraseña debe tener al menos 8 caracteres y contener al menos un número y una letra mayúscula y minúscula y un símbolo."
                                     disabled={!editMode}
                                   />
-                                  <Input
-                                    type="password"
+                                  <PasswordInput
                                     {...methods.register(
                                       'passwordConfirmation'
                                     )}

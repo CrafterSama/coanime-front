@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
@@ -13,6 +11,7 @@ import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import { Button } from '@/components/ui/button';
 import Checkbox from '@/components/ui/Checkbox';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/auth';
 
@@ -23,7 +22,6 @@ const Login = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<string | string[]>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const redirectionIfLoggedIn = () => {
     if (router.query.redirect) setRedirect(router.query.redirect as string);
@@ -101,23 +99,14 @@ const Login = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               value={password}
               className="block mt-1 w-full"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(event.target.value)
               }
               autoComplete="current-password"
-              endIcon={
-                showPassword ? (
-                  <AiOutlineEyeInvisible size={24} />
-                ) : (
-                  <AiOutlineEye size={24} />
-                )
-              }
-              endIconAction={() => setShowPassword(!showPassword)}
             />
           </div>
 
@@ -127,7 +116,7 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
-            <Button className="ml-3">Login</Button>
+            <Button className="ml-3" variant="solid-orange">Login</Button>
 
             <div className="flex flex-row justify-around content-center w-full">
               <Link

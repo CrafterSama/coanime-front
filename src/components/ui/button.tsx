@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -19,6 +19,23 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        // Variantes personalizadas para mantener compatibilidad
+        solid: 'bg-orange-500 text-white hover:bg-orange-600',
+        'solid-orange': 'bg-orange-500 text-white hover:bg-orange-600',
+        'solid-purple': 'bg-purple-500 text-white hover:bg-purple-600',
+        'solid-teal': 'bg-teal-500 text-white hover:bg-teal-600',
+        'solid-red': 'bg-red-500 text-white hover:bg-red-600',
+        'solid-yellow': 'bg-yellow-500 text-white hover:bg-yellow-600',
+        'solid-blue': 'bg-blue-500 text-white hover:bg-blue-600',
+        'outline-orange':
+          'border border-orange-500 text-orange-500 hover:bg-orange-50',
+        'outline-purple':
+          'border border-purple-500 text-purple-500 hover:bg-purple-50',
+        'outline-teal': 'border border-teal-500 text-teal-500 hover:bg-teal-50',
+        'outline-red': 'border border-red-500 text-red-500 hover:bg-red-50',
+        'outline-yellow':
+          'border border-yellow-500 text-yellow-500 hover:bg-yellow-50',
+        'outline-blue': 'border border-blue-500 text-blue-500 hover:bg-blue-50',
       },
       size: {
         default: 'h-9 px-4 py-2',

@@ -10,6 +10,7 @@ import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/auth';
 
@@ -76,9 +77,8 @@ const PasswordReset = () => {
           {/* Password */}
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               name="password"
               value={password}
               className="block mt-1 w-full"
@@ -93,9 +93,8 @@ const PasswordReset = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <Input
+            <PasswordInput
               id="passwordConfirmation"
-              type="password"
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"

@@ -10,6 +10,7 @@ import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/auth';
 
 const Register = () => {
@@ -90,9 +91,8 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="password">Password</Label>
 
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               name="password"
               value={password}
               className="block mt-1 w-full"
@@ -108,9 +108,8 @@ const Register = () => {
           <div className="mt-4">
             <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
-            <Input
+            <PasswordInput
               id="passwordConfirmation"
-              type="password"
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
@@ -122,7 +121,7 @@ const Register = () => {
           </div>
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
-            <Button>Register</Button>
+            <Button variant="solid-orange">Register</Button>
             <div className="flex w-full justify-center">
               <Link
                 href="/login"
