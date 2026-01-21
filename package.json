@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "devHttps": "node server.js",
-    "dev": "next dev -H front.coanime.net -p 3000",
-    "build": "next build",
+    "dev": "next dev -H front.coanime.net -p 3000 --turbo",
+    "dev:webpack": "next dev -H front.coanime.net -p 3000",
+    "build": "next build --turbo",
+    "build:webpack": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write ./**/*.{js,ts,tsx,css,md,json} --config ./.prettierrc",
