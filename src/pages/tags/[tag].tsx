@@ -25,9 +25,13 @@ interface TagsProps {
 }
 
 const Tags = ({ tag, tagData, articlesData, errors }: TagsProps) => {
-  const { data = {}, isLoading } = useQuery(['tags', tagData], () => getTags(tag), {
-    initialData: tagData,
-  });
+  const { data = {}, isLoading } = useQuery(
+    ['tags', tagData],
+    () => getTags(tag),
+    {
+      initialData: tagData,
+    }
+  );
   const [articles, setArticles] = useState<any[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);
@@ -111,7 +115,11 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }: { params?: any }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}: {
+  params?: any;
+}) => {
   // Next.js 15: params puede ser una Promise
   const resolvedParams = await params;
   const tag = resolvedParams?.tag as string | undefined;

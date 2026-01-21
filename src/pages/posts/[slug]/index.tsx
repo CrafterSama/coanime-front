@@ -33,9 +33,13 @@ interface ShowArticleProps {
 const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
-  const { data = {} } = useQuery(['viewArticles', slug], () => getArticleData(slug), {
-    initialData: articleData,
-  });
+  const { data = {} } = useQuery(
+    ['viewArticles', slug],
+    () => getArticleData(slug),
+    {
+      initialData: articleData,
+    }
+  );
   const {
     title,
     description,

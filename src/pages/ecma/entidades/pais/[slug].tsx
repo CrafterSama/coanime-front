@@ -37,7 +37,10 @@ const Country = ({ entitiesData }: CountryProps) => {
         page,
       },
     });
-    const response = await getEntitiesByCountry({ country: slug as string, page });
+    const response = await getEntitiesByCountry({
+      country: slug as string,
+      page,
+    });
     setData(response.data);
   };
 

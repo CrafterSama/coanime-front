@@ -263,6 +263,7 @@ coanime-front/
 ### Frontend Público
 
 #### 1. Página de Inicio (`/`)
+
 - **Top Slider**: Carrusel de posts relevantes
 - **Posts Recientes**: Lista de artículos más recientes
 - **Broadcast Today**: Animes en emisión hoy (integración con Jikan API)
@@ -272,6 +273,7 @@ coanime-front/
 - **SEO**: Meta tags completos, Open Graph, Twitter Cards
 
 #### 2. Gestión de Posts/Artículos
+
 - **Listado de Posts** (`/posts`): Lista paginada de todos los artículos
 - **Detalle de Post** (`/posts/[slug]`): Vista completa del artículo
   - Contenido completo
@@ -282,6 +284,7 @@ coanime-front/
   - Contador de visitas
 
 #### 3. Gestión de Títulos (Anime/Manga)
+
 - **Listado por Tipo** (`/ecma/titulos/[type]`):
   - TV, Película, OVA, Especial, ONA, Music
   - Manga, Manhua, Manhwa, Novela Ligera, One-shot, Doujinshi
@@ -297,35 +300,42 @@ coanime-front/
   - Fechas de emisión
 
 #### 4. Personas (Seiyuus, Mangakas, etc.)
+
 - **Listado** (`/ecma/personas`)
 - **Por País** (`/ecma/personas/pais/[slug]`)
 - **Detalle** (`/ecma/personas/[slug]`)
 
 #### 5. Revistas
+
 - **Listado** (`/ecma/revistas`)
 - **Por Demografía** (`/ecma/revistas/demografia/[slug]`)
 - **Detalle** (`/ecma/revistas/[slug]`)
 
 #### 6. Entidades
+
 - **Listado** (`/ecma/entidades`)
 - **Por País** (`/ecma/entidades/pais/[slug]`)
 - **Detalle** (`/ecma/entidades/[slug]`)
 
 #### 7. Eventos
+
 - **Listado** (`/eventos`)
 - **Por País** (`/eventos/pais/[slug]`)
 - **Detalle** (`/eventos/[slug]`)
 
 #### 8. Categorías y Tags
+
 - **Categorías** (`/categorias/[category]`)
 - **Tags** (`/tags/[tag]`)
 
 #### 9. Usuarios
+
 - **Perfil Público** (`/users/[slug]`)
 - **Perfil Propio** (`/perfil` y `/perfil/edit`)
 - **Mi Lista** (`/mi-lista`): Lista personal de títulos del usuario
 
 #### 10. Búsqueda
+
 - **Búsqueda con Algolia**: Búsqueda en tiempo real
 - **Búsqueda de Posts**: Búsqueda de artículos
 - **Búsqueda de Títulos**: Búsqueda de anime/manga
@@ -333,6 +343,7 @@ coanime-front/
 ### Panel de Administración (Dashboard)
 
 #### 1. Dashboard Principal (`/dashboard`)
+
 - **Estadísticas**:
   - Total de artículos
   - Total de títulos
@@ -341,6 +352,7 @@ coanime-front/
 - **Accesos rápidos** a las diferentes secciones
 
 #### 2. Gestión de Posts (`/dashboard/posts`)
+
 - **Listado**: Tabla con todos los posts (paginación)
 - **Crear Post** (`/dashboard/posts/create`):
   - Editor WYSIWYG (SunEditor)
@@ -354,6 +366,7 @@ coanime-front/
 - **Eliminar Post**: Soft delete
 
 #### 3. Gestión de Títulos (`/dashboard/titles`)
+
 - **Listado**: Tabla con todos los títulos
 - **Crear Título** (`/dashboard/titles/create`):
   - Información básica (nombre, sinopsis, tipo)
@@ -366,21 +379,26 @@ coanime-front/
 - **Eliminar Título**: Soft delete
 
 #### 4. Gestión de Personas (`/dashboard/people`)
+
 - **Listado**: Tabla con todas las personas
 - **Crear Persona** (`/dashboard/people/create`)
 - **Editar Persona** (`/dashboard/people/[id]`)
 
 #### 5. Gestión de Revistas (`/dashboard/magazine`)
+
 - **Listado y gestión** de revistas
 
 #### 6. Gestión de Compañías (`/dashboard/companies`)
+
 - **Listado y gestión** de compañías
 
 #### 7. Gestión de Eventos (`/dashboard/events`)
+
 - **Listado y gestión** de eventos
 - **Integración con Google Maps** para ubicaciones
 
 #### 8. Perfil de Administrador (`/dashboard/profile`)
+
 - Edición de perfil personal
 
 ### Sistema de Autenticación
@@ -403,11 +421,13 @@ coanime-front/
 El proyecto utiliza **tres instancias de Axios** configuradas en `src/lib/http.ts`:
 
 1. **`httpClient`**: Para endpoints internos (`/internal`)
+
    - Usado en el dashboard
    - Transformación snake_case ↔ camelCase
    - Interceptores para manejo de errores 401
 
 2. **`httpClientExternal`**: Para endpoints externos (`/external`)
+
    - Usado en el frontend público
    - Transformación snake_case ↔ camelCase
 
@@ -417,85 +437,96 @@ El proyecto utiliza **tres instancias de Axios** configuradas en `src/lib/http.t
 ### Servicios Principales
 
 #### Posts (`src/services/posts.ts`)
+
 ```typescript
-- postCreate(params)
-- postUpdate(id, params)
-- postDelete(id)
-- getArticleData(slug)
-- getArticlesData({ page })
-- getArticlesJapan({ page })
-- getPosts({ page })
+-postCreate(params) -
+  postUpdate(id, params) -
+  postDelete(id) -
+  getArticleData(slug) -
+  getArticlesData({ page }) -
+  getArticlesJapan({ page }) -
+  getPosts({ page });
 ```
 
 #### Títulos (`src/services/titles.ts`)
+
 ```typescript
-- getAllTitles()
-- getTitles({ page })
-- getUpcomingTitles({ page })
-- getTitlesByType({ type, page })
-- getTitlesByGenre({ genre, page })
-- getTitle({ type, title })
-- getRandomImageByTitle({ title })
-- titleCreate(params)
-- titleUpdate(id, params)
-- getUserTitleList({ page })
+-getAllTitles() -
+  getTitles({ page }) -
+  getUpcomingTitles({ page }) -
+  getTitlesByType({ type, page }) -
+  getTitlesByGenre({ genre, page }) -
+  getTitle({ type, title }) -
+  getRandomImageByTitle({ title }) -
+  titleCreate(params) -
+  titleUpdate(id, params) -
+  getUserTitleList({ page });
 ```
 
 #### Usuarios (`src/services/users.ts`)
+
 ```typescript
-- getUser()
+-getUser();
 ```
 
 #### Eventos (`src/services/events.ts`)
+
 ```typescript
-- getEvents({ page })
-- getEventsByCountry({ country, page })
-- getEvent({ slug })
+-getEvents({ page }) -
+  getEventsByCountry({ country, page }) -
+  getEvent({ slug });
 ```
 
 #### Personas (`src/services/people.ts`)
+
 ```typescript
-- getPeople({ page })
-- getPeopleByCountry({ country, page })
-- getPerson({ slug })
+-getPeople({ page }) -
+  getPeopleByCountry({ country, page }) -
+  getPerson({ slug });
 ```
 
 #### Revistas (`src/services/magazine.ts`)
+
 ```typescript
-- getMagazines({ page })
-- getMagazine({ slug })
-- getMagazinesByDemography({ demography, page })
+-getMagazines({ page }) -
+  getMagazine({ slug }) -
+  getMagazinesByDemography({ demography, page });
 ```
 
 #### Home (`src/services/home.ts`)
+
 ```typescript
-- getHomeData()
-- getBroadcastToday()  // Integración con Jikan API
-- getSeriesSoon()     // Integración con Jikan API
+-getHomeData() -
+  getBroadcastToday() - // Integración con Jikan API
+  getSeriesSoon(); // Integración con Jikan API
 ```
 
 #### Jikan API (`src/services/jikan.ts`)
+
 ```typescript
-- getJikanAnime({ type, title })
-- getJikanManga({ type, title })
+-getJikanAnime({ type, title }) - getJikanManga({ type, title });
 ```
 
 ### Integraciones Externas
 
 1. **Jikan API** (`https://api.jikan.moe/v4/`)
+
    - Datos de anime y manga
    - Schedules (programación)
    - Búsqueda de títulos
 
 2. **Algolia Search**
+
    - Búsqueda en tiempo real
    - Indexación de contenido
 
 3. **Google Maps API**
+
    - Ubicaciones de eventos
    - Mapas interactivos
 
 4. **Disqus**
+
    - Sistema de comentarios en posts
 
 5. **Google Analytics**
@@ -522,6 +553,7 @@ El proyecto utiliza **Laravel Sanctum** en el backend para autenticación basada
 #### Hook `useAuth` (`src/hooks/auth.ts`)
 
 **Funcionalidades:**
+
 - `login({ setErrors, setStatus, ...props })`: Inicio de sesión
 - `register({ setErrors, ...props })`: Registro de usuario
 - `logout(redirect?)`: Cierre de sesión
@@ -531,10 +563,12 @@ El proyecto utiliza **Laravel Sanctum** en el backend para autenticación basada
 - `user`: Estado del usuario actual (vía SWR)
 
 **Middleware:**
+
 - `middleware: 'auth'`: Requiere autenticación
 - `middleware: 'guest'`: Solo para usuarios no autenticados
 
 **Rutas Protegidas:**
+
 ```typescript
 const securePaths = [
   'dashboard',
@@ -566,6 +600,7 @@ const securePaths = [
 ## 📝 Interfaces y Tipos
 
 ### Article (`src/interface/articles.ts`)
+
 ```typescript
 interface Article {
   id: number;
@@ -594,6 +629,7 @@ interface Article {
 ```
 
 ### Title (`src/interface/titles.ts`)
+
 ```typescript
 interface Title {
   id: number;
@@ -625,6 +661,7 @@ interface Title {
 ```
 
 ### User (`src/interface/users.ts`)
+
 ```typescript
 interface User {
   id: number;
@@ -653,6 +690,7 @@ interface User {
 ```
 
 ### Category (`src/interface/categories.ts`)
+
 ```typescript
 interface Category {
   id: number;
@@ -662,6 +700,7 @@ interface Category {
 ```
 
 ### Tag (`src/interface/tags.ts`)
+
 ```typescript
 interface Tag {
   id: number;
@@ -689,33 +728,40 @@ interface Tag {
 ### Componentes UI (40 componentes)
 
 **Formularios:**
+
 - `Button`, `Input`, `TextArea`, `Select`, `Checkbox`, `ToggleCheckbox`
 - `Form`, `FormHeader`, `Label`
 - `TextEditor` (SunEditor wrapper)
 - `UploadImage`
 
 **Navegación:**
+
 - `NavLink`, `ResponsiveNavLink`, `MenuLink`, `Dropdown`, `DropdownLink`
 
 **Feedback:**
+
 - `Loading`, `Alert`, `Errors`, `AuthValidationErrors`
 - `Modal`, `Tabs`
 
 **Datos:**
+
 - `Table`, `Paginator`, `RowRender`
 - `ItemInfo`, `ImageDetails`
 
 **Layout:**
+
 - `Section`, `SectionHeader`, `SectionTitle`
 - `FlexLayout`, `Aside`
 
 **Otros:**
+
 - `ApplicationLogo`, `AuthCard`, `AuthSessionStatus`
 - `CloudLinks`, `Icon`, `Show`, `Text`
 
 ### Módulos de Funcionalidad
 
 #### Home (8 componentes)
+
 - `TopSlider`: Carrusel principal
 - `RecentPosts`: Posts recientes
 - `BroadcastToday`: Animes en emisión
@@ -723,12 +769,15 @@ interface Tag {
 - `OtherNews`: Otras noticias
 
 #### Posts (9 componentes)
+
 - Componentes para listado, detalle, cards, etc.
 
 #### Titles (9 componentes)
+
 - Componentes para listado, detalle, cards, etc.
 
 #### Search
+
 - `AlgoliaSearch`: Componente de búsqueda con Algolia
 - `SearchBox`: Caja de búsqueda personalizada
 
@@ -739,9 +788,11 @@ interface Tag {
 ### 🔴 Críticos
 
 1. **Error de Sintaxis en `tailwind.config.js`**
+
    - Falta la propiedad `plugins:` en la línea 19
    - **Impacto**: Tailwind puede no funcionar correctamente
    - **Solución**:
+
    ```javascript
    plugins: [
      require('@tailwindcss/typography'),
@@ -752,6 +803,7 @@ interface Tag {
    ```
 
 2. **TypeScript Strict Mode Deshabilitado**
+
    - `strict: false` en `tsconfig.json`
    - **Impacto**: 138 ocurrencias de `any`, menos seguridad de tipos
    - **Recomendación**: Habilitar gradualmente
@@ -772,16 +824,19 @@ interface Tag {
 ### 🟠 Alta Prioridad
 
 4. **Dependencias Duplicadas**
+
    - `date-fns` y `dayjs` (ambos en uso)
    - `swr` y `@tanstack/react-query` (swr solo en auth)
    - `react-select-search` (posiblemente no usado)
    - `@tinymce/tinymce-react` (no usado, solo suneditor)
 
 5. **Next.js Desactualizado**
+
    - Versión 13.5.4 (actual: 14.x)
    - **Beneficios de actualizar**: Mejoras de rendimiento, Server Actions, mejor App Router
 
 6. **Manejo de Errores Inconsistente**
+
    - Diferentes patrones en diferentes partes
    - No hay logging centralizado
    - Errores no manejados pueden causar crashes
@@ -793,16 +848,20 @@ interface Tag {
 ### 🟡 Media Prioridad
 
 8. **Configuración de TypeScript Subóptima**
+
    - `target: "es5"` (muy antiguo)
    - Falta `noUnusedLocals`, `noUnusedParameters`
 
 9. **Falta `.env.example`**
+
    - Mencionado en README pero no existe
 
 10. **Plugin de Tailwind Redundante**
+
     - `@tailwindcss/line-clamp` ya incluido en Tailwind 3.3+
 
 11. **QueryClient Creado en Cada Render**
+
     - En `src/pages/_app.tsx:35`
     - Mejor práctica: crear fuera del componente
 
@@ -812,18 +871,23 @@ interface Tag {
 ### 🟢 Baja Prioridad
 
 13. **Optimización de Imágenes**
+
     - No todos los lugares usan `next/image`
 
 14. **SEO**
+
     - Meta tags manuales, podría usar `next-seo`
 
 15. **Testing**
+
     - No hay tests implementados
 
 16. **Documentación de Código**
+
     - Falta JSDoc en funciones públicas
 
 17. **Performance Monitoring**
+
     - Solo Google Analytics básico
 
 18. **Accesibilidad (a11y)**
@@ -836,6 +900,7 @@ interface Tag {
 ### Mejoras Inmediatas (Semana 1-2)
 
 1. **Corregir `tailwind.config.js`**
+
 ```javascript
 plugins: [
   require('@tailwindcss/typography'),
@@ -846,9 +911,11 @@ plugins: [
 ```
 
 2. **Eliminar `console.log` de producción**
+
    - Reemplazar con sistema de logging apropiado
 
 3. **Mejorar manejo de errores en `axios.ts`**
+
 ```typescript
 if (typeof window !== 'undefined') {
   const token = document.cookie
@@ -862,20 +929,24 @@ if (typeof window !== 'undefined') {
 ### Mejoras de Limpieza (Semana 3-4)
 
 4. **Estandarizar librería de fechas**
+
    - Opción A: Mantener `dayjs` (más ligero)
    - Opción B: Mantener `date-fns` (mejor tree-shaking)
    - **Recomendación**: `dayjs` por simplicidad y tamaño
 
 5. **Migrar `useAuth` de SWR a React Query**
+
    - Unificar estrategia de data fetching
    - Reducir bundle size
 
 6. **Eliminar dependencias no usadas**
+
    - `@tinymce/tinymce-react`
    - `react-select-search` (verificar primero)
    - `@tailwindcss/line-clamp`
 
 7. **Crear `.env.example`**
+
 ```env
 NEXT_PUBLIC_API_URL=https://api.coanime.net
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
@@ -886,22 +957,26 @@ ALGOLIA_SECRET=your_search_key
 ### Mejoras de Actualización (Mes 2)
 
 8. **Actualizar Next.js a 14.x**
+
    - Revisar breaking changes
    - Actualizar APIs obsoletas
    - Aprovechar nuevas características
 
 9. **Habilitar TypeScript Strict Mode gradualmente**
+
    - Empezar con `noImplicitAny: true`
    - Reducir uso de `any` progresivamente
    - Actualizar `target` a `ES2020` o `ES2022`
 
 10. **Sistema centralizado de manejo de errores**
+
     - Error boundary global
     - Interceptor de errores en Axios
     - Utilidad para formatear errores
     - Logging estructurado
 
 11. **Validación de variables de entorno**
+
 ```typescript
 // src/lib/env.ts
 const requiredEnvVars = {
@@ -921,6 +996,7 @@ export const env = requiredEnvVars;
 ### Mejoras de Optimización (Mes 3+)
 
 12. **Optimizar QueryClient**
+
 ```typescript
 // Crear fuera del componente
 const queryClient = new QueryClient({
@@ -935,24 +1011,29 @@ const queryClient = new QueryClient({
 ```
 
 13. **Implementar `next-seo`**
+
     - Manejo centralizado de meta tags
     - Open Graph y Twitter Cards automáticos
 
 14. **Auditar y optimizar imágenes**
+
     - Reemplazar todos los `<img>` con `next/image`
     - Configurar dominios permitidos
 
 15. **Agregar testing**
+
     - Jest + React Testing Library
     - Tests unitarios para componentes críticos
     - Tests de integración para flujos principales
 
 16. **Mejorar documentación**
+
     - JSDoc en funciones públicas
     - Documentación de componentes
     - Guías de contribución
 
 17. **Implementar error tracking**
+
     - Sentry o LogRocket
     - Monitoreo de errores en producción
 
@@ -964,12 +1045,14 @@ const queryClient = new QueryClient({
 ### Mejoras Arquitectónicas (Futuro)
 
 19. **Considerar migración a App Router** (Next.js 13+)
+
     - Mejor rendimiento
     - Server Components
     - Mejor SEO
     - **Nota**: Requiere refactorización significativa
 
 20. **Estructura por Features** (si el proyecto crece)
+
 ```
 src/
 ├── features/
@@ -981,6 +1064,7 @@ src/
 ```
 
 21. **State Management**
+
     - Considerar Zustand o Jotai si el estado global crece
     - Actualmente React Query es suficiente
 
@@ -1108,6 +1192,7 @@ src/
 ## 📊 Métricas del Proyecto Actual
 
 ### Código
+
 - **Archivos TypeScript/TSX**: ~150+ archivos
 - **Componentes UI**: 40 componentes
 - **Módulos de funcionalidad**: 43 archivos
@@ -1116,17 +1201,20 @@ src/
 - **Páginas**: 50+ páginas
 
 ### Dependencias
+
 - **Dependencias de producción**: 38
 - **Dependencias de desarrollo**: 25
 - **Total**: 63 dependencias
 
 ### Problemas
+
 - **Uso de `any`**: 138 ocurrencias en 58 archivos
 - **Console.logs**: 8 ocurrencias
 - **Errores de sintaxis**: 1 (tailwind.config.js)
 - **Dependencias duplicadas**: 4 pares identificados
 
 ### Configuración
+
 - **TypeScript strict mode**: ❌ Deshabilitado
 - **ESLint configurado**: ✅ Sí
 - **Prettier configurado**: ✅ Sí
@@ -1139,24 +1227,29 @@ src/
 ### APIs Externas
 
 1. **Backend API** (`NEXT_PUBLIC_API_URL`)
+
    - Endpoints internos: `/internal/*`
    - Endpoints externos: `/external/*`
    - Autenticación: Laravel Sanctum
 
 2. **Jikan API** (`https://api.jikan.moe/v4/`)
+
    - Datos de anime y manga
    - Schedules (programación diaria)
    - Búsqueda
 
 3. **Algolia Search**
+
    - Búsqueda en tiempo real
    - Indexación de contenido
 
 4. **Google Maps API**
+
    - Mapas para eventos
    - Geocoding
 
 5. **Disqus**
+
    - Comentarios en posts
 
 6. **Google Analytics**

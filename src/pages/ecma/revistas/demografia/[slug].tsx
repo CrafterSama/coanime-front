@@ -37,7 +37,10 @@ const Demography = ({ magazinesData }: DemographyProps) => {
         page,
       },
     });
-    const response = await getMagazinesByDemography({ demography: slug as string, page });
+    const response = await getMagazinesByDemography({
+      demography: slug as string,
+      page,
+    });
     setData(response.data);
   };
 

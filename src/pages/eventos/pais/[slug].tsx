@@ -37,7 +37,10 @@ const Country = ({ eventsData }: CountryProps) => {
         page,
       },
     });
-    const response = await getEventsByCountry({ country: slug as string, page });
+    const response = await getEventsByCountry({
+      country: slug as string,
+      page,
+    });
     setData(response.data);
   };
 

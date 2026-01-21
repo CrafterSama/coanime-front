@@ -24,7 +24,9 @@ const UploadImage = ({
   const [newImage, setNewImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const uploadPostImages = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+  const uploadPostImages = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
     setLoading(true);
     const images = e.target.files;
     if (!images) {

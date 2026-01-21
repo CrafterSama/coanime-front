@@ -11,6 +11,7 @@
 Este proyecto es un frontend y panel de administración para CoAnime construido con Next.js, TypeScript y Tailwind CSS. El proyecto está funcional pero presenta varias oportunidades de mejora en términos de calidad de código, optimización, mantenibilidad y actualización de dependencias.
 
 ### Estado General
+
 - ✅ **Estructura organizada**: El proyecto tiene una estructura clara y bien organizada
 - ✅ **TypeScript implementado**: Uso de TypeScript en todo el proyecto
 - ✅ **Herramientas de calidad**: ESLint y Prettier configurados
@@ -23,9 +24,11 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ## 🔴 Problemas Críticos
 
 ### 1. Error de Sintaxis en `tailwind.config.js`
+
 **Ubicación:** `tailwind.config.js:19-23`
 
 **Problema:** Falta la propiedad `plugins` en la configuración de Tailwind. El código actual tiene:
+
 ```javascript
   ],
     require('@tailwindcss/typography'),
@@ -36,6 +39,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ```
 
 **Solución:** Debe ser:
+
 ```javascript
   plugins: [
     require('@tailwindcss/typography'),
@@ -50,11 +54,13 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 2. TypeScript Strict Mode Deshabilitado
+
 **Ubicación:** `tsconfig.json:8`
 
 **Problema:** `"strict": false` permite código menos seguro y reduce los beneficios de TypeScript.
 
 **Impacto:**
+
 - Permite el uso de `any` sin restricciones (138 ocurrencias encontradas)
 - No detecta errores potenciales en tiempo de compilación
 - Reduce la calidad y mantenibilidad del código
@@ -64,9 +70,11 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 3. Uso Excesivo de `any` en TypeScript
+
 **Estadísticas:** 138 ocurrencias de `any` en 58 archivos
 
 **Archivos más afectados:**
+
 - `src/lib/http.ts` - Uso de `any` en interceptores
 - `src/hooks/auth.ts` - Props sin tipado adecuado
 - `src/components/ui/*` - Múltiples componentes con `any`
@@ -81,14 +89,17 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ### 4. Dependencias Duplicadas
 
 #### 4.1 Librerías de Manejo de Fechas
+
 - **`date-fns`** (v2.30.0) - En uso
 - **`dayjs`** (v1.11.10) - En uso
 
 **Análisis:** Ambas librerías están siendo utilizadas en el proyecto. `dayjs` se usa en:
+
 - `src/pages/dashboard/posts/create.tsx`
 - `src/pages/dashboard/posts/[id]/index.tsx`
 
 **Recomendación:** Estandarizar en una sola librería:
+
 - **Opción A:** Mantener `dayjs` (más ligero, API similar a moment.js)
 - **Opción B:** Mantener `date-fns` (mejor tree-shaking, más funcional)
 
@@ -97,12 +108,14 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 #### 4.2 Librerías de Data Fetching
+
 - **`@tanstack/react-query`** (v4.35.7) - Uso principal
 - **`swr`** (v2.2.4) - Solo en `src/hooks/auth.ts`
 
 **Análisis:** `swr` solo se usa en el hook de autenticación, mientras que el resto del proyecto usa React Query.
 
 **Recomendación:** Migrar `useAuth` a React Query para:
+
 - Unificar la estrategia de data fetching
 - Reducir el tamaño del bundle
 - Simplificar el mantenimiento
@@ -112,6 +125,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 #### 4.3 Librerías de Select
+
 - **`react-select`** (v5.7.7) - En uso
 - **`react-select-search`** (v4.1.6) - **No encontrado en uso**
 
@@ -120,6 +134,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 #### 4.4 Editores de Texto
+
 - **`suneditor`** + **`suneditor-react`** - En uso (confirmado en `src/components/ui/TextEditor.tsx`)
 - **`@tinymce/tinymce-react`** (v4.3.0) - **No encontrado en uso**
 
@@ -128,16 +143,19 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 5. Next.js Desactualizado
+
 **Versión actual:** 13.5.4  
 **Versión recomendada:** 14.x (última estable)
 
 **Beneficios de actualizar:**
+
 - Mejoras de rendimiento
 - Nuevas características (Server Actions, mejor App Router)
 - Correcciones de seguridad
 - Mejor soporte para React 19
 
 **Consideraciones:**
+
 - Next.js 14 requiere Node.js 18.17 o superior
 - Puede requerir cambios en algunas APIs
 - Revisar breaking changes en la documentación
@@ -145,6 +163,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 6. Manejo de Errores Inconsistente
+
 **Problema:** El manejo de errores varía entre diferentes partes del código:
 
 1. **En `src/hooks/auth.ts`:** Uso de `.catch()` con verificación manual de status codes
@@ -152,6 +171,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 3. **En componentes:** Algunos usan `try-catch`, otros usan `.catch()`
 
 **Ejemplo problemático:**
+
 ```typescript
 .catch((error) => {
   if (error.response.status !== 422) throw error;
@@ -160,11 +180,13 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ```
 
 **Problemas:**
+
 - No maneja casos donde `error.response` es `undefined`
 - Código repetitivo
 - No hay logging centralizado de errores
 
 **Recomendación:** Crear un sistema centralizado de manejo de errores:
+
 - Interceptor global de errores en Axios
 - Utilidad para formatear errores
 - Componente de error boundary para React
@@ -172,9 +194,11 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 7. Console.logs en Código de Producción
+
 **Estadísticas:** 8 ocurrencias encontradas
 
 **Archivos afectados:**
+
 - `src/services/mapServices.ts`
 - `src/pages/dashboard/posts/[id]/index.tsx`
 - `src/pages/dashboard/posts/create.tsx`
@@ -184,7 +208,8 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 - `src/pages/dashboard/titles/create.tsx`
 - `src/pages/dashboard/titles/[id]/index.tsx`
 
-**Recomendación:** 
+**Recomendación:**
+
 - Eliminar todos los `console.log` de producción
 - Usar un sistema de logging apropiado (ej: `winston`, `pino`)
 - O usar `console.error`/`console.warn` solo para debugging en desarrollo
@@ -194,12 +219,15 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ## 🟡 Problemas de Media Prioridad
 
 ### 8. Configuración de TypeScript Subóptima
+
 **Problemas identificados:**
+
 - `target: "es5"` - Muy antiguo, limita características modernas
 - `strict: false` - Ya mencionado
 - Falta `skipLibCheck: true` (aunque está presente)
 
 **Recomendaciones:**
+
 ```json
 {
   "compilerOptions": {
@@ -215,9 +243,11 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 9. Falta de Archivo `.env.example`
+
 **Problema:** El README menciona copiar `.env.example` a `.env`, pero el archivo no existe en el repositorio.
 
 **Variables de entorno identificadas:**
+
 - `NEXT_PUBLIC_API_URL` - Usado en `src/lib/axios.ts` y `src/lib/http.ts`
 - `GA_TRACKING_ID` - Usado en `src/lib/gtag.js` y `src/pages/_app.tsx`
 
@@ -226,6 +256,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 10. Plugin de Tailwind Redundante
+
 **Problema:** `@tailwindcss/line-clamp` está instalado pero ya está incluido en Tailwind CSS 3.3+
 
 **Recomendación:** Eliminar `@tailwindcss/line-clamp` de `package.json` y usar la utilidad nativa `line-clamp-*` de Tailwind.
@@ -233,9 +264,11 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 ---
 
 ### 11. QueryClient Creado en Cada Render
+
 **Ubicación:** `src/pages/_app.tsx:35`
 
 **Problema:**
+
 ```typescript
 const queryClient = new QueryClient({
   // ...
@@ -245,6 +278,7 @@ const queryClient = new QueryClient({
 **Análisis:** Aunque Next.js puede optimizar esto, es mejor práctica crear el QueryClient fuera del componente o usar un singleton.
 
 **Recomendación:**
+
 ```typescript
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -260,11 +294,13 @@ const queryClient = new QueryClient({
 ---
 
 ### 12. Uso de `document.cookie` en Cliente
+
 **Ubicación:** `src/lib/axios.ts:17-20`
 
 **Problema:** Acceso directo a `document.cookie` sin verificación de entorno (SSR).
 
 **Recomendación:** Verificar que estamos en el cliente antes de acceder:
+
 ```typescript
 if (typeof window !== 'undefined') {
   const token = document.cookie
@@ -277,9 +313,11 @@ if (typeof window !== 'undefined') {
 ---
 
 ### 13. Falta de Validación de Variables de Entorno
+
 **Problema:** No hay validación de que las variables de entorno requeridas estén presentes.
 
 **Recomendación:** Crear un archivo `src/lib/env.ts`:
+
 ```typescript
 const requiredEnvVars = {
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
@@ -300,9 +338,11 @@ export const env = requiredEnvVars;
 ## 🟢 Mejoras de Baja Prioridad
 
 ### 14. Optimización de Imágenes
+
 **Recomendación:** Asegurar que todas las imágenes usen `next/image` en lugar de `<img>` estándar.
 
 **Beneficios:**
+
 - Optimización automática
 - Lazy loading
 - Mejor rendimiento
@@ -310,7 +350,9 @@ export const env = requiredEnvVars;
 ---
 
 ### 15. SEO y Meta Tags
+
 **Recomendación:** Implementar `next-seo` o similar para manejo centralizado de:
+
 - Meta tags
 - Open Graph
 - Twitter Cards
@@ -319,9 +361,11 @@ export const env = requiredEnvVars;
 ---
 
 ### 16. Estructura de Carpetas
+
 **Estado actual:** Organización por tipo técnico (components, hooks, services, etc.)
 
 **Consideración futura:** Si el proyecto crece, considerar organización por features:
+
 ```
 src/
 ├── features/
@@ -342,9 +386,11 @@ src/
 ---
 
 ### 17. Testing
+
 **Estado actual:** No se encontraron archivos de test ni configuración de testing.
 
 **Recomendación:** Implementar testing:
+
 - **Unit tests:** Jest + React Testing Library
 - **E2E tests:** Playwright o Cypress
 - **Coverage:** Al menos 60% para código crítico
@@ -352,7 +398,9 @@ src/
 ---
 
 ### 18. Documentación de Código
+
 **Recomendación:** Agregar JSDoc a funciones y componentes públicos:
+
 ```typescript
 /**
  * Hook personalizado para autenticación
@@ -360,15 +408,20 @@ src/
  * @param redirectIfAuthenticated - Ruta a la que redirigir si está autenticado
  * @returns Objeto con funciones de autenticación y estado del usuario
  */
-export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = {}) => {
+export const useAuth = ({
+  middleware,
+  redirectIfAuthenticated,
+}: useAuthProps = {}) => {
   // ...
-}
+};
 ```
 
 ---
 
 ### 19. Performance Monitoring
+
 **Recomendación:** Implementar monitoreo de performance:
+
 - Web Vitals (ya tiene Google Analytics)
 - Error tracking (Sentry, LogRocket)
 - Performance monitoring (Vercel Analytics si está en Vercel)
@@ -376,7 +429,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 ---
 
 ### 20. Accesibilidad (a11y)
-**Recomendación:** 
+
+**Recomendación:**
+
 - Auditar con herramientas como `eslint-plugin-jsx-a11y`
 - Agregar atributos ARIA donde sea necesario
 - Asegurar navegación por teclado
@@ -387,11 +442,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 ## 📋 Lista de Mejoras Priorizadas
 
 ### 🔴 Críticas (Hacer inmediatamente)
+
 1. ✅ **Corregir error de sintaxis en `tailwind.config.js`**
 2. ✅ **Eliminar `console.log` de producción (8 ocurrencias)**
 3. ✅ **Mejorar manejo de errores en `src/lib/axios.ts` (verificar `document` antes de usar)**
 
 ### 🟠 Alta Prioridad (Próximas 2 semanas)
+
 4. ✅ **Estandarizar librería de fechas** (eliminar `date-fns` o `dayjs`)
 5. ✅ **Migrar `useAuth` de SWR a React Query**
 6. ✅ **Eliminar dependencias no utilizadas:**
@@ -401,6 +458,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 8. ✅ **Crear sistema centralizado de manejo de errores**
 
 ### 🟡 Media Prioridad (Próximo mes)
+
 9. ✅ **Habilitar modo estricto de TypeScript gradualmente**
 10. ✅ **Reducir uso de `any` (138 ocurrencias)**
 11. ✅ **Crear archivo `.env.example`**
@@ -409,6 +467,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 14. ✅ **Agregar validación de variables de entorno**
 
 ### 🟢 Baja Prioridad (Backlog)
+
 15. ✅ **Auditar y optimizar uso de imágenes**
 16. ✅ **Implementar `next-seo` para SEO**
 17. ✅ **Agregar testing (Jest + React Testing Library)**
@@ -421,17 +480,20 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 ## 📊 Métricas del Proyecto
 
 ### Dependencias
+
 - **Total de dependencias:** 38
 - **Dependencias de desarrollo:** 25
 - **Dependencias duplicadas identificadas:** 4 pares
 
 ### Código
+
 - **Archivos TypeScript/TSX:** ~150+ archivos
 - **Uso de `any`:** 138 ocurrencias en 58 archivos
 - **Console.logs:** 8 ocurrencias
 - **Errores de sintaxis:** 1 (tailwind.config.js)
 
 ### Configuración
+
 - **TypeScript strict mode:** ❌ Deshabilitado
 - **ESLint configurado:** ✅ Sí
 - **Prettier configurado:** ✅ Sí
@@ -442,23 +504,27 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 ## 🎯 Plan de Acción Recomendado
 
 ### Semana 1-2: Correcciones Críticas
+
 1. Corregir `tailwind.config.js`
 2. Eliminar `console.log` de producción
 3. Mejorar manejo de errores en interceptores
 
 ### Semana 3-4: Limpieza de Dependencias
+
 1. Estandarizar librería de fechas
 2. Migrar `useAuth` a React Query
 3. Eliminar dependencias no utilizadas
 4. Crear `.env.example`
 
 ### Mes 2: Actualizaciones y Mejoras
+
 1. Actualizar Next.js a 14.x
 2. Habilitar modo estricto de TypeScript gradualmente
 3. Reducir uso de `any`
 4. Implementar sistema centralizado de errores
 
 ### Mes 3+: Optimizaciones y Mejoras Continuas
+
 1. Agregar testing
 2. Mejorar SEO
 3. Implementar monitoring
@@ -469,6 +535,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: useAuthProps = 
 ## 📝 Notas Finales
 
 Este proyecto tiene una base sólida y está bien estructurado. Las mejoras sugeridas son principalmente para:
+
 - **Mantenibilidad:** Reducir dependencias duplicadas y mejorar tipado
 - **Rendimiento:** Actualizar dependencias y optimizar código
 - **Calidad:** Mejorar manejo de errores y testing
@@ -480,4 +547,3 @@ La mayoría de las mejoras son incrementales y pueden implementarse gradualmente
 
 **Generado por:** Análisis automatizado del proyecto  
 **Última actualización:** 2026-01-07
-

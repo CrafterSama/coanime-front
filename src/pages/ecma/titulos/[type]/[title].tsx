@@ -313,13 +313,15 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
                         />
                         <SerieItemInfo
                           title="Géneros"
-                          value={titleData?.result?.genres?.map((genre: any) => (
-                            <span key={genre?.id} className="genre-tag">
-                              <Link href={`/ecma/generos/${genre?.slug}`}>
-                                {genre?.name}
-                              </Link>
-                            </span>
-                          ))}
+                          value={titleData?.result?.genres?.map(
+                            (genre: any) => (
+                              <span key={genre?.id} className="genre-tag">
+                                <Link href={`/ecma/generos/${genre?.slug}`}>
+                                  {genre?.name}
+                                </Link>
+                              </span>
+                            )
+                          )}
                         />
                         <SerieItemInfo
                           title="Episodios"
@@ -336,13 +338,14 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
                           value={
                             titleData?.result?.status ? (
                               <div
-                                className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
-                                  (() => {
-                                    const statusKey = titleData?.result?.status as keyof typeof status;
-                                    const colorKey = status[statusKey] as keyof typeof STATUS_COLORS;
-                                    return STATUS_COLORS[colorKey] || '';
-                                  })()
-                                }`}>
+                                className={`text-center border-2 rounded-md px-1 max-w-[100px] ${(() => {
+                                  const statusKey = titleData?.result
+                                    ?.status as keyof typeof status;
+                                  const colorKey = status[
+                                    statusKey
+                                  ] as keyof typeof STATUS_COLORS;
+                                  return STATUS_COLORS[colorKey] || '';
+                                })()}`}>
                                 {titleData?.result?.status}
                               </div>
                             ) : (
