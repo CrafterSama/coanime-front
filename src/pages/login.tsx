@@ -116,7 +116,9 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
-            <Button className="ml-3" variant="solid-orange">Login</Button>
+            <Button className="ml-3" variant="solid-orange">
+              Login
+            </Button>
 
             <div className="flex flex-row justify-around content-center w-full">
               <Link
