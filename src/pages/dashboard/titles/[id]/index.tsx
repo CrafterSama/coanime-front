@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import DatePicker from 'react-datetime-picker';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -14,8 +14,8 @@ import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';

@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -46,12 +47,11 @@ const RecentPosts = ({ posts }) => (
               <span className="flex flex-row gap-2">
                 <ClockIcon className="w-6 h-6" />
                 <span className="text-gray-300">
-                  {format(
-                    new Date(
-                      post?.postponedTo ? post?.postponedTo : post?.createdAt
-                    ),
-                    'd LLLL, yyyy'
-                  )}
+                  {dayjs(
+                    post?.postponedTo ? post?.postponedTo : post?.createdAt
+                  )
+                    .locale('es')
+                    .format('D MMMM, YYYY')}
                 </span>
               </span>
             </p>

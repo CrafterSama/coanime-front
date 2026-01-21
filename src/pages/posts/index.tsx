@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import OtherNews from '@/components/modules/home/components/OtherNews';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesData } from '@/services/posts';

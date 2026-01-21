@@ -10,7 +10,8 @@ const credentialsAuth: NextApiHandler = async (req, res) => {
   }
 
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const { requireEnv } = await import('@/lib/env');
+    const apiUrl = requireEnv('NEXT_PUBLIC_API_URL');
 
     if (!apiUrl) {
       res

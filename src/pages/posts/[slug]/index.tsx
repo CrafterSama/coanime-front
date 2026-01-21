@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -116,12 +116,12 @@ const ShowArticle = ({ slug, articleData, errors }) => {
               property="article:published_time"
               content={
                 post?.postponedTo
-                  ? format(
-                      new Date(post?.postponedTo),
-                      'dd LLLL, yyyy hh:mm a',
-                      { locale: es }
-                    )
-                  : format(new Date(post?.createdAt), 'dd LLLL, yyyy hh:mm a')
+                  ? dayjs(post?.postponedTo)
+                      .locale('es')
+                      .format('DD MMMM, YYYY hh:mm a')
+                  : dayjs(post?.createdAt)
+                      .locale('es')
+                      .format('DD MMMM, YYYY hh:mm a')
               }
             />
           </Head>

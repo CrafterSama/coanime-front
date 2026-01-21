@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import Label from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 
 const TextArea = ({
   label,

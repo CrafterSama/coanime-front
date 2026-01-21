@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { CgSpinner } from 'react-icons/cg';
 
 import Image from 'next/image';
+import { useFormContext } from 'react-hook-form';
+import { CgSpinner } from 'react-icons/cg';
+import toast from 'react-hot-toast';
 
 import { CloudUploadIcon } from '@/components/icons';
 import { uploadImages } from '@/hooks/images';
+import { Label } from '@/components/ui/label';
 
-import Label from './Label';
 import { Show } from './Show';
 
 const UploadImage = ({ disabled = false, name, model }) => {

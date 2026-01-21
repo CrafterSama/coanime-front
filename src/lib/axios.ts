@@ -1,11 +1,15 @@
 import Axios from 'axios';
 
+import { requireEnv } from './env';
+
+const apiUrl = requireEnv('NEXT_PUBLIC_API_URL');
+
 const axios = Axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: apiUrl,
   headers: {
     Accept: 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-    Origin: process.env.NEXT_PUBLIC_API_URL,
+    Origin: apiUrl,
   },
   // Necesario para que las cookies (incluida XSRF-TOKEN) viajen con la request
   withCredentials: true,

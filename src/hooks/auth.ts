@@ -115,7 +115,10 @@ export const useAuth = ({
         // Errores de validación de Laravel
         const errors = error.response.data.errors;
         setErrors(Object.values(errors).flat());
-      } else if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
+      } else if (
+        error?.code === 'ERR_NETWORK' ||
+        error?.message === 'Network Error'
+      ) {
         // Error de red (CORS, URL incorrecta, etc.)
         setErrors([
           'Error de conexión. Verifica que la API esté disponible y configurada correctamente.',
@@ -123,7 +126,9 @@ export const useAuth = ({
         console.error('[forgotPassword] Network Error:', error);
       } else {
         // Otros errores
-        setErrors(['Error al enviar el email de recuperación. Intenta de nuevo.']);
+        setErrors([
+          'Error al enviar el email de recuperación. Intenta de nuevo.',
+        ]);
         console.error('[forgotPassword] Error:', error);
       }
     }
@@ -151,7 +156,10 @@ export const useAuth = ({
         // Errores de validación de Laravel
         const errors = error.response.data.errors;
         setErrors(Object.values(errors).flat());
-      } else if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
+      } else if (
+        error?.code === 'ERR_NETWORK' ||
+        error?.message === 'Network Error'
+      ) {
         // Error de red
         setErrors([
           'Error de conexión. Verifica que la API esté disponible y configurada correctamente.',

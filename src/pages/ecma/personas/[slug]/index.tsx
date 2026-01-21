@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -93,11 +93,9 @@ const Person = ({ personData }) => {
                           value={
                             <span className="post-date">
                               {personData?.result?.birthday
-                                ? format(
-                                    new Date(personData?.result?.birthday),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )
+                                ? dayjs(personData?.result?.birthday)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')
                                 : 'Sin Información'}
                             </span>
                           }

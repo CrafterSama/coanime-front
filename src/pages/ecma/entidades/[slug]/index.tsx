@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -77,13 +77,9 @@ const Entity = ({ entityData }) => {
                                 condition={entityData?.result?.foundationDate}>
                                 {typeof entityData?.result?.foundationDate ===
                                   'string' &&
-                                  format(
-                                    new Date(
-                                      entityData?.result?.foundationDate
-                                    ),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )}
+                                  dayjs(entityData?.result?.foundationDate)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')}
                               </Show>
                               <Show
                                 condition={!entityData?.result?.foundationDate}>

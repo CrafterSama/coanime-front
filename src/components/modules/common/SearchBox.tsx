@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useSearchPosts } from '@/hooks/posts';

@@ -10,7 +10,7 @@ import BroadcastToday from '@/components/modules/home/components/BroadcastToday'
 import OtherNews from '@/components/modules/home/components/OtherNews';
 import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';

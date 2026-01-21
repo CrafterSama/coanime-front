@@ -2,8 +2,9 @@
 
 **Fecha:** Enero 2026  
 **Versión Actual:** 1.0.4  
-**Next.js:** 14.2.35  
-**TailwindCSS:** 3.4.17
+**Next.js:** 15.1.7 ✅  
+**TailwindCSS:** 4.0.0 ✅  
+**React:** 19.0.0 ✅
 
 ---
 
@@ -13,8 +14,10 @@
 - Estructura organizada y modular
 - Uso de TypeScript en todo el proyecto
 - React Query configurado para data fetching
-- Sistema de autenticación funcional con Laravel Sanctum
+- Sistema de autenticación con Auth.js (next-auth) ✅
 - Helpers y utilidades bien organizados
+- Tailwind CSS 4 implementado ✅
+- shadcn/ui integrado ✅
 
 ### ⚠️ Áreas de Mejora Identificadas
 
@@ -22,11 +25,11 @@
 
 ## 🔴 Prioridad Alta - Correcciones Críticas
 
-### 1. **Problema con CSS y Sucrase** (Actual)
-- **Estado:** Parcialmente resuelto con script de copia
-- **Recomendación:** Monitorear y considerar Next.js 15 que mejora esto
+### 1. **Problema con CSS y Sucrase** ✅ RESUELTO
+- **Estado:** ✅ Resuelto con actualización a Next.js 15 y Tailwind v4
+- **Solución aplicada:** Next.js 15 mejora el manejo de CSS, Tailwind v4 usa nueva sintaxis
 
-### 2. **TypeScript Strict Mode Deshabilitado**
+### 2. **TypeScript Strict Mode Deshabilitado** ⏳ PENDIENTE
 ```json
 // tsconfig.json
 "strict": false  // ❌ Permite código inseguro
@@ -48,28 +51,10 @@
 }
 ```
 
-### 3. **QueryClient Creado en Cada Render**
-```typescript
-// ❌ Actual - se recrea en cada render
-const queryClient = new QueryClient({...})
-```
-**Solución:**
-```typescript
-// ✅ Crear fuera del componente
-let browserQueryClient: QueryClient | undefined = undefined;
+### 3. **QueryClient Creado en Cada Render** ✅ RESUELTO
+- ✅ Implementado patrón singleton en `src/lib/queryClient.ts`
 
-function getQueryClient() {
-  if (typeof window === 'undefined') {
-    return new QueryClient({...});
-  }
-  if (!browserQueryClient) {
-    browserQueryClient = new QueryClient({...});
-  }
-  return browserQueryClient;
-}
-```
-
-### 4. **Manejo de Errores Inconsistente**
+### 4. **Manejo de Errores Inconsistente** ⏳ PENDIENTE
 - Falta manejo centralizado
 - Errores pueden causar crashes
 - Sin logging estructurado
@@ -80,229 +65,205 @@ function getQueryClient() {
 
 ## 🟠 Prioridad Media - Optimizaciones
 
-### 5. **Dependencias Duplicadas**
-- `date-fns` y `dayjs` (ambos en uso)
-- `swr` y `@tanstack/react-query` (swr solo en auth)
-- `@tinymce/tinymce-react` (no usado)
+### 5. **Dependencias Duplicadas** ✅ RESUELTO
+- ✅ `date-fns` eliminado (todo migrado a `dayjs`)
+- ✅ `swr` eliminado (migrado a Auth.js)
+- ✅ `react-datetime-picker` eliminado (reemplazado por DatePicker de shadcn/ui)
+- ✅ `@tinymce/tinymce-react` eliminado
+- ✅ `react-select-search` eliminado
+- ✅ `@tailwindcss/line-clamp` eliminado
 
-**Recomendación:** Consolidar y eliminar duplicados
+### 6. **Migrar `useAuth` de SWR a React Query** ✅ RESUELTO
+- ✅ Migrado completamente a Auth.js (next-auth)
+- ✅ Usa `useSession`, `signIn`, `signOut` de Auth.js
 
-### 6. **Migrar `useAuth` de SWR a React Query**
-```typescript
-// ❌ Actual - usa SWR
-useSWR('/api/user', () => httpClientAuth.get('/api/user'))
-
-// ✅ Recomendado - usar React Query
-useQuery({
-  queryKey: ['user'],
-  queryFn: () => httpClientAuth.get('/api/user').then(res => res.data)
-})
-```
-
-### 7. **Uso de `<img>` en lugar de `<Image />`**
+### 7. **Uso de `<img>` en lugar de `<Image />`** ⏳ PENDIENTE
 - **Archivos afectados:** `Error.tsx`, `Loading.tsx`
 - **Impacto:** Menor LCP, mayor bandwidth
 - **Solución:** Migrar a `next/image`
 
-### 8. **Plugins de Tailwind Redundantes**
-- `@tailwindcss/line-clamp` (ya incluido en Tailwind 3.3+)
+### 8. **Migración Completa a shadcn/ui** ⚠️ PARCIAL
+- ✅ Componentes base creados (button, input, textarea, form, label, calendar, popover, date-picker)
+- ✅ DatePicker completamente migrado
+- ⚠️ ~21 archivos aún usan componentes antiguos (Button.tsx, Input.tsx, TextArea.tsx, Label.tsx)
+- **Solución:** Migrar archivos restantes y eliminar componentes antiguos
 
 ---
 
 ## 🟡 Prioridad Baja - Mejoras de Calidad
 
-### 9. **Console.logs en Producción**
-- 8+ ocurrencias encontradas
-- **Solución:** Eliminar o usar logger apropiado
+### 9. **Console.logs en Producción** ✅ PARCIALMENTE RESUELTO
+- ✅ Eliminados la mayoría
+- ⚠️ Algunos `console.error` mantenidos (apropiados para debugging)
+- **Solución:** Usar logger estructurado en producción
 
-### 10. **Falta `.env.example`**
+### 10. **Falta `.env.example`** ⏳ PENDIENTE
 - **Impacto:** Dificulta onboarding
 - **Solución:** Crear archivo con todas las variables necesarias
 
-### 11. **Warnings de ESLint**
-- Import order
-- React Hooks dependencies
-- **Solución:** Configurar auto-fix en pre-commit
+### 11. **Warnings de ESLint** ⚠️ PARCIALMENTE RESUELTO
+- ✅ Errores críticos corregidos
+- ⚠️ ~80 warnings restantes (orden de imports, dependencias de hooks)
+- **Solución:** Configurar auto-fix en pre-commit y corregir gradualmente
 
 ---
 
-## 🚀 Actualizaciones Propuestas
+## 🚀 Actualizaciones Completadas
 
-### ⚠️ **TailwindCSS 4** - NO RECOMENDADO AÚN
+### ✅ **Next.js 15** - COMPLETADO
 
-**Estado:** Actualmente en **alpha/beta** (no estable para producción)
+**Versión Actual:** 15.1.7 ✅
 
-**Motivos para esperar:**
-- ❌ No está estable (versión 4.0.0-alpha.X)
-- ❌ Requiere cambios significativos en configuración
-- ❌ Compatibilidad con plugins de terceros no garantizada
-- ✅ TailwindCSS 3.4.17 (actual) es muy bueno y estable
-
-**Recomendación:** 
-- ⏳ **Esperar a versión estable (Q2-Q3 2026)**
-- ✅ **Mantenerse en TailwindCSS 3.4.x** por ahora
-- 🎯 **Actualizar a v4 cuando esté en producción estable**
-
----
-
-### ✅ **Next.js 15** - RECOMENDADO (con precauciones)
-
-**Versión Actual:** 14.2.35  
-**Versión Propuesta:** 15.1.x
-
-#### Cambios Principales en Next.js 15:
-
-1. **APIs Asíncronas (Breaking Change)**
-   ```typescript
-   // ❌ Next.js 14
-   const headers = headers()
-   const userAgent = headers().get('user-agent')
-   
-   // ✅ Next.js 15
-   const headersList = await headers()
-   const userAgent = headersList.get('user-agent')
-   ```
+#### Cambios Aplicados:
+1. **APIs Asíncronas**
+   - ✅ Actualizadas 28 funciones `getStaticProps`/`getServerSideProps` para usar `await params`
 
 2. **Mejoras en el Compilador**
-   - ✅ Mejor manejo de CSS (resuelve tu problema actual)
+   - ✅ Mejor manejo de CSS (resuelve problema de Sucrase)
    - ✅ Soporte mejorado para Rust-based tools
    - ✅ Mejor tree-shaking
 
 3. **App Router Mejorado**
-   - Mejor soporte para Server Components
-   - Partial Prerendering (PPR) estable
+   - ✅ Mejor soporte para Server Components
+   - ✅ Partial Prerendering (PPR) disponible
 
-#### Plan de Migración a Next.js 15:
-
-**Fase 1: Preparación (1-2 días)**
-```bash
-# 1. Actualizar Next.js
-yarn add next@^15.1.8 react@^18.3.1 react-dom@^18.3.1
-
-# 2. Actualizar tipos
-yarn add -D @types/react@^18.3.12 @types/react-dom@^18.3.1 @types/node@^20
-```
-
-**Fase 2: Actualizar APIs (2-3 días)**
-- Convertir `headers()`, `cookies()`, `params` a async
-- Actualizar `getServerSideProps` si hay uso
-- Verificar middleware
-
-**Fase 3: Testing (1-2 días)**
-- Probar todas las rutas
-- Verificar SSR/SSG
-- Testing de autenticación
-
-**Beneficios:**
+**Beneficios Obtenidos:**
 - ✅ Resuelve problemas con CSS/Sucrase
 - ✅ Mejor rendimiento
 - ✅ Nuevas características (PPR, mejor caching)
 
-**Riesgos:**
-- ⚠️ Cambios breaking en APIs asíncronas
-- ⚠️ Puede requerir actualización de dependencias
-- ⚠️ Necesita testing exhaustivo
+---
 
-**Recomendación:** ✅ **SÍ, actualizar a Next.js 15** (es la mejor opción para resolver tus problemas actuales)
+### ✅ **TailwindCSS 4** - COMPLETADO
+
+**Versión Actual:** 4.0.0 ✅
+
+#### Cambios Aplicados:
+- ✅ Migrado de `@tailwind base/components/utilities` a `@import "tailwindcss"`
+- ✅ Actualizado `postcss.config.js` para usar `@tailwindcss/postcss`
+- ✅ Migrado `tailwind.config.js` a `tailwind.config.ts`
+- ✅ Actualizadas variables CSS para shadcn/ui
+- ✅ Corregidos errores de `@layer`
+
+**Beneficios Obtenidos:**
+- ✅ Sintaxis moderna
+- ✅ Mejor rendimiento de compilación
+- ✅ Compatible con shadcn/ui latest
 
 ---
 
-### ⚠️ **Auth.js (next-auth v5)** - EVALUAR CUIDADOSAMENTE
+### ✅ **Auth.js (next-auth)** - COMPLETADO
 
-**Estado Actual:**
-- Usas **Laravel Sanctum** para autenticación (no next-auth)
-- `next-auth` está instalado pero **no se usa activamente**
-- Autenticación custom con hooks y cookies
+**Estado Actual:** ✅ Implementado completamente
 
-**Situación:**
-- Tu proyecto usa un sistema de autenticación **custom con Laravel Sanctum**
-- Auth.js sería un **cambio arquitectónico completo**
+#### Cambios Aplicados:
+- ✅ Migrado completamente de Laravel Sanctum client-side a Auth.js
+- ✅ Configurado Credentials Provider
+- ✅ Creada ruta API interna para autenticación con Laravel
+- ✅ Implementado manejo de cookies server-side
+- ✅ Refactorizado `useAuth` para usar Auth.js
+- ✅ Login y registro migrados a Auth.js
 
-#### ¿Deberías migrar a Auth.js?
+**Beneficios Obtenidos:**
+- ✅ Autenticación más robusta
+- ✅ Mejor manejo de sesiones
+- ✅ Preparado para OAuth si se necesita
 
-**❌ NO, si:**
-- Tu backend Laravel ya maneja autenticación
-- Estás satisfecho con la solución actual
-- No quieres duplicar lógica de autenticación
+---
 
-**✅ SÍ, si:**
-- Quieres OAuth providers (Google, GitHub, etc.)
-- Necesitas edge-compatible auth
-- Planeas migrar completamente a Next.js sin backend Laravel
+### ✅ **shadcn/ui** - PARCIALMENTE COMPLETADO
 
-#### Opciones:
+**Estado Actual:** ⚠️ Componentes base creados, migración parcial
 
-**Opción 1: Mantener Laravel Sanctum (Recomendado)**
-- ✅ Ya funciona
-- ✅ Backend centralizado
-- ✅ Menos cambios necesarios
+#### Cambios Aplicados:
+- ✅ Instalado y configurado shadcn/ui
+- ✅ Creados componentes: button, input, textarea, label, form, calendar, popover, date-picker
+- ✅ Reemplazado `react-datetime-picker` por DatePicker de shadcn/ui
+- ✅ Migrados archivos principales (login, register, dashboard)
 
-**Opción 2: Migrar a Auth.js v5**
-- ⚠️ Requiere cambios significativos
-- ⚠️ Posible duplicación con backend Laravel
-- ✅ Más features OAuth
-- ✅ Edge-compatible
-
-**Opción 3: Híbrido**
-- Usar Auth.js solo para OAuth providers
-- Mantener Sanctum para autenticación principal
-
-**Recomendación:** 
-- 🔄 **Mantener Laravel Sanctum** por ahora
-- 💡 **Considerar Auth.js** solo si necesitas OAuth providers en el futuro
+#### Pendiente:
+- ⚠️ ~21 archivos aún usan componentes antiguos
+- ⚠️ Componentes antiguos (Button.tsx, Input.tsx, etc.) aún existen
 
 ---
 
 ## 📋 Plan de Actualización Recomendado
 
-### Fase 1: Correcciones Inmediatas (Semana 1)
-1. ✅ Ya completado: Actualización a Next.js 14
-2. ✅ Ya completado: Script de copia de CSS
-3. 🔄 Optimizar QueryClient (crear singleton)
-4. 🔄 Migrar useAuth de SWR a React Query
-5. 🔄 Reemplazar `<img>` con `<Image />`
+### Fase 1: Correcciones Inmediatas ✅ COMPLETADO
+1. ✅ Actualización a Next.js 15
+2. ✅ Actualización a Tailwind CSS 4
+3. ✅ QueryClient singleton
+4. ✅ Migración a Auth.js
+5. ✅ Estandarización de dayjs
+6. ✅ Eliminación de dependencias duplicadas
 
-### Fase 2: Actualización a Next.js 15 (Semana 2-3)
-1. 📦 Actualizar Next.js a 15.1.x
-2. 🔧 Convertir APIs a async (headers, cookies, params)
-3. 🧪 Testing exhaustivo
-4. 🚀 Deploy y monitoreo
+### Fase 2: Completar Migración shadcn/ui (Semana Actual)
+1. ⏳ Migrar ~21 archivos restantes a componentes de shadcn/ui
+2. ⏳ Eliminar componentes antiguos (Button.tsx, Input.tsx, TextArea.tsx, Label.tsx)
+3. ⏳ Verificar que todo funciona correctamente
 
-### Fase 3: Mejoras de Calidad (Mes 2)
-1. 🔒 Habilitar TypeScript strict mode gradualmente
-2. 📝 Crear `.env.example`
-3. 🧹 Eliminar dependencias no usadas
-4. 📊 Implementar sistema de logging
-5. 🎨 Optimizar imágenes restantes
+### Fase 3: Mejoras de Calidad (Próximas Semanas)
+1. ⏳ Habilitar TypeScript strict mode gradualmente
+2. ⏳ Crear `.env.example`
+3. ⏳ Reemplazar `<img>` con `<Image />` en Error.tsx y Loading.tsx
+4. ⏳ Corregir warnings de ESLint restantes
+5. ⏳ Implementar sistema de logging
+6. ⏳ Crear Error Boundary global
 
-### Fase 4: TailwindCSS 4 (Cuando esté estable - Q2-Q3 2026)
-1. ⏳ Esperar versión estable
-2. 📚 Leer guía de migración oficial
-3. 🧪 Testing en branch separado
-4. 🚀 Migración gradual
+### Fase 4: Optimizaciones (Mes 2)
+1. ⏳ Implementar `next-seo`
+2. ⏳ Optimizar componentes con `React.memo`
+3. ⏳ Lazy loading de componentes pesados
+4. ⏳ Agregar testing (Jest + React Testing Library)
 
 ---
 
 ## 🎯 Recomendación Final
 
-### Prioridad 1: ✅ **Actualizar a Next.js 15**
-- Resuelve problemas actuales con CSS
-- Mejoras de rendimiento significativas
-- Vale la pena el esfuerzo de migración
+### Prioridad 1: ✅ **COMPLETADO**
+- ✅ Actualización a Next.js 15
+- ✅ Actualización a Tailwind CSS 4
+- ✅ Migración a Auth.js
+- ✅ Estandarización de dayjs
 
-### Prioridad 2: ⏳ **Esperar TailwindCSS 4**
-- No está listo para producción
-- Mantener 3.4.x es la mejor opción ahora
+### Prioridad 2: ⏳ **EN PROGRESO**
+- ⏳ Completar migración a shadcn/ui (21 archivos restantes)
 
-### Prioridad 3: 🔄 **Mantener Laravel Sanctum**
-- Funciona bien
-- No hay necesidad de Auth.js a menos que necesites OAuth
-
-### Prioridad 4: 📈 **Mejoras Incrementales**
-- TypeScript strict mode
-- Optimizar QueryClient
-- Limpiar código
+### Prioridad 3: 📈 **PRÓXIMOS PASOS**
+- ⏳ TypeScript strict mode
+- ⏳ Error Boundary global
+- ⏳ Optimizar imágenes restantes
+- ⏳ Corregir warnings de ESLint
 
 ---
 
-¿Quieres que implemente alguna de estas mejoras específicas ahora?
+## 📊 Resumen de Estado
+
+### ✅ Completado (11 mejoras)
+1. Next.js 15
+2. React 19
+3. Tailwind CSS 4
+4. shadcn/ui (componentes base)
+5. Auth.js (migración completa)
+6. QueryClient singleton
+7. Estandarización dayjs
+8. Eliminación de dependencias duplicadas
+9. Configuración de imágenes
+10. Limpieza de lógica antigua
+11. Correcciones críticas de ESLint/Prettier
+
+### ⏳ Pendiente (10 mejoras)
+1. Completar migración shadcn/ui
+2. TypeScript strict mode
+3. Error Boundary global
+4. Validación de variables de entorno
+5. Reemplazar `<img>` con `<Image />`
+6. Corregir warnings de ESLint
+7. Implementar next-seo
+8. Agregar testing
+9. Crear `.env.example`
+10. Optimizar componentes
+
+---
+
+**Última Actualización:** Enero 2026

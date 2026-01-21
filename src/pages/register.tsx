@@ -7,9 +7,9 @@ import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/auth';
 
 const Register = () => {

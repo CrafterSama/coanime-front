@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/titles/settings';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';

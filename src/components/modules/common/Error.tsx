@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import WebLayout from '@/components/Layouts/WebLayout';
@@ -185,8 +186,16 @@ const Error = ({ code, error, text }) => {
             </div>
             <div>
               <div className="relative w-[100%] sm:w-[380px] h-auto rounded-lg overflow-hidden bg-gray-50 shadow">
-                <img src={image?.url} alt={code} className="w-full h-auto" />
-                {/* eslint-disable-line */}
+                {image?.url && (
+                  <Image
+                    src={image.url}
+                    alt={code}
+                    width={380}
+                    height={380}
+                    className="w-full h-auto"
+                    unoptimized
+                  />
+                )}
                 <p className="text-xs text-gray-400 p-2  text-center">
                   {image?.text}
                 </p>

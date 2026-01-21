@@ -15,7 +15,7 @@ import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 import Rates from '@/components/modules/titles/components/Rates';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Statistics from '@/components/modules/titles/components/Statistics';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';

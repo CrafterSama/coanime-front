@@ -30,9 +30,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
+          const { getEnv } = await import('@/lib/env');
           const baseUrl =
-            process.env.NEXTAUTH_URL_INTERNAL ??
-            process.env.NEXTAUTH_URL ??
+            getEnv('NEXTAUTH_URL_INTERNAL') ??
+            getEnv('NEXTAUTH_URL') ??
             'http://localhost:3000';
 
           // Llamar a nuestra API interna que maneja CSRF correctamente

@@ -7,7 +7,7 @@ import {
 
 import cn from 'classnames';
 
-import Label from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 
 import { Show } from './Show';
 

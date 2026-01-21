@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -41,17 +41,13 @@ const OtherNews = ({ articles }) => {
                 <div className="flex gap-2 justify-start items-center">
                   <span className="text-gray-200 flex flex-row gap-2 text-sm">
                     <ClockIcon className="w-6 h-6" />
-                    {format(
-                      new Date(
-                        article.postponedTo
-                          ? article.postponedTo
-                          : article.createdAt
-                      ),
-                      'dd LLLL, yyyy',
-                      {
-                        locale: es,
-                      }
-                    )}
+                    {dayjs(
+                      article.postponedTo
+                        ? article.postponedTo
+                        : article.createdAt
+                    )
+                      .locale('es')
+                      .format('DD MMMM, YYYY')}
                   </span>
                 </div>
               </div>

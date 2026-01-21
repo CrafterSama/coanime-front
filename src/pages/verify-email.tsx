@@ -5,7 +5,7 @@ import Link from 'next/link';
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/auth';
 
 const VerifyEmail = () => {

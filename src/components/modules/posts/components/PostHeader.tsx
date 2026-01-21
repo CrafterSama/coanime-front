@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -28,7 +29,9 @@ const PostHeader = ({ image, post }) => (
         <p>
           <span className="post-date">
             {post?.postponedTo &&
-              format(new Date(post?.postponedTo), 'd LLLL, yyyy')}
+              dayjs(post?.postponedTo)
+                .locale('es')
+                .format('D MMMM, YYYY')}
           </span>{' '}
           por{' '}
           <Link

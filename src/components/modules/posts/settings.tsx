@@ -7,7 +7,7 @@ import { extractText, strLimit } from '@/utils/string';
 import { EyeIcon, LinkIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { hasRole } from '@/utils/common';
 import { Show } from '@/components/ui/Show';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 export const usePostsSettings = ({
   user: authUser,

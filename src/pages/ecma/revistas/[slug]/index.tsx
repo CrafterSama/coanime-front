@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -101,13 +101,9 @@ const Magazine = ({ magazineData }) => {
                               {magazineData?.result?.foundationDate &&
                               magazineData?.result?.foundationDate !==
                                 '0000-00-00 00:00:00'
-                                ? format(
-                                    new Date(
-                                      magazineData?.result?.foundationDate
-                                    ),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )
+                                ? dayjs(magazineData?.result?.foundationDate)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')
                                 : 'Sin Información'}
                             </span>
                           }

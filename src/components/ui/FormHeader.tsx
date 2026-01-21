@@ -1,7 +1,7 @@
 import { CgSpinner } from 'react-icons/cg';
 
 import { PencilIcon } from '@/components/icons';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { RoundedButton } from '@/components/ui/RoundedButton';
 
 type FormHeaderProps = {

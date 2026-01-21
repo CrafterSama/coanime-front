@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import DateTimePicker from 'react-datetime-picker';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
@@ -16,8 +16,8 @@ import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import { FormWithContext } from '@/components/ui/Form';
 import FormHeader from '@/components/ui/FormHeader';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
 import TextEditor from '@/components/ui/TextEditor';
@@ -204,11 +204,11 @@ const CreatePost = () => {
             <div className="w-full md:w-4/12">
               <div className="mb-4 flex flex-col gap-3 datepicker-box">
                 <Label htmlFor="description">Posponer hasta(Hora Local):</Label>
-                <DateTimePicker
+                <DatePicker
                   onChange={(value) => setValue('postponedTo', value)}
-                  minDate={new Date()}
-                  format="dd-MM-yyyy hh:mm a"
                   value={watch('postponedTo')}
+                  format="dd-MM-yyyy"
+                  showTime={true}
                   calendarIcon={
                     <span className="text-orange-400">
                       <CalendarIcon className="w-6 h-6" />

@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Checkbox from '@/components/ui/Checkbox';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/auth';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Input } from '@/components/ui/Input';
 
 const Login = () => {
   const router = useRouter();

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { usePostsSettings } from '@/components/modules/posts/settings';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -17,7 +17,7 @@ import { useAuth } from '@/hooks/auth';
 import { postDelete } from '@/services/posts';
 import { toast } from 'react-hot-toast';
 import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 const Posts = () => {
   const router = useRouter();
