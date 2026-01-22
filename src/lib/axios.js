@@ -13,6 +13,7 @@ const axios = Axios.create({
   },
   // Necesario para que las cookies (incluida XSRF-TOKEN) viajen con la request
   withCredentials: true,
+  withXSRFToken: true,
   // Configuración estándar para Laravel Sanctum
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-XSRF-TOKEN',
