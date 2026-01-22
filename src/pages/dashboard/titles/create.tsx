@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import DatePicker from 'react-datetime-picker';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -12,10 +12,10 @@ import { useRouter } from 'next/router';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
@@ -28,7 +28,6 @@ import { CalendarIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 
-import 'react-widgets/styles.css';
 import { Show } from '@/components/ui/Show';
 import FlexLayout from '@/components/ui/FlexLayout';
 
@@ -78,21 +77,21 @@ const CreateTitle = () => {
     resetTitleInfo();
   }, []);
 
-  const genresOptions = genres?.map((genre) => ({
+  const genresOptions = genres?.map((genre: any) => ({
     value: genre.id,
     label: genre.name,
   }));
-  const typesOptions = types?.map((type) => ({
+  const typesOptions = types?.map((type: any) => ({
     value: type.id,
     label: type.name,
   }));
-  const ratingsOptions = ratings?.map((rating) => ({
+  const ratingsOptions = ratings?.map((rating: any) => ({
     value: rating.id,
     label: rating.name,
     description: rating.description,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     router.push('/dashboard/titles');
     toast.success(response.data.message.text);
   };
@@ -101,24 +100,23 @@ const CreateTitle = () => {
     titleCreate(params)
   );
 
-  const onHandleError = (error) => {
+  const onHandleError = (error: any) => {
     return toast.error(
       error?.response?.data?.message?.text || error?.response?.data?.message
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const params = {
       ...data,
       ratingId: data.ratingId.value,
       typeId: data.typeId.value,
-      genreId: data.genreId.map((g) => g.value),
+      genreId: data.genreId.map((g: any) => g.value),
       broadTime: dayjs(data.broadTime).format('YYYY-MM-DD'),
       broadFinish: dayjs(data.broadFinish).format('YYYY-MM-DD'),
       status: data.status.value,
       justYear: data.justYear === false ? 'false' : 'true',
     };
-    //console.log('🚀 ~ file: index.tsx ~ line 114 ~ onSubmit ~ params', params);
     createTitle(
       { params },
       {
@@ -212,7 +210,9 @@ const CreateTitle = () => {
                             <TextEditor
                               defaultValue={watch('sinopsis')}
                               errors={errors?.['sinopsis']?.message}
-                              onChange={(value) => setValue('sinopsis', value)}
+                              onChange={(value: string) =>
+                                setValue('sinopsis', value)
+                              }
                             />
                           )}
                         />
@@ -228,7 +228,7 @@ const CreateTitle = () => {
                     options={typesOptions}
                     name="typeId"
                     value={watch('typeId')}
-                    callBack={(option) => setValue('typeId', option)}
+                    callBack={(option: any) => setValue('typeId', option)}
                     errors={errors?.['typeId']?.message as string}
                   />
                 </div>
@@ -236,12 +236,12 @@ const CreateTitle = () => {
                   <Label htmlFor="ratingId">Rating</Label>
                   <FormSelect
                     options={ratingsOptions}
-                    getOptionLabel={(option) =>
+                    getOptionLabel={(option: any) =>
                       `${option?.label} (${option?.description})`
                     }
                     name="ratingId"
                     value={watch('ratingId')}
-                    callBack={(option) => setValue('ratingId', option)}
+                    callBack={(option: any) => setValue('ratingId', option)}
                     errors={errors?.['ratingId']?.message as string}
                   />
                 </div>
@@ -295,7 +295,7 @@ const CreateTitle = () => {
                     options={statusOptions}
                     name="status"
                     value={watch('status')}
-                    callBack={(option) => setValue('status', option)}
+                    callBack={(option: any) => setValue('status', option)}
                     errors={errors?.['status']?.message as string}
                   />
                 </div>

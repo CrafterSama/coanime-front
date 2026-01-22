@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -12,7 +12,11 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEvent } from '@/services/events';
 import { Show } from '@/components/ui/Show';
 
-const Event = ({ eventData }) => {
+interface EventProps {
+  eventData: any;
+}
+
+const Event = ({ eventData }: EventProps) => {
   return (
     <>
       {eventData && (
@@ -44,6 +48,7 @@ const Event = ({ eventData }) => {
                     }
                     alt={eventData?.result?.name}
                     fill
+                    unoptimized
                   />
                 </figure>
                 <div className="overlayer"></div>
@@ -72,11 +77,9 @@ const Event = ({ eventData }) => {
                           value={
                             <span className="post-date">
                               {eventData?.result?.dateStart
-                                ? format(
-                                    new Date(eventData?.result?.dateStart),
-                                    'dd LLLL, yyyy hh:mm a',
-                                    { locale: es }
-                                  )
+                                ? dayjs(eventData?.result?.dateStart)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY hh:mm a')
                                 : 'Sin Información'}
                             </span>
                           }
@@ -86,11 +89,9 @@ const Event = ({ eventData }) => {
                           value={
                             <span className="post-date">
                               {eventData?.result?.dateEnd
-                                ? format(
-                                    new Date(eventData?.result?.dateEnd),
-                                    'dd LLLL, yyyy hh:mm a',
-                                    { locale: es }
-                                  )
+                                ? dayjs(eventData?.result?.dateEnd)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY hh:mm a')
                                 : 'Sin Información'}
                             </span>
                           }
@@ -134,8 +135,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const params = context.params;
+export async function getStaticProps(context: any) {
+  // Next.js 15: params puede ser una Promise
+  const params = await context.params;
   const { slug } = params;
   const response = await getEvent({
     slug,

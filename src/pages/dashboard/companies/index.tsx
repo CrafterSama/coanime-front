@@ -11,7 +11,6 @@ import { RowRender } from '@/components/ui/RowRender';
 import { Show } from '@/components/ui/Show';
 
 /*const Test = (props) => {
-  console.log(props);
   const { name } = props;
   return (
     <ul className="flex flex-col gap-2 justify-start items-start">

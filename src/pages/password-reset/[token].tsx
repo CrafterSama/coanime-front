@@ -8,9 +8,10 @@ import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/auth';
 
 const PasswordReset = () => {
@@ -21,18 +22,18 @@ const PasswordReset = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
 
-  const submitForm = (event) => {
+  const submitForm = (event: React.FormEvent) => {
     event.preventDefault();
 
     resetPassword({
       email,
       password,
       password_confirmation: passwordConfirmation,
-      setErrors,
-      setStatus,
+      setErrors: (errors: string[]) => setErrors(errors),
+      setStatus: (status: string | null) => setStatus(status),
     });
   };
 
@@ -65,7 +66,9 @@ const PasswordReset = () => {
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
               required
               autoFocus
             />
@@ -73,35 +76,37 @@ const PasswordReset = () => {
 
           {/* Password */}
           <div className="mt-4">
-            <Label htmlFor="password">Password</Label>
-            <Input
+            <Label htmlFor="password">Contraseña</Label>
+            <PasswordInput
               id="password"
-              type="password"
               name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
               required
             />
           </div>
 
           {/* Confirm Password */}
           <div className="mt-4">
-            <Label htmlFor="passwordConfirmation">Confirm Password</Label>
+            <Label htmlFor="passwordConfirmation">Confirmar contraseña</Label>
 
-            <Input
+            <PasswordInput
               id="passwordConfirmation"
-              type="password"
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={(event) => setPasswordConfirmation(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordConfirmation(event.target.value)
+              }
               required
             />
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <Button>Reset Password</Button>
+            <Button>Restablecer contraseña</Button>
           </div>
         </form>
       </AuthCard>

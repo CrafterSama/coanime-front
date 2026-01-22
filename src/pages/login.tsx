@@ -1,29 +1,27 @@
 import { useEffect, useState } from 'react';
 
-import Head from 'next/head';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Checkbox from '@/components/ui/Checkbox';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/auth';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Input } from '@/components/ui/Input';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<string | string[]>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const redirectionIfLoggedIn = () => {
     if (router.query.redirect) setRedirect(router.query.redirect as string);
@@ -40,18 +38,35 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (router.query.reset?.length > 0 && errors.length === 0) {
-      setStatus(String(router.query.reset));
+    if (
+      router.query.reset &&
+      Array.isArray(router.query.reset) &&
+      router.query.reset.length > 0 &&
+      errors.length === 0
+    ) {
+      setStatus(String(router.query.reset[0]));
     } else {
       setStatus(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const submitForm = async (event) => {
+  const submitForm = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    login({ email, password, setErrors, setStatus });
+    const redirectPath = router.query.redirect
+      ? Array.isArray(router.query.redirect)
+        ? router.query.redirect[0]
+        : router.query.redirect
+      : '/';
+
+    login({
+      email,
+      password,
+      setErrors: (errors: string[]) => setErrors(errors),
+      setStatus: (status: string | null) => setStatus(status),
+      redirectTo: redirectPath as string,
+    });
   };
 
   return (
@@ -81,29 +96,24 @@ const Login = () => {
               type="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
             />
           </div>
 
           {/* Password */}
           <div className="mt-4">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Contraseña</Label>
 
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={(event) => setPassword(event.target.value)}
-              autoComplete="current-password"
-              endIcon={
-                showPassword ? (
-                  <AiOutlineEyeInvisible size={24} />
-                ) : (
-                  <AiOutlineEye size={24} />
-                )
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
               }
-              endIconAction={() => setShowPassword(!showPassword)}
+              autoComplete="current-password"
             />
           </div>
 
@@ -113,7 +123,9 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
-            <Button className="ml-3">Login</Button>
+            <Button className="ml-3" variant="solid-orange">
+              Iniciar sesión
+            </Button>
 
             <div className="flex flex-row justify-around content-center w-full">
               <Link

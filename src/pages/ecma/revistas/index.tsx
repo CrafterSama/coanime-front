@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getMagazines } from '@/services/magazine';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type MagazineData = {
   title: string;
@@ -18,7 +19,11 @@ type MagazineData = {
   result: any;
 };
 
-const Magazines = ({ magazinesData }) => {
+interface MagazinesProps {
+  magazinesData: any;
+}
+
+const Magazines = ({ magazinesData }: MagazinesProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<MagazineData>(magazinesData);
@@ -56,7 +61,7 @@ const Magazines = ({ magazinesData }) => {
         <Show condition={magazines}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {magazines?.data?.map((magazine) => (
+              {magazines?.data?.map((magazine: any) => (
                 <MagazineCard key={magazine?.id} magazine={magazine} />
               ))}
             </div>
@@ -68,23 +73,35 @@ const Magazines = ({ magazinesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
-  const response = await getMagazines({ page: Number(params?.page) ?? 1 });
+export const getStaticProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  try {
+    const response = await withRetry(() =>
+      getMagazines({ page: Number(resolvedParams?.page) ?? 1 })
+    );
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const magazinesData = response.data;
+
+    return {
+      props: {
+        magazinesData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener revistas:', error);
     return {
       notFound: true,
     };
   }
-
-  const magazinesData = response.data;
-
-  return {
-    props: {
-      magazinesData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Magazines;

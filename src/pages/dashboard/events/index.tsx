@@ -14,8 +14,6 @@ const Events = () => {
   const { data = {}, isLoading } = useEvents({ page });
   const { result, title, description } = data;
 
-  console.log(result);
-
   return (
     <AppLayout
       header={
@@ -38,7 +36,7 @@ const Events = () => {
             )}
             {result?.data && (
               <Table columns={headers}>
-                {result?.data?.map((row) => (
+                {result?.data?.map((row: any) => (
                   <Rows key={row.id} columns={headers} row={row} />
                 ))}
               </Table>

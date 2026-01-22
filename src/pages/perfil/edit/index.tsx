@@ -14,10 +14,11 @@ import Image from 'next/image';
 import { GetServerSideProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
+import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import TextEditor from '@/components/ui/TextEditor';
@@ -51,7 +52,7 @@ const Profile = () => {
   } = methods;
 
   const resetProfileData = useCallback(
-    (result) => {
+    (result: any) => {
       setValue('name', result?.name);
       setValue('username', result?.username);
       setValue('email', result?.email);
@@ -69,10 +70,15 @@ const Profile = () => {
     [result, setValue]
   );
 
-  const uploadAvatar = async (e) => {
+  const uploadAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profilePhotoPath', response?.data?.url);
       toast.success('Profile photo uploaded successfully');
     } catch (error) {
@@ -82,10 +88,15 @@ const Profile = () => {
     }
   };
 
-  const uploadCover = async (e) => {
+  const uploadCover = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadingImages(true);
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      setUploadingImages(false);
+      return;
+    }
     try {
-      const response = await uploadImages(e.target.files, 'users');
+      const response = await uploadImages(files, 'users');
       setValue('profileCoverPath', response?.data?.url);
       toast.success('Cover photo uploaded successfully');
     } catch (error) {
@@ -105,13 +116,13 @@ const Profile = () => {
     ({ params }: { params: any }) => updateMe(params)
   );
 
-  const onHandleError = (error) => {
+  const onHandleError = (error: any) => {
     if (
       error?.response?.status === 422 &&
       error?.response?.data?.errors?.password
     ) {
-      error?.response?.data?.errors?.password?.map((error) =>
-        toast.error(error)
+      error?.response?.data?.errors?.password?.map((err: string) =>
+        toast.error(err)
       );
       return;
     }
@@ -120,7 +131,7 @@ const Profile = () => {
     );
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     if (data.avatar && !data.profilePhotoPath) {
       data.profilePhotoPath = data.avatar;
     }
@@ -237,25 +248,23 @@ const Profile = () => {
                                     hint="You can't change your email, we never send spam to your email or share your personal info."
                                     disabled
                                   />
-                                  <Input
-                                    type="password"
+                                  <PasswordInput
                                     prefix={
                                       <LockClosedIcon className="w-6 h-6" />
                                     }
                                     label="Password"
                                     {...methods.register('password')}
                                     name="password"
-                                    onChange={(e) =>
-                                      setValue('password', e.target.value)
-                                    }
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => setValue('password', e.target.value)}
                                     errors={
                                       errors?.['password']?.message as string
                                     }
                                     hint="Tu contraseña solo cambia si ingresa una nueva aquí. Importante: Su contraseña debe tener al menos 8 caracteres y contener al menos un número y una letra mayúscula y minúscula y un símbolo."
                                     disabled={!editMode}
                                   />
-                                  <Input
-                                    type="password"
+                                  <PasswordInput
                                     {...methods.register(
                                       'passwordConfirmation'
                                     )}
@@ -264,7 +273,9 @@ const Profile = () => {
                                     }
                                     label="Password Confirmation"
                                     name="passwordConfirmation"
-                                    onChange={(e) =>
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) =>
                                       setValue(
                                         'passwordConfirmation',
                                         e.target.value
@@ -294,6 +305,7 @@ const Profile = () => {
                                           className="w-full h-full object-cover"
                                           fill
                                           alt={result?.name}
+                                          unoptimized
                                         />
                                         <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
                                           <PencilIcon className="w-6 h-6" />
@@ -446,7 +458,9 @@ const Profile = () => {
                                   <TextEditor
                                     defaultValue={result?.bio}
                                     errors={errors?.['bio']?.message as string}
-                                    onChange={(value) => setValue('bio', value)}
+                                    onChange={(value: string) =>
+                                      setValue('bio', value)
+                                    }
                                     disabled={!editMode}
                                     height="200px"
                                   />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import WebLayout from '@/components/Layouts/WebLayout';
@@ -140,18 +141,35 @@ const IMAGES_404 = [
   },
 ];
 
-const Error = ({ code, error, text }) => {
-  const [image, setImage] = useState(null);
+type ErrorProps = {
+  code?: number;
+  error?: any;
+  text?: string;
+};
+
+const Error = ({ code, error, text }: ErrorProps) => {
+  const [image, setImage] = useState<{ url: string; text: string } | null>(
+    null
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setImage(IMAGES_404[Math.floor(Math.random() * IMAGES_404.length)]);
   }, []);
 
+  // Convertir error a string de forma segura
+  const errorMessage =
+    typeof error === 'string'
+      ? error
+      : error?.message ||
+        error?.response?.data?.message ||
+        error?.toString() ||
+        'Error desconocido';
+
   return (
     <WebLayout>
       <Head>
-        <title>{`${code} - ${error}`}</title>
+        <title>{`${code} - ${errorMessage}`}</title>
         <meta name="robots" content="noindex" />
       </Head>
       <div className="relative flex items-top justify-center min-h-[80vh] bg-white sm:items-center sm:pt-0">
@@ -162,7 +180,7 @@ const Error = ({ code, error, text }) => {
                 <div className="absolute">
                   <div>
                     <h1 className="my-2 text-gray-800 font-bold text-3xl">
-                      {`${code} - ${error}`}
+                      {`${code} - ${errorMessage}`}
                     </h1>
                     <p className="my-2 text-gray-800">{text}</p>
                     <p className="my-2 text-gray-600">
@@ -185,8 +203,16 @@ const Error = ({ code, error, text }) => {
             </div>
             <div>
               <div className="relative w-[100%] sm:w-[380px] h-auto rounded-lg overflow-hidden bg-gray-50 shadow">
-                <img src={image?.url} alt={code} className="w-full h-auto" />
-                {/* eslint-disable-line */}
+                {image?.url && (
+                  <Image
+                    src={image.url}
+                    alt={String(code ?? 'Error')}
+                    width={380}
+                    height={380}
+                    className="w-full h-auto"
+                    unoptimized
+                  />
+                )}
                 <p className="text-xs text-gray-400 p-2  text-center">
                   {image?.text}
                 </p>

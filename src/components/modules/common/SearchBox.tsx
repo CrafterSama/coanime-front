@@ -3,8 +3,9 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useSearchPosts } from '@/hooks/posts';
@@ -18,9 +19,12 @@ const SearchBox = () => {
   return (
     <div className="grid relative w-[290px]">
       <Input
-        placeholder="Search"
-        onChange={(e) => setName(e.target.value)}
-        onBlur={(e) => {
+        placeholder="Buscar..."
+        prefix={<MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setName(e.target.value)
+        }
+        onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
           setTimeout(() => {
             e.target.value = '';
             setName('');
@@ -32,7 +36,7 @@ const SearchBox = () => {
           {titles?.result?.data?.length > 0 ? (
             <div className="px-2">
               <SectionTitle title="" subtitle="Titulos" />
-              {titles?.result?.data?.map((title) => (
+              {titles?.result?.data?.map((title: any) => (
                 <Link
                   key={title?.id}
                   href={`/ecma/titulos/${title?.type?.slug}/${title?.slug}`}
@@ -45,6 +49,7 @@ const SearchBox = () => {
                       className={`object-cover group-hover:object-scale-down ${
                         title?.ratingId === 6 ? 'blur-lg' : ''
                       }`}
+                      unoptimized
                     />
                     {title?.ratingId === 6 && (
                       <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">
@@ -54,6 +59,7 @@ const SearchBox = () => {
                           height={70}
                           width={150}
                           className="relative"
+                          unoptimized
                         />
                       </div>
                     )}
@@ -84,7 +90,7 @@ const SearchBox = () => {
           {posts?.result?.data?.length > 0 ? (
             <div className="px-2">
               <SectionTitle title="" subtitle="Noticias" />
-              {posts?.result?.data?.map((post) => (
+              {posts?.result?.data?.map((post: any) => (
                 <Link
                   key={post?.id}
                   href={`/posts/${post?.slug}`}
@@ -95,6 +101,7 @@ const SearchBox = () => {
                       alt={post?.title}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   </div>
                   <span className="flex flex-col gap-1">

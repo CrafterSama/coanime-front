@@ -24,7 +24,8 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
     initialData: broadcastData,
   });
 
-  const series = today?.data?.filter((item) => item.approved === true) ?? [];
+  const series =
+    today?.data?.filter((item: any) => item.approved === true) ?? [];
 
   return (
     <>
@@ -67,7 +68,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
                 spaceBetween: 16,
               },
             }}>
-            {series?.map((serie, index) => (
+            {series?.map((serie: any, index: number) => (
               <SwiperSlide key={index} virtualIndex={index}>
                 <SerieCard serie={serie} />
               </SwiperSlide>

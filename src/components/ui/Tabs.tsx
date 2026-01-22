@@ -1,6 +1,15 @@
+import React from 'react';
 import cn from 'classnames';
 
-export const Tabs = ({ children, active, onClick }) => (
+export const Tabs = ({
+  children,
+  active,
+  onClick,
+}: {
+  children: React.ReactNode;
+  active: boolean;
+  onClick: () => void;
+}) => (
   <div
     className={cn(
       'inline-block p-1 font-bold text-xl	cursor-pointer border-b-2 ',
@@ -14,6 +23,10 @@ export const Tabs = ({ children, active, onClick }) => (
   </div>
 );
 
-export const TabsContent = ({ active, children }) => (
-  <div>{active && <div className="mt-4">{children}</div>}</div>
-);
+export const TabsContent = ({
+  active,
+  children,
+}: {
+  active: boolean;
+  children: React.ReactNode;
+}) => <div>{active && <div className="mt-4">{children}</div>}</div>;

@@ -18,7 +18,11 @@ type eventsData = {
   result: any;
 };
 
-const Country = ({ eventsData }) => {
+interface CountryProps {
+  eventsData: any;
+}
+
+const Country = ({ eventsData }: CountryProps) => {
   const router = useRouter();
   const { slug } = router.query;
   const [page, setPage] = useState(1);
@@ -33,7 +37,10 @@ const Country = ({ eventsData }) => {
         page,
       },
     });
-    const response = await getEventsByCountry({ country: slug, page });
+    const response = await getEventsByCountry({
+      country: slug as string,
+      page,
+    });
     setData(response.data);
   };
 
@@ -57,7 +64,7 @@ const Country = ({ eventsData }) => {
         <Show condition={events}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {events?.data?.map((event) => (
+              {events?.data?.map((event: any) => (
                 <EventCard key={event?.id} event={event} />
               ))}
             </div>
@@ -69,10 +76,12 @@ const Country = ({ eventsData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   const response = await getEventsByCountry({
-    country: params?.slug,
-    page: Number(params?.page) ?? 1,
+    country: resolvedParams?.slug,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.data?.code === 404) {

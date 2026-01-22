@@ -1,4 +1,6 @@
-const OfficeBuildingIcon = (props) => (
+import React from 'react';
+
+const OfficeBuildingIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"

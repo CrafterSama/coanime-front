@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import DateTimePicker from 'react-datetime-picker';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
@@ -15,10 +15,10 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import { FormWithContext } from '@/components/ui/Form';
+import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
 import FormSelect from '@/components/ui/Select';
@@ -53,17 +53,17 @@ const UpdatePost = () => {
 
   const { result: series } = serieData;
 
-  const onChangeTitle = (length) => {
+  const onChangeTitle = (length: number) => {
     setTitleCount(length);
   };
-  const onChangeExcerpt = (length) => {
+  const onChangeExcerpt = (length: number) => {
     setExcerptCount(length);
   };
 
   useEffect(() => {
     if (series?.data?.length > 0) {
       setSerieList(
-        series?.data?.map((serie) => ({
+        series?.data?.map((serie: any) => ({
           label: serie.name,
           value: serie.id,
           type: serie.type?.name,
@@ -91,7 +91,7 @@ const UpdatePost = () => {
     setValue('excerpt', post?.excerpt);
     setValue('content', post?.content);
     setValue('image', post?.image);
-    setValue('tags', post?.tags?.map((tag) => tag.name));
+    setValue('tags', post?.tags?.map((tag: any) => tag.name));
     setValue('categoryId', {
       value: post?.categories?.id,
       label: post?.categories?.name,
@@ -111,12 +111,12 @@ const UpdatePost = () => {
     }
   }, [post, resetPostInfo]);
 
-  const categories = categoriesData?.map((category) => ({
+  const categories = categoriesData?.map((category: any) => ({
     value: category.id,
     label: category.name,
   }));
 
-  const onSavedSuccess = (response) => {
+  const onSavedSuccess = (response: any) => {
     setEditMode(false);
     refetch();
     toast.success(response.data.message.text);
@@ -126,7 +126,7 @@ const UpdatePost = () => {
     ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
   );
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     const id = post?.id;
     const postponedTo = data.postponedTo
       ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
@@ -150,7 +150,9 @@ const UpdatePost = () => {
           queryClient.invalidateQueries(['post']);
         },
         onError: (error) => {
-          console.log(getServerError(error));
+          if (process.env.NODE_ENV === 'development') {
+            console.error('[Update Post Error]', getServerError(error));
+          }
           toast.error(getServerError(error) as string);
         },
       }
@@ -198,7 +200,9 @@ const UpdatePost = () => {
                     defaultValue={post?.title}
                     disabled={!editMode}
                     charactersCount={titleCount}
-                    onChange={(e) => onChangeTitle(e.target.value.length)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChangeTitle(e.target.value.length)
+                    }
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -213,7 +217,9 @@ const UpdatePost = () => {
                     defaultValue={post?.excerpt}
                     disabled={!editMode}
                     charactersCount={excerptCount}
-                    onChange={(e) => onChangeExcerpt(e.target.value.length)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChangeExcerpt(e.target.value.length)
+                    }
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -226,7 +232,7 @@ const UpdatePost = () => {
                         disabled={!editMode}
                         defaultValue={post?.content}
                         errors={errors?.['content']?.message}
-                        onChange={(value) => setValue('content', value)}
+                        onChange={(value: string) => setValue('content', value)}
                       />
                     )}
                   />
@@ -237,10 +243,11 @@ const UpdatePost = () => {
                   <Label htmlFor="description">
                     Posponer hasta(Hora Local):
                   </Label>
-                  <DateTimePicker
+                  <DatePicker
                     onChange={(value) => setValue('postponedTo', value)}
                     value={watch('postponedTo')}
-                    format="dd-MM-yyyy hh:mm a"
+                    format="dd-MM-yyyy"
+                    showTime={true}
                     calendarIcon={
                       <span className="text-orange-400">
                         <CalendarIcon className="w-6 h-6" />
@@ -268,8 +275,8 @@ const UpdatePost = () => {
                     options={categories}
                     name="categoryId"
                     value={watch('categoryId')}
-                    callBack={(option) => setValue('categoryId', option)}
-                    errors={errors?.['category_id']?.message as string}
+                    callBack={(option: any) => setValue('categoryId', option)}
+                    errors={errors?.['categoryId']?.message as string}
                     disabled={!editMode}
                   />
                 </div>
@@ -281,6 +288,7 @@ const UpdatePost = () => {
                       alt={post?.title}
                       className="w-full rounded-lg object-cover"
                       fill
+                      unoptimized
                     />
                   </div>
                   <UploadImage
@@ -295,8 +303,8 @@ const UpdatePost = () => {
                     <TagsInput
                       separators={['Enter', ',']}
                       isEditOnRemove={true}
-                      value={post?.tags?.map((tag) => tag.name)}
-                      onChange={(tags) => setValue('tags', tags)}
+                      value={post?.tags?.map((tag: any) => tag.name)}
+                      onChange={(tags: string[]) => setValue('tags', tags)}
                       disabled={!editMode}
                     />
                   </div>
@@ -311,6 +319,7 @@ const UpdatePost = () => {
                           alt={post?.titles?.[0]?.name}
                           className="w-full relative"
                           fill
+                          unoptimized
                         />
                       </div>
                       <div className="">
@@ -329,13 +338,13 @@ const UpdatePost = () => {
                     isLoading={isLoadingSeries}
                     defaultValue={post?.titles?.[0]?.id}
                     placeholder="Asignar una serie"
-                    onInputChange={(value) => setSerieName(value)}
+                    onInputChange={(value: string) => setSerieName(value)}
                     onChange={(option: { value: any; label: any }) =>
                       setValue('titleId', option?.value)
                     }
                     isDisabled={!editMode}
                     menuPlacement="auto"
-                    getOptionLabel={(option) =>
+                    getOptionLabel={(option: any) =>
                       `${option?.label} (${option?.type})`
                     }
                   />

@@ -27,12 +27,12 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
   return (
     <>
       {!broadcast && (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
+        <div className="flex content-center justify-center min-h-screen min-w-screen">
           <Loading size={16} />
         </div>
       )}
       {series?.length > 0 && (
-        <div className="broadcast-today px-4 xl:px-0">
+        <div className="px-4 broadcast-today xl:px-0">
           <Swiper
             className="flex"
             modules={[

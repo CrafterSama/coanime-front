@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import WebLayout from '@/components/Layouts/WebLayout';
 import OtherNews from '@/components/modules/home/components/OtherNews';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { getArticlesData } from '@/services/posts';
@@ -18,7 +18,7 @@ type ArticlesProps = {
   data: any;
 };
 
-const Posts = ({ articlesData }) => {
+const Posts = ({ articlesData }: { articlesData: ArticlesProps }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<ArticlesProps>(articlesData);
@@ -66,8 +66,12 @@ const Posts = ({ articlesData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
-  const response = await getArticlesData({ page: Number(params?.page) ?? 1 });
+export const getServerSideProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const response = await getArticlesData({
+    page: Number(resolvedParams?.page) ?? 1,
+  });
 
   if (response.data.code === 404) {
     return {

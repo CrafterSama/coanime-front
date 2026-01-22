@@ -19,7 +19,10 @@ type FormSelectProps = {
   value?: any;
   disabled?: boolean;
   height?: string;
-  errors?: string | Merge<FieldError, FieldErrorsImpl<DeepRequired<any>>>;
+  errors?:
+    | string
+    | Merge<FieldError, FieldErrorsImpl<DeepRequired<any>>>
+    | null;
   name?: string;
   getOptionLabel?: any;
   isClearable?: boolean;
@@ -71,20 +74,22 @@ const FormSelect = ({
       <Controller
         control={control}
         name={name}
-        render={() => (
+        render={({ field }) => (
           <Select
             id={id || name}
-            value={value}
+            value={value || field.value}
             defaultValue={defaultValue}
             isSearchable
             isClearable={isClearable}
             isLoading={isLoading}
             options={options}
             onInputChange={onInputChange}
-            onChange={(value) => callBack(value)}
+            onChange={(value: any) => {
+              callBack?.(value);
+              field.onChange(value);
+            }}
             isDisabled={disabled}
             styles={colourStyles}
-            name={name}
             menuPlacement="auto"
             placeholder={placeholder}
             getOptionLabel={getOptionLabel}

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { usePostsSettings } from '@/components/modules/posts/settings';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -17,16 +17,23 @@ import { useAuth } from '@/hooks/auth';
 import { postDelete } from '@/services/posts';
 import { toast } from 'react-hot-toast';
 import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 const Posts = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const [page, setPage] = useState<number>(null);
-  const [name, setName] = useState<any>(null);
-  const [postId, setPostId] = useState<string>(null);
+  const [page, setPage] = useState<number>(1);
+  const [name, setName] = useState<string>('');
+  const [postId, setPostId] = useState<string | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const { data = {}, isLoading, refetch } = usePosts({ page, name });
+  const {
+    data = {},
+    isLoading,
+    refetch,
+  } = usePosts({
+    page,
+    name,
+  });
   const { data: posts = [] } = data;
   const { headers } = usePostsSettings({ user, setPostId, setOpenDeleteModal });
 
@@ -46,7 +53,7 @@ const Posts = () => {
     });
   };
 
-  const deletePost = (id) => {
+  const deletePost = (id: string) => {
     setPostId(id);
     postDelete(id)
       .then(() => {
@@ -105,7 +112,7 @@ const Posts = () => {
               </Button>
               <Button
                 suffix={<TrashIcon className="w-4 h-4" />}
-                onClick={() => deletePost(postId)}
+                onClick={() => postId && deletePost(postId)}
                 className="flex flex-row items-center gap-2">
                 <span>Si</span>
               </Button>
@@ -119,7 +126,9 @@ const Posts = () => {
                 placeholder="Buscar"
                 className="w-[300px]"
                 defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setName(e.target.value)
+                }
               />
             </div>
             <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
@@ -131,7 +140,7 @@ const Posts = () => {
               {posts && (
                 <>
                   <Table columns={headers}>
-                    {posts?.map((row) => (
+                    {posts?.map((row: any) => (
                       <Rows key={row.id} columns={headers} row={row} />
                     ))}
                   </Table>

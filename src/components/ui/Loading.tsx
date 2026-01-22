@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { CgSpinner } from 'react-icons/cg';
 
 const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
@@ -10,7 +12,13 @@ const Loading = ({ size = 40, showText = false, showFancySpiner = true }) => {
       )}
       {showFancySpiner && (
         <div className={`relative w-[100%] h-auto`}>
-          <img src="/images/saitama.gif" alt="Loading" />
+          <Image
+            src="/images/saitama.gif"
+            alt="Loading"
+            width={200}
+            height={200}
+            unoptimized
+          />
         </div>
       )}
       {showText && <span className="text-xs">Cargando</span>}

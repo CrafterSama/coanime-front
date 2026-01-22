@@ -1,40 +1,59 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { CgSpinner } from 'react-icons/cg';
 
 import Image from 'next/image';
+import { useFormContext } from 'react-hook-form';
+import { CgSpinner } from 'react-icons/cg';
+import toast from 'react-hot-toast';
 
 import { CloudUploadIcon } from '@/components/icons';
 import { uploadImages } from '@/hooks/images';
+import { Label } from '@/components/ui/label';
 
-import Label from './Label';
 import { Show } from './Show';
 
-const UploadImage = ({ disabled = false, name, model }) => {
+const UploadImage = ({
+  disabled = false,
+  name,
+  model,
+}: {
+  disabled?: boolean;
+  name: string;
+  model: string;
+}) => {
   const { register, watch, setValue } = useFormContext();
   const [newImage, setNewImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const uploadPostImages = async (e) => {
+  const uploadPostImages = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
     setLoading(true);
     const images = e.target.files;
+    if (!images) {
+      setLoading(false);
+      return;
+    }
     try {
       const response = await uploadImages(images, model);
       if (response.status === 200) {
         setValue(name, response?.data?.url);
         setNewImage(true);
-        return toast.success(response?.data?.message?.text);
+        toast.success(response?.data?.message?.text);
+        return;
       }
-    } catch (error) {
-      if (error.response.status === 413) {
-        return toast.error(
+    } catch (error: any) {
+      if (error?.response?.status === 413) {
+        toast.error(
           `Image upload failed, Error: La Imagen excede el Tamaño permitido.( 1.5MB)`
         );
+        return;
       }
-      return toast.error(
-        `Image upload failed, Error: ${error.response?.data?.message}`
+      toast.error(
+        `Image upload failed, Error: ${
+          error?.response?.data?.message || 'Unknown error'
+        }`
       );
+      return;
     } finally {
       setLoading(false);
     }
@@ -78,6 +97,7 @@ const UploadImage = ({ disabled = false, name, model }) => {
             alt="New image"
             className="rounded-lg object-scale-down bg-gray-200"
             fill
+            unoptimized
           />
         </div>
       </Show>

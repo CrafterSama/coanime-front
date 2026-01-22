@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getEvents } from '@/services/events';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type eventsData = {
   title: string;
@@ -18,7 +19,11 @@ type eventsData = {
   result: any;
 };
 
-const Events = ({ eventsData }) => {
+interface EventsProps {
+  eventsData: any;
+}
+
+const Events = ({ eventsData }: EventsProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<eventsData>(eventsData);
@@ -56,7 +61,7 @@ const Events = ({ eventsData }) => {
         <Show condition={events}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {events?.data?.map((event, index) => (
+              {events?.data?.map((event: any, index: number) => (
                 <EventCard key={event?.id ? event?.id : index} event={event} />
               ))}
             </div>
@@ -68,23 +73,35 @@ const Events = ({ eventsData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
-  const response = await getEvents({ page: Number(params?.page) ?? 1 });
+export const getStaticProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  try {
+    const response = await withRetry(() =>
+      getEvents({ page: Number(resolvedParams?.page) ?? 1 })
+    );
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const eventsData = response.data;
+
+    return {
+      props: {
+        eventsData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener eventos:', error);
     return {
       notFound: true,
     };
   }
-
-  const eventsData = response.data;
-
-  return {
-    props: {
-      eventsData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Events;

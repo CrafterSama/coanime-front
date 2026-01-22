@@ -1,7 +1,7 @@
 import { httpClientExternal } from '@/lib/http';
 
-export const getEntities = async ({ page = 1 }) => {
-  const params = {};
+export const getEntities = async ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -11,8 +11,14 @@ export const getEntities = async ({ page = 1 }) => {
   return response;
 };
 
-export const getEntitiesByCountry = async ({ country, page = 1 }) => {
-  const params = {};
+export const getEntitiesByCountry = async ({
+  country,
+  page = 1,
+}: {
+  country: string;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -25,7 +31,7 @@ export const getEntitiesByCountry = async ({ country, page = 1 }) => {
   return response;
 };
 
-export const getEntity = async ({ slug }) => {
+export const getEntity = async ({ slug }: { slug: string }) => {
   const response = await httpClientExternal.get(`companies/${slug}`);
   return response;
 };

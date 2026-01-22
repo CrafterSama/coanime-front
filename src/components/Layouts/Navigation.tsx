@@ -32,7 +32,7 @@ const Navigation: FC<NavigationProps> = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-b border-gray-100">
+    <nav className="bg-white shadow-sm">
       {/* Primary Navigation Menu */}
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -59,6 +59,7 @@ const Navigation: FC<NavigationProps> = ({
                           alt={user?.name}
                           className="rounded-full w-full h-full object-cover"
                           fill
+                          unoptimized
                         />
                       }
                       <span>{user?.name}</span>
@@ -130,7 +131,7 @@ const Navigation: FC<NavigationProps> = ({
           </div>
 
           {/* Responsive Settings Options */}
-          <div className="pt-4 pb-1 border-t border-gray-200">
+          <div className="pt-4 pb-1 shadow-[0_-1px_0_0_rgba(0,0,0,0.05)]">
             <div className="flex items-center px-4">
               <div className="flex-shrink-0">
                 <svg
@@ -160,7 +161,9 @@ const Navigation: FC<NavigationProps> = ({
 
             <div className="mt-3 space-y-1">
               {/* Authentication */}
-              <ResponsiveNavButton onClick={logout}>Logout</ResponsiveNavButton>
+              <ResponsiveNavButton onClick={() => logout()}>
+                Logout
+              </ResponsiveNavButton>
             </div>
           </div>
         </div>

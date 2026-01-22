@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -11,7 +11,11 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { getPerson } from '@/services/people';
 import { Show } from '@/components/ui/Show';
 
-const Person = ({ personData }) => {
+interface PersonProps {
+  personData: any;
+}
+
+const Person = ({ personData }: PersonProps) => {
   return (
     <>
       {personData && (
@@ -93,11 +97,9 @@ const Person = ({ personData }) => {
                           value={
                             <span className="post-date">
                               {personData?.result?.birthday
-                                ? format(
-                                    new Date(personData?.result?.birthday),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )
+                                ? dayjs(personData?.result?.birthday)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')
                                 : 'Sin Información'}
                             </span>
                           }
@@ -135,8 +137,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const params = context.params;
+export async function getStaticProps(context: any) {
+  // Next.js 15: params puede ser una Promise
+  const params = await context.params;
   const { slug } = params;
   const response = await getPerson({
     slug,

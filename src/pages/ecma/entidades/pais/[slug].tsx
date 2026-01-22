@@ -18,7 +18,11 @@ type EntitiesData = {
   result: any;
 };
 
-const Country = ({ entitiesData }) => {
+interface CountryProps {
+  entitiesData: any;
+}
+
+const Country = ({ entitiesData }: CountryProps) => {
   const router = useRouter();
   const { slug } = router.query;
   const [page, setPage] = useState(1);
@@ -33,7 +37,10 @@ const Country = ({ entitiesData }) => {
         page,
       },
     });
-    const response = await getEntitiesByCountry({ country: slug, page });
+    const response = await getEntitiesByCountry({
+      country: slug as string,
+      page,
+    });
     setData(response.data);
   };
 
@@ -57,7 +64,7 @@ const Country = ({ entitiesData }) => {
         <Show condition={entities}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {entities?.data?.map((entity) => (
+              {entities?.data?.map((entity: any) => (
                 <EntityCard key={entity?.id} entity={entity} />
               ))}
             </div>
@@ -69,10 +76,12 @@ const Country = ({ entitiesData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   const response = await getEntitiesByCountry({
-    country: params?.slug,
-    page: Number(params?.page) ?? 1,
+    country: resolvedParams?.slug,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.data?.code === 404) {

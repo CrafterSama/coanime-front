@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,17 +19,27 @@ import TitleRelated from '@/components/modules/posts/components/TitleRelated';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { Show } from '@/components/ui/Show';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
-import { Show } from '@/components/ui/Show';
 
-const ShowArticle = ({ slug, articleData, errors }) => {
+interface ShowArticleProps {
+  slug: string;
+  articleData: any;
+  errors: any;
+}
+
+const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
-  const { data = {} } = useQuery(['viewArticles', slug], getArticleData, {
-    initialData: articleData,
-  });
+  const { data = {} } = useQuery(
+    ['viewArticles', slug],
+    () => getArticleData(slug),
+    {
+      initialData: articleData,
+    }
+  );
   const {
     title,
     description,
@@ -38,7 +48,7 @@ const ShowArticle = ({ slug, articleData, errors }) => {
     pathImage,
     otherArticles,
     relateds,
-  } = data;
+  } = (data as any) || {};
 
   useEffect(() => {
     if (errors) {
@@ -116,12 +126,12 @@ const ShowArticle = ({ slug, articleData, errors }) => {
               property="article:published_time"
               content={
                 post?.postponedTo
-                  ? format(
-                      new Date(post?.postponedTo),
-                      'dd LLLL, yyyy hh:mm a',
-                      { locale: es }
-                    )
-                  : format(new Date(post?.createdAt), 'dd LLLL, yyyy hh:mm a')
+                  ? dayjs(post?.postponedTo)
+                      .locale('es')
+                      .format('DD MMMM, YYYY hh:mm a')
+                  : dayjs(post?.createdAt)
+                      .locale('es')
+                      .format('DD MMMM, YYYY hh:mm a')
               }
             />
           </Head>
@@ -193,8 +203,10 @@ const ShowArticle = ({ slug, articleData, errors }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
-  const { slug } = params;
+export const getServerSideProps = async ({ params }: { params: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   let errors = null;
   let response = null;
   let articleData = null;

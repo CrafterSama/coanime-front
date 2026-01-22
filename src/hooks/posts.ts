@@ -2,8 +2,14 @@ import axios from '@/lib/axios';
 import httpClient, { httpClientAuth, httpClientExternal } from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const usePosts = ({ page = 1, name = '' }) => {
-  const params = {};
+export const usePosts = ({
+  page = 1,
+  name = '',
+}: {
+  page?: number;
+  name?: string;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -22,8 +28,8 @@ export const usePosts = ({ page = 1, name = '' }) => {
   });
 };
 
-export const useSearchPosts = ({ name = '' }) => {
-  const params = {};
+export const useSearchPosts = ({ name = '' }: { name?: string }) => {
+  const params: Record<string, any> = {};
 
   if (name) {
     params['name'] = name;
@@ -60,7 +66,7 @@ export const useGetArticle = (slug: string) => {
   });
 };
 
-export const imageUpload = async (files, model) => {
+export const imageUpload = async (files: FileList, model: string) => {
   const formData = new FormData();
   formData.append('model', model);
   formData.append('file', files[0], files[0].name);

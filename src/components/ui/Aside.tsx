@@ -6,7 +6,9 @@ import MenuLink from '@/components/ui/MenuLink';
 import { menu } from '@/constants/menu';
 import { Show } from './Show';
 
-const Aside = ({ isTiny }) => {
+import React from 'react';
+
+const Aside = ({ isTiny }: { isTiny?: boolean }) => {
   const router = useRouter();
   const path = router.asPath.split('/')[router.asPath.split('/').length - 1];
 
@@ -14,7 +16,7 @@ const Aside = ({ isTiny }) => {
     <aside
       className={`${
         isTiny ? 'w-14' : 'md:w-auto'
-      } w-14 border-r border-gray-200`}>
+      } w-14 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]`}>
       <div className="flex flex-col gap-4 m-auto">
         <div className="w-auto h-20 p-4 rounded-full self-center ">
           <Link

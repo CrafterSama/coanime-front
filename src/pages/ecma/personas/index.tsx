@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getPeople } from '@/services/people';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type PeopleData = {
   title: string;
@@ -18,7 +19,11 @@ type PeopleData = {
   result: any;
 };
 
-const People = ({ peopleData }) => {
+interface PeopleProps {
+  peopleData: any;
+}
+
+const People = ({ peopleData }: PeopleProps) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<PeopleData>(peopleData);
@@ -56,7 +61,7 @@ const People = ({ peopleData }) => {
         <Show condition={people}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {people?.data?.map((person) => (
+              {people?.data?.map((person: any) => (
                 <PersonCard key={person?.id} person={person} />
               ))}
             </div>
@@ -68,23 +73,35 @@ const People = ({ peopleData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
-  const response = await getPeople({ page: Number(params?.page) ?? 1 });
+export const getStaticProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  try {
+    const response = await withRetry(() =>
+      getPeople({ page: Number(resolvedParams?.page) ?? 1 })
+    );
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const peopleData = response.data;
+
+    return {
+      props: {
+        peopleData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener personas:', error);
     return {
       notFound: true,
     };
   }
-
-  const peopleData = response.data;
-
-  return {
-    props: {
-      peopleData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default People;

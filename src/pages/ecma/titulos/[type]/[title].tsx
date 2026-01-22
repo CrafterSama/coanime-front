@@ -15,7 +15,7 @@ import OtherArticles from '@/components/modules/posts/components/OtherArticles';
 import Rates from '@/components/modules/titles/components/Rates';
 import SerieItemInfo from '@/components/modules/titles/components/SerieItemInfo';
 import Statistics from '@/components/modules/titles/components/Statistics';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
@@ -44,7 +44,13 @@ const status = {
   Estreno: 'estreno',
 };
 
-const Titles = ({ title, titleData, errors }) => {
+interface TitlesProps {
+  title: any;
+  titleData: any;
+  errors: any;
+}
+
+const Titles = ({ title, titleData, errors }: TitlesProps) => {
   const [activeTab, setActiveTab] = useState('posts');
   const { user } = useAuth({ middleware: 'auth' });
   const [censored, setCensored] = useState(false);
@@ -307,13 +313,15 @@ const Titles = ({ title, titleData, errors }) => {
                         />
                         <SerieItemInfo
                           title="Géneros"
-                          value={titleData?.result?.genres?.map((genre) => (
-                            <span key={genre?.id} className="genre-tag">
-                              <Link href={`/ecma/generos/${genre?.slug}`}>
-                                {genre?.name}
-                              </Link>
-                            </span>
-                          ))}
+                          value={titleData?.result?.genres?.map(
+                            (genre: any) => (
+                              <span key={genre?.id} className="genre-tag">
+                                <Link href={`/ecma/generos/${genre?.slug}`}>
+                                  {genre?.name}
+                                </Link>
+                              </span>
+                            )
+                          )}
                         />
                         <SerieItemInfo
                           title="Episodios"
@@ -330,11 +338,14 @@ const Titles = ({ title, titleData, errors }) => {
                           value={
                             titleData?.result?.status ? (
                               <div
-                                className={`text-center border-2 rounded-md px-1 max-w-[100px] ${
-                                  STATUS_COLORS[
-                                    status[titleData?.result?.status]
-                                  ]
-                                }`}>
+                                className={`text-center border-2 rounded-md px-1 max-w-[100px] ${(() => {
+                                  const statusKey = titleData?.result
+                                    ?.status as keyof typeof status;
+                                  const colorKey = status[
+                                    statusKey
+                                  ] as keyof typeof STATUS_COLORS;
+                                  return STATUS_COLORS[colorKey] || '';
+                                })()}`}>
                                 {titleData?.result?.status}
                               </div>
                             ) : (
@@ -390,11 +401,13 @@ const Titles = ({ title, titleData, errors }) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params }: { params?: any }) {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   let res = null;
   let errors = null;
   let titleData = null;
-  const { type, title } = params;
+  const { type, title } = resolvedParams;
   try {
     res = await getTitle({ type, title });
     titleData = res.data;

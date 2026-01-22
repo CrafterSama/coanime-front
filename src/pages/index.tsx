@@ -10,7 +10,7 @@ import OtherNews from '@/components/modules/home/components/OtherNews';
 import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
 import UpcomingSeries from '@/components/modules/home/components/UpcomingSeries';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/Loading';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
@@ -19,39 +19,74 @@ import { getArticlesData, getArticlesJapan } from '@/services/posts';
 import { PlusSmallIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 
-const Home = ({ homeDataSSR }) => {
+const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
   const [page, setPage] = useState(1);
   const { isLoading, error }: any = useQuery(['homeData'], getHomeData);
   const {
     data: articlesData,
     isLoading: articlesLoading,
     error: errorArticles,
-  } = useQuery(['articlesData', page], () => getArticlesData({ page }));
+  } = useQuery(['articlesData', page], () => getArticlesData({ page }), {
+    retry: false,
+    onError: (error: any) => {
+      if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
+        console.error('Error de red al cargar artículos:', error);
+      }
+    },
+  });
   const {
     data: articlesJapan,
     isLoading: loadingJapan,
     error: errorJapan,
   } = useQuery(['japanData', page], () => getArticlesJapan({ page }));
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
 
   useEffect(() => {
     if (articlesData && page) {
       setArticles([...articles, ...articlesData.data.data]);
     }
-    if (error || errorArticles || errorJapan) {
-      toast.error(error || errorArticles || errorJapan);
+    if (error) {
+      const errorMessage =
+        error?.message ||
+        error?.response?.data?.message ||
+        'Error al cargar datos';
+      toast.error(errorMessage);
+    }
+    if (errorArticles) {
+      const errorMessage =
+        errorArticles?.message ||
+        errorArticles?.response?.data?.message ||
+        'Error al cargar artículos';
+      toast.error(errorMessage);
+    }
+    if (errorJapan) {
+      const errorMessage =
+        (errorJapan as any)?.message ||
+        (errorJapan as any)?.response?.data?.message ||
+        'Error al cargar artículos de Japón';
+      toast.error(errorMessage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error, errorArticles, errorJapan, articlesData, page]);
 
   const moreArticles = async () => {
     setLoadArticles(true);
-    const response = await getArticlesData({ page });
-    const oldArticles: any[] = articles;
-    const newArticles: any[] = response?.data?.data;
-    setArticles([...oldArticles, ...newArticles]);
-    setLoadArticles(false);
+    try {
+      const response = await getArticlesData({ page });
+      const oldArticles: any[] = articles;
+      const newArticles: any[] = response?.data?.data;
+      setArticles([...oldArticles, ...newArticles]);
+    } catch (error: any) {
+      console.error('Error loading articles:', error);
+      if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
+        toast.error('Error de conexión. Verifica que la API esté disponible.');
+      } else {
+        toast.error('Error al cargar artículos. Intenta de nuevo.');
+      }
+    } finally {
+      setLoadArticles(false);
+    }
   };
 
   useEffect(() => {

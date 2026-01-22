@@ -36,7 +36,7 @@ const Magazine = () => {
             )}
             {result?.data && (
               <Table columns={headers}>
-                {result?.data?.map((row) => (
+                {result?.data?.map((row: any) => (
                   <Rows key={row.id} columns={headers} row={row} />
                 ))}
               </Table>

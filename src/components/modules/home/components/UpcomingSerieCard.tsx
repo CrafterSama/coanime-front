@@ -7,7 +7,9 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 
 dayjs.extend(utc);
 
-const BroadcastSerieCard = ({ serie }) => {
+import React from 'react';
+
+const BroadcastSerieCard = ({ serie }: { serie: any }) => {
   return (
     <div className="h-72 w-52 relative rounded overflow-hidden bg-gray-100 p-2">
       <Image
@@ -18,6 +20,7 @@ const BroadcastSerieCard = ({ serie }) => {
         }`}
         fill
         quality={90}
+        unoptimized
       />
       {serie?.ratingId === 6 && (
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 flex flex-col justify-center items-center">

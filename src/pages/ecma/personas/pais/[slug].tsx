@@ -18,7 +18,11 @@ type PeopleData = {
   result: any;
 };
 
-const Country = ({ peopleData }) => {
+interface CountryProps {
+  peopleData: any;
+}
+
+const Country = ({ peopleData }: CountryProps) => {
   const router = useRouter();
   const { slug } = router.query;
   const [page, setPage] = useState(1);
@@ -33,7 +37,10 @@ const Country = ({ peopleData }) => {
         page,
       },
     });
-    const response = await getPeopleByCountry({ country: slug, page });
+    const response = await getPeopleByCountry({
+      country: slug as string,
+      page,
+    });
     setData(response.data);
   };
 
@@ -57,7 +64,7 @@ const Country = ({ peopleData }) => {
         <Show condition={people}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
-              {people?.data?.map((person) => (
+              {people?.data?.map((person: any) => (
                 <PersonCard key={person?.id} person={person} />
               ))}
             </div>
@@ -69,10 +76,12 @@ const Country = ({ peopleData }) => {
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
   const response = await getPeopleByCountry({
-    country: params?.slug,
-    page: Number(params?.page) ?? 1,
+    country: resolvedParams?.slug,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.data?.code === 404) {

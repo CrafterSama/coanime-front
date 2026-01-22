@@ -2,9 +2,11 @@ import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 
 import algoliasearch from 'algoliasearch/lite';
 
+import { getEnv } from '@/lib/env';
+
 const searchClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_SECRET
+  getEnv('ALGOLIA_APP_ID') || '',
+  getEnv('ALGOLIA_SECRET') || ''
 );
 
 const AlgoliaSearch = () => (

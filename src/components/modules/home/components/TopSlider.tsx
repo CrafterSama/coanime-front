@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Navigation, Pagination, A11y, Thumbs, EffectFade } from 'swiper';
@@ -6,12 +7,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
-const TopSlider = ({ relevants }) => (
+import React from 'react';
+
+const TopSlider = ({ relevants }: { relevants?: any[] }) => (
   <div className="top-slider">
     <div className="flex flex-col gap-4 relative">
       <Swiper
@@ -23,7 +22,7 @@ const TopSlider = ({ relevants }) => (
         loop={true}
         autoplay={{ delay: 1500 }}
         className="flex flex-row gap-8 w-full">
-        {relevants?.map((relevant) => (
+        {relevants?.map((relevant: any) => (
           <SwiperSlide key={relevant.id}>
             <div className="top-slider flex relative min-h-screen">
               <Image
@@ -32,6 +31,7 @@ const TopSlider = ({ relevants }) => (
                 quality={90}
                 className="object-cover"
                 fill
+                unoptimized
               />
               <div className="overlayer" />
               <div className="carousel-caption text-shadow flex flex-col gap-2">
@@ -59,14 +59,13 @@ const TopSlider = ({ relevants }) => (
                     <p className="flex flex-row gap-2 text-gray-400">
                       <ClockIcon className="w-6 h-6" />
                       <span className="text-gray-300">
-                        {format(
-                          new Date(
-                            relevant?.postponedTo
-                              ? relevant?.postponedTo
-                              : relevant?.createdAt
-                          ),
-                          'd LLLL, yyyy'
-                        )}
+                        {dayjs(
+                          relevant?.postponedTo
+                            ? relevant?.postponedTo
+                            : relevant?.createdAt
+                        )
+                          .locale('es')
+                          .format('D MMMM, YYYY')}
                       </span>
                     </p>
                   </div>

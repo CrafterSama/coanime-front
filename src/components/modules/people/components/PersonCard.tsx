@@ -4,7 +4,9 @@ import Link from 'next/link';
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
 
-const PersonCard = ({ person }) => (
+import React from 'react';
+
+const PersonCard = ({ person }: { person: any }) => (
   <div className="title-item overflow-hidden py-4">
     <Image
       src={

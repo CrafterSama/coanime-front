@@ -1,8 +1,8 @@
 import httpClient, { httpClientExternal } from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const useTitles = ({ page = '' }) => {
-  const params = {};
+export const useTitles = ({ page = '' }: { page?: string }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -27,7 +27,7 @@ export const useProfile = () => {
   });
 };
 
-export const useProfileByUser = ({ slug }) => {
+export const useProfileByUser = ({ slug }: { slug: string }) => {
   return useQuery({
     queryKey: ['profile', slug],
     queryFn: async () => {
@@ -37,8 +37,14 @@ export const useProfileByUser = ({ slug }) => {
   });
 };
 
-export const usePostsByUser = ({ id, page = 1 }) => {
-  const params = {};
+export const usePostsByUser = ({
+  id,
+  page = 1,
+}: {
+  id: string | number;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -55,8 +61,14 @@ export const usePostsByUser = ({ id, page = 1 }) => {
   });
 };
 
-export const useTitlesByUser = ({ id, page = 1 }) => {
-  const params = {};
+export const useTitlesByUser = ({
+  id,
+  page = 1,
+}: {
+  id: string | number;
+  page?: number;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -73,9 +85,16 @@ export const useTitlesByUser = ({ id, page = 1 }) => {
   });
 };
 
-export const updateMe = async (params) => await httpClient.put(`me`, params);
+export const updateMe = async (params: any) =>
+  await httpClient.put(`me`, params);
 
-export const useCheckUserStatistics = ({ user, title }) => {
+export const useCheckUserStatistics = ({
+  user,
+  title,
+}: {
+  user: string | number;
+  title: string | number;
+}) => {
   return useQuery({
     queryKey: ['user-statistics', title, user],
     queryFn: async () => {
@@ -87,7 +106,13 @@ export const useCheckUserStatistics = ({ user, title }) => {
   });
 };
 
-export const useCheckUserRates = ({ user, title }) => {
+export const useCheckUserRates = ({
+  user,
+  title,
+}: {
+  user: any;
+  title: any;
+}) => {
   return useQuery({
     queryKey: ['user-rates', title, user],
     queryFn: async () => {

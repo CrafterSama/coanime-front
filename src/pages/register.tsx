@@ -7,9 +7,10 @@ import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/auth';
 
 const Register = () => {
@@ -22,9 +23,9 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const submitForm = (event) => {
+  const submitForm = (event: React.FormEvent) => {
     event.preventDefault();
 
     register({
@@ -32,7 +33,7 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      setErrors,
+      setErrors: (errors: string[]) => setErrors(errors),
     });
   };
 
@@ -53,7 +54,7 @@ const Register = () => {
         <form onSubmit={submitForm}>
           {/* Name */}
           <div>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Nombre</Label>
 
             <Input
               id="name"
@@ -61,7 +62,9 @@ const Register = () => {
               name="name"
               value={name}
               className="block mt-1 w-full"
-              onChange={(event) => setName(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setName(event.target.value)
+              }
               required
               autoFocus
             />
@@ -69,7 +72,7 @@ const Register = () => {
 
           {/* Email Address */}
           <div className="mt-4">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Correo electrónico</Label>
 
             <Input
               id="email"
@@ -77,22 +80,25 @@ const Register = () => {
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
               required
             />
           </div>
 
           {/* Password */}
           <div className="mt-4">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Contraseña</Label>
 
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               name="password"
               value={password}
               className="block mt-1 w-full"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
               required
               autoComplete="new-password"
             />
@@ -100,26 +106,27 @@ const Register = () => {
 
           {/* Confirm Password */}
           <div className="mt-4">
-            <Label htmlFor="passwordConfirmation">Confirm Password</Label>
+            <Label htmlFor="passwordConfirmation">Confirmar contraseña</Label>
 
-            <Input
+            <PasswordInput
               id="passwordConfirmation"
-              type="password"
               name="passwordConfirmation"
               value={passwordConfirmation}
               className="block mt-1 w-full"
-              onChange={(event) => setPasswordConfirmation(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordConfirmation(event.target.value)
+              }
               required
             />
           </div>
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
-            <Button>Register</Button>
+            <Button variant="solid-orange">Registrar</Button>
             <div className="flex w-full justify-center">
               <Link
                 href="/login"
                 className="underline underline-offset-4 text-sm text-orange-600 hover:text-orange-700">
-                Already registered?
+                ¿Ya tienes cuenta?
               </Link>
             </div>
           </div>

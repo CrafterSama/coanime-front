@@ -1,6 +1,6 @@
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
-import { format } from 'date-fns';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 
 import Section from '@/components/ui/Section';
@@ -34,9 +34,9 @@ const Footer = () => {
             </div>
             <div className="flex flex-row gap-4 items-center justify-start py-4">
               <p className="text-white">
-                &copy; 2007 - {format(new Date(), 'yyyy')} Coanime. Algunos
-                derechos reservados. Los derechos de la mayoría de las imágenes
-                aca publicadas son de sus respectivos autores, no de Coanime.
+                &copy; 2007 - {dayjs().format('YYYY')} Coanime. Algunos derechos
+                reservados. Los derechos de la mayoría de las imágenes aca
+                publicadas son de sus respectivos autores, no de Coanime.
               </p>
             </div>
             {/*<div className="flex flex-row gap-4 items-center justify-start py-4">

@@ -1,8 +1,8 @@
 import httpClient from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const useCompanies = ({ page = '' }) => {
-  const params = {};
+export const useCompanies = ({ page = '' }: { page?: string }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -11,7 +11,7 @@ export const useCompanies = ({ page = '' }) => {
   return useQuery({
     queryKey: ['companies', page],
     queryFn: async () => {
-      const response = await httpClient.get(`companies`, params);
+      const response = await httpClient.get(`companies`, { params });
       return response.data;
     },
   });

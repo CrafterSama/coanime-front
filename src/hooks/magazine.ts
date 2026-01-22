@@ -1,8 +1,8 @@
 import httpClient from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const useMagazines = ({ page = '' }) => {
-  const params = {};
+export const useMagazines = ({ page = '' }: { page?: string }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;

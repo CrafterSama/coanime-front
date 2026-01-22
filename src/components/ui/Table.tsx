@@ -18,7 +18,13 @@ type RowsProps = {
   rowExpandable?: boolean;
 };
 
-const ChevronTrigger = ({ innerRowItems, isOpen }) => (
+const ChevronTrigger = ({
+  innerRowItems,
+  isOpen,
+}: {
+  innerRowItems: any[];
+  isOpen: boolean;
+}) => (
   <div className="flex justify-end">
     <CollapsiblePrimitive.Trigger asChild>
       {innerRowItems.length > 0 && (
@@ -42,7 +48,7 @@ export const Rows: FC<RowsProps> = ({
   rowExpandable = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const tdStyles = (column) =>
+  const tdStyles = (column: any) =>
     cn(
       `col-span-1 first:flex hidden md:flex py-2 first:justify-start justify-center items-center w-full  ${
         column.cellClass ?? ''
@@ -68,7 +74,7 @@ export const Rows: FC<RowsProps> = ({
     <CollapsiblePrimitive.Root open={isOpen} onOpenChange={setIsOpen} asChild>
       <>
         <div
-          className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}>
+          className={`grid grid-cols-${columns.length} grid-flow-col shadow-[0_1px_0_0_rgba(0,0,0,0.05)] group`}>
           {columns?.map((column, i) => (
             <div key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (
@@ -127,7 +133,7 @@ export const Table: FC<TableProps> = ({
     cn('first:flex hidden md:flex justify-center items-center', {
       'sticky top-0': fixedHeader,
     });
-  const handleSortChange = (index, currentSort) => {
+  const handleSortChange = (index: number, currentSort: string) => {
     const column = columns[index];
     let sort = SORTING_TYPES.none;
 
@@ -142,7 +148,15 @@ export const Table: FC<TableProps> = ({
     column.sorting(sort);
   };
 
-  const WrapperSorting = ({ index, sort, children }) => (
+  const WrapperSorting = ({
+    index,
+    sort,
+    children,
+  }: {
+    index: number;
+    sort: string;
+    children: React.ReactNode;
+  }) => (
     <span
       className="flex items-center ml-2 cursor-pointer"
       onClick={() => handleSortChange(index, sort)}>
@@ -150,7 +164,7 @@ export const Table: FC<TableProps> = ({
     </span>
   );
 
-  const renderSorting = (index, column) => {
+  const renderSorting = (index: number, column: any) => {
     if (!column?.sorting) return null;
 
     const currentSort = column?.sort ?? 'none';

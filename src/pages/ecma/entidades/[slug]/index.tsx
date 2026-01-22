@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,7 +13,11 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEntity } from '@/services/entities';
 import { Show } from '@/components/ui/Show';
 
-const Entity = ({ entityData }) => {
+interface EntityProps {
+  entityData: any;
+}
+
+const Entity = ({ entityData }: EntityProps) => {
   return (
     <>
       {entityData && (
@@ -77,13 +81,9 @@ const Entity = ({ entityData }) => {
                                 condition={entityData?.result?.foundationDate}>
                                 {typeof entityData?.result?.foundationDate ===
                                   'string' &&
-                                  format(
-                                    new Date(
-                                      entityData?.result?.foundationDate
-                                    ),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )}
+                                  dayjs(entityData?.result?.foundationDate)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')}
                               </Show>
                               <Show
                                 condition={!entityData?.result?.foundationDate}>
@@ -139,8 +139,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const params = context.params;
+export async function getStaticProps(context: any) {
+  // Next.js 15: params puede ser una Promise
+  const params = await context.params;
   const { slug } = params;
   const response = await getEntity({
     slug,

@@ -10,6 +10,7 @@ import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { getUpcomingTitles } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
+import { withRetry } from '@/utils/getStaticPropsHelper';
 
 type TitleData = {
   title: string;
@@ -20,7 +21,11 @@ type TitleData = {
   types: any;
 };
 
-const Titles = ({ titlesData }) => {
+interface TitlesProps {
+  titlesData: any;
+}
+
+const Titles = ({ titlesData }: TitlesProps) => {
   const router = useRouter();
   const [page, setPage] = useState<any>(1);
   const [data, setData] = useState<TitleData>(titlesData);
@@ -74,23 +79,35 @@ const Titles = ({ titlesData }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
-  const response = await getUpcomingTitles({ page: Number(params?.page) ?? 1 });
+export const getStaticProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  try {
+    const response = await withRetry(() =>
+      getUpcomingTitles({ page: Number(resolvedParams?.page) ?? 1 })
+    );
 
-  if (response?.data?.code === 404) {
+    if (response?.data?.code === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const titlesData = response.data;
+
+    return {
+      props: {
+        titlesData,
+        revalidate: 5 * 60,
+      },
+    };
+  } catch (error) {
+    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
+    console.error('[getStaticProps] Error al obtener títulos próximos:', error);
     return {
       notFound: true,
     };
   }
-
-  const titlesData = response.data;
-
-  return {
-    props: {
-      titlesData,
-      revalidate: 5 * 60,
-    },
-  };
 };
 
 export default Titles;

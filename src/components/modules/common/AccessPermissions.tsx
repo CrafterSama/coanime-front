@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/auth';
 import { hasRole } from '@/utils/common';
 
-const AccessPermissions = (children) => {
+const AccessPermissions = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { user } = useAuth({ middleware: 'auth' });
 

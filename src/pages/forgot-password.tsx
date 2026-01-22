@@ -7,22 +7,26 @@ import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
-import Button from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import Label from '@/components/ui/Label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/auth';
 
 const ForgotPassword = () => {
   const { forgotPassword } = useAuth({ middleware: 'guest' });
 
   const [email, setEmail] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
 
-  const submitForm = (event) => {
+  const submitForm = (event: React.FormEvent) => {
     event.preventDefault();
 
-    forgotPassword({ email, setErrors, setStatus });
+    forgotPassword({
+      email,
+      setErrors: (errors: string[]) => setErrors(errors),
+      setStatus: (status: string | null) => setStatus(status),
+    });
   };
 
   return (
@@ -34,9 +38,8 @@ const ForgotPassword = () => {
           </Link>
         }>
         <div className="mb-4 text-sm text-gray-600 max-w-[480px]">
-          Forgot your password? No problem. Just let us know your email address
-          and we will email you a password reset link that will allow you to
-          choose a new one.
+          ¿Olvidaste tu contraseña? ¡No te preocupes! Solo compártenos tu correo
+          electrónico y te enviaremos un enlace para que puedas crear una nueva.
         </div>
 
         {/* Session Status */}
@@ -48,26 +51,30 @@ const ForgotPassword = () => {
         <form onSubmit={submitForm}>
           {/* Email Address */}
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Correo electrónico</Label>
             <Input
               id="email"
               type="email"
               name="email"
               value={email}
               className="block mt-1 w-full"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
               required
               autoFocus
             />
           </div>
 
           <div className="flex flex-col items-center justify-center mt-4 gap-4">
-            <Button>Email Password Reset Link</Button>
+            <Button variant="solid-orange">
+              Enviar enlace de restablecimiento de contraseña
+            </Button>
             <div className="flex flex-row justify-around content-center w-full">
               <Link
                 href="/login"
                 className="text-sm text-orange-600 hover:text-orange-700 underline underline-offset-4">
-                Return to login
+                Volver a iniciar sesión
               </Link>
             </div>
           </div>

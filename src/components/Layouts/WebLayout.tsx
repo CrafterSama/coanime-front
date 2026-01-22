@@ -14,12 +14,16 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     const handleRouteChange = () => {
-      document.getElementById('top').scrollIntoView();
+      const topElement = document.getElementById('top');
+      if (topElement) {
+        topElement.scrollIntoView();
+      }
     };
     router.events.on('routeChangeComplete', handleRouteChange);
   }, [router]);
 
   const { user } = useAuth({ middleware: 'auth' });
+
   return (
     <div id="top" className="wraper flex flex-col min-h-screen">
       <header className="header">

@@ -1,8 +1,10 @@
 import Link from 'next/link';
 
-const SerieGenres = ({ genres }) => (
+import React from 'react';
+
+const SerieGenres = ({ genres }: { genres?: any[] }) => (
   <div className="text-center text-white">
-    {genres?.map((genre, index) => (
+    {genres?.map((genre: any, index: number) => (
       <span key={genre?.id}>
         <span>
           <Link

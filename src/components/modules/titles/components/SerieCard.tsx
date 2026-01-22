@@ -6,7 +6,9 @@ import SerieGenres from '@/components/modules/titles/components/SerieGenres';
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
 
-const SerieCard = ({ serie }) => {
+import React from 'react';
+
+const SerieCard = ({ serie }: { serie: any }) => {
   return (
     <div className="title-item">
       <Image

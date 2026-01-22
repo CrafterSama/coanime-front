@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,7 +13,11 @@ import { getMagazine } from '@/services/magazine';
 import { strToSlug } from '@/utils/string';
 import { Show } from '@/components/ui/Show';
 
-const Magazine = ({ magazineData }) => {
+interface MagazineProps {
+  magazineData: any;
+}
+
+const Magazine = ({ magazineData }: MagazineProps) => {
   return (
     <>
       {magazineData && (
@@ -101,13 +105,9 @@ const Magazine = ({ magazineData }) => {
                               {magazineData?.result?.foundationDate &&
                               magazineData?.result?.foundationDate !==
                                 '0000-00-00 00:00:00'
-                                ? format(
-                                    new Date(
-                                      magazineData?.result?.foundationDate
-                                    ),
-                                    'dd LLLL, yyyy',
-                                    { locale: es }
-                                  )
+                                ? dayjs(magazineData?.result?.foundationDate)
+                                    .locale('es')
+                                    .format('DD MMMM, YYYY')
                                 : 'Sin Información'}
                             </span>
                           }
@@ -159,8 +159,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const params = context.params;
+export async function getStaticProps(context: any) {
+  // Next.js 15: params puede ser una Promise
+  const params = await context.params;
   const { slug } = params;
   const response = await getMagazine({
     slug,

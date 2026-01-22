@@ -27,7 +27,11 @@ const tabs = [
   { key: 'genres', title: 'Géneros' },
 ];
 
-const Titles = ({ titlesData }) => {
+interface TitlesProps {
+  titlesData: any;
+}
+
+const Titles = ({ titlesData }: TitlesProps) => {
   const router = useRouter();
   const { genre } = router.query;
   const [page, setPage] = useState(1);
@@ -52,7 +56,7 @@ const Titles = ({ titlesData }) => {
           page,
         },
       });
-      const response = await getTitlesByGenre({ genre, page });
+      const response = await getTitlesByGenre({ genre: genre as string, page });
       setData(response.data);
       return;
     }
@@ -106,7 +110,7 @@ const Titles = ({ titlesData }) => {
               <CloudLinks allLink="/ecma/generos" links={data?.genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
-              {data?.result?.data?.map((serie) => (
+              {data?.result?.data?.map((serie: any) => (
                 <SerieCard key={serie?.id} serie={serie} />
               ))}
               <Show condition={data?.result?.data?.length < 1}>
@@ -130,11 +134,13 @@ export function getStaticPaths() {
   };
 }
 
-export const getStaticProps = async ({ params }) => {
-  const { genre } = params;
+export const getStaticProps = async ({ params }: { params?: any }) => {
+  // Next.js 15: params puede ser una Promise
+  const resolvedParams = await params;
+  const { genre } = resolvedParams;
   const response = await getTitlesByGenre({
     genre,
-    page: Number(params?.page) ?? 1,
+    page: Number(resolvedParams?.page) ?? 1,
   });
 
   if (response?.status === 404) {

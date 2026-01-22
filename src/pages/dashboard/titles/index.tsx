@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { headers } from '@/components/modules/titles/settings';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -75,7 +75,9 @@ const Titles = () => {
                 placeholder="Buscar"
                 className="w-[300px]"
                 defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setName(e.target.value)
+                }
               />
               <FunnelIcon
                 className="w-6 h-6 text-orange-500 cursor-pointer"
@@ -91,11 +93,11 @@ const Titles = () => {
               {result?.data && (
                 <>
                   <Table columns={headers}>
-                    {result?.data?.map((row) => (
+                    {result?.data?.map((row: any) => (
                       <Rows key={row.id} columns={headers} row={row} />
                     ))}
                   </Table>
-                  <Paginator page={page} setPage={setPage} data={result} />
+                  <Paginator page={page ?? 1} setPage={setPage} data={result} />
                 </>
               )}
             </div>

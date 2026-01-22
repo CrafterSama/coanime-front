@@ -1,8 +1,14 @@
 import httpClient, { httpClientExternal } from '@/lib/http';
 import { useQuery } from '@tanstack/react-query';
 
-export const useTitles = ({ page, name }) => {
-  const params = {};
+export const useTitles = ({
+  page,
+  name,
+}: {
+  page?: number | string;
+  name?: string;
+}) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
@@ -21,7 +27,7 @@ export const useTitles = ({ page, name }) => {
   });
 };
 
-export const useTitle = ({ id }) => {
+export const useTitle = ({ id }: { id: string | number }) => {
   return useQuery({
     queryKey: ['title', id],
     queryFn: async () => {
@@ -51,8 +57,8 @@ export const useGetTitle = (type: string, title: string) => {
   });
 };
 
-export const useGetUserTitleList = ({ page = 1 }) => {
-  const params = {};
+export const useGetUserTitleList = ({ page = 1 }: { page?: number }) => {
+  const params: Record<string, any> = {};
 
   if (page) {
     params['page'] = page;
