@@ -248,7 +248,7 @@ Este proyecto es un frontend y panel de administración para CoAnime construido 
 
 **Variables de entorno identificadas:**
 
-- `NEXT_PUBLIC_API_URL` - Usado en `src/lib/axios.ts` y `src/lib/http.ts`
+- `NEXT_PUBLIC_BACKEND_URL` - Usado en `src/lib/axios.ts` y `src/lib/http.ts`
 - `GA_TRACKING_ID` - Usado en `src/lib/gtag.js` y `src/pages/_app.tsx`
 
 **Recomendación:** Crear `.env.example` con todas las variables necesarias (sin valores sensibles).
@@ -320,7 +320,7 @@ if (typeof window !== 'undefined') {
 
 ```typescript
 const requiredEnvVars = {
-  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
   // ...
 };
 

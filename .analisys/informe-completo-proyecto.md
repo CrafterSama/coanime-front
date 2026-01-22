@@ -536,7 +536,7 @@ El proyecto utiliza **tres instancias de Axios** configuradas en `src/lib/http.t
 ### Variables de Entorno Requeridas
 
 ```env
-NEXT_PUBLIC_API_URL=          # URL base de la API backend
+NEXT_PUBLIC_BACKEND_URL=          # URL base de la API backend
 NEXT_PUBLIC_GA_ID=            # Google Analytics Tracking ID
 ALGOLIA_APP_ID=               # Algolia Application ID
 ALGOLIA_SECRET=               # Algolia Search API Key
@@ -948,7 +948,7 @@ if (typeof window !== 'undefined') {
 7. **Crear `.env.example`**
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.coanime.net
+NEXT_PUBLIC_BACKEND_URL=https://api.coanime.net
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ALGOLIA_APP_ID=your_app_id
 ALGOLIA_SECRET=your_search_key
@@ -980,7 +980,7 @@ ALGOLIA_SECRET=your_search_key
 ```typescript
 // src/lib/env.ts
 const requiredEnvVars = {
-  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
   NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
 };
 
@@ -1226,7 +1226,7 @@ src/
 
 ### APIs Externas
 
-1. **Backend API** (`NEXT_PUBLIC_API_URL`)
+1. **Backend API** (`NEXT_PUBLIC_BACKEND_URL`)
 
    - Endpoints internos: `/internal/*`
    - Endpoints externos: `/external/*`

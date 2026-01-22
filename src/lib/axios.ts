@@ -1,40 +1,33 @@
-import Axios from 'axios';
+import { EXPIRED_SESSION_ROUTE, LOGIN_ROUTE } from '@/constants/common';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
-import { requireEnv } from './env';
-
-const apiUrl = requireEnv('NEXT_PUBLIC_API_URL');
-
-const axios = Axios.create({
-  baseURL: apiUrl,
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  withCredentials: true,
   headers: {
     Accept: 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    Origin: apiUrl,
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
   },
-  // Necesario para que las cookies (incluida XSRF-TOKEN) viajen con la request
-  withCredentials: true,
-  // Configuración estándar para Laravel Sanctum
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
 });
 
-axios.defaults.withCredentials = true;
-
-// Interceptor para agregar el token CSRF a cada solicitud (solo en el navegador)
-axios.interceptors.request.use((config) => {
-  if (typeof document === 'undefined') return config;
-
-  const token = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('XSRF-TOKEN='))
-    ?.split('=')[1];
-
-  if (token) {
-    // Cabecera que Sanctum espera por defecto
-    config.headers['X-XSRF-TOKEN'] = token;
+// Add an interceptor to redirect to the login page if the server responds with a 401 (unauthorized)
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      if (
+        typeof window !== 'undefined' &&
+        window.location.pathname !== LOGIN_ROUTE
+      ) {
+        // We're on the client side
+        // It's important to check that we're not on the login page, otherwise we'll end up in an infinite loop
+        // The server side redirects are handled by the ServerSideRequestsManager class
+        window.location.href = EXPIRED_SESSION_ROUTE;
+      }
+    }
+    return Promise.reject(error);
   }
+);
 
-  return config;
-});
-
-export default axios;
+export default axiosInstance;

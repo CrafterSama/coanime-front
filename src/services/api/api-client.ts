@@ -1,4 +1,5 @@
 import { API_URL } from '@/constants/common';
+import { getBackendUrl } from '@/utils/cors-config';
 import axios, {
   AxiosError,
   AxiosRequestConfig,
@@ -15,17 +16,17 @@ export const HTTP_METHODS = {
 };
 
 const getApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
 const getApiExternalUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
 const getAuthApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
@@ -39,7 +40,7 @@ const getCsrfToken = (): string | undefined => {
 
   return document.cookie
     .split('; ')
-    .find((row) => row.startsWith('XSRF-TOKEN='))
+    .find((row) => row.trim().startsWith('XSRF-TOKEN='))
     ?.split('=')[1];
 };
 
@@ -103,9 +104,11 @@ const createInstance = (baseURL: string, config?: AxiosRequestConfig) => {
         // Las transformaciones se harán en los hooks/servicios cuando sea necesario
       ];
 
+  const backendUrl = typeof window !== 'undefined' ? getBackendUrl() : baseURL;
+
   const instance = axios.create({
-    baseURL,
-    withCredentials: typeof window !== 'undefined',
+    baseURL: backendUrl,
+    withCredentials: true, // Siempre true para Sanctum en el cliente
     responseType: 'json', // Asegurar que Axios parsee JSON automáticamente
     headers: {
       Accept: 'application/json',
@@ -186,7 +189,7 @@ export const httpClientExternal = createInstance(getApiExternalUrl());
 export const httpClientAuth = createInstance(getAuthApiUrl());
 
 // Default export: Main API client (uses base URL)
-const api = createInstance(process.env.NEXT_PUBLIC_API_URL || API_URL);
+const api = createInstance(process.env.NEXT_PUBLIC_BACKEND_URL || API_URL);
 
 /**
  * Configure interceptors for form data uploads
