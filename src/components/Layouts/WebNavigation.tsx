@@ -9,8 +9,13 @@ import { Permissions } from '@/components/modules/common/Permissions';
 import SearchBox from '@/components/modules/common/SearchBox';
 import { CoanimeIcon } from '@/components/ui/ApplicationLogo';
 import { Button } from '@/components/ui/button';
-import Dropdown from '@/components/ui/Dropdown';
-import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import NavLink from '@/components/ui/NavLink';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
@@ -37,7 +42,7 @@ const Navigation = ({ user }: { user: any }) => {
   const [open, setOpen] = useState(false);
 
   const navStyles = cn({
-    'border-b border-gray-200': router?.asPath?.includes('ecma'),
+    'shadow-sm': router?.asPath?.includes('ecma'),
   });
   const navigationStyles = cn(
     'absolute top-16 bg-white transition-all w-full',
@@ -97,66 +102,75 @@ const Navigation = ({ user }: { user: any }) => {
               {/* Login/Register Buttons or User Menu */}
               <div className="flex items-center gap-2">
                 <Show condition={user}>
-                  <Dropdown
-                    align="right"
-                    width={48}
-                    trigger={
-                      <div className="flex flex-row gap-1 text-sm font-semibold items-center text-gray-500 cursor-pointer">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex flex-row gap-2 text-sm font-semibold items-center text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-lg px-2 py-1.5 transition-colors">
                         <div className="flex items-center relative w-10 h-10">
-                          <Show condition={user}>
-                            <Image
-                              src={
-                                user?.profilePhotoPath
-                                  ? user?.profilePhotoPath
-                                  : DEFAULT_IMAGE
-                              }
-                              alt={user?.name}
-                              className="rounded-full w-8 h-8 object-cover"
-                              unoptimized
-                              width={36}
-                              height={36}
-                            />
-                          </Show>
+                          <Image
+                            src={
+                              user?.profilePhotoPath
+                                ? user?.profilePhotoPath
+                                : DEFAULT_IMAGE
+                            }
+                            alt={user?.name || 'Usuario'}
+                            className="rounded-full w-10 h-10 object-cover ring-2 ring-gray-200 hover:ring-orange-500 transition-all"
+                            unoptimized
+                            width={40}
+                            height={40}
+                          />
                         </div>
-                        <span className="whitespace-nowrap">{user?.name}</span>
-                        <div className="ml-1 col-span-1">
-                          <ChevronDownIcon className="h-4 w-4 text-gray-400" />
-                        </div>
-                      </div>
-                    }>
-                    {/* Authentication */}
-                    <Permissions>
-                      <DropdownLink
-                        href={checkUser ? '/dashboard' : '/login'}
-                        rel="nofollow"
-                        icon={
-                          <RectangleGroupIcon className="h-6 w-6 text-gray-700" />
-                        }>
-                        Dashboard
-                      </DropdownLink>
-                    </Permissions>
-                    <DropdownLink
-                      href={`/users/${user?.slug}`}
-                      icon={
-                        <UserCircleIcon className="h-6 w-6 text-gray-700" />
-                      }>
-                      Perfil
-                    </DropdownLink>
-                    <DropdownLink
-                      href="/mi-lista"
-                      icon={
-                        <QueueListIcon className="h-6 w-6 text-gray-700" />
-                      }>
-                      Mi Lista
-                    </DropdownLink>
-                    <DropdownButton
-                      onClick={logout}
-                      icon={
-                        <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />
-                      }>
-                      Logout
-                    </DropdownButton>
-                  </Dropdown>
+                        <span className="whitespace-nowrap hidden sm:block">
+                          {user?.name}
+                        </span>
+                        <ChevronDownIcon className="h-4 w-4 text-gray-400 hidden sm:block" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-56 bg-white shadow-xl rounded-lg overflow-hidden">
+                      {/* Authentication */}
+                      <Permissions>
+                        <DropdownMenuItem asChild>
+                          <Link
+                            href={checkUser ? '/dashboard' : '/login'}
+                            rel="nofollow"
+                            className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-orange-50 focus:bg-orange-50 transition-colors">
+                            <RectangleGroupIcon className="h-5 w-5 text-gray-600" />
+                            <span className="text-sm font-medium text-gray-700">
+                              Dashboard
+                            </span>
+                          </Link>
+                        </DropdownMenuItem>
+                      </Permissions>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href={`/users/${user?.slug}`}
+                          className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-orange-50 focus:bg-orange-50 transition-colors">
+                          <UserCircleIcon className="h-5 w-5 text-gray-600" />
+                          <span className="text-sm font-medium text-gray-700">
+                            Perfil
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/mi-lista"
+                          className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-orange-50 focus:bg-orange-50 transition-colors">
+                          <QueueListIcon className="h-5 w-5 text-gray-600" />
+                          <span className="text-sm font-medium text-gray-700">
+                            Mi Lista
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="bg-gray-100" />
+                      <DropdownMenuItem
+                        onClick={() => logout()}
+                        className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-red-50 focus:bg-red-50 text-red-600 transition-colors">
+                        <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                        <span className="text-sm font-medium">Logout</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </Show>
                 <Show condition={!user}>
                   <Link href="/login">
@@ -205,7 +219,7 @@ const Navigation = ({ user }: { user: any }) => {
         </div>*/}
 
           {/* Responsive Settings Options */}
-          <div className="pt-4 pb-1 border-t border-gray-200">
+          <div className="pt-4 pb-1 shadow-[0_-1px_0_0_rgba(0,0,0,0.05)]">
             {user?.name ? (
               <>
                 <div className="flex items-center px-4">

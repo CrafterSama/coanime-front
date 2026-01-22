@@ -16,7 +16,7 @@ const Aside = ({ isTiny }: { isTiny?: boolean }) => {
     <aside
       className={`${
         isTiny ? 'w-14' : 'md:w-auto'
-      } w-14 border-r border-gray-200`}>
+      } w-14 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]`}>
       <div className="flex flex-col gap-4 m-auto">
         <div className="w-auto h-20 p-4 rounded-full self-center ">
           <Link

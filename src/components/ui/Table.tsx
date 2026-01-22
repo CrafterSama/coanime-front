@@ -74,7 +74,7 @@ export const Rows: FC<RowsProps> = ({
     <CollapsiblePrimitive.Root open={isOpen} onOpenChange={setIsOpen} asChild>
       <>
         <div
-          className={`grid grid-cols-${columns.length} grid-flow-col border-b border-gray-200 group`}>
+          className={`grid grid-cols-${columns.length} grid-flow-col shadow-[0_1px_0_0_rgba(0,0,0,0.05)] group`}>
           {columns?.map((column, i) => (
             <div key={`${column.name}-${i}`} className={tdStyles(column)}>
               {column.firstItem ? (

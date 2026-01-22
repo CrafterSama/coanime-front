@@ -23,7 +23,7 @@ const WebLayout: FC<WebLayoutProps> = ({ children }) => {
   }, [router]);
 
   const { user } = useAuth({ middleware: 'auth' });
-  console.log('user', user);
+
   return (
     <div id="top" className="wraper flex flex-col min-h-screen">
       <header className="header">
