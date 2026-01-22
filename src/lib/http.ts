@@ -13,17 +13,17 @@ export const HTTP_METHODS = {
 };
 
 const getApiUrl = () => {
-  const url = requireEnv('NEXT_PUBLIC_API_URL');
+  const url = requireEnv('NEXT_PUBLIC_BACKEND_URL');
   return `${url}/internal`;
 };
 
 const getApiExternalUrl = () => {
-  const url = requireEnv('NEXT_PUBLIC_API_URL');
+  const url = requireEnv('NEXT_PUBLIC_BACKEND_URL');
   return `${url}/external`;
 };
 
 const getAuthApiUrl = () => {
-  const url = requireEnv('NEXT_PUBLIC_API_URL');
+  const url = requireEnv('NEXT_PUBLIC_BACKEND_URL');
   return `${url}`;
 };
 

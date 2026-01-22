@@ -45,7 +45,7 @@ export const authOptions = {
 
         try {
           // Crear una instancia de axios para el servidor con la URL completa
-          const apiUrl = requireEnv('NEXT_PUBLIC_API_URL');
+          const apiUrl = requireEnv('NEXT_PUBLIC_BACKEND_URL');
 
           // Para producción, asegurar que use la URL correcta
           const serverApiUrl =
@@ -113,11 +113,23 @@ export const authOptions = {
             }
           );
 
-          // Interceptor para agregar cookies a las peticiones
+          // Interceptor para agregar cookies y headers necesarios a las peticiones
           serverAxios.interceptors.request.use(
             (config) => {
-              if (sessionCookies.length > 0 && config.headers) {
-                // Agregar las cookies de sesión a la cabecera Cookie
+              if (!config.headers) {
+                config.headers = new axios.AxiosHeaders();
+              }
+
+              // CRÍTICO: Agregar Referer header con la URL del frontend
+              // Esto es necesario para que Sanctum valide que el origen es permitido
+              const frontendUrl =
+                process.env.FRONTEND_URL ||
+                process.env.NEXT_PUBLIC_FRONTEND_URL ||
+                'http://localhost:3000';
+              config.headers['Referer'] = frontendUrl;
+
+              // Agregar las cookies de sesión a la cabecera Cookie
+              if (sessionCookies.length > 0) {
                 const cookieHeader = sessionCookies
                   .map((cookie) => cookie.split(';')[0]) // Solo el nombre=valor, sin atributos
                   .join('; ');
@@ -131,6 +143,7 @@ export const authOptions = {
                     {
                       cookieCount: sessionCookies.length,
                       hasCookieHeader: !!cookieHeader,
+                      referer: frontendUrl,
                     }
                   );
                 }
@@ -138,7 +151,10 @@ export const authOptions = {
                 // eslint-disable-next-line no-console
                 console.warn(
                   '[NextAuth] No hay cookies para agregar a la petición:',
-                  config.url
+                  config.url,
+                  {
+                    referer: frontendUrl,
+                  }
                 );
               }
               return config;

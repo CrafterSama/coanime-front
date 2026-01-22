@@ -1,11 +1,11 @@
 import { API_URL } from '@/constants/common';
+import { getBackendUrl } from '@/utils/cors-config';
 import axios, {
   AxiosError,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from 'axios';
 import snakecaseKeys from 'snakecase-keys';
-import { getBackendUrl } from '@/utils/cors-config';
 
 export const HTTP_METHODS = {
   post: 'POST',
@@ -16,17 +16,17 @@ export const HTTP_METHODS = {
 };
 
 const getApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
 const getApiExternalUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
 const getAuthApiUrl = () => {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   return `${url}`;
 };
 
@@ -189,7 +189,7 @@ export const httpClientExternal = createInstance(getApiExternalUrl());
 export const httpClientAuth = createInstance(getAuthApiUrl());
 
 // Default export: Main API client (uses base URL)
-const api = createInstance(process.env.NEXT_PUBLIC_API_URL || API_URL);
+const api = createInstance(process.env.NEXT_PUBLIC_BACKEND_URL || API_URL);
 
 /**
  * Configure interceptors for form data uploads
