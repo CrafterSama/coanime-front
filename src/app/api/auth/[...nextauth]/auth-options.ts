@@ -47,11 +47,17 @@ export const authOptions = {
           // Crear una instancia de axios para el servidor con la URL completa
           const apiUrl = requireEnv('NEXT_PUBLIC_API_URL');
 
+          // Para producción, asegurar que use la URL correcta
+          const serverApiUrl =
+            process.env.NODE_ENV === 'production'
+              ? 'https://api.coanime.net'
+              : apiUrl;
+
           // Variable para almacenar las cookies de sesión entre peticiones
           let sessionCookies: string[] = [];
 
           const serverAxios = axios.create({
-            baseURL: apiUrl,
+            baseURL: serverApiUrl,
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',

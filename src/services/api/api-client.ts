@@ -5,6 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import snakecaseKeys from 'snakecase-keys';
+import { getBackendUrl } from '@/utils/cors-config';
 
 export const HTTP_METHODS = {
   post: 'POST',
@@ -39,7 +40,7 @@ const getCsrfToken = (): string | undefined => {
 
   return document.cookie
     .split('; ')
-    .find((row) => row.startsWith('XSRF-TOKEN='))
+    .find((row) => row.trim().startsWith('XSRF-TOKEN='))
     ?.split('=')[1];
 };
 
@@ -103,9 +104,11 @@ const createInstance = (baseURL: string, config?: AxiosRequestConfig) => {
         // Las transformaciones se harán en los hooks/servicios cuando sea necesario
       ];
 
+  const backendUrl = typeof window !== 'undefined' ? getBackendUrl() : baseURL;
+
   const instance = axios.create({
-    baseURL,
-    withCredentials: typeof window !== 'undefined',
+    baseURL: backendUrl,
+    withCredentials: true, // Siempre true para Sanctum en el cliente
     responseType: 'json', // Asegurar que Axios parsee JSON automáticamente
     headers: {
       Accept: 'application/json',
