@@ -24,15 +24,15 @@ const VerifyEmail = () => {
           </Link>
         }>
         <div className="mb-4 text-sm text-gray-600">
-          Thanks for signing up! Before getting started, could you verify your
-          email address by clicking on the link we just emailed to you? If you
-          didn't receive the email, we will gladly send you another.
+          ¡Gracias por unirte! Antes de comenzar, verifica tu correo electrónico
+          haciendo clic en el enlace que te enviamos. Si no lo recibiste, no hay
+          problema, podemos enviarte otro.
         </div>
 
         {status === 'verification-link-sent' && (
           <div className="mb-4 font-medium text-sm text-green-600">
-            A new verification link has been sent to the email address you
-            provided during registration.
+            Un nuevo enlace de verificación ha sido enviado a tu correo
+            electrónico.
           </div>
         )}
 
@@ -43,14 +43,14 @@ const VerifyEmail = () => {
                 setStatus: (status: string | null) => setStatus(status),
               })
             }>
-            Resend Verification Email
+            Reenviar correo de verificación
           </Button>
 
           <button
             type="button"
             className="underline text-sm text-gray-600 hover:text-gray-900"
             onClick={() => logout()}>
-            Logout
+            Cerrar sesión
           </button>
         </div>
       </AuthCard>

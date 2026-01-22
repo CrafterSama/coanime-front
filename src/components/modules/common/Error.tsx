@@ -157,10 +157,19 @@ const Error = ({ code, error, text }: ErrorProps) => {
     setImage(IMAGES_404[Math.floor(Math.random() * IMAGES_404.length)]);
   }, []);
 
+  // Convertir error a string de forma segura
+  const errorMessage =
+    typeof error === 'string'
+      ? error
+      : error?.message ||
+        error?.response?.data?.message ||
+        error?.toString() ||
+        'Error desconocido';
+
   return (
     <WebLayout>
       <Head>
-        <title>{`${code} - ${error}`}</title>
+        <title>{`${code} - ${errorMessage}`}</title>
         <meta name="robots" content="noindex" />
       </Head>
       <div className="relative flex items-top justify-center min-h-[80vh] bg-white sm:items-center sm:pt-0">
@@ -171,7 +180,7 @@ const Error = ({ code, error, text }: ErrorProps) => {
                 <div className="absolute">
                   <div>
                     <h1 className="my-2 text-gray-800 font-bold text-3xl">
-                      {`${code} - ${error}`}
+                      {`${code} - ${errorMessage}`}
                     </h1>
                     <p className="my-2 text-gray-800">{text}</p>
                     <p className="my-2 text-gray-600">

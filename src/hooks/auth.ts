@@ -37,28 +37,69 @@ export const useAuth = ({
     setStatus,
     email,
     password,
+    redirectTo,
   }: {
     setErrors: (errors: string[]) => void;
     setStatus: (status: string | null) => void;
     email: string;
     password: string;
+    redirectTo?: string;
   }) => {
     setErrors([]);
     setStatus(null);
 
-    const result = await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-      callbackUrl: '/',
-    });
+    try {
+      // Paso 1: Obtener XSRF-TOKEN del cliente antes de hacer login
+      // Esto establece la cookie XSRF-TOKEN en el navegador
+      await axios.get('/sanctum/csrf-cookie');
 
-    if (result?.error) {
-      setErrors([result.error]);
-      return;
+      // Paso 2: Ahora que tenemos el XSRF-TOKEN, hacer login con Auth.js
+      // Auth.js ejecutará authorize en el servidor, pero el cliente ya tiene el token
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+        callbackUrl: redirectTo || '/',
+      });
+
+      if (result?.error) {
+        setErrors([result.error]);
+        return;
+      }
+
+      // Paso 3: Si el login fue exitoso, hacer una petición adicional a Laravel
+      // para establecer las cookies de sesión en el navegador
+      // Esto es necesario porque las cookies establecidas en el servidor no se propagan al cliente
+      // Las cookies de sesión de Laravel son necesarias para futuras peticiones autenticadas
+      if (result?.ok) {
+        try {
+          // Hacer una petición a un endpoint protegido de Laravel
+          // Esto establecerá las cookies de sesión de Laravel en el navegador
+          // Usamos /internal/me que es el endpoint correcto según la configuración
+          await axios.get('/internal/me');
+        } catch (sessionError: any) {
+          // Si hay error, loguearlo pero no fallar el login
+          // El login ya fue exitoso en Auth.js
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.warn(
+              '[Login] Error al establecer cookies de sesión:',
+              sessionError?.response?.status
+            );
+          }
+        }
+      }
+
+      setStatus('Login exitoso');
+
+      // Redirigir después de un login exitoso
+      if (result?.ok) {
+        router.push(redirectTo || '/');
+      }
+    } catch (error: any) {
+      console.error('[Login] Error:', error);
+      setErrors(['Error al iniciar sesión. Por favor, intenta de nuevo.']);
     }
-
-    setStatus('Login exitoso');
   };
 
   // Registro: Auth.js no tiene registro nativo, así que llamamos directamente a Laravel

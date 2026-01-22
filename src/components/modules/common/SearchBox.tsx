@@ -3,6 +3,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 import { Input } from '@/components/ui/input';
 import SectionTitle from '@/components/ui/SectionTitle';
@@ -18,7 +19,8 @@ const SearchBox = () => {
   return (
     <div className="grid relative w-[290px]">
       <Input
-        placeholder="Search"
+        placeholder="Buscar..."
+        prefix={<MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setName(e.target.value)
         }

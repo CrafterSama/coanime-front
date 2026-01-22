@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import Head from 'next/head';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
 import AuthCard from '@/components/ui/AuthCard';
@@ -11,9 +8,12 @@ import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import { Button } from '@/components/ui/button';
 import Checkbox from '@/components/ui/Checkbox';
 import { Input } from '@/components/ui/input';
-import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/auth';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const router = useRouter();
@@ -54,11 +54,18 @@ const Login = () => {
   const submitForm = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const redirectPath = router.query.redirect
+      ? Array.isArray(router.query.redirect)
+        ? router.query.redirect[0]
+        : router.query.redirect
+      : '/';
+
     login({
       email,
       password,
       setErrors: (errors: string[]) => setErrors(errors),
       setStatus: (status: string | null) => setStatus(status),
+      redirectTo: redirectPath as string,
     });
   };
 
@@ -97,7 +104,7 @@ const Login = () => {
 
           {/* Password */}
           <div className="mt-4">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Contraseña</Label>
 
             <PasswordInput
               id="password"
@@ -117,7 +124,7 @@ const Login = () => {
 
           <div className="flex flex-col items-center justify-end mt-4 gap-4">
             <Button className="ml-3" variant="solid-orange">
-              Login
+              Iniciar sesión
             </Button>
 
             <div className="flex flex-row justify-around content-center w-full">

@@ -7,6 +7,23 @@ const Errors = ({ errors = [] }: ErrorsProps) => {
 
   if (hasNotErrors) return null;
 
+  // Función helper para convertir error a string de forma segura
+  const getErrorMessage = (error: any): string => {
+    if (typeof error === 'string') {
+      return error;
+    }
+    if (error?.message && typeof error.message === 'string') {
+      return error.message;
+    }
+    if (error?.response?.data?.message) {
+      return error.response.data.message;
+    }
+    if (error?.toString) {
+      return error.toString();
+    }
+    return 'Error desconocido';
+  };
+
   return (
     <div className="p-4 flex flex-row gap-4 border-l-4 border-red-700 bg-red-50 mt-4">
       <div className="w-full">
@@ -14,7 +31,7 @@ const Errors = ({ errors = [] }: ErrorsProps) => {
           <span className="text-base">Whoops!: </span>
           {errors?.map((error, index) => (
             <span key={index}>
-              <span>{error?.message}</span>
+              <span>{getErrorMessage(error)}</span>
               {errors.length > 1 && ', '}
             </span>
           ))}

@@ -7,7 +7,8 @@ import { useRouter } from 'next/router';
 
 import { Permissions } from '@/components/modules/common/Permissions';
 import SearchBox from '@/components/modules/common/SearchBox';
-import { CoanimeIcon, Logotype } from '@/components/ui/ApplicationLogo';
+import { CoanimeIcon } from '@/components/ui/ApplicationLogo';
+import { Button } from '@/components/ui/button';
 import Dropdown from '@/components/ui/Dropdown';
 import DropdownLink, { DropdownButton } from '@/components/ui/DropdownLink';
 import NavLink from '@/components/ui/NavLink';
@@ -20,12 +21,12 @@ import { useAuth } from '@/hooks/auth';
 import {
   ArrowLeftOnRectangleIcon,
   Bars3Icon,
-  RectangleGroupIcon,
-  XMarkIcon,
   ChevronDownIcon,
-  UserCircleIcon,
-  QueueListIcon,
   HomeIcon,
+  QueueListIcon,
+  RectangleGroupIcon,
+  UserCircleIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 
 const Navigation = ({ user }: { user: any }) => {
@@ -57,17 +58,26 @@ const Navigation = ({ user }: { user: any }) => {
               <div className="flex-shrink-0 flex items-center">
                 <Link
                   href="/"
-                  className="relative w-48 flex flex-row items-center gap-2">
-                  <CoanimeIcon className="h-24 text-orange-600" />
-                  <Logotype className="h-16 text-gray-800" />
+                  className="relative flex flex-row items-center gap-2">
+                  <CoanimeIcon className="h-8 w-8 text-orange-500" />
+                  <span className="text-xl font-bold text-orange-500">
+                    COANIME
+                  </span>
                 </Link>
               </div>
 
               {/* Navigation Links */}
-              <div className="hidden space-x-8 sm:-my-px sm:ml-10 lg:flex">
+              <div className="hidden space-x-6 sm:-my-px sm:ml-6 lg:flex items-center">
+                <NavLink
+                  href="/"
+                  active={router.pathname === '/'}
+                  className="flex items-center gap-1">
+                  <HomeIcon className="w-5 h-5" />
+                </NavLink>
                 <NavLink
                   href="/ecma/titulos"
-                  active={router.pathname.includes('/ecma')}>
+                  active={router.pathname.includes('/ecma')}
+                  className="flex items-center gap-1">
                   Enciclopedia
                 </NavLink>
                 <NavLink
@@ -78,83 +88,86 @@ const Navigation = ({ user }: { user: any }) => {
               </div>
             </div>
 
-            <div className="hidden lg:flex items-center min-w-[300px] px-2">
-              <SearchBox />
-            </div>
-            {/* Settings Dropdown */}
-            <div className="hidden lg:flex sm:gap-8 sm:items-center sm:ml-6 z-10 w-[230px]">
-              {/* Search Input */}
-              <Show condition={user}>
-                <Dropdown
-                  align="right"
-                  width={48}
-                  trigger={
-                    <div className="flex flex-row gap-1 text-sm font-semibold items-center text-gray-500 cursor-pointer">
-                      <div className="flex items-center relative w-10 h-10">
-                        <Show condition={user}>
-                          <Image
-                            src={
-                              user?.profilePhotoPath
-                                ? user?.profilePhotoPath
-                                : DEFAULT_IMAGE
-                            }
-                            alt={user?.name}
-                            className="rounded-full w-8 h-8 object-cover"
-                            unoptimized
-                            width={36}
-                            height={36}
-                          />
-                        </Show>
-                      </div>
-                      <span className="whitespace-nowrap">{user?.name}</span>
-                      <div className="ml-1 col-span-1">
-                        <ChevronDownIcon className="h-4 w-4 text-gray-400" />
-                      </div>
-                    </div>
-                  }>
-                  {/* Authentication */}
-                  <Permissions>
-                    <DropdownLink
-                      href={checkUser ? '/dashboard' : '/login'}
-                      rel="nofollow"
-                      icon={
-                        <RectangleGroupIcon className="h-6 w-6 text-gray-700" />
-                      }>
-                      Dashboard
-                    </DropdownLink>
-                  </Permissions>
-                  <DropdownLink
-                    href={`/users/${user?.slug}`}
-                    icon={<UserCircleIcon className="h-6 w-6 text-gray-700" />}>
-                    Perfil
-                  </DropdownLink>
-                  <DropdownLink
-                    href="/mi-lista"
-                    icon={<QueueListIcon className="h-6 w-6 text-gray-700" />}>
-                    Mi Lista
-                  </DropdownLink>
-                  <DropdownButton
-                    onClick={logout}
-                    icon={
-                      <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />
-                    }>
-                    Logout
-                  </DropdownButton>
-                </Dropdown>
-              </Show>
-              <Show condition={!user}>
-                <Link
-                  href="/login"
-                  className="text-sm font-medium text-gray-700 underline">
-                  Login
-                </Link>
+            <div className="hidden lg:flex items-center gap-4">
+              {/* Search Box */}
+              <div className="min-w-[200px]">
+                <SearchBox />
+              </div>
 
-                <Link
-                  href="/register"
-                  className="ml-4 text-sm font-medium text-gray-700 underline">
-                  Register
-                </Link>
-              </Show>
+              {/* Login/Register Buttons or User Menu */}
+              <div className="flex items-center gap-2">
+                <Show condition={user}>
+                  <Dropdown
+                    align="right"
+                    width={48}
+                    trigger={
+                      <div className="flex flex-row gap-1 text-sm font-semibold items-center text-gray-500 cursor-pointer">
+                        <div className="flex items-center relative w-10 h-10">
+                          <Show condition={user}>
+                            <Image
+                              src={
+                                user?.profilePhotoPath
+                                  ? user?.profilePhotoPath
+                                  : DEFAULT_IMAGE
+                              }
+                              alt={user?.name}
+                              className="rounded-full w-8 h-8 object-cover"
+                              unoptimized
+                              width={36}
+                              height={36}
+                            />
+                          </Show>
+                        </div>
+                        <span className="whitespace-nowrap">{user?.name}</span>
+                        <div className="ml-1 col-span-1">
+                          <ChevronDownIcon className="h-4 w-4 text-gray-400" />
+                        </div>
+                      </div>
+                    }>
+                    {/* Authentication */}
+                    <Permissions>
+                      <DropdownLink
+                        href={checkUser ? '/dashboard' : '/login'}
+                        rel="nofollow"
+                        icon={
+                          <RectangleGroupIcon className="h-6 w-6 text-gray-700" />
+                        }>
+                        Dashboard
+                      </DropdownLink>
+                    </Permissions>
+                    <DropdownLink
+                      href={`/users/${user?.slug}`}
+                      icon={
+                        <UserCircleIcon className="h-6 w-6 text-gray-700" />
+                      }>
+                      Perfil
+                    </DropdownLink>
+                    <DropdownLink
+                      href="/mi-lista"
+                      icon={
+                        <QueueListIcon className="h-6 w-6 text-gray-700" />
+                      }>
+                      Mi Lista
+                    </DropdownLink>
+                    <DropdownButton
+                      onClick={logout}
+                      icon={
+                        <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />
+                      }>
+                      Logout
+                    </DropdownButton>
+                  </Dropdown>
+                </Show>
+                <Show condition={!user}>
+                  <Link href="/login">
+                    <Button variant="link">Login</Button>
+                  </Link>
+
+                  <Link href="/register">
+                    <Button variant="solid-orange">Registro</Button>
+                  </Link>
+                </Show>
+              </div>
             </div>
 
             {/* Hamburger */}

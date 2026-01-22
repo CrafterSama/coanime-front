@@ -30,8 +30,19 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/gtag.js"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "src/lib/gtag.js",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -6,3 +6,6 @@ export const SORTING_TYPES = {
 
 export const DEFAULT_IMAGE =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
+
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'https://dev.coanime.net';
