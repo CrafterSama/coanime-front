@@ -2,6 +2,7 @@
   "name": "coanime-dashboard",
   "version": "1.0.4",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "devHttps": "node server.js",
     "dev": "next dev -H front.coanime.net -p 3000 --turbo",
@@ -41,7 +42,7 @@
     "disqus-react": "1.1.5",
     "lucide-react": "^0.562.0",
     "next": "^15.2.4",
-    "next-auth": "^5.0.0-beta.25",
+    "next-auth": "^4.24.13",
     "nextjs-progressbar": "0.0.16",
     "react": "^19.0.0",
     "react-charts": "3.0.0-beta.55",
