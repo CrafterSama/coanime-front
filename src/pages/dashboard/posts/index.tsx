@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
-import { usePostsSettings } from '@/components/modules/posts/settings';
-import { Input } from '@/components/ui/input';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import SectionHeader from '@/components/ui/SectionHeader';
-import { Rows, Table } from '@/components/ui/Table';
-import { usePosts } from '@/hooks/posts';
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useAuth } from '@/hooks/auth';
-import { postDelete } from '@/services/posts';
-import { toast } from 'react-hot-toast';
-import Modal from '@/components/ui/Modal';
+import { createPostColumns } from '@/components/modules/posts/columns';
 import { Button } from '@/components/ui/button';
+import { DataTable } from '@/components/ui/data-table';
+import Loading from '@/components/ui/Loading';
+import Modal from '@/components/ui/Modal';
+import { useAuth } from '@/hooks/auth';
+import { usePosts } from '@/hooks/posts';
+import { postDelete } from '@/services/posts';
+import { ChevronLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { toast } from 'react-hot-toast';
 
 const Posts = () => {
   const router = useRouter();
@@ -34,8 +31,11 @@ const Posts = () => {
     page,
     name,
   });
-  const { data: posts = [] } = data;
-  const { headers } = usePostsSettings({ user, setPostId, setOpenDeleteModal });
+  const { data: posts = [], result } = data;
+  const columns = React.useMemo(
+    () => createPostColumns(user, setPostId, setOpenDeleteModal),
+    [user, setPostId, setOpenDeleteModal]
+  );
 
   useEffect(() => {
     if (router?.query?.page) {
@@ -80,21 +80,7 @@ const Posts = () => {
       <Head>
         <title>Coanime.net - Lista de Articulos</title>
       </Head>
-      <AppLayout
-        header={
-          <SectionHeader
-            backlink="/dashboard"
-            text="Lista de Articulos"
-            rightElement={
-              <Link
-                href={`/dashboard/posts/create`}
-                className="font-semibold py-2 px-4 rounded-lg transition-colors border-2 text-orange-500 bg-orange-100 border-orange-500 hover:bg-orange-200 flex flex-row justify-center items-center gap-2">
-                <PlusIcon className="h-4 w-4" />
-                Crear
-              </Link>
-            }
-          />
-        }>
+      <AppLayout>
         <Modal
           title="Borrar Post"
           isOpen={openDeleteModal}
@@ -119,33 +105,54 @@ const Posts = () => {
             </div>
           </div>
         </Modal>
-        <div className="py-12">
-          <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-start py-4">
-              <Input
-                placeholder="Buscar"
-                className="w-[300px]"
-                defaultValue={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setName(e.target.value)
-                }
-              />
+        <div className="p-4">
+          <div className="w-full">
+            {/* Header Section */}
+            <div className="flex flex-row gap-4 justify-between items-center mb-4">
+              <div className="flex flex-row gap-4 items-center">
+                <Link
+                  href="/dashboard"
+                  className="bg-gray-200 text-orange-400 rounded p-1 hover:bg-gray-300 transition-colors">
+                  <ChevronLeftIcon className="w-6 h-6" />
+                </Link>
+                <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
+                  Lista de Articulos
+                </h2>
+              </div>
+              <Link
+                href={`/dashboard/posts/create`}
+                className="font-semibold py-2 px-4 rounded-lg transition-colors text-orange-500 bg-orange-100 hover:bg-orange-200 shadow-sm hover:shadow-md flex flex-row justify-center items-center gap-2">
+                <PlusIcon className="h-4 w-4" />
+                Crear
+              </Link>
             </div>
-            <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
-              {isLoading && (
-                <div className="flex justify-center content-center min-w-screen min-h-screen">
+
+            <div className="bg-white overflow-hidden shadow-sm rounded-lg p-4">
+              {isLoading ? (
+                <div className="flex justify-center content-center min-h-screen">
                   <Loading size={16} />
                 </div>
-              )}
-              {posts && (
-                <>
-                  <Table columns={headers}>
-                    {posts?.map((row: any) => (
-                      <Rows key={row.id} columns={headers} row={row} />
-                    ))}
-                  </Table>
-                  <Paginator page={page} setPage={setPage} data={data} />
-                </>
+              ) : (
+                <DataTable
+                  columns={columns}
+                  data={posts}
+                  searchKey="title"
+                  searchPlaceholder="Buscar por título..."
+                  pagination={
+                    result
+                      ? {
+                          pageIndex: (result.current_page ?? page) - 1,
+                          pageSize: result.per_page ?? 15,
+                          total: result.total ?? 0,
+                          lastPage: result.last_page ?? 1,
+                          currentPage: result.current_page ?? page,
+                          onPageChange: (newPage: number) => {
+                            setPage(newPage);
+                          },
+                        }
+                      : undefined
+                  }
+                />
               )}
             </div>
           </div>

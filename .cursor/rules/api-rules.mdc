@@ -1,0 +1,8 @@
+---
+description: Consume API & Data Fetching
+globs:
+alwaysApply: true
+---
+
+- **Wrapper Usage**: When interacting with the backend, always use the central API wrapper located at `@/services/api`. This wrapper handles default headers and error logging to Sentry.
+- **Hooks**: When creating a component that fetches or mutates data, create and use a **custom hook** with **Tanstack Query** (e.g., `useGetUsersQuery`). Do not perform data fetching directly inside the component.

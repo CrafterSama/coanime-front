@@ -4,12 +4,26 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { MenuIcon, LogoutIcon } from '@/components/icons';
-import Dropdown from '@/components/ui/Dropdown';
-import { DropdownButton } from '@/components/ui/DropdownLink';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
 } from '@/components/ui/ResponsiveNavLink';
 import { Show } from '@/components/ui/Show';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -44,130 +58,133 @@ const Navigation: FC<NavigationProps> = ({
           {/* Settings Dropdown */}
           <div className="hidden sm:flex sm:items-center sm:ml-6">
             <Show condition={user}>
-              <Dropdown
-                align="right"
-                trigger={
-                  <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out w-12 h-12">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
                     <div className="flex flex-row justify-start items-center gap-4">
-                      {
-                        <Image
+                      <Avatar className="w-12 h-12 ring-2 ring-gray-200 hover:ring-orange-500 transition-all">
+                        <AvatarImage
                           src={
                             user?.profilePhotoPath
                               ? user?.profilePhotoPath
                               : DEFAULT_IMAGE
                           }
                           alt={user?.name}
-                          className="rounded-full w-full h-full object-cover"
-                          fill
-                          unoptimized
                         />
-                      }
-                      <span>{user?.name}</span>
+                        <AvatarFallback className="bg-orange-100 text-orange-600">
+                          {user?.name
+                            ?.split(' ')
+                            .map((n: string) => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .slice(0, 2) || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="hidden sm:block">{user?.name}</span>
                     </div>
 
                     <div className="ml-1">
                       <ChevronDownIcon className="h-3 w-3 text-gray-400" />
                     </div>
                   </button>
-                }>
-                {/* Authentication */}
-                {/*<DropdownLink
-                  href="/dashboard/profile"
-                  scroll={true}
-                  icon={<UserCircleIcon className="h-6 w-6 text-gray-400" />}>
-                  Profile
-                </DropdownLink>*/}
-                <DropdownButton
-                  icon={<LogoutIcon className="h-6 w-6 text-gray-400" />}
-                  onClick={logout}>
-                  Logout
-                </DropdownButton>
-              </Dropdown>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 bg-white shadow-lg rounded-lg">
+                  <DropdownMenuItem
+                    onClick={logout}
+                    className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-red-50 focus:bg-red-50 text-red-600 transition-colors">
+                    <LogoutIcon className="h-5 w-5" />
+                    <span className="text-sm font-medium">Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </Show>
           </div>
 
-          {/* Hamburger */}
+          {/* Hamburger - Mobile Menu */}
           <div className="-mr-2 flex items-center sm:hidden">
-            <button
-              onClick={() => setOpen((open) => !open)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-              <svg
-                className="h-6 w-6"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 24 24">
-                {open ? (
-                  <path
-                    className="inline-flex"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    className="inline-flex"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                  <svg
+                    className="h-6 w-6"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                    {open ? (
+                      <path
+                        className="inline-flex"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    ) : (
+                      <path
+                        className="inline-flex"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    )}
+                  </svg>
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle>Menú</SheetTitle>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  <ResponsiveNavLink
+                    href="/dashboard"
+                    active={router.pathname === '/dashboard'}>
+                    Dashboard
+                  </ResponsiveNavLink>
+                  <Separator />
+                  {user?.name && (
+                    <>
+                      <div className="flex items-center px-4 py-3">
+                        <Avatar className="w-12 h-12 mr-3">
+                          <AvatarImage
+                            src={
+                              user?.profilePhotoPath
+                                ? user?.profilePhotoPath
+                                : DEFAULT_IMAGE
+                            }
+                            alt={user?.name}
+                          />
+                          <AvatarFallback className="bg-orange-100 text-orange-600">
+                            {user?.name
+                              ?.split(' ')
+                              .map((n: string) => n[0])
+                              .join('')
+                              .toUpperCase()
+                              .slice(0, 2) || 'U'}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-medium text-base text-gray-800">
+                            {user?.name}
+                          </div>
+                          <div className="font-medium text-sm text-gray-500">
+                            {user?.email}
+                          </div>
+                        </div>
+                      </div>
+                      <Separator />
+                    </>
+                  )}
+                  <ResponsiveNavButton onClick={() => logout()}>
+                    Logout
+                  </ResponsiveNavButton>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-
-      {/* Responsive Navigation Menu */}
-      {open && (
-        <div className="block sm:hidden">
-          <div className="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink
-              href="/dashboard"
-              active={router.pathname === '/dashboard'}>
-              Dashboard
-            </ResponsiveNavLink>
-          </div>
-
-          {/* Responsive Settings Options */}
-          <div className="pt-4 pb-1 shadow-[0_-1px_0_0_rgba(0,0,0,0.05)]">
-            <div className="flex items-center px-4">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-10 w-10 fill-current text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </div>
-
-              <div className="ml-3">
-                <div className="font-medium text-base text-gray-800">
-                  {user?.name}
-                </div>
-                <div className="font-medium text-sm text-gray-500">
-                  {user?.email}
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-3 space-y-1">
-              {/* Authentication */}
-              <ResponsiveNavButton onClick={() => logout()}>
-                Logout
-              </ResponsiveNavButton>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

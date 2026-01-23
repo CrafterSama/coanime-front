@@ -1,0 +1,14 @@
+---
+description: When generating tests for a new or existing component, follow these rules to achieve at least 80% coverage.
+globs:
+alwaysApply: true
+---
+
+- **Framework**: Use **Vitest** for the test runner and **React Testing Library** for component testing.
+- **Unit Tests**: When writing unit tests for a hook or utility function, focus on testing different inputs and expected outputs, including edge cases.
+- **Component Tests**: When testing a component, verify the following:
+  - The component renders correctly in different states (e.g., loading, error, success).
+  - Simulate user interactions like clicks, form submissions, and input changes.
+  - Mock API calls using **Tanstack Query** to isolate the component logic.
+  - Ensure accessibility by checking for `aria-labels` and other semantic attributes.
+- **Mocks**: Always mock external dependencies, such as API services, to ensure tests are fast and reliable.
