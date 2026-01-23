@@ -21,21 +21,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const [status, setStatus] = useState<string | null>(null);
-  const [redirect, setRedirect] = useState<string | string[]>('');
 
-  const redirectionIfLoggedIn = () => {
-    if (router.query.redirect) setRedirect(router.query.redirect as string);
-    setRedirect('/');
-  };
-
-  const { login } = useAuth({
-    middleware: 'guest',
-    redirectIfAuthenticated: redirect as string,
-  });
-
-  useEffect(() => {
-    redirectionIfLoggedIn();
-  });
+  // No usar middleware 'guest' aquí para permitir acceso al login
+  // incluso si el usuario está autenticado (útil para cambiar de cuenta)
+  const { login } = useAuth();
 
   useEffect(() => {
     if (
