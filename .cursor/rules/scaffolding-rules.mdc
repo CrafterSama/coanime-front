@@ -1,0 +1,23 @@
+---
+description: Adhere to the following directory structure for all new files and features.
+globs:
+alwaysApply: true
+---
+
+# Directory and Scaffolding Rules
+
+- **General Structure**: The core architecture is based on separating concerns by function (e.g., `hooks/`, `services/`) and then organizing files within those folders by feature (`hooks/profiles/`, `services/profiles/`). All file names must be in `kebab-case`.
+
+- **Feature-Specific Files**: All files related to a specific feature (e.g., `profiles`) must be placed in a subdirectory with the feature's name.
+
+- **Hooks**: Custom hooks must be located in `src/hooks/[feature-name]/`, with a name following the pattern `use-[feature].ts` (e.g., `src/hooks/profiles/use-profile.ts`).
+- **Services**: API service functions must be located in `src/services/[feature-name]/`, named `[feature]-service.ts` or a relevant name (e.g., `src/services/profiles/profile-service.ts`).
+- **Contexts**: React Contexts for global or scoped state should be in `src/contexts/[feature-name]/` (e.g., `src/contexts/profiles/profile-context.ts`).
+- **Providers**: Providers that wrap the application or modules must be in `src/providers/[feature-name]/` (e.g., `src/providers/profiles/profile-provider.ts`).
+- **State Management**: Zustand stores should be located in `src/state-management/[feature-name]/`, named `[feature]-state.ts` (e.g., `src/state-management/profiles/profile-state.ts`).
+- **Types**: Shared types and interfaces must be in `src/types/[feature-name]/`, following the pattern `[feature].types.d.ts` (e.g., `src/types/profiles/profile.types.d.ts`).
+- **Constants**: All constants and enums should be in `src/constants/[feature-name]/` (e.g., `src/constants/profiles.ts`).
+- **DTOs**: DTOs for a specific feature should be located in `src/modules/[feature-name]/dtos/`.
+- **Modules**: Feature-specific components and logic belong in `src/modules/[feature-name]/`.
+
+- **UI Components**: UI components should be placed in `src/components/[feature-name]/`, named `[feature]-[component].tsx` (e.g., `src/components/profiles/profile-list.tsx`).

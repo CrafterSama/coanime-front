@@ -150,9 +150,9 @@ const Profile = () => {
         <meta name="description" content={description} />
       </Head>
 
-      <div className="py-12">
-        <div className="max-w-9xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
+      <div className="p-4">
+        <div className="w-full">
+          <div className="bg-white overflow-hidden shadow-sm rounded-lg">
             {isLoading && (
               <div className="flex justify-center content-center min-w-screen min-h-screen">
                 <Loading size={16} />
@@ -175,7 +175,7 @@ const Profile = () => {
                       <div className="shadow sm:rounded-md sm:overflow-hidden">
                         <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                           <div className="flex flex-row gap-6">
-                            <div className="w-3/12 pr-6 border-r-2 border-orange-200">
+                            <div className="w-3/12 pr-6">
                               <div className="flex flex-col gap-2 mb-4">
                                 <Label className="block text-sm font-medium text-gray-700">
                                   {' '}
@@ -262,7 +262,7 @@ const Profile = () => {
                                     </div>
                                   </label>
                                 ) : (
-                                  <div className="mt-1 flex justify-center border-2 border-gray-300 border-dashed min-h-[180px] rounded-md overflow-hidden relative">
+                                  <div className="mt-1 flex justify-center min-h-[180px] rounded-md overflow-hidden relative shadow-sm">
                                     <div className="space-y-1 text-center w-full">
                                       <label
                                         htmlFor="cover"

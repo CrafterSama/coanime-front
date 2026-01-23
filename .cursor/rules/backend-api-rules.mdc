@@ -1,0 +1,14 @@
+---
+description: Backend API
+globs:
+alwaysApply: true
+---
+
+- **API Usage**: When interacting with the backend, always use the central API wrapper located at `@/services/api`.
+- The API routes are located in the `api` folder inside the `app` folder. Each route file contains a single route and its corresponding controller, for example `app/api/users/route.ts` following the convectional code rule used in Next.Js.
+- The API routes are organized into modules based on their functionality. For example, the `users` module contains routes related to user management.
+- The API routes are written in a standardized format using the `Next.js` framework.
+- The API routes are tested using the `Jest` testing framework.
+- The API routes are documented using the `Swagger` documentation tool.
+
+---

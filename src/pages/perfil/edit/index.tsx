@@ -313,7 +313,7 @@ const Profile = () => {
                                       </div>
                                     </label>
                                   ) : (
-                                    <div className="mt-1 flex justify-center border-2 border-gray-300 border-dashed min-h-[180px] rounded-md overflow-hidden relative">
+                                    <div className="mt-1 flex justify-center border-2 border-gray-100 border-dashed min-h-[180px] rounded-md overflow-hidden relative">
                                       <div className="space-y-1 text-center w-full">
                                         <label
                                           htmlFor="cover"
