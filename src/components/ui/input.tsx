@@ -58,7 +58,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             'flex h-9 w-full rounded-md bg-transparent text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
             hasPrefix ? 'pl-10' : 'pl-3',
             hasSuffix ? 'pr-10' : 'pr-3',
-            hasErrors && 'border-destructive focus-visible:ring-destructive',
+            hasErrors && 'shadow-[0_0_0_1px_hsl(var(--destructive))] focus-visible:ring-destructive bg-red-50',
             className
           )}
           ref={ref}

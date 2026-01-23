@@ -24,7 +24,7 @@ const MenuLink: FC<MenuLinkProps> = ({
     className={`flex flex-row justify-start w-ful;l items-center pl-2 pr-7 py-2 border-r-4 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out ${
       active
         ? 'border-orange-400 focus:border-orange-600 text-orange-500'
-        : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300'
+        : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-100 focus:text-gray-700 focus:border-gray-100'
     }`}>
     <Link
       href={href || '#'}

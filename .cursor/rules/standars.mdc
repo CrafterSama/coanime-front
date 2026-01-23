@@ -1,0 +1,19 @@
+---
+description: The following rules are mandatory for all development tasks. When generating or modifying code, strictly adhere to these guidelines.
+globs:
+alwaysApply: true
+---
+
+- **Language**: All code, including variable names, function names, comments, and file names, must be in **English**.
+- **Code Quality**: Use **TypeScript** with strict typing. The use of `any` is forbidden.
+- **File Naming**: All files and directories must use **`kebab-case`** (e.g., `user-profile-page.tsx`).
+- **Imports**: Use **absolute imports** (e.g., `@/components/ui/button`) instead of relative imports.
+- **UI Frameworks**: Use **shadcn/ui** for components and **Tailwind CSS** for styling. Do not use inline styles.
+- **UI Patterns**: Components should be designed using **Atomic Design** principles. Avoid creating multiple similar components; instead, use **variants** with `cva` or Tailwind CSS.
+- **Error Handling**: Use **Sentry** to capture and report errors. When an API call fails, ensure the error is logged via `Sentry.captureException`.
+- **Testing**: All new code requires tests written with **Vitest** and **React Testing Library**. The test coverage must be at least 80%.
+- **API Calls**: All API requests must be made using the centralized `api` wrapper. Do not use `fetch` or `axios` directly in components.
+- **State Management**: For asynchronous data fetching, use **Tanstack Query**. For simple, global state, use **Zustand**.
+- **Authentication**: With **Laravel Sanctum** for authentication in the backend and **NextAuth** for authentication in the frontend.
+- **Forms**: Use **React Hook Form** for form handling in the frontend and **zod** for form validation in the front and the components must be use **shadcn/ui** for styling the form.
+- **Files**: Ths files for components and utils or methods must be more or les 300 lines, make sure to split the code into smaller files, if we need to add more functionality to the component or method it's better divide it into more files.
