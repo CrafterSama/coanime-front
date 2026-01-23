@@ -63,8 +63,6 @@ const getInstance = (config?: AxiosRequestConfig) => {
     },
   ];
 
-  axios.defaults.withCredentials = true;
-
   const instance = axios.create({
     baseURL: '/',
     headers: {
@@ -72,25 +70,37 @@ const getInstance = (config?: AxiosRequestConfig) => {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
     },
-    withCredentials: true, // Necesario para que las cookies (incluida XSRF-TOKEN) viajen
+    // Eliminar withCredentials - ya no necesario con JWT
     transformRequest,
     transformResponse,
     ...config,
   });
 
-  // Interceptor de request: Agregar XSRF-TOKEN a todas las peticiones
+  // Interceptor de request: Agregar JWT token a todas las peticiones
   instance.interceptors.request.use(
-    (config) => {
+    async (config) => {
       // Solo en el navegador
-      if (typeof document !== 'undefined') {
-        const token = document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('XSRF-TOKEN='))
-          ?.split('=')[1];
+      if (typeof window !== 'undefined' && config.headers) {
+        try {
+          // Obtener el token JWT de la sesión de NextAuth v4
+          const { getSession } = await import('next-auth/react');
+          const session = await getSession();
 
-        if (token && config.headers) {
-          // Laravel Sanctum espera el token en esta cabecera
-          config.headers['X-XSRF-TOKEN'] = token;
+          // TypeScript: accessToken está definido en src/types/next-auth.d.ts
+          // Usar type assertion porque TypeScript no reconoce la extensión del tipo
+          const accessToken = (session as any)?.accessToken as
+            | string
+            | undefined;
+          if (accessToken) {
+            // Agregar el token JWT en el header Authorization
+            config.headers['Authorization'] = `Bearer ${accessToken}`;
+          }
+        } catch (error) {
+          // Si hay error obteniendo la sesión, continuar sin token
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.warn('[HTTP Client] No se pudo obtener token JWT:', error);
+          }
         }
       }
       return config;

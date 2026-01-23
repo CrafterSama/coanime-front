@@ -49,12 +49,8 @@ export const useAuth = ({
     setStatus(null);
 
     try {
-      // Paso 1: Obtener XSRF-TOKEN del cliente antes de hacer login
-      // Esto establece la cookie XSRF-TOKEN en el navegador
-      await axios.get('/sanctum/csrf-cookie');
-
-      // Paso 2: Ahora que tenemos el XSRF-TOKEN, hacer login con Auth.js
-      // Auth.js ejecutará authorize en el servidor, pero el cliente ya tiene el token
+      // Con JWT, no necesitamos CSRF cookies
+      // Auth.js ejecutará authorize en el servidor que hará POST a /api/login
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -65,29 +61,6 @@ export const useAuth = ({
       if (result?.error) {
         setErrors([result.error]);
         return;
-      }
-
-      // Paso 3: Si el login fue exitoso, hacer una petición adicional a Laravel
-      // para establecer las cookies de sesión en el navegador
-      // Esto es necesario porque las cookies establecidas en el servidor no se propagan al cliente
-      // Las cookies de sesión de Laravel son necesarias para futuras peticiones autenticadas
-      if (result?.ok) {
-        try {
-          // Hacer una petición a un endpoint protegido de Laravel
-          // Esto establecerá las cookies de sesión de Laravel en el navegador
-          // Usamos /internal/me que es el endpoint correcto según la configuración
-          await axios.get('/internal/me');
-        } catch (sessionError: any) {
-          // Si hay error, loguearlo pero no fallar el login
-          // El login ya fue exitoso en Auth.js
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.warn(
-              '[Login] Error al establecer cookies de sesión:',
-              sessionError?.response?.status
-            );
-          }
-        }
       }
 
       setStatus('Login exitoso');
@@ -113,23 +86,28 @@ export const useAuth = ({
     setErrors([]);
 
     try {
-      // Obtener CSRF cookie primero
-      await axios.get('/sanctum/csrf-cookie');
+      // Con JWT, no necesitamos CSRF cookies
+      // El backend retorna: { access_token, token_type, expires_in, user }
+      const response = await axios.post('/api/register', props);
 
-      // Hacer el registro
-      await axios.post('/register', props);
+      // Si el registro es exitoso, el backend retorna el token
+      // Podemos hacer login automáticamente con Auth.js usando las credenciales
+      if (response.data?.access_token) {
+        // Hacer login automáticamente con Auth.js
+        const loginResult = await signIn('credentials', {
+          redirect: false,
+          email: props.email,
+          password: props.password,
+          callbackUrl: '/',
+        });
 
-      // Si el registro es exitoso, hacer login automáticamente
-      const loginResult = await signIn('credentials', {
-        redirect: false,
-        email: props.email,
-        password: props.password,
-        callbackUrl: '/',
-      });
-
-      if (loginResult?.error) {
-        // Si el login falla después del registro, redirigir a login
-        router.push('/login');
+        if (loginResult?.error) {
+          // Si el login falla después del registro, redirigir a login
+          router.push('/login');
+        }
+      } else {
+        // Si no hay token, el registro falló
+        setErrors(['Error al registrar. Por favor, intenta de nuevo.']);
       }
     } catch (error: any) {
       if (error?.response?.status === 422) {
@@ -169,11 +147,8 @@ export const useAuth = ({
     setStatus(null);
 
     try {
-      // Obtener CSRF cookie primero
-      await axios.get('/sanctum/csrf-cookie');
-
-      // Hacer la petición de forgot password
-      const response = await axios.post('/forgot-password', { email });
+      // Con JWT, no necesitamos CSRF cookie
+      const response = await axios.post('/api/forgot-password', { email });
       setStatus(response.data.status);
     } catch (error: any) {
       if (error?.response?.status === 422) {
@@ -212,11 +187,8 @@ export const useAuth = ({
     setStatus(null);
 
     try {
-      // Obtener CSRF cookie primero
-      await axios.get('/sanctum/csrf-cookie');
-
-      // Hacer la petición de reset password
-      const response = await axios.post('/reset-password', {
+      // Con JWT, no necesitamos CSRF cookie
+      const response = await axios.post('/api/reset-password', {
         token: router.query.token,
         ...props,
       });

@@ -4,6 +4,12 @@ const path = require('path');
 const nextConfig = {
   // Silenciar warning de workspace root
   outputFileTracingRoot: path.join(__dirname),
+  // Configurar Turbopack root para evitar warnings de múltiples lockfiles
+  experimental: {
+    turbo: {
+      root: path.join(__dirname),
+    },
+  },
   images: {
     domains: [
       'coanime.s3.us-east-2.amazonaws.com',
