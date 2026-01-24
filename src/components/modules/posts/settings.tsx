@@ -126,8 +126,8 @@ export const usePostsSettings = ({
           <div className="flex flex-row gap-2">
             <Show
               condition={
-                hasRole(authUser?.roles, 'administrator') ||
-                hasRole(authUser?.roles, 'writer')
+                !!hasRole(authUser?.roles, 'administrator') ||
+                !!hasRole(authUser?.roles, 'writer')
               }>
               <Button
                 prefix={<TrashIcon className="w-4 h-4" />}

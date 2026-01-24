@@ -63,7 +63,7 @@ const UploadImage = ({
     <>
       <label
         htmlFor={name}
-        className={`w-full max-w-md border-2 border-orange-400 bg-orange-50 hover:bg-orange-100 mx-auto rounded-lg px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none ${
+        className={`w-full max-w-md bg-orange-50 hover:bg-orange-100 mx-auto rounded-md px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] transition-shadow ${
           !disabled
             ? 'opacity-100 cursor-pointer'
             : 'opacity-50 cursor-not-allowed'

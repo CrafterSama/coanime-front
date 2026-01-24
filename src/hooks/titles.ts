@@ -4,9 +4,23 @@ import { useQuery } from '@tanstack/react-query';
 export const useTitles = ({
   page,
   name,
+  sortBy,
+  sortDirection,
+  perPage,
+  typeId,
+  ratingId,
+  genreId,
+  userId,
 }: {
   page?: number | string;
   name?: string;
+  sortBy?: string;
+  sortDirection?: 'asc' | 'desc';
+  perPage?: number;
+  typeId?: string | number;
+  ratingId?: string | number;
+  genreId?: string | number;
+  userId?: string | number;
 }) => {
   const params: Record<string, any> = {};
 
@@ -18,10 +32,52 @@ export const useTitles = ({
     params['name'] = name;
   }
 
+  if (sortBy) {
+    params['sort_by'] = sortBy;
+  }
+
+  if (sortDirection) {
+    params['sort_direction'] = sortDirection;
+  }
+
+  if (perPage) {
+    params['per_page'] = perPage;
+  }
+
+  if (typeId) {
+    params['type_id'] = typeId;
+  }
+
+  if (ratingId) {
+    params['rating_id'] = ratingId;
+  }
+
+  if (genreId) {
+    params['genre_id'] = genreId;
+  }
+
+  if (userId) {
+    params['user_id'] = userId;
+  }
+
   return useQuery({
-    queryKey: ['titles', page, name],
+    queryKey: [
+      'titles',
+      page,
+      name,
+      sortBy,
+      sortDirection,
+      perPage,
+      typeId,
+      ratingId,
+      genreId,
+      userId,
+    ],
     queryFn: async () => {
-      const response = await httpClient.get(`titles`, { params });
+      const paramsWithFilters = { ...params, include_filters: 1 };
+      const response = await httpClient.get(`titles`, {
+        params: paramsWithFilters,
+      });
       return response.data;
     },
   });

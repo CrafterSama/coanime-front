@@ -175,10 +175,12 @@ const AppLayout = ({ header, children }: AppLayoutProps) => {
                       {/* Logout */}
                       <div className="py-1">
                         <DropdownMenuItem
-                          onClick={logout}
+                          onClick={() => logout()}
                           className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-red-50 focus:bg-red-50 text-red-600 transition-colors">
                           <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-                          <span className="text-sm font-medium">Cerrar Sesión</span>
+                          <span className="text-sm font-medium">
+                            Cerrar Sesión
+                          </span>
                         </DropdownMenuItem>
                       </div>
                     </DropdownMenuContent>
@@ -186,7 +188,9 @@ const AppLayout = ({ header, children }: AppLayoutProps) => {
                 </Show>
               </div>
             </div>
-            <section className="flex-1 bg-gray-50 overflow-x-hidden w-full">{children}</section>
+            <section className="flex-1 bg-gray-50 overflow-x-hidden w-full">
+              {children}
+            </section>
           </SidebarInset>
         </div>
       </SidebarProvider>

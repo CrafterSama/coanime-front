@@ -1,0 +1,69 @@
+# Frontend Development Rules
+
+Estas reglas son obligatorias y deben seguirse siempre en el desarrollo del frontend.
+
+## Estándares Generales
+
+- **Language**: All code, including variable names, function names, comments, and file names, must be in **English**.
+- **Code Quality**: Use **TypeScript** with strict typing. The use of `any` is forbidden.
+- **File Naming**: All files and directories must use **`kebab-case`** (e.g., `user-profile-page.tsx`).
+- **Imports**: Use **absolute imports** (e.g., `@/components/ui/button`) instead of relative imports.
+- **UI Frameworks**: Use **shadcn/ui** for components and **Tailwind CSS** for styling. Do not use inline styles.
+- **UI Patterns**: Components should be designed using **Atomic Design** principles. Avoid creating multiple similar components; instead, use **variants** with `cva` or Tailwind CSS.
+- **Error Handling**: Use **Sentry** to capture and report errors. When an API call fails, ensure the error is logged via `Sentry.captureException`.
+- **Testing**: All new code requires tests written with **Vitest** and **React Testing Library**. The test coverage must be at least 80%.
+- **API Calls**: All API requests must be made using the centralized `api` wrapper. Do not use `fetch` or `axios` directly in components.
+- **State Management**: For asynchronous data fetching, use **Tanstack Query**. For simple, global state, use **Zustand**.
+- **Authentication**: With **Laravel Sanctum** for authentication in the backend and **NextAuth** for authentication in the frontend.
+- **Forms**: Use **React Hook Form** for form handling in the frontend and **zod** for form validation in the front and the components must be use **shadcn/ui** for styling the form.
+- **Files**: The files for components and utils or methods must be more or less 300 lines, make sure to split the code into smaller files, if we need to add more functionality to the component or method it's better divide it into more files.
+
+## UI Design Rules - Fancy & Subtle Design
+
+- **Borders**: Use VERY subtle borders (`border-gray-100` or `border-gray-200` at most). Prefer subtle shadows over borders when possible.
+- **Shadows**: Use subtle shadows like `shadow-sm` or `shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]`. Avoid heavy shadows like `shadow-md`, `shadow-lg`, or `shadow-xl`.
+- **Border Radius**: Keep it subtle - use `rounded-sm` (2px) for small elements, `rounded-md` (6px) as default, `rounded-lg` (8px) only for larger containers. Avoid `rounded-xl` or larger.
+- **General Principle**: Everything should be subtle, elegant, and fancy. Prefer shadows to create depth instead of visible borders.
+
+## API y Data Fetching
+
+- **Wrapper Usage**: When interacting with the backend, always use the central API wrapper located at `@/services/api`. This wrapper handles default headers and error logging to Sentry.
+- **Hooks**: When creating a component that fetches or mutates data, create and use a **custom hook** with **Tanstack Query** (e.g., `useGetUsersQuery`). Do not perform data fetching directly inside the component.
+
+## Backend API
+
+- **API Usage**: When interacting with the backend, always use the central API wrapper located at `@/services/api`.
+- The API routes are located in the `api` folder inside the `app` folder. Each route file contains a single route and its corresponding controller, for example `app/api/users/route.ts` following the conventional code rule used in Next.Js.
+- The API routes are organized into modules based on their functionality. For example, the `users` module contains routes related to user management.
+- The API routes are written in a standardized format using the `Next.js` framework.
+- The API routes are tested using the `Jest` testing framework.
+- The API routes are documented using the `Swagger` documentation tool.
+
+## Estructura de Directorios y Scaffolding
+
+- **General Structure**: The core architecture is based on separating concerns by function (e.g., `hooks/`, `services/`) and then organizing files within those folders by feature (`hooks/profiles/`, `services/profiles/`). All file names must be in `kebab-case`.
+
+- **Feature-Specific Files**: All files related to a specific feature (e.g., `profiles`) must be placed in a subdirectory with the feature's name.
+
+- **Hooks**: Custom hooks must be located in `src/hooks/[feature-name]/`, with a name following the pattern `use-[feature].ts` (e.g., `src/hooks/profiles/use-profile.ts`).
+- **Services**: API service functions must be located in `src/services/[feature-name]/`, named `[feature]-service.ts` or a relevant name (e.g., `src/services/profiles/profile-service.ts`).
+- **Contexts**: React Contexts for global or scoped state should be in `src/contexts/[feature-name]/` (e.g., `src/contexts/profiles/profile-context.ts`).
+- **Providers**: Providers that wrap the application or modules must be in `src/providers/[feature-name]/` (e.g., `src/providers/profiles/profile-provider.ts`).
+- **State Management**: Zustand stores should be located in `src/state-management/[feature-name]/`, named `[feature]-state.ts` (e.g., `src/state-management/profiles/profile-state.ts`).
+- **Types**: Shared types and interfaces must be in `src/types/[feature-name]/`, following the pattern `[feature].types.d.ts` (e.g., `src/types/profiles/profile.types.d.ts`).
+- **Constants**: All constants and enums should be in `src/constants/[feature-name]/` (e.g., `src/constants/profiles.ts`).
+- **DTOs**: DTOs for a specific feature should be located in `src/modules/[feature-name]/dtos/`.
+- **Modules**: Feature-specific components and logic belong in `src/modules/[feature-name]/`.
+
+- **UI Components**: UI components should be placed in `src/components/[feature-name]/`, named `[feature]-[component].tsx` (e.g., `src/components/profiles/profile-list.tsx`).
+
+## Testing Rules
+
+- **Framework**: Use **Vitest** for the test runner and **React Testing Library** for component testing.
+- **Unit Tests**: When writing unit tests for a hook or utility function, focus on testing different inputs and expected outputs, including edge cases.
+- **Component Tests**: When testing a component, verify the following:
+  - The component renders correctly in different states (e.g., loading, error, success).
+  - Simulate user interactions like clicks, form submissions, and input changes.
+  - Mock API calls using **Tanstack Query** to isolate the component logic.
+  - Ensure accessibility by checking for `aria-labels` and other semantic attributes.
+- **Mocks**: Always mock external dependencies, such as API services, to ensure tests are fast and reliable.

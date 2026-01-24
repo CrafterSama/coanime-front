@@ -11,7 +11,7 @@ import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { Show } from '@/components/ui/Show';
-import { Tabs } from '@/components/ui/Tabs';
+import { Tabs } from '@/components/ui/TabsWrapper';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useGetUserTitleList } from '@/hooks/titles';

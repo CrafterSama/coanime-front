@@ -52,8 +52,7 @@ const App = ({
             <Toaster
               position="top-right"
               toastOptions={{
-                className:
-                  'bg-white rounded-md shadow-xl text-sm',
+                className: 'bg-white rounded-md shadow-xl text-sm',
                 duration: 4000,
                 style: {
                   marginTop: '30px',

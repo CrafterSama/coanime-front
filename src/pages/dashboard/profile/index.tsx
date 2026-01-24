@@ -210,33 +210,47 @@ const Profile = () => {
                                 </div>
                               </div>
                               <div className="flex flex-col gap-2">
-                                <Input
-                                  prefix={<UserIcon className="w-6 h-6" />}
-                                  label="Full Name"
-                                  {...register('name')}
-                                  name="name"
-                                  defaultValue={result?.name}
-                                  placeholder="coanime..."
-                                  errors={
-                                    errors?.['name']
-                                      ?.message as string as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={<EnvelopeIcon className="w-6 h-6" />}
-                                  label="Email"
-                                  {...register('email')}
-                                  name="email"
-                                  defaultValue={result?.email}
-                                  placeholder="coanime..."
-                                  errors={
-                                    errors?.['email']
-                                      ?.message as string as string
-                                  }
-                                  hint="You can't change your email, we never send spam to your email or share your personal info."
-                                  disabled
-                                />
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="name">Full Name</Label>
+                                  <Input
+                                    prefix={<UserIcon className="w-6 h-6" />}
+                                    {...register('name')}
+                                    id="name"
+                                    name="name"
+                                    defaultValue={result?.name}
+                                    placeholder="coanime..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['name']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['name']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="email">Email</Label>
+                                  <Input
+                                    prefix={
+                                      <EnvelopeIcon className="w-6 h-6" />
+                                    }
+                                    {...register('email')}
+                                    id="email"
+                                    name="email"
+                                    defaultValue={result?.email}
+                                    placeholder="coanime..."
+                                    disabled
+                                  />
+                                  {errors?.['email']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['email']?.message as string}
+                                    </p>
+                                  )}
+                                  <p className="text-sm text-muted-foreground">
+                                    You can't change your email, we never send
+                                    spam to your email or share your personal
+                                    info.
+                                  </p>
+                                </div>
                               </div>
                             </div>
 
@@ -295,110 +309,154 @@ const Profile = () => {
                                 />
                               </div>
                               <div className="grid grid-cols-3 gap-6">
-                                <Input
-                                  prefix={
-                                    <UserCircleIcon className="w-6 h-6" />
-                                  }
-                                  label="Username"
-                                  {...register('username')}
-                                  name="username"
-                                  defaultValue={result?.username}
-                                  placeholder="coanime..."
-                                  errors={
-                                    errors?.['username']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={<LinkIcon className="w-6 h-6" />}
-                                  label="Website"
-                                  {...register('website')}
-                                  name="website"
-                                  defaultValue={result?.website}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['website']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={
-                                    <AiOutlineTwitter className="w-6 h-6" />
-                                  }
-                                  label="Twitter"
-                                  {...register('twitter')}
-                                  name="twitter"
-                                  defaultValue={result?.twitter}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['twitter']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={
-                                    <AiOutlineInstagram className="w-6 h-6" />
-                                  }
-                                  label="Instagram"
-                                  {...register('instagram')}
-                                  name="instagram"
-                                  defaultValue={result?.instagram}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['instagam']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={
-                                    <AiOutlineFacebook className="w-6 h-6" />
-                                  }
-                                  label="Facebook"
-                                  {...register('facebook')}
-                                  name="facebook"
-                                  defaultValue={result?.facebook}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['facebook']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={
-                                    <AiOutlineYoutube className="w-6 h-6" />
-                                  }
-                                  label="Youtube"
-                                  {...register('youtube')}
-                                  name="youtube"
-                                  defaultValue={result?.youtube}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['youtube']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={<FaTiktok className="w-6 h-6" />}
-                                  label="TikTok"
-                                  {...register('tiktok')}
-                                  name="tiktok"
-                                  defaultValue={result?.tiktok}
-                                  placeholder="http://..."
-                                  errors={errors?.['tiktok']?.message as string}
-                                  disabled={!editMode}
-                                />
-                                <Input
-                                  prefix={<FaPinterest className="w-6 h-6" />}
-                                  label="Pinterest"
-                                  {...register('pinterest')}
-                                  name="pinterest"
-                                  defaultValue={result?.pinterest}
-                                  placeholder="http://..."
-                                  errors={
-                                    errors?.['pinterest']?.message as string
-                                  }
-                                  disabled={!editMode}
-                                />
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="username">Username</Label>
+                                  <Input
+                                    prefix={
+                                      <UserCircleIcon className="w-6 h-6" />
+                                    }
+                                    {...register('username')}
+                                    id="username"
+                                    name="username"
+                                    defaultValue={result?.username}
+                                    placeholder="coanime..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['username']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['username']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="website">Website</Label>
+                                  <Input
+                                    prefix={<LinkIcon className="w-6 h-6" />}
+                                    {...register('website')}
+                                    id="website"
+                                    name="website"
+                                    defaultValue={result?.website}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['website']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['website']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="twitter">Twitter</Label>
+                                  <Input
+                                    prefix={
+                                      <AiOutlineTwitter className="w-6 h-6" />
+                                    }
+                                    {...register('twitter')}
+                                    id="twitter"
+                                    name="twitter"
+                                    defaultValue={result?.twitter}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['twitter']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['twitter']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="instagram">Instagram</Label>
+                                  <Input
+                                    prefix={
+                                      <AiOutlineInstagram className="w-6 h-6" />
+                                    }
+                                    {...register('instagram')}
+                                    id="instagram"
+                                    name="instagram"
+                                    defaultValue={result?.instagram}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['instagam']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['instagam']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="facebook">Facebook</Label>
+                                  <Input
+                                    prefix={
+                                      <AiOutlineFacebook className="w-6 h-6" />
+                                    }
+                                    {...register('facebook')}
+                                    id="facebook"
+                                    name="facebook"
+                                    defaultValue={result?.facebook}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['facebook']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['facebook']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-6">
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="youtube">Youtube</Label>
+                                  <Input
+                                    prefix={
+                                      <AiOutlineYoutube className="w-6 h-6" />
+                                    }
+                                    {...register('youtube')}
+                                    id="youtube"
+                                    name="youtube"
+                                    defaultValue={result?.youtube}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['youtube']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['youtube']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="tiktok">TikTok</Label>
+                                  <Input
+                                    prefix={<FaTiktok className="w-6 h-6" />}
+                                    {...register('tiktok')}
+                                    id="tiktok"
+                                    name="tiktok"
+                                    defaultValue={result?.tiktok}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['tiktok']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['tiktok']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <Label htmlFor="pinterest">Pinterest</Label>
+                                  <Input
+                                    prefix={<FaPinterest className="w-6 h-6" />}
+                                    {...register('pinterest')}
+                                    id="pinterest"
+                                    name="pinterest"
+                                    defaultValue={result?.pinterest}
+                                    placeholder="http://..."
+                                    disabled={!editMode}
+                                  />
+                                  {errors?.['pinterest']?.message && (
+                                    <p className="text-sm text-red-500">
+                                      {errors['pinterest']?.message as string}
+                                    </p>
+                                  )}
+                                </div>
                               </div>
                               <div className="flex flex-col gap-2">
                                 <Label>About</Label>

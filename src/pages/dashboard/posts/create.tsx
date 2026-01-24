@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
-import { Controller, Resolver, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import Select from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import dayjs from 'dayjs';
@@ -14,12 +13,26 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import { FormWithContext } from '@/components/ui/form';
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormWithContext,
+} from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import SectionHeader from '@/components/ui/SectionHeader';
-import FormSelect from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
 import { useCategoriesList } from '@/hooks/categories';
@@ -150,7 +163,7 @@ const CreatePost = () => {
       <Head>
         <title>Coanime.net - Creación de Articulo</title>
       </Head>
-      <article className="p-4">
+      <article className="p-6">
         <FormWithContext methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <FormHeader
             title="Nuevo Post"
@@ -158,131 +171,277 @@ const CreatePost = () => {
             editAction={() => {}}
             isSaving={savingLoading}
           />
-          <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
-            <div className="w-full md:w-8/12">
-              <div className="mb-4 flex flex-col gap-2">
-                <Input
-                  label="Titulo"
-                  {...register('title')}
-                  id="title"
-                  name="title"
-                  errors={errors?.['title']?.message}
-                  placeholder="Title"
-                  className="w-full block text-lg"
-                  lowerHint={titleCount}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onChangeTitle(e.target.value.length)
-                  }
-                />
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Input
-                  label="Excerpt"
-                  {...register('excerpt')}
-                  id="excerpt"
-                  name="excerpt"
-                  errors={errors?.['excerpt']?.message}
-                  placeholder="excerpt"
-                  className="w-full block text-base"
-                  lowerHint={excerptCount}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onChangeExcerpt(e.target.value.length)
-                  }
-                />
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Label htmlFor="content">Contenido</Label>
-                <Controller
-                  control={control}
-                  name="content"
-                  render={() => (
-                    <TextEditor
-                      errors={errors?.['content']?.message}
-                      onChange={(value: string) => setValue('content', value)}
-                      defaultValue=""
-                    />
-                  )}
-                />
-              </div>
-            </div>
-            <div className="w-full md:w-4/12">
-              <div className="mb-4 flex flex-col gap-3 datepicker-box">
-                <Label htmlFor="description">Posponer hasta(Hora Local):</Label>
-                <DatePicker
-                  onChange={(value) => setValue('postponedTo', value)}
-                  value={watch('postponedTo')}
-                  format="dd-MM-yyyy"
-                  showTime={true}
-                  calendarIcon={
-                    <span className="text-orange-400">
-                      <CalendarIcon className="w-6 h-6" />
-                    </span>
-                  }
-                  clearIcon={
-                    <span className="text-orange-400">
-                      <XIcon className="w-6 h-6" />
-                    </span>
-                  }
-                />
-                <span className="text-sm font-bold">
-                  {`Hora del Server: ${
-                    postponed
-                      ? dayjs(postponed).utc().format('DD-MM-YYYY hh:mm a')
-                      : ''
-                  }`}
-                </span>
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Label htmlFor="description">Categoría</Label>
-                <FormSelect
-                  options={categories}
-                  name="categoryId"
-                  value={watch('categoryId')}
-                  callBack={(option: any) => setValue('categoryId', option)}
-                  errors={errors?.['categoryId']?.message as string}
-                />
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Label>Imagen Principal del Post</Label>
-                <UploadImage name="image" model="posts" />
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Label>Tags</Label>
-                <div className={`tags-box`}>
-                  <TagsInput
-                    onChange={(tags) => setValue('tags', tags)}
-                    separators={['Enter', ',']}
-                    isEditOnRemove={true}
+          <div className="p-6 flex flex-col lg:flex-row gap-6 rounded-b-lg bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+            {/* Columna Principal - Contenido */}
+            <div className="w-full lg:w-8/12 space-y-6">
+              {/* Sección: Información Básica */}
+              <section className="bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-5">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Información Básica
+                </h3>
+                <div className="space-y-4">
+                  <FormField
+                    control={control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título</FormLabel>
+                        <FormControl>
+                          <div>
+                            <Input
+                              {...field}
+                              placeholder="Ingresa el título del artículo"
+                              className="w-full block text-lg"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                field.onChange(e);
+                                onChangeTitle(e.target.value.length);
+                              }}
+                            />
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {titleCount}
+                            </p>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="excerpt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Extracto</FormLabel>
+                        <FormControl>
+                          <div>
+                            <Input
+                              {...field}
+                              placeholder="Breve descripción del artículo"
+                              className="w-full block text-base"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                field.onChange(e);
+                                onChangeExcerpt(e.target.value.length);
+                              }}
+                            />
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {excerptCount}
+                            </p>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-              </div>
-              <div className="mb-4 flex flex-col gap-2">
-                <Label htmlFor="title_id">Serie Relacionada</Label>
-                <Select
-                  options={serieList}
-                  isLoading={isLoadingSeries}
-                  placeholder="Asignar una serie"
-                  onInputChange={(value: string) => setSerieName(value)}
-                  onChange={(option: {
-                    label: string;
-                    value: number;
-                    type: string;
-                  }) => setValue('titleId', option?.value)}
-                  getOptionLabel={(option: {
-                    label: string;
-                    value: number;
-                    type: string;
-                  }) => {
-                    return `${option?.label} (${option?.type})`;
-                  }}
+              </section>
+
+              {/* Sección: Contenido */}
+              <section className="bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-5">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Contenido
+                </h3>
+                <FormField
+                  control={control}
+                  name="content"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cuerpo del Artículo</FormLabel>
+                      <FormControl>
+                        <TextEditor
+                          onChange={(value: string) => {
+                            field.onChange(value);
+                            setValue('content', value);
+                          }}
+                          defaultValue={field.value || ''}
+                          errors={errors.content?.message}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                <input
-                  {...register}
-                  type="hidden"
-                  id="titleId"
-                  name="titleId"
-                />
-              </div>
+              </section>
+            </div>
+
+            {/* Columna Lateral - Metadatos */}
+            <div className="w-full lg:w-4/12 space-y-6">
+              {/* Sección: Publicación */}
+              <section className="bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-5">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Publicación
+                </h3>
+                <div className="space-y-4">
+                  <FormField
+                    control={control}
+                    name="postponedTo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fecha y Hora de Publicación</FormLabel>
+                        <FormControl>
+                          <DatePicker
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValue('postponedTo', value);
+                            }}
+                            value={field.value || watch('postponedTo')}
+                            format="dd-MM-yyyy"
+                            showTime={true}
+                            calendarIcon={
+                              <span className="text-orange-400">
+                                <CalendarIcon className="w-6 h-6" />
+                              </span>
+                            }
+                            clearIcon={
+                              <span className="text-orange-400">
+                                <XIcon className="w-6 h-6" />
+                              </span>
+                            }
+                          />
+                        </FormControl>
+                        {postponed && (
+                          <FormDescription>
+                            Hora del Servidor:{' '}
+                            {dayjs(postponed)
+                              .utc()
+                              .format('DD-MM-YYYY hh:mm a')}
+                          </FormDescription>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="categoryId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Categoría</FormLabel>
+                        <Select
+                          value={field.value?.value?.toString() || ''}
+                          onValueChange={(value) => {
+                            const selectedCategory = categories?.find(
+                              (cat: any) => cat.value.toString() === value
+                            );
+                            if (selectedCategory) {
+                              field.onChange(selectedCategory);
+                              setValue('categoryId', selectedCategory);
+                            }
+                          }}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona una categoría">
+                              {field.value?.label || ''}
+                            </SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categories?.map((category: any) => (
+                              <SelectItem
+                                key={category.value}
+                                value={category.value.toString()}>
+                                {category.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </section>
+
+              {/* Sección: Multimedia */}
+              <section className="bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-5">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Multimedia
+                </h3>
+                <div className="space-y-4">
+                  <FormField
+                    control={control}
+                    name="image"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>Imagen Principal</FormLabel>
+                        <FormControl>
+                          <UploadImage name="image" model="posts" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </section>
+
+              {/* Sección: Clasificación */}
+              <section className="bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-5">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Clasificación
+                </h3>
+                <div className="space-y-4">
+                  <FormField
+                    control={control}
+                    name="tags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Etiquetas</FormLabel>
+                        <FormControl>
+                          <div className="tags-box">
+                            <TagsInput
+                              onChange={(tags) => {
+                                field.onChange(tags);
+                                setValue('tags', tags);
+                              }}
+                              separators={['Enter', ',']}
+                              isEditOnRemove={true}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="titleId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Serie Relacionada</FormLabel>
+                        <FormControl>
+                          <SearchableSelect
+                            options={serieList || []}
+                            value={field.value}
+                            onValueChange={(value) => {
+                              if (value !== null && value !== undefined) {
+                                const numValue =
+                                  typeof value === 'string'
+                                    ? Number(value)
+                                    : (value as number);
+                                field.onChange(numValue);
+                                setValue('titleId', numValue);
+                              } else {
+                                field.onChange(undefined);
+                                setValue('titleId', undefined);
+                              }
+                            }}
+                            onSearchChange={(search) => {
+                              setSerieName(search);
+                            }}
+                            isLoading={isLoadingSeries}
+                            placeholder="Seleccionar serie..."
+                            getOptionLabel={(option) => {
+                              return `${option.label} (${option.type || ''})`;
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </section>
             </div>
           </div>
         </FormWithContext>

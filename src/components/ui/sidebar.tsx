@@ -5,10 +5,7 @@ import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import {
-  Sheet,
-  SheetContent,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Tooltip,
   TooltipContent,
@@ -17,8 +14,8 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
-const SIDEBAR_COOKIE_NAME = 'sidebar:state';
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+// const SIDEBAR_COOKIE_NAME = 'sidebar:state';
+// const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_MOBILE = '18rem';
 const SIDEBAR_WIDTH_ICON = '3rem';
@@ -218,14 +215,14 @@ const Sidebar = React.forwardRef<
           data-state={state}
           data-collapsible={state === 'collapsed' ? collapsible : ''}
           data-side={side}
-        className={cn(
-          'group peer hidden md:flex text-sidebar-foreground transition-[width] duration-200 ease-linear',
-          'bg-white shadow-sm',
-          state === 'collapsed'
-            ? 'w-[--sidebar-width-icon]'
-            : 'w-[--sidebar-width]',
-          className
-        )}
+          className={cn(
+            'group peer hidden md:flex text-sidebar-foreground transition-[width] duration-200 ease-linear',
+            'bg-white shadow-sm',
+            state === 'collapsed'
+              ? 'w-[--sidebar-width-icon]'
+              : 'w-[--sidebar-width]',
+            className
+          )}
           {...props}>
           <div
             data-sidebar="sidebar"
@@ -507,43 +504,48 @@ const SidebarMenuButton = React.forwardRef<
     tooltip?: string | React.ComponentProps<typeof TooltipContent>;
     size?: 'default' | 'sm' | 'lg';
   }
->(({ asChild = false, isActive = false, tooltip, size, className, ...props }, ref) => {
-  const Comp = asChild ? Slot : 'button';
-  const { isMobile, state } = useSidebar();
+>(
+  (
+    { asChild = false, isActive = false, tooltip, size, className, ...props },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : 'button';
+    const { isMobile, state } = useSidebar();
 
-  const button = (
-    <Comp
-      ref={ref}
-      data-sidebar="menu-button"
-      data-size={size}
-      data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ size, className }))}
-      {...props}
-    />
-  );
-
-  if (!tooltip) {
-    return button;
-  }
-
-  if (typeof tooltip === 'string') {
-    tooltip = {
-      children: tooltip,
-    };
-  }
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
-        side="right"
-        align="center"
-        hidden={state !== 'collapsed' || isMobile}
-        {...tooltip}
+    const button = (
+      <Comp
+        ref={ref}
+        data-sidebar="menu-button"
+        data-size={size}
+        data-active={isActive}
+        className={cn(sidebarMenuButtonVariants({ size, className }))}
+        {...props}
       />
-    </Tooltip>
-  );
-});
+    );
+
+    if (!tooltip) {
+      return button;
+    }
+
+    if (typeof tooltip === 'string') {
+      tooltip = {
+        children: tooltip,
+      };
+    }
+
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent
+          side="right"
+          align="center"
+          hidden={state !== 'collapsed' || isMobile}
+          {...tooltip}
+        />
+      </Tooltip>
+    );
+  }
+);
 SidebarMenuButton.displayName = 'SidebarMenuButton';
 
 const SidebarMenuAction = React.forwardRef<
@@ -713,6 +715,5 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar
+  useSidebar,
 };
-

@@ -12,13 +12,27 @@ import { useRouter } from 'next/router';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
 import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
-import { FormWithContext } from '@/components/ui/form';
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormWithContext,
+} from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
-import FormSelect from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import TextEditor from '@/components/ui/TextEditor';
 import ToggleCheckbox from '@/components/ui/ToggleCheckbox';
 import UploadImage from '@/components/ui/UploadImage';
@@ -158,28 +172,42 @@ const CreateTitle = () => {
             <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
               <div className="w-full md:w-9/12">
                 <div className="mb-4 flex flex-col gap-2">
-                  <Input
-                    label="Nombre del Titulo"
-                    {...register('name')}
-                    id="name"
+                  <FormField
+                    control={control}
                     name="name"
-                    errors={errors?.['name']?.message}
-                    placeholder="Dragon Ball Z"
-                    className="w-full block text-lg"
-                    defaultValue={watch('name')}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nombre del Titulo</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Dragon Ball Z"
+                            className="w-full block text-lg"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
-                  <Input
-                    label="Otros Titulos"
-                    {...register('otherTitles')}
-                    hint="Separar con ','"
-                    id="otherTitles"
+                  <FormField
+                    control={control}
                     name="otherTitles"
-                    errors={errors?.['otherTitles']?.message}
-                    placeholder="Dragon Ball Z, Dragon Ball"
-                    className="w-full block text-lg"
-                    defaultValue={watch('otherTitles')}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Otros Titulos</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Dragon Ball Z, Dragon Ball"
+                            className="w-full block text-lg"
+                          />
+                        </FormControl>
+                        <FormDescription>Separar con ','</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -222,29 +250,86 @@ const CreateTitle = () => {
                 </FlexLayout>
               </div>
               <div className="w-full md:w-3/12">
-                <div className="mb-4 flex flex-col gap-3">
-                  <Label htmlFor="typeId">Tipo de Contenido</Label>
-                  <FormSelect
-                    options={typesOptions}
-                    name="typeId"
-                    value={watch('typeId')}
-                    callBack={(option: any) => setValue('typeId', option)}
-                    errors={errors?.['typeId']?.message as string}
-                  />
-                </div>
-                <div className="mb-4 flex flex-col gap-3">
-                  <Label htmlFor="ratingId">Rating</Label>
-                  <FormSelect
-                    options={ratingsOptions}
-                    getOptionLabel={(option: any) =>
-                      `${option?.label} (${option?.description})`
-                    }
-                    name="ratingId"
-                    value={watch('ratingId')}
-                    callBack={(option: any) => setValue('ratingId', option)}
-                    errors={errors?.['ratingId']?.message as string}
-                  />
-                </div>
+                <FormField
+                  control={control}
+                  name="typeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tipo de Contenido</FormLabel>
+                      <Select
+                        value={field.value?.value?.toString() || ''}
+                        onValueChange={(value) => {
+                          const selectedType = typesOptions?.find(
+                            (type: any) => type.value.toString() === value
+                          );
+                          if (selectedType) {
+                            field.onChange(selectedType);
+                            setValue('typeId', selectedType);
+                          }
+                        }}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un tipo">
+                              {field.value?.label || ''}
+                            </SelectValue>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {typesOptions?.map((type: any) => (
+                            <SelectItem
+                              key={type.value}
+                              value={type.value.toString()}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="ratingId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Rating</FormLabel>
+                      <Select
+                        value={field.value?.value?.toString() || ''}
+                        onValueChange={(value) => {
+                          const selectedRating = ratingsOptions?.find(
+                            (rating: any) => rating.value.toString() === value
+                          );
+                          if (selectedRating) {
+                            field.onChange(selectedRating);
+                            setValue('ratingId', selectedRating);
+                          }
+                        }}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un rating">
+                              {field.value
+                                ? `${field.value.label} (${
+                                    field.value.description || ''
+                                  })`
+                                : ''}
+                            </SelectValue>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {ratingsOptions?.map((rating: any) => (
+                            <SelectItem
+                              key={rating.value}
+                              value={rating.value.toString()}>
+                              {rating.label} ({rating.description || ''})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <div className="mb-4 flex flex-col gap-2 datepicker-box">
                   <Label htmlFor="broadTime">Fecha de Estreno:</Label>
                   <DatePicker
@@ -289,39 +374,85 @@ const CreateTitle = () => {
                     checked={watch('justYear')}
                   />
                 </div>
-                <div className="mb-4 flex flex-col gap-3">
-                  <Label htmlFor="status">Estatus</Label>
-                  <FormSelect
-                    options={statusOptions}
-                    name="status"
-                    value={watch('status')}
-                    callBack={(option: any) => setValue('status', option)}
-                    errors={errors?.['status']?.message as string}
-                  />
-                </div>
+                <FormField
+                  control={control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Estatus</FormLabel>
+                      <Select
+                        value={
+                          field.value?.value?.toString() || field.value || ''
+                        }
+                        onValueChange={(value) => {
+                          const selectedStatus = statusOptions?.find(
+                            (status: any) => status.value.toString() === value
+                          );
+                          if (selectedStatus) {
+                            field.onChange(selectedStatus);
+                            setValue('status', selectedStatus);
+                          }
+                        }}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un estatus">
+                              {field.value?.label || field.value || ''}
+                            </SelectValue>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {statusOptions?.map((status: any) => (
+                            <SelectItem
+                              key={status.value}
+                              value={status.value.toString()}>
+                              {status.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <div className="mb-4 flex flex-col gap-2">
-                  <Input
-                    label="Episodios"
-                    {...register('episodies')}
-                    id="episodies"
+                  <FormField
+                    control={control}
                     name="episodies"
-                    errors={errors?.['episodies']?.message}
-                    placeholder="12"
-                    className="w-full block text-lg"
-                    defaultValue={watch('episodies')}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Episodios</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="12"
+                            className="w-full block text-lg"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
-                  <Input
-                    label="Url del Trailer"
-                    {...register('trailerUrl')}
-                    hint="work better with a youtube url"
-                    id="trailerUrl"
+                  <FormField
+                    control={control}
                     name="trailerUrl"
-                    errors={errors?.['trailerUrl']?.message}
-                    placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    className="w-full block text-lg"
-                    defaultValue={watch('trailerUrl')}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Url del Trailer</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                            className="w-full block text-lg"
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          work better with a youtube url
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
               </div>

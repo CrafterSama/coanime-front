@@ -10,7 +10,7 @@ import FlexLayout from '@/components/ui/FlexLayout';
 import Loading from '@/components/ui/Loading';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
+import { Tabs, TabsContent } from '@/components/ui/TabsWrapper';
 import { getTitles } from '@/services/titles';
 import { Show } from '@/components/ui/Show';
 import { withRetry } from '@/utils/getStaticPropsHelper';

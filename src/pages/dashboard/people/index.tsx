@@ -1,38 +1,153 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { SortingState } from '@tanstack/react-table';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { createPeopleColumns } from '@/components/modules/people/columns';
 import { DataTable } from '@/components/ui/data-table';
+import { FilterSelect } from '@/components/ui/filter-select';
 import Loading from '@/components/ui/Loading';
 import { usePeople } from '@/hooks/people';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 const People = () => {
   const router = useRouter();
-  const [page, setPage] = useState<number>(1);
-  const { data = {}, isLoading } = usePeople({ page: String(page) });
-  const { result, title, description } = data;
+
+  // Inicializar page desde URL o default 1
+  const initialPage = router?.query?.page ? Number(router.query.page) : 1;
+
+  const [page, setPage] = useState<number>(initialPage);
+  const [name, setName] = useState<string>(
+    (router?.query?.name as string) || ''
+  );
+  const [sortBy, setSortBy] = useState<string>(
+    (router?.query?.sortBy as string) || 'name'
+  );
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(
+    (router?.query?.sortDirection as 'asc' | 'desc') || 'asc'
+  );
+  const [countryCode, setCountryCode] = useState<string | undefined>(
+    (router?.query?.countryCode as string) || undefined
+  );
+
+  // React Query: cache automático por queryKey ['people', page, name, sortBy, sortDirection, ...]
+  const { data = {}, isLoading } = usePeople({
+    page,
+    name,
+    sortBy,
+    sortDirection,
+    countryCode,
+  });
+  const { result, title, description, filters } = data;
   const columns = React.useMemo(() => createPeopleColumns(), []);
 
+  // Helper para actualizar URL con todos los filtros
+  const updateURL = useCallback(
+    (updates: Record<string, any>) => {
+      const query: Record<string, any> = {
+        page: updates.page ?? page,
+        ...(updates.name !== undefined
+          ? updates.name
+            ? { name: updates.name }
+            : {}
+          : name
+          ? { name }
+          : {}),
+        ...(updates.sortBy !== undefined
+          ? updates.sortBy
+            ? { sortBy: updates.sortBy }
+            : {}
+          : sortBy
+          ? { sortBy }
+          : {}),
+        ...(updates.sortDirection !== undefined
+          ? updates.sortDirection
+            ? { sortDirection: updates.sortDirection }
+            : {}
+          : sortDirection
+          ? { sortDirection }
+          : {}),
+        ...(updates.countryCode !== undefined
+          ? updates.countryCode
+            ? { countryCode: updates.countryCode }
+            : {}
+          : countryCode
+          ? { countryCode }
+          : {}),
+      };
+      router.push(
+        {
+          pathname: '/dashboard/people',
+          query,
+        },
+        undefined,
+        { shallow: true }
+      );
+    },
+    [page, name, sortBy, sortDirection, countryCode, router]
+  );
+
+  // 1. Sincronizar URL → Estado (cuando cambia la URL manualmente o navegación del navegador)
   useEffect(() => {
     if (router?.query?.page) {
-      return setPage(Number(router?.query?.page));
+      const urlPage = Number(router.query.page);
+      if (urlPage !== page) {
+        setPage(urlPage);
+      }
+    } else if (page !== 1) {
+      setPage(1);
     }
-    return setPage(1);
-  }, [router?.query?.page]);
+  }, [router?.query?.page, page]);
 
+  // 2. Sincronizar Backend → Estado/URL (backend es fuente de verdad)
+  // Nota: httpClient transforma snake_case a camelCase, así que usamos result.currentPage
+  useEffect(() => {
+    if (result?.currentPage && result.currentPage !== page) {
+      const backendPage = result.currentPage;
+      setPage(backendPage);
+      updateURL({ page: backendPage });
+    }
+  }, [result?.currentPage, page, updateURL]);
+
+  // 3. Función directa: actualiza estado y URL, React Query se encarga del resto
   const onPageChange = async (newPage: number) => {
+    // Validar que la página esté en rango válido
+    if (result && (newPage < 1 || newPage > result.lastPage)) {
+      return;
+    }
+
     setPage(newPage);
-    await router.push({
-      pathname: '/dashboard/people',
-      query: {
-        page: newPage,
-      },
-    });
+    updateURL({ page: newPage });
+  };
+
+  // 4. Handler para búsqueda
+  const handleSearchChange = (searchValue: string) => {
+    setName(searchValue);
+    setPage(1);
+    updateURL({ name: searchValue, page: 1 });
+  };
+
+  // 5. Handler para sorting
+  const handleSortingChange = (sorting: SortingState) => {
+    if (sorting.length > 0) {
+      const newSortBy = sorting[0].id;
+      const newSortDirection = sorting[0].desc ? 'desc' : 'asc';
+      setSortBy(newSortBy);
+      setSortDirection(newSortDirection);
+      setPage(1);
+      updateURL({
+        sortBy: newSortBy,
+        sortDirection: newSortDirection,
+        page: 1,
+      });
+    } else {
+      setSortBy('name');
+      setSortDirection('asc');
+      setPage(1);
+      updateURL({ sortBy: 'name', sortDirection: 'asc', page: 1 });
+    }
   };
 
   return (
@@ -58,7 +173,7 @@ const People = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow-sm rounded-lg p-4">
+          <div className="bg-white overflow-hidden shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] rounded-md p-4">
             {isLoading ? (
               <div className="flex justify-center content-center min-h-screen">
                 <Loading size={16} />
@@ -67,19 +182,43 @@ const People = () => {
               <DataTable
                 columns={columns}
                 data={result?.data || []}
-                searchKey="name"
                 searchPlaceholder="Buscar por nombre..."
                 pagination={
                   result
                     ? {
-                        pageIndex: (result.current_page ?? page) - 1,
-                        pageSize: result.per_page ?? 15,
+                        // Backend es fuente de verdad: httpClient transforma snake_case a camelCase
+                        pageIndex: (result.currentPage ?? 1) - 1,
+                        pageSize: result.perPage ?? 15,
                         total: result.total ?? 0,
-                        lastPage: result.last_page ?? 1,
-                        currentPage: result.current_page ?? page,
-                        onPageChange,
+                        // Calcular lastPage si no viene del backend
+                        lastPage:
+                          result.lastPage ??
+                          (Math.ceil(
+                            (result.total ?? 0) / (result.perPage ?? 15)
+                          ) ||
+                            1),
+                        currentPage: result.currentPage ?? 1,
+                        onPageChange, // Función directa que actualiza estado y URL
                       }
                     : undefined
+                }
+                onSearchChange={handleSearchChange}
+                onSortingChange={handleSortingChange}
+                initialSearch={name}
+                initialSorting={
+                  sortBy ? [{ id: sortBy, desc: sortDirection === 'desc' }] : []
+                }
+                filters={
+                  <FilterSelect
+                    value={countryCode}
+                    onChange={(value) => {
+                      setCountryCode(value as string | undefined);
+                      setPage(1);
+                      updateURL({ countryCode: value, page: 1 });
+                    }}
+                    options={filters?.countries || []}
+                    placeholder="Todos los países"
+                  />
                 }
               />
             )}

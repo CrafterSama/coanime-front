@@ -1,7 +1,9 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
+import { signOut } from 'next-auth/react';
 
+import { LOGIN_ROUTE } from '@/constants/common';
 import { requireEnv } from './env';
 
 export const HTTP_METHODS = {
@@ -110,10 +112,65 @@ const getInstance = (config?: AxiosRequestConfig) => {
     }
   );
 
-  // Interceptor de errores para manejar Network Errors
+  // Interceptor de errores para manejar Network Errors y 401
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error: AxiosError) => {
+      // Handle 401 Unauthorized: automatically logout and redirect to login
+      if (error.response?.status === 401 && typeof window !== 'undefined') {
+        const currentPath = window.location.pathname;
+
+        // Avoid infinite loop if already on login page
+        if (currentPath !== LOGIN_ROUTE) {
+          // Save the current URL (pathname + search) to redirect after login
+          const currentUrl = window.location.pathname + window.location.search;
+
+          if (process.env.NODE_ENV === 'development') {
+            console.log(
+              '[HTTP Client] 401 detected, saving URL and logging out:',
+              {
+                currentUrl,
+                requestUrl: error.config?.url,
+                method: error.config?.method,
+              }
+            );
+          }
+
+          // Store the URL in sessionStorage to redirect after login
+          // Use sessionStorage instead of localStorage so it's cleared when browser closes
+          sessionStorage.setItem('redirectAfterLogin', currentUrl);
+
+          // Clear any existing session data
+          try {
+            // Clear NextAuth session
+            await signOut({
+              redirect: false, // We'll handle redirect manually
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+              console.log('[HTTP Client] SignOut completed');
+            }
+          } catch (signOutError) {
+            // If signOut fails, continue anyway
+            console.error('[HTTP Client] Error during signOut:', signOutError);
+          }
+
+          // Redirect to login with the redirect parameter
+          const loginUrl = `${LOGIN_ROUTE}?redirect=${encodeURIComponent(
+            currentUrl
+          )}`;
+
+          if (process.env.NODE_ENV === 'development') {
+            console.log('[HTTP Client] Redirecting to login:', loginUrl);
+          }
+
+          window.location.href = loginUrl;
+
+          return Promise.reject(error);
+        }
+      }
+
+      // Handle Network Errors
       if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
         // Log del error para debugging
         if (typeof window !== 'undefined') {

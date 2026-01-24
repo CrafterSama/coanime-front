@@ -1,55 +1,56 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { Menu } from '@headlessui/react';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 const DropdownLink = ({
   href,
   icon = null,
   children,
+  className,
   ...props
 }: {
   href: string;
   icon?: React.ReactNode | null;
   children: React.ReactNode;
+  className?: string;
   [key: string]: any;
 }) => (
-  <Menu.Item>
-    {({ active }) => (
-      <Link
-        href={href}
-        {...props}
-        className={`w-full flex flex-row justify-between text-left px-4 py-2 text-sm leading-5 text-gray-700 ${
-          active ? 'bg-gray-100' : ''
-        } focus:outline-none transition duration-150 ease-in-out`}>
-        {icon ?? ''}
-        {children}
-      </Link>
-    )}
-  </Menu.Item>
+  <DropdownMenuItem asChild>
+    <Link
+      href={href}
+      className={cn(
+        'w-full flex flex-row justify-between text-left cursor-pointer',
+        className
+      )}
+      {...props}>
+      {icon ?? ''}
+      {children}
+    </Link>
+  </DropdownMenuItem>
 );
 
 export const DropdownButton = ({
   icon = null,
   children,
+  className,
   ...props
 }: {
   icon?: React.ReactNode | null;
   children: React.ReactNode;
+  className?: string;
   [key: string]: any;
 }) => (
-  <Menu.Item>
-    {({ active }) => (
-      <button
-        className={`w-full flex flex-row justify-between text-left px-4 py-2 text-sm leading-5 text-gray-700 ${
-          active ? 'bg-gray-100' : ''
-        } focus:outline-none transition duration-150 ease-in-out`}
-        {...props}>
-        {icon ?? ''}
-        {children}
-      </button>
+  <DropdownMenuItem
+    className={cn(
+      'w-full flex flex-row justify-between text-left cursor-pointer',
+      className
     )}
-  </Menu.Item>
+    {...props}>
+    {icon ?? ''}
+    {children}
+  </DropdownMenuItem>
 );
 
 export default DropdownLink;

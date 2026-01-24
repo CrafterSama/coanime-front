@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import Select from 'react-select';
+import ReactSelect from 'react-select';
 import { TagsInput } from 'react-tag-input-component';
 
 import dayjs from 'dayjs';
@@ -15,13 +15,26 @@ import { CalendarIcon, XIcon } from '@/components/icons';
 import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
-import { FormWithContext } from '@/components/ui/form';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormWithContext,
+} from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
-import FormSelect from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Show } from '@/components/ui/Show';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
@@ -189,38 +202,50 @@ const UpdatePost = () => {
             <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
               <div className="w-full md:w-8/12">
                 <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="title">Titulo</Label>
                   <Input
-                    label="Titulo"
                     {...register('title')}
                     id="title"
                     name="title"
-                    errors={errors?.['title']?.message}
                     placeholder="Title"
                     className="w-full block text-lg"
                     defaultValue={post?.title}
                     disabled={!editMode}
-                    charactersCount={titleCount}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      onChangeTitle(e.target.value.length)
-                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      register('title').onChange(e);
+                      onChangeTitle(e.target.value.length);
+                    }}
                   />
+                  {errors?.['title']?.message && (
+                    <p className="text-sm text-red-500">
+                      {errors['title']?.message as string}
+                    </p>
+                  )}
+                  <p className="text-sm text-muted-foreground">{titleCount}</p>
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
+                  <Label htmlFor="excerpt">Excerpt</Label>
                   <Input
-                    label="Excerpt"
                     {...register('excerpt')}
                     id="excerpt"
                     name="excerpt"
-                    errors={errors?.['excerpt']?.message}
                     placeholder="excerpt"
                     className="w-full block text-base"
                     defaultValue={post?.excerpt}
                     disabled={!editMode}
-                    charactersCount={excerptCount}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      onChangeExcerpt(e.target.value.length)
-                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      register('excerpt').onChange(e);
+                      onChangeExcerpt(e.target.value.length);
+                    }}
                   />
+                  {errors?.['excerpt']?.message && (
+                    <p className="text-sm text-red-500">
+                      {errors['excerpt']?.message as string}
+                    </p>
+                  )}
+                  <p className="text-sm text-muted-foreground">
+                    {excerptCount}
+                  </p>
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
                   <Label htmlFor="content">Contenido</Label>
@@ -269,17 +294,45 @@ const UpdatePost = () => {
                     }`}
                   </span>
                 </div>
-                <div className="mb-4 flex flex-col gap-2">
-                  <Label htmlFor="description">Categoria</Label>
-                  <FormSelect
-                    options={categories}
-                    name="categoryId"
-                    value={watch('categoryId')}
-                    callBack={(option: any) => setValue('categoryId', option)}
-                    errors={errors?.['categoryId']?.message as string}
-                    disabled={!editMode}
-                  />
-                </div>
+                <FormField
+                  control={control}
+                  name="categoryId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Categoria</FormLabel>
+                      <Select
+                        value={field.value?.value?.toString() || ''}
+                        onValueChange={(value) => {
+                          const selectedCategory = categories?.find(
+                            (cat: any) => cat.value.toString() === value
+                          );
+                          if (selectedCategory) {
+                            field.onChange(selectedCategory);
+                            setValue('categoryId', selectedCategory);
+                          }
+                        }}
+                        disabled={!editMode}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona una categoría">
+                              {field.value?.label || ''}
+                            </SelectValue>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {categories?.map((category: any) => (
+                            <SelectItem
+                              key={category.value}
+                              value={category.value.toString()}>
+                              {category.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <div className="mb-4 flex flex-col gap-2">
                   <Label>Imagen Principal del Post</Label>
                   <div className="relative h-[300px]">
@@ -333,7 +386,7 @@ const UpdatePost = () => {
                   <Show condition={post?.titles?.length === 0}>
                     'No tiene Serie Relacionada'
                   </Show>
-                  <Select
+                  <ReactSelect
                     options={serieList}
                     isLoading={isLoadingSeries}
                     defaultValue={post?.titles?.[0]?.id}

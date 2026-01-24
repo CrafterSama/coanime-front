@@ -1,0 +1,60 @@
+---
+description: UI Design rules for creating a fancy, subtle, and elegant interface. All components must follow these guidelines for borders, shadows, and border radius.
+globs:
+alwaysApply: true
+---
+
+# UI Design Rules - Fancy & Subtle Design
+
+## Border Guidelines
+
+- **Borders should be VERY subtle**: Use `border-gray-100` or `border-gray-200` at most. Avoid darker borders like `border-gray-300` or higher.
+- **Prefer shadows over borders**: Instead of visible borders, use subtle shadows like `shadow-sm` or `shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]` to create depth without harsh lines.
+- **When borders are necessary**: Use `border border-gray-100` or `border border-gray-200` for very subtle separation. Never use borders darker than `border-gray-200`.
+
+## Shadow Guidelines
+
+- **Use subtle shadows**: Prefer `shadow-sm` for most components. For more depth, use custom shadows like:
+  - `shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]` - Very subtle
+  - `shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]` - Light shadow
+- **Avoid heavy shadows**: Never use `shadow-md`, `shadow-lg`, or `shadow-xl` unless absolutely necessary for specific emphasis.
+- **Replace borders with shadows**: When you need visual separation, use a subtle shadow instead of a border.
+
+## Border Radius Guidelines
+
+- **Keep it subtle**: Use smaller border radius values:
+  - `rounded-sm` (2px) - For small elements
+  - `rounded-md` (6px) - Default for most components
+  - `rounded-lg` (8px) - Only for larger containers or cards
+  - Avoid `rounded-xl` (12px) or larger unless for very specific design elements
+- **Default radius**: Most components should use `rounded-md` (6px) as the default.
+
+## Component Examples
+
+### Inputs
+- Use: `shadow-sm` or `shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]`
+- Border: `border border-gray-100` only if absolutely necessary
+- Radius: `rounded-md`
+
+### Buttons
+- Use: `shadow-sm` for subtle depth
+- Border: Only for outline variants, use `border border-gray-200`
+- Radius: `rounded-md`
+
+### Cards/Containers
+- Use: `shadow-sm` or `shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]`
+- Border: Avoid borders, use shadows instead
+- Radius: `rounded-md` or `rounded-lg` for larger containers
+
+### Selects/Dropdowns
+- Use: `shadow-sm`
+- Border: `border border-gray-100` or no border with shadow
+- Radius: `rounded-md`
+
+## General Principles
+
+1. **Subtlety over visibility**: Everything should be subtle and elegant
+2. **Shadows over borders**: Prefer shadows to create depth instead of visible borders
+3. **Small radius**: Keep border radius small and consistent
+4. **Consistency**: Use the same shadow and radius values across similar components
+5. **Fancy feel**: The goal is a premium, elegant, and modern look
