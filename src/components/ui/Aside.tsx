@@ -28,9 +28,7 @@ const Aside = () => {
   const isTiny = state === 'collapsed';
 
   return (
-    <Sidebar
-      collapsible="icon"
-      className="bg-white shadow-sm">
+    <Sidebar collapsible="icon" className="bg-white shadow-sm">
       <SidebarHeader className="p-4">
         <Link
           href="/"

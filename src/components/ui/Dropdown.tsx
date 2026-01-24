@@ -1,13 +1,18 @@
 import React from 'react';
 
-import { Menu, Transition } from '@headlessui/react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 type DropdownProps = {
   children: React.ReactNode;
-  trigger?: any;
+  trigger?: React.ReactNode;
   contentClasses?: string;
   width?: string | number;
-  align?: 'left' | 'right' | 'top';
+  align?: 'left' | 'right' | 'top' | 'bottom';
 };
 
 const Dropdown = ({
@@ -17,38 +22,46 @@ const Dropdown = ({
   trigger,
   children,
 }: DropdownProps) => {
-  const alignmentClasses = {
-    top: 'origin-top',
-    left: 'origin-top-left left-0',
-    right: 'origin-top-right right-0',
-  };
+  const alignMap = {
+    top: 'start',
+    left: 'start',
+    right: 'end',
+    bottom: 'end',
+  } as const;
+
+  const sideMap = {
+    top: 'top',
+    left: 'left',
+    right: 'right',
+    bottom: 'bottom',
+  } as const;
+
+  // Convertir width a clase de Tailwind o estilo inline
+  const widthStyle =
+    typeof width === 'number'
+      ? { width: `${width * 0.25}rem` }
+      : width.includes('w-')
+      ? {}
+      : { width: width };
+
+  const widthClass =
+    typeof width === 'number'
+      ? ''
+      : width.includes('w-')
+      ? width
+      : `w-[${width}]`;
 
   return (
-    <Menu as="div" className="relative">
-      {({ open }) => (
-        <>
-          <Menu.Button as={React.Fragment}>{trigger}</Menu.Button>
-
-          <Transition
-            show={open}
-            enter="transition ease-out duration-200"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95">
-            <div
-              className={`absolute z-50 mt-2 w-${width} rounded-md shadow-lg ${alignmentClasses[align]}`}>
-              <Menu.Items
-                className={`rounded-md focus:outline-none ring-1 ring-black ring-opacity-5 ${contentClasses}`}
-                static>
-                {children}
-              </Menu.Items>
-            </div>
-          </Transition>
-        </>
-      )}
-    </Menu>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+      <DropdownMenuContent
+        align={alignMap[align] || 'end'}
+        side={sideMap[align] || 'bottom'}
+        className={cn(widthClass, contentClasses)}
+        style={typeof width === 'number' ? widthStyle : undefined}>
+        {children}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

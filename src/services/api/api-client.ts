@@ -1,10 +1,11 @@
-import { API_URL } from '@/constants/common';
+import { API_URL, LOGIN_ROUTE } from '@/constants/common';
 import { getBackendUrl } from '@/utils/cors-config';
 import axios, {
   AxiosError,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from 'axios';
+import { signOut } from 'next-auth/react';
 import snakecaseKeys from 'snakecase-keys';
 
 export const HTTP_METHODS = {
@@ -143,7 +144,44 @@ const createInstance = (baseURL: string, config?: AxiosRequestConfig) => {
     (response) => {
       return response;
     },
-    (error: AxiosError) => {
+    async (error: AxiosError) => {
+      // Handle 401 Unauthorized: automatically logout and redirect to login
+      if (error.response?.status === 401 && typeof window !== 'undefined') {
+        const currentPath = window.location.pathname;
+
+        // Avoid infinite loop if already on login page
+        if (currentPath !== LOGIN_ROUTE) {
+          // Save the current URL (pathname + search) to redirect after login
+          const currentUrl = window.location.pathname + window.location.search;
+
+          // Store the URL in sessionStorage to redirect after login
+          // Use sessionStorage instead of localStorage so it's cleared when browser closes
+          sessionStorage.setItem('redirectAfterLogin', currentUrl);
+
+          // Clear any existing session data
+          try {
+            // Clear NextAuth session
+            await signOut({
+              redirect: false, // We'll handle redirect manually
+            });
+          } catch (signOutError) {
+            // If signOut fails, continue anyway
+            console.error(
+              '[API Interceptor] Error during signOut:',
+              signOutError
+            );
+          }
+
+          // Redirect to login with the redirect parameter
+          const loginUrl = `${LOGIN_ROUTE}?redirect=${encodeURIComponent(
+            currentUrl
+          )}`;
+          window.location.href = loginUrl;
+
+          return Promise.reject(error);
+        }
+      }
+
       // Log error to Sentry if available
       if (typeof window !== 'undefined') {
         /*try {

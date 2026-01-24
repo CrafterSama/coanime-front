@@ -21,7 +21,7 @@ import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Tabs, TabsContent } from '@/components/ui/Tabs';
+import { Tabs, TabsContent } from '@/components/ui/TabsWrapper';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useRandomImageByTitle } from '@/hooks/random-images';

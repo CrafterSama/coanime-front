@@ -49,13 +49,22 @@ export const useAuth = ({
     setStatus(null);
 
     try {
+      // Check for saved redirect URL from 401 error
+      const savedRedirect =
+        typeof window !== 'undefined'
+          ? sessionStorage.getItem('redirectAfterLogin')
+          : null;
+
+      // Use saved redirect if available, otherwise use provided redirectTo
+      const finalRedirect = savedRedirect || redirectTo || '/';
+
       // Con JWT, no necesitamos CSRF cookies
       // Auth.js ejecutará authorize en el servidor que hará POST a /api/login
       const result = await signIn('credentials', {
         redirect: false,
         email,
         password,
-        callbackUrl: redirectTo || '/',
+        callbackUrl: finalRedirect,
       });
 
       if (result?.error) {
@@ -67,7 +76,12 @@ export const useAuth = ({
 
       // Redirigir después de un login exitoso
       if (result?.ok) {
-        router.push(redirectTo || '/');
+        // Clear the saved redirect from sessionStorage
+        if (typeof window !== 'undefined' && savedRedirect) {
+          sessionStorage.removeItem('redirectAfterLogin');
+        }
+
+        router.push(finalRedirect);
       }
     } catch (error: any) {
       console.error('[Login] Error:', error);
@@ -121,6 +135,11 @@ export const useAuth = ({
   };
 
   const logout = async (redirect: string | null = null) => {
+    // Clear any saved redirect URL
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('redirectAfterLogin');
+    }
+
     await signOut({
       callbackUrl: redirect ?? '/login',
     });

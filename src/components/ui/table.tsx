@@ -46,10 +46,7 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn(
-      'bg-gray-50 font-medium shadow-sm',
-      className
-    )}
+    className={cn('bg-gray-50 font-medium shadow-sm', className)}
     {...props}
   />
 ));
@@ -110,7 +107,12 @@ const TableCaption = React.forwardRef<
 TableCaption.displayName = 'TableCaption';
 
 export {
-  Table, TableBody, TableCaption, TableCell, TableFooter,
-  TableHead, TableHeader, TableRow
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
 };
-

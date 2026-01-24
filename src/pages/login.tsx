@@ -6,7 +6,7 @@ import AuthCard from '@/components/ui/AuthCard';
 import AuthSessionStatus from '@/components/ui/AuthSessionStatus';
 import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
 import { Button } from '@/components/ui/button';
-import Checkbox from '@/components/ui/Checkbox';
+import Checkbox from '@/components/ui/CheckboxWrapper';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';

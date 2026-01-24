@@ -57,7 +57,9 @@ const Dashboard = () => {
                       Artículos
                     </CardTitle>
                     <div className="p-2.5 bg-orange-400 rounded-lg shadow-sm">
-                      <Link href="/dashboard/posts?page=1" className="text-white">
+                      <Link
+                        href="/dashboard/posts?page=1"
+                        className="text-white">
                         <NewspaperIcon className="h-5 w-5" />
                       </Link>
                     </div>

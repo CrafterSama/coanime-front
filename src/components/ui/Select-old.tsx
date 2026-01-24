@@ -39,7 +39,7 @@ const FormSelect = ({
   defaultValue = {},
   value = {},
   disabled = false,
-  height = '45px',
+  height = '36px',
   errors = null,
   name = '',
   getOptionLabel,
@@ -52,21 +52,44 @@ const FormSelect = ({
     control: (base) => {
       return {
         ...base,
-        height,
+        height: height || '36px',
+        minHeight: height || '36px',
         backgroundColor: disabled ? 'rgb(249 250 251)' : '#fff',
         borderRadius: '6px',
-        borderWidth: '2px',
-        borderColor: errors ? '#ce0000' : 'rgb(250, 167, 111)',
-        boxShadow: 'none',
-        '&:hover': { borderColor: 'rgb(250, 167, 111)' },
-        '&:focus': {
-          borderColor: 'rgb(250, 167, 111)',
-          boxShadow: 'none',
+        borderWidth: '1px',
+        borderColor: errors ? '#fca5a5' : '#f3f4f6',
+        boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',
+        '&:hover': {
+          borderColor: errors ? '#fca5a5' : '#e5e7eb',
+        },
+        '&:focus-within': {
+          borderColor: errors ? '#ef4444' : '#fb923c',
+          boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',
+          outline: 'none',
         },
         color: disabled ? '#666' : '#333',
         cursor: disabled ? 'not-allowed' : 'default',
       };
     },
+    menu: (base) => ({
+      ...base,
+      borderRadius: '6px',
+      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.1)',
+      border: '1px solid #f3f4f6',
+      marginTop: '4px',
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isSelected
+        ? '#fb923c'
+        : state.isFocused
+        ? '#fff7ed'
+        : 'white',
+      color: state.isSelected ? 'white' : '#374151',
+      '&:active': {
+        backgroundColor: state.isSelected ? '#fb923c' : '#fff7ed',
+      },
+    }),
   };
 
   return (

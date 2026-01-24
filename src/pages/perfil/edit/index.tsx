@@ -14,7 +14,15 @@ import Image from 'next/image';
 import { GetServerSideProps } from 'next/types';
 
 import WebLayout from '@/components/Layouts/WebLayout';
-import { FormWithContext } from '@/components/ui/form';
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormWithContext,
+} from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
@@ -46,6 +54,7 @@ const Profile = () => {
   const methods = useForm<any>();
 
   const {
+    control,
     handleSubmit,
     setValue,
     formState: { errors },
@@ -223,70 +232,119 @@ const Profile = () => {
                                   </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                  <Input
-                                    prefix={<UserIcon className="w-6 h-6" />}
-                                    label="Full Name"
-                                    {...methods.register('name')}
+                                  <FormField
+                                    control={control}
                                     name="name"
-                                    defaultValue={result?.name}
-                                    placeholder="coanime..."
-                                    errors={errors?.['name']?.message as string}
-                                    disabled={!editMode}
-                                  />
-                                  <Input
-                                    prefix={
-                                      <EnvelopeIcon className="w-6 h-6" />
-                                    }
-                                    label="Email"
-                                    {...methods.register('email')}
-                                    name="email"
-                                    defaultValue={result?.email}
-                                    placeholder="coanime..."
-                                    errors={
-                                      errors?.['email']?.message as string
-                                    }
-                                    hint="You can't change your email, we never send spam to your email or share your personal info."
-                                    disabled
-                                  />
-                                  <PasswordInput
-                                    prefix={
-                                      <LockClosedIcon className="w-6 h-6" />
-                                    }
-                                    label="Password"
-                                    {...methods.register('password')}
-                                    name="password"
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => setValue('password', e.target.value)}
-                                    errors={
-                                      errors?.['password']?.message as string
-                                    }
-                                    hint="Tu contraseña solo cambia si ingresa una nueva aquí. Importante: Su contraseña debe tener al menos 8 caracteres y contener al menos un número y una letra mayúscula y minúscula y un símbolo."
-                                    disabled={!editMode}
-                                  />
-                                  <PasswordInput
-                                    {...methods.register(
-                                      'passwordConfirmation'
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Full Name</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <UserIcon className="w-6 h-6" />
+                                            }
+                                            placeholder="coanime..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.name}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
                                     )}
-                                    prefix={
-                                      <LockClosedIcon className="w-6 h-6" />
-                                    }
-                                    label="Password Confirmation"
+                                  />
+                                  <FormField
+                                    control={control}
+                                    name="email"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <EnvelopeIcon className="w-6 h-6" />
+                                            }
+                                            placeholder="coanime..."
+                                            disabled
+                                            defaultValue={result?.email}
+                                          />
+                                        </FormControl>
+                                        <FormDescription>
+                                          You can't change your email, we never
+                                          send spam to your email or share your
+                                          personal info.
+                                        </FormDescription>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={control}
+                                    name="password"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                          <PasswordInput
+                                            {...field}
+                                            prefix={
+                                              <LockClosedIcon className="w-6 h-6" />
+                                            }
+                                            onChange={(
+                                              e: React.ChangeEvent<HTMLInputElement>
+                                            ) =>
+                                              setValue(
+                                                'password',
+                                                e.target.value
+                                              )
+                                            }
+                                            disabled={!editMode}
+                                          />
+                                        </FormControl>
+                                        <FormDescription>
+                                          Tu contraseña solo cambia si ingresa
+                                          una nueva aquí. Importante: Su
+                                          contraseña debe tener al menos 8
+                                          caracteres y contener al menos un
+                                          número y una letra mayúscula y
+                                          minúscula y un símbolo.
+                                        </FormDescription>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={control}
                                     name="passwordConfirmation"
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) =>
-                                      setValue(
-                                        'passwordConfirmation',
-                                        e.target.value
-                                      )
-                                    }
-                                    errors={
-                                      errors?.['passwordConfirmation']
-                                        ?.message as string
-                                    }
-                                    hint="You need a password confirmation"
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>
+                                          Password Confirmation
+                                        </FormLabel>
+                                        <FormControl>
+                                          <PasswordInput
+                                            {...field}
+                                            prefix={
+                                              <LockClosedIcon className="w-6 h-6" />
+                                            }
+                                            onChange={(
+                                              e: React.ChangeEvent<HTMLInputElement>
+                                            ) =>
+                                              setValue(
+                                                'passwordConfirmation',
+                                                e.target.value
+                                              )
+                                            }
+                                            disabled={!editMode}
+                                          />
+                                        </FormControl>
+                                        <FormDescription>
+                                          You need a password confirmation
+                                        </FormDescription>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
                                 </div>
                               </div>
@@ -346,111 +404,173 @@ const Profile = () => {
                                   />
                                 </div>
                                 <div className="grid grid-cols-3 gap-6">
-                                  <Input
-                                    prefix={
-                                      <UserCircleIcon className="w-6 h-6" />
-                                    }
-                                    label="Username"
-                                    {...methods.register('username')}
+                                  <FormField
+                                    control={control}
                                     name="username"
-                                    defaultValue={result?.username}
-                                    placeholder="coanime..."
-                                    errors={
-                                      errors?.['username']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Username</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <UserCircleIcon className="w-6 h-6" />
+                                            }
+                                            placeholder="coanime..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.username}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={<LinkIcon className="w-6 h-6" />}
-                                    label="Website"
-                                    {...methods.register('website')}
+                                  <FormField
+                                    control={control}
                                     name="website"
-                                    defaultValue={result?.website}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['website']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Website</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <LinkIcon className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.website}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={
-                                      <AiOutlineTwitter className="w-6 h-6" />
-                                    }
-                                    label="Twitter"
-                                    {...methods.register('twitter')}
+                                  <FormField
+                                    control={control}
                                     name="twitter"
-                                    defaultValue={result?.twitter}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['twitter']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Twitter</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <AiOutlineTwitter className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.twitter}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={
-                                      <AiOutlineInstagram className="w-6 h-6" />
-                                    }
-                                    label="Instagram"
-                                    {...methods.register('instagram')}
+                                  <FormField
+                                    control={control}
                                     name="instagram"
-                                    defaultValue={result?.instagram}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['instagam']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Instagram</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <AiOutlineInstagram className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.instagram}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={
-                                      <AiOutlineFacebook className="w-6 h-6" />
-                                    }
-                                    label="Facebook"
-                                    {...methods.register('facebook')}
+                                  <FormField
+                                    control={control}
                                     name="facebook"
-                                    defaultValue={result?.facebook}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['facebook']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Facebook</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <AiOutlineFacebook className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.facebook}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={
-                                      <AiOutlineYoutube className="w-6 h-6" />
-                                    }
-                                    label="Youtube"
-                                    {...methods.register('youtube')}
+                                  <FormField
+                                    control={control}
                                     name="youtube"
-                                    defaultValue={result?.youtube}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['youtube']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Youtube</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <AiOutlineYoutube className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.youtube}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={<FaTiktok className="w-6 h-6" />}
-                                    label="TikTok"
-                                    {...methods.register('tiktok')}
+                                  <FormField
+                                    control={control}
                                     name="tiktok"
-                                    defaultValue={result?.tiktok}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['tiktok']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>TikTok</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <FaTiktok className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.tiktok}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
-                                  <Input
-                                    prefix={<FaPinterest className="w-6 h-6" />}
-                                    label="Pinterest"
-                                    {...methods.register('pinterest')}
+                                  <FormField
+                                    control={control}
                                     name="pinterest"
-                                    defaultValue={result?.pinterest}
-                                    placeholder="http://..."
-                                    errors={
-                                      errors?.['pinterest']?.message as string
-                                    }
-                                    disabled={!editMode}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Pinterest</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            {...field}
+                                            prefix={
+                                              <FaPinterest className="w-6 h-6" />
+                                            }
+                                            placeholder="http://..."
+                                            disabled={!editMode}
+                                            defaultValue={result?.pinterest}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
                                   />
                                 </div>
                                 <div className="flex flex-col gap-2">

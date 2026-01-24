@@ -204,8 +204,8 @@ export const createPostColumns = (
         <div className="w-40">
           <Show
             condition={
-              hasRole(authUser?.roles, 'administrator') ||
-              hasRole(authUser?.roles, 'writer')
+              !!hasRole(authUser?.roles, 'administrator') ||
+              !!hasRole(authUser?.roles, 'writer')
             }>
             <Button
               variant="outline"

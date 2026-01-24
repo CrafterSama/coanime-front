@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { MenuIcon, LogoutIcon } from '@/components/icons';
@@ -8,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import ResponsiveNavLink, {
@@ -92,7 +90,7 @@ const Navigation: FC<NavigationProps> = ({
                   align="end"
                   className="w-56 bg-white shadow-lg rounded-lg">
                   <DropdownMenuItem
-                    onClick={logout}
+                    onClick={() => logout()}
                     className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-red-50 focus:bg-red-50 text-red-600 transition-colors">
                     <LogoutIcon className="h-5 w-5" />
                     <span className="text-sm font-medium">Logout</span>

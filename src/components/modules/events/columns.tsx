@@ -85,7 +85,9 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
       return (
         <div className="w-40 flex flex-col gap-2 text-sm">
           <span>{event.address}</span>
-          <span>{`${event.country?.emoji} ${event.city?.name}, ${name['es'] || ''}`}</span>
+          <span>{`${event.country?.emoji} ${event.city?.name}, ${
+            name['es'] || ''
+          }`}</span>
         </div>
       );
     },
