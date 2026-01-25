@@ -132,6 +132,13 @@ export const createMediaColumns = (
     },
     cell: ({ row }) => {
       const collection = row.original.collection_name;
+      if (!collection || collection === 'default') {
+        return (
+          <div className="w-32">
+            <span className="text-gray-400 text-sm">-</span>
+          </div>
+        );
+      }
       return (
         <div className="w-32">
           <Badge variant="secondary" className="text-xs">
