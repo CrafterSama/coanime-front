@@ -230,6 +230,26 @@ const Dashboard = () => {
                     </Link>
                   </CardContent>
                 </Card>
+
+                <Card className="shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                  <CardContent className="p-6">
+                    <Link
+                      href="/dashboard/media"
+                      className="flex items-center gap-4">
+                      <div className="p-3 bg-blue-100 rounded-lg">
+                        <PhotoIcon className="h-6 w-6 text-blue-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 mb-1">
+                          Gestión de Media
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Administra todas las imágenes
+                        </p>
+                      </div>
+                    </Link>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
