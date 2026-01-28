@@ -26,12 +26,12 @@ const Person = ({ personData }: PersonProps) => {
         </Head>
       )}
       <WebLayout>
-        <Show condition={!personData}>
+        <Show when={!personData}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={personData}>
+        <Show when={personData}>
           <div id="title">
             <Section>
               <div className="title-header">

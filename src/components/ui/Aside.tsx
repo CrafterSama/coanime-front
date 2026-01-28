@@ -34,7 +34,7 @@ const Aside = () => {
           href="/"
           className="flex flex-row items-center gap-2 overflow-hidden">
           <CoanimeIcon className="h-10 w-10 text-orange-500 flex-shrink-0" />
-          <Show condition={!isTiny}>
+          <Show when={!isTiny}>
             <Logotype className="h-6 fill-current text-gray-800" />
           </Show>
         </Link>

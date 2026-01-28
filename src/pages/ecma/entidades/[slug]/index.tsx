@@ -28,12 +28,12 @@ const Entity = ({ entityData }: EntityProps) => {
         </Head>
       )}
       <WebLayout>
-        <Show condition={!entityData}>
+        <Show when={!entityData}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={entityData}>
+        <Show when={entityData}>
           <div id="title">
             <Section>
               <div className="title-header">
@@ -78,7 +78,7 @@ const Entity = ({ entityData }: EntityProps) => {
                           value={
                             <span className="post-date">
                               <Show
-                                condition={entityData?.result?.foundationDate}>
+                                when={entityData?.result?.foundationDate}>
                                 {typeof entityData?.result?.foundationDate ===
                                   'string' &&
                                   dayjs(entityData?.result?.foundationDate)
@@ -86,7 +86,7 @@ const Entity = ({ entityData }: EntityProps) => {
                                     .format('DD MMMM, YYYY')}
                               </Show>
                               <Show
-                                condition={!entityData?.result?.foundationDate}>
+                                when={!entityData?.result?.foundationDate}>
                                 'Sin Información'
                               </Show>
                             </span>

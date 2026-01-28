@@ -14,25 +14,25 @@ import AppLayout from '@/components/Layouts/AppLayout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
 import { postSchema } from '@/components/modules/posts/schemas/postSchema';
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormWithContext,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    FormWithContext,
 } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import SectionHeader from '@/components/ui/SectionHeader';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
-import { SearchableSelect } from '@/components/ui/searchable-select';
 import TextEditor from '@/components/ui/TextEditor';
 import UploadImage from '@/components/ui/UploadImage';
 import { useCategoriesList } from '@/hooks/categories';
@@ -92,6 +92,9 @@ const CreatePost = () => {
     formState: { errors },
   } = methods;
 
+  // Log errors whenever they change
+  console.log('[CREATE POST] Form errors:', errors);
+
   const resetPostInfo = () => {
     register('title');
     register('content');
@@ -123,9 +126,13 @@ const CreatePost = () => {
   );
 
   const onSubmit = (data: any) => {
+    console.log('[CREATE POST] Form data received:', data);
+    
     const postponed = data.postponedTo
-      ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
+      ? dayjs(data.postponedTo).format('YYYY-MM-DD HH:mm:ss')
       : dayjs().format('YYYY-MM-DD HH:mm:ss');
+
+    console.log('[CREATE POST] Postponed date:', postponed);
 
     const params = {
       title: data.title,
@@ -138,6 +145,8 @@ const CreatePost = () => {
       postponedTo: postponed,
     };
 
+    console.log('[CREATE POST] Params to send:', params);
+
     createPost(
       { params },
       {
@@ -145,6 +154,7 @@ const CreatePost = () => {
           onSavedSuccess(response);
         },
         onError: (message) => {
+          console.error('[CREATE POST] Error:', message);
           toast.error(`Error: ${message}`);
         },
       }

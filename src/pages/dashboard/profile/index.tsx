@@ -17,7 +17,7 @@ import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Loading from '@/components/ui/Loading';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import TextEditor from '@/components/ui/TextEditor';
 import { uploadImages } from '@/hooks/images';
 import { useProfile, updateMe } from '@/hooks/users';
@@ -153,11 +153,7 @@ const Profile = () => {
       <div className="p-4">
         <div className="w-full">
           <div className="bg-white overflow-hidden shadow-sm rounded-lg">
-            {isLoading && (
-              <div className="flex justify-center content-center min-w-screen min-h-screen">
-                <Loading size={16} />
-              </div>
-            )}
+            {isLoading && <FormSkeleton fields={8} />}
             {result && (
               <>
                 <div className="flex w-full">

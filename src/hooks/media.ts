@@ -5,21 +5,21 @@ export interface MediaItem {
   id: number;
   uuid: string;
   name: string;
-  file_name: string;
-  mime_type: string;
+  fileName: string;
+  mimeType: string;
   size: number;
-  collection_name: string;
+  collectionName: string | null;
   disk: string;
   url: string;
-  thumb_url: string | null;
-  is_placeholder: boolean;
-  original_url: string | null;
-  model_type: string | null;
-  model_id: number | null;
-  model_title: string | null;
-  model_slug: string | null;
-  created_at: string;
-  updated_at: string;
+  thumbUrl: string | null;
+  isPlaceholder: boolean;
+  originalUrl: string | null;
+  modelType: string | null;
+  modelId: number | null;
+  modelTitle: string | null;
+  modelSlug: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface MediaFilters {
@@ -44,9 +44,9 @@ export interface MediaDetailResponse {
   code: number;
   message: string;
   data: MediaItem & {
-    medium_url?: string | null;
-    large_url?: string | null;
-    custom_properties?: Record<string, any>;
+    mediumUrl?: string | null;
+    largeUrl?: string | null;
+    customProperties?: Record<string, any>;
   };
 }
 

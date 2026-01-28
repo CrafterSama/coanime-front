@@ -40,7 +40,7 @@
 
   /* shadcn/ui CSS Variables para Tailwind v4 */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(0.2 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -49,15 +49,15 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: 210 40% 96.1%;
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: 210 40% 98%;
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.88 0 0);
+  --input: oklch(0.88 0 0);
+  --ring: oklch(0.65 0 0);
   --radius: 0.625rem;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -115,9 +115,10 @@ body {
 }
 
 /* Estilos base de shadcn/ui */
-* {
+/* Removed global border-color to allow Tailwind border utilities to work properly */
+/* * {
   border-color: hsl(var(--border));
-}
+} */
 
 body {
   background-color: hsl(var(--background));
@@ -152,38 +153,8 @@ body {
 }
 
 /*
- * The following styles are for the slider only.
+ * The following styles are for the news slider (custom carousel, no Swiper).
  */
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 2rem;
-  color: var(--light-orange);
-}
-
-.top-slider .swiper-horizontal > .swiper-pagination-bullets,
-.top-slider .swiper-pagination-bullets.swiper-pagination-horizontal,
-.top-slider .swiper-pagination-custom,
-.top-slider .swiper-pagination-fraction {
-  bottom: 100px;
-}
-
-.top-slider .swiper-pagination-bullet {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: #f90;
-  opacity: 0.3;
-  margin: 0 5px;
-  @apply transition-all;
-}
-
-.top-slider .swiper-pagination-bullet-active {
-  opacity: 0.8;
-  width: 30px;
-  border-radius: 10px;
-  @apply transition-all;
-}
 
 .overlayer,
 .article .overlayer {
@@ -1536,7 +1507,8 @@ ul.info__article-tags a:hover {
 
 /* DatePicker Styles */
 .datepicker-box .react-datetime-picker__wrapper {
-  @apply flex flex-row content-center justify-center block w-full px-4 py-1 border-2 border-orange-300 rounded-lg;
+  @apply flex flex-row content-center justify-center w-full px-4 py-1 border-2 border-orange-300 rounded-lg;
+  display: flex;
 }
 
 .datepicker-box .react-calendar {
@@ -1651,9 +1623,10 @@ ul.info__article-tags a:hover {
 }
 
 @layer base {
-  * {
+  /* Removed global border-border to allow Tailwind border utilities to work properly */
+  /* * {
     @apply border-border outline-ring/50;
-  }
+  } */
   body {
     @apply bg-background text-foreground;
   }

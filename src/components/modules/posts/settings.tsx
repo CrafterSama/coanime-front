@@ -125,7 +125,7 @@ export const usePostsSettings = ({
         <div className="w-40">
           <div className="flex flex-row gap-2">
             <Show
-              condition={
+              when={
                 !!hasRole(authUser?.roles, 'administrator') ||
                 !!hasRole(authUser?.roles, 'writer')
               }>

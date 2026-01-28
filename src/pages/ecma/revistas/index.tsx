@@ -53,12 +53,12 @@ const Magazines = ({ magazinesData }: MagazinesProps) => {
         <meta name="keywords" content={magazinesData?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={!data}>
+        <Show when={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={magazines}>
+        <Show when={magazines}>
           <Section withContainer>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-8 min-h-[90vh]">
               {magazines?.data?.map((magazine: any) => (

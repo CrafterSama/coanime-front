@@ -6,17 +6,10 @@ import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
 import { createMediaColumns } from '@/components/modules/media/columns';
-import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { FilterSelect } from '@/components/ui/filter-select';
-import Loading from '@/components/ui/Loading';
-import { Input } from '@/components/ui/input';
 import { useMedia } from '@/hooks/media';
-import {
-  ChevronLeftIcon,
-  MagnifyingGlassIcon,
-  PhotoIcon,
-} from '@heroicons/react/24/outline';
+import { PhotoIcon } from '@heroicons/react/24/outline';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { EditMediaModal } from '@/components/modules/media/EditMediaModal';
 
@@ -198,101 +191,86 @@ const Media = () => {
         header={
           <SectionHeader backlink="/dashboard" text="Gestión de Media" />
         }>
-        <div className="p-4">
+        <div className="p-4 md:p-6">
           <div className="flex flex-col gap-6">
             {/* Header con búsqueda y filtros */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 rounded-lg">
+                  <div className="rounded-md p-2 bg-orange-50 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                     <PhotoIcon className="h-6 w-6 text-orange-600" />
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
+                    <h1 className="text-2xl font-semibold text-gray-800 leading-tight">
                       Gestión de Media
                     </h1>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 mt-1">
                       Administra todas las imágenes del sistema
                     </p>
                   </div>
                 </div>
               </div>
-
-              {/* Búsqueda y filtros */}
-              <div className="flex flex-col md:flex-row gap-4">
-                {/* Búsqueda */}
-                <div className="flex-1">
-                  <div className="relative">
-                    <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <Input
-                      type="text"
-                      placeholder="Buscar por nombre, archivo o modelo..."
-                      value={search}
-                      onChange={(e) => handleSearchChange(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-
-                {/* Filtros */}
-                <div className="flex flex-wrap gap-2">
-                  <FilterSelect
-                    label="Tipo de Modelo"
-                    value={modelType}
-                    onChange={handleModelTypeChange}
-                    options={[
-                      { value: undefined, label: 'Todos los tipos' },
-                      ...(filters?.model_types?.map((type: string) => ({
-                        value: type,
-                        label: type,
-                      })) || []),
-                    ]}
-                  />
-
-                  <FilterSelect
-                    label="Colección"
-                    value={collection}
-                    onChange={handleCollectionChange}
-                    options={[
-                      { value: undefined, label: 'Todas las colecciones' },
-                      ...(filters?.collections?.map((col: string) => ({
-                        value: col,
-                        label: col,
-                      })) || []),
-                    ]}
-                  />
-
-                  <FilterSelect
-                    label="Estado"
-                    value={isPlaceholder ? 'placeholder' : 'all'}
-                    onChange={(value) =>
-                      handlePlaceholderToggle(value === 'placeholder')
-                    }
-                    options={[
-                      { value: 'all', label: 'Todos' },
-                      { value: 'placeholder', label: 'Solo Placeholders' },
-                    ]}
-                  />
-                </div>
-              </div>
             </div>
 
             {/* Tabla de media */}
-            {isLoading ? (
-              <Loading />
-            ) : (
+            <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">
               <DataTable
-                columns={columns}
-                data={media}
-                pagination={{
+              columns={columns}
+              data={media}
+              isLoading={isLoading}
+              searchPlaceholder="Buscar por nombre, archivo o modelo..."
+              initialSearch={search}
+              onSearchChange={handleSearchChange}
+              pagination={{
                   currentPage: result?.currentPage || page,
                   lastPage: result?.lastPage || 1,
                   perPage: result?.perPage || 15,
                   total: result?.total || 0,
                   onPageChange,
                 }}
+                filters={
+                  <>
+                    <FilterSelect
+                      value={modelType || ''}
+                      onChange={(value) => handleModelTypeChange(value || undefined)}
+                      options={[
+                        { id: '', name: 'Todos los tipos' },
+                        ...(filters?.model_types?.map((type: string) => ({
+                          id: type,
+                          name: type,
+                        })) || []),
+                      ]}
+                      placeholder="Tipo de Modelo"
+                    />
+
+                    <FilterSelect
+                      value={collection || ''}
+                      onChange={(value) => handleCollectionChange(value || undefined)}
+                      options={[
+                        { id: '', name: 'Todas las colecciones' },
+                        ...(filters?.collections?.map((col: string) => ({
+                          id: col,
+                          name: col,
+                        })) || []),
+                      ]}
+                      placeholder="Colección"
+                    />
+
+                    <FilterSelect
+                      value={isPlaceholder ? 'placeholder' : 'all'}
+                      onChange={(value) =>
+                        handlePlaceholderToggle(value === 'placeholder')
+                      }
+                      options={[
+                        { id: 'all', name: 'Todos' },
+                        { id: 'placeholder', name: 'Solo Placeholders' },
+                      ]}
+                      placeholder="Estado"
+                    />
+                  </>
+                }
               />
-            )}
+            </div>
           </div>
         </div>
 

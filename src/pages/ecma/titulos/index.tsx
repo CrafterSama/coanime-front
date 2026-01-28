@@ -79,12 +79,12 @@ const Titles = ({ titlesData }: TitlesProps) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={!data}>
+        <Show when={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={series}>
+        <Show when={series}>
           <Section withContainer>
             <FlexLayout justify="center" align="center" gap={1}>
               <FlexLayout direction="row" justify="center">
@@ -112,13 +112,13 @@ const Titles = ({ titlesData }: TitlesProps) => {
   );
 };
 
-export const getStaticProps = async ({ params }: { params?: any }) => {
-  // Next.js 15: params puede ser una Promise
-  const resolvedParams = await params;
+export const getStaticProps = async (context: { params?: any }) => {
+  const resolvedParams = context?.params != null ? await context.params : undefined;
+  const page = resolvedParams?.page != null ? Number(resolvedParams.page) : 1;
+  const safePage = Number.isFinite(page) && page >= 1 ? page : 1;
+
   try {
-    const response = await withRetry(() =>
-      getTitles({ page: Number(resolvedParams?.page) ?? 1 })
-    );
+    const response = await withRetry(() => getTitles({ page: safePage }));
 
     if (response?.data?.code === 404) {
       return {

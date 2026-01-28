@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
 import { extractText, strLimit } from '@/utils/string';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -46,15 +47,16 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
     },
     cell: ({ row }) => {
       const magazine = row.original;
+      const imgSrc = magazine.image?.name
+        ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine.image.name}`
+        : DEFAULT_IMAGE;
       return (
-        <div className="flex flex-row gap-2 w-96">
-          <div className="w-4/12 h-46">
-            <Link
-              href={`/dashboard/magazine/${magazine.slug}`}
-              className="relative flex h-[170px] w-full">
+        <div className="flex flex-row gap-4 w-96 py-2">
+          <div className="w-24 h-24 shrink-0 relative rounded-lg overflow-hidden shadow-md bg-gray-100">
+            <Link href={`/dashboard/magazine/${magazine.slug}`}>
               <Image
-                className="rounded-lg object-scale-down bg-gray-200"
-                src={`https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine.image?.name}`}
+                className="object-cover"
+                src={imgSrc}
                 alt={magazine.name}
                 loading="lazy"
                 fill
@@ -62,17 +64,19 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
               />
             </Link>
           </div>
-          <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
+          <div className="flex-1 min-w-0">
             <Link
               href={`/dashboard/magazine/${magazine.slug}`}
-              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{magazine.name}</h4>
+              className="text-orange-600 font-semibold text-sm hover:text-orange-700 hover:underline transition-colors line-clamp-1 block mb-0.5">
+              {magazine.name}
             </Link>
-            <p className="text-gray-600 text-xs">
-              {strLimit(extractText(magazine.about ?? '') || '', 150)}
-            </p>
-            <p className="text-gray-600 text-xs">
-              Demografia : {magazine.type?.name}
+            {magazine.type?.name ? (
+              <span className="inline-block text-xs font-medium text-teal-700 bg-teal-50 px-2 py-0.5 rounded mb-1 w-fit">
+                {magazine.type.name}
+              </span>
+            ) : null}
+            <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
+              {strLimit(extractText(magazine.about ?? '') || '', 100)}
             </p>
           </div>
         </div>
@@ -83,11 +87,15 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
   },
   {
     accessorKey: 'release',
-    header: 'Tiempo de Publicación',
+    header: 'Publicación',
     cell: ({ row }) => {
+      const name = row.original.release?.name;
+      if (!name) return <div className="w-40">—</div>;
       return (
-        <div className="w-60 flex justify-center items-center text-sm">
-          {row.original.release?.name}
+        <div className="w-40">
+          <span className="inline-flex items-center px-3 py-1.5 text-xs font-semibold text-teal-700 bg-teal-50 rounded-full shadow-sm hover:bg-teal-100 transition-colors">
+            {name}
+          </span>
         </div>
       );
     },
@@ -95,13 +103,17 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
   },
   {
     accessorKey: 'country',
-    header: 'Ciudad/Pais',
+    header: 'País',
     cell: ({ row }) => {
       const country = row.original.country;
-      const name = JSON.parse(country?.translations || '{}');
+      if (!country) return <div className="w-40">—</div>;
+      const name = JSON.parse(country.translations || '{}');
+      const label = `${country.emoji || ''} ${name['es'] || ''}`.trim();
       return (
-        <div className="w-40 flex flex-row gap-2 text-sm">
-          <span>{`${country?.emoji} ${name['es'] || ''}`}</span>
+        <div className="w-40">
+          <span className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition-colors">
+            {label || '—'}
+          </span>
         </div>
       );
     },
@@ -121,11 +133,14 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
     },
     cell: ({ row }) => {
       const magazine = row.original;
+      const d = magazine.createdAt || magazine.updatedAt;
+      if (!d) return <div className="w-40">—</div>;
       return (
-        <div className="w-40 flex">
-          {magazine.createdAt
-            ? dayjs(magazine.createdAt).format('DD/MM/YYYY HH:mm a')
-            : dayjs(magazine.updatedAt).format('DD/MM/YYYY HH:mm a')}
+        <div className="w-40 flex flex-col gap-0.5">
+          <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
+            {dayjs(d).format('DD/MM/YYYY')}
+          </span>
+          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
         </div>
       );
     },

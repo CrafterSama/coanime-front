@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useMediaDetail, useUpdateMedia } from '@/hooks/media';
-import Loading from '@/components/ui/Loading';
+import { Skeleton } from '@/components/ui/skeleton';
 import { DEFAULT_IMAGE } from '@/constants/common';
 
 interface EditMediaModalProps {
@@ -98,8 +98,8 @@ export const EditMediaModal = ({
     }
   };
 
-  const imageUrl = preview || media?.thumb_url || media?.url || DEFAULT_IMAGE;
-  const isPlaceholder = media?.is_placeholder;
+  const imageUrl = preview || media?.thumbUrl || media?.url || DEFAULT_IMAGE;
+  const isPlaceholder = media?.isPlaceholder;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -111,7 +111,17 @@ export const EditMediaModal = ({
         </DialogHeader>
 
         {isLoading ? (
-          <Loading />
+          <div className="space-y-6">
+            <Skeleton className="h-64 w-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          </div>
         ) : !media ? (
           <div className="text-center py-8 text-gray-500">
             No se pudo cargar la información del media
@@ -119,7 +129,7 @@ export const EditMediaModal = ({
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             {/* Información del modelo */}
-            {media.model_type && (
+            {media.modelType && (
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-gray-700 mb-2">
                   Información del Modelo
@@ -127,19 +137,19 @@ export const EditMediaModal = ({
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
                     <span className="text-gray-500">Tipo:</span>{' '}
-                    <span className="font-medium">{media.model_type}</span>
+                    <span className="font-medium">{media.modelType}</span>
                   </div>
-                  {media.model_title && (
+                  {media.modelTitle && (
                     <div>
                       <span className="text-gray-500">Título:</span>{' '}
-                      <span className="font-medium">{media.model_title}</span>
+                      <span className="font-medium">{media.modelTitle}</span>
                     </div>
                   )}
-                  {media.collection_name && (
+                  {media.collectionName && (
                     <div>
                       <span className="text-gray-500">Colección:</span>{' '}
                       <span className="font-medium">
-                        {media.collection_name}
+                        {media.collectionName}
                       </span>
                     </div>
                   )}
@@ -160,9 +170,9 @@ export const EditMediaModal = ({
                       El archivo original no está disponible. Puedes reemplazarlo
                       subiendo una nueva imagen.
                     </p>
-                    {media.original_url && (
+                    {media.originalUrl && (
                       <p className="text-xs text-yellow-600 mt-2">
-                        URL original: {media.original_url}
+                        URL original: {media.originalUrl}
                       </p>
                     )}
                   </div>
@@ -173,7 +183,7 @@ export const EditMediaModal = ({
             {/* Vista previa de la imagen */}
             <div>
               <Label>Vista Previa</Label>
-              <div className="mt-2 relative w-full h-64 rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+              <div className="mt-2 relative w-full h-64 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
                 <Image
                   src={imageUrl}
                   alt={media.name || 'Media preview'}
@@ -217,7 +227,7 @@ export const EditMediaModal = ({
                   <label
                     htmlFor="file"
                     className="flex-1 cursor-pointer">
-                    <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-400 hover:bg-orange-50 transition-colors">
+                    <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-100 rounded-lg hover:border-orange-400 hover:bg-orange-50 transition-colors">
                       <div className="text-center">
                         <PhotoIcon className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                         <p className="text-sm text-gray-600">
@@ -264,11 +274,11 @@ export const EditMediaModal = ({
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <span className="text-gray-500">Archivo:</span>{' '}
-                  <span className="font-medium">{media.file_name}</span>
+                  <span className="font-medium">{media.fileName}</span>
                 </div>
                 <div>
                   <span className="text-gray-500">Tipo:</span>{' '}
-                  <span className="font-medium">{media.mime_type}</span>
+                  <span className="font-medium">{media.mimeType}</span>
                 </div>
                 {media.size > 0 && (
                   <div>

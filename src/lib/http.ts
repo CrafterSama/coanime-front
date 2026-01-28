@@ -1,9 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
-import snakecaseKeys from 'snakecase-keys';
 import { signOut } from 'next-auth/react';
 
 import { LOGIN_ROUTE } from '@/constants/common';
+import { keysToSnakeCase } from '@/utils/string';
 import { requireEnv } from './env';
 
 export const HTTP_METHODS = {
@@ -36,9 +36,18 @@ const getInstance = (config?: AxiosRequestConfig) => {
         return;
       }
 
-      return snakecaseKeys(data, {
-        exclude: ['_destroy'],
-      });
+      // No transformar FormData, ya que destruye la estructura
+      if (typeof FormData !== 'undefined' && data instanceof FormData) {
+        return data;
+      }
+
+      const snakedData = keysToSnakeCase(data);
+      
+      // Debug: log transformed data (always show)
+      console.log('[HTTP Client] Original data:', data);
+      console.log('[HTTP Client] Transformed data:', snakedData);
+      
+      return snakedData;
     },
     ...(Array.isArray(axios.defaults.transformRequest)
       ? axios.defaults.transformRequest

@@ -57,13 +57,13 @@ export const authOptions = {
           for (const endpoint of possibleEndpoints) {
             const fullUrl = `${serverApiUrl}${endpoint}`;
 
-            if (process.env.NODE_ENV === 'development') {
-              // eslint-disable-next-line no-console
-              console.log('[NextAuth] Intentando login con JWT a Laravel:', {
-                url: fullUrl,
-                endpoint,
-              });
-            }
+            // Debug disabled
+            // if (process.env.NODE_ENV === 'development') {
+            //   console.log('[NextAuth] Intentando login con JWT a Laravel:', {
+            //     url: fullUrl,
+            //     endpoint,
+            //   });
+            // }
 
             try {
               res = await fetch(fullUrl, {
@@ -82,15 +82,7 @@ export const authOptions = {
 
               // Si la respuesta es exitosa (200-299), usar este endpoint
               if (res.ok && data?.access_token) {
-                if (process.env.NODE_ENV === 'development') {
-                  // eslint-disable-next-line no-console
-                  console.log('[NextAuth] Endpoint exitoso:', {
-                    endpoint,
-                    status: res.status,
-                    hasToken: !!data?.access_token,
-                    hasUser: !!data?.user,
-                  });
-                }
+                // Debug disabled
                 break; // Salir del loop si encontramos un endpoint que funciona
               }
 
@@ -101,13 +93,7 @@ export const authOptions = {
             } catch (error: any) {
               // Si es un error de red o 404, continuar con el siguiente endpoint
               if (error?.message?.includes('fetch') || res?.status === 404) {
-                if (process.env.NODE_ENV === 'development') {
-                  // eslint-disable-next-line no-console
-                  console.log('[NextAuth] Endpoint no disponible:', {
-                    endpoint,
-                    error: error?.message,
-                  });
-                }
+                // Debug disabled
                 continue;
               }
               // Para otros errores, guardar y continuar
@@ -117,28 +103,11 @@ export const authOptions = {
 
           // Si no encontramos ningún endpoint que funcione
           if (!res || !res.ok || !data?.access_token || !data?.user) {
-            if (process.env.NODE_ENV === 'development') {
-              // eslint-disable-next-line no-console
-              console.error('[NextAuth] Todos los endpoints fallaron:', {
-                lastError,
-                triedEndpoints: possibleEndpoints,
-                hasRes: !!res,
-                resOk: res?.ok,
-                hasToken: !!data?.access_token,
-                hasUser: !!data?.user,
-              });
-            }
+            // Debug disabled
             return null;
           }
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log('[NextAuth] Respuesta de Laravel login exitosa:', {
-              status: res.status,
-              hasToken: !!data?.access_token,
-              hasUser: !!data?.user,
-            });
-          }
+          // Debug disabled
 
           // Verificar que la respuesta tenga el token y el usuario
           if (data?.access_token && data?.user) {
@@ -155,41 +124,19 @@ export const authOptions = {
               access_token: data.access_token, // Guardar el token JWT
             };
 
-            if (process.env.NODE_ENV === 'development') {
-              // eslint-disable-next-line no-console
-              console.log('[NextAuth] Usuario retornado:', {
-                id: user.id,
-                email: user.email,
-                hasAccessToken: !!user.access_token,
-              });
-            }
+            // Debug disabled
 
             // Retornar el usuario (será guardado en el JWT)
             return user as User & { access_token?: string };
           }
 
           // Si no hay token o usuario, el login falló
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.error(
-              '[NextAuth] Login falló: respuesta no contiene token o usuario',
-              {
-                hasToken: !!data?.access_token,
-                hasUser: !!data?.user,
-              }
-            );
-          }
+          // Debug disabled
 
           return null;
         } catch (error: any) {
           // Log error in development
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.error('[NextAuth] Authorize error:', {
-              message: error?.message,
-              error,
-            });
-          }
+          // Debug disabled
           return null;
         }
       },
@@ -200,16 +147,7 @@ export const authOptions = {
     async jwt({ token, user }: any) {
       // Si hay un usuario (primera vez que se llama), guardar todos sus datos en el token
       if (user) {
-        if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
-          console.log('[NextAuth] JWT callback - Usuario recibido:', {
-            hasUser: !!user,
-            userId: user?.id,
-            userEmail: user?.email,
-            hasAccessToken: !!user?.access_token,
-            userKeys: Object.keys(user || {}),
-          });
-        }
+        // Debug disabled
 
         // Guardar access_token en token.accessToken para que esté disponible en la sesión
         token.accessToken = user.access_token;
@@ -230,31 +168,13 @@ export const authOptions = {
           }
         });
 
-        if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
-          console.log('[NextAuth] JWT callback - Token actualizado:', {
-            hasAccessToken: !!token.accessToken,
-            hasId: !!token.id,
-            hasEmail: !!token.email,
-            tokenKeys: Object.keys(token),
-          });
-        }
+        // Debug disabled
       }
       return token;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, token }: any) {
-      // Log siempre para ver si se ejecuta
-      // eslint-disable-next-line no-console
-      console.log('[NextAuth] Session callback EJECUTADO:', {
-        hasToken: !!token,
-        tokenId: token?.id,
-        tokenEmail: token?.email,
-        hasAccessToken: !!token?.accessToken,
-        tokenKeys: Object.keys(token || {}),
-        hasSession: !!session,
-        sessionUser: session?.user,
-      });
+      // Debug disabled
 
       // Asegurar que session.user tenga la estructura correcta
       if (token?.id) {
@@ -287,10 +207,7 @@ export const authOptions = {
           }, {}),
         };
       } else {
-        // eslint-disable-next-line no-console
-        console.warn('[NextAuth] Session callback - Token no tiene id:', {
-          token,
-        });
+        // Debug disabled
       }
 
       // Asegurar que accessToken esté disponible directamente en la sesión
@@ -298,15 +215,7 @@ export const authOptions = {
         session.accessToken = token.accessToken;
       }
 
-      // eslint-disable-next-line no-console
-      console.log('[NextAuth] Session callback - Sesión FINAL:', {
-        hasUser: !!session.user,
-        userId: session.user?.id,
-        userEmail: session.user?.email,
-        hasAccessToken: !!session.accessToken,
-        sessionKeys: Object.keys(session),
-        fullSession: JSON.stringify(session, null, 2),
-      });
+      // Debug disabled
 
       return session;
     },

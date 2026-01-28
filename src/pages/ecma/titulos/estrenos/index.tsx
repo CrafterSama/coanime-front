@@ -63,12 +63,12 @@ const Titles = ({ titlesData }: TitlesProps) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={!data}>
+        <Show when={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={series}>
+        <Show when={series}>
           <Section withContainer>
             <SeriesList series={series?.data} />
             <Paginator page={page} setPage={setPage} data={series} />

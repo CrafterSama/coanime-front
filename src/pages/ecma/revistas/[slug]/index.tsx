@@ -28,12 +28,12 @@ const Magazine = ({ magazineData }: MagazineProps) => {
         </Head>
       )}
       <WebLayout>
-        <Show condition={!magazineData}>
+        <Show when={!magazineData}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={magazineData}>
+        <Show when={magazineData}>
           <div id="title">
             <Section>
               <div className="title-header">

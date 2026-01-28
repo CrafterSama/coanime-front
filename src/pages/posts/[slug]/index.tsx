@@ -16,7 +16,7 @@ import PostHeader from '@/components/modules/posts/components/PostHeader';
 import Relateds from '@/components/modules/posts/components/Relateds';
 import Tags from '@/components/modules/posts/components/Tags';
 import TitleRelated from '@/components/modules/posts/components/TitleRelated';
-import Loading from '@/components/ui/Loading';
+import { ArticleSkeleton } from '@/components/ui/article-skeleton';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { Show } from '@/components/ui/Show';
@@ -76,11 +76,7 @@ const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
 
   return (
     <WebLayout>
-      {fetching && (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
-          <Loading size={16} />
-        </div>
-      )}
+      {fetching && <ArticleSkeleton />}
       {post && (
         <>
           <Head>
@@ -180,7 +176,7 @@ const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
                   </div>
                 </Section>
                 <Section withContainer id="features">
-                  <Show condition={post}>
+                  <Show when={post}>
                     <SectionTitle
                       title=""
                       subtitle="¿nos dejas un comentario?"

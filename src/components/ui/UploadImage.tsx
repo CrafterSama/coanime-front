@@ -1,26 +1,30 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
 import { useFormContext } from 'react-hook-form';
-import { CgSpinner } from 'react-icons/cg';
 import toast from 'react-hot-toast';
+import { CgSpinner } from 'react-icons/cg';
 
 import { CloudUploadIcon } from '@/components/icons';
-import { uploadImages } from '@/hooks/images';
 import { Label } from '@/components/ui/label';
+import { uploadImages } from '@/hooks/images';
 
 import { Show } from './Show';
 
 const UploadImage = ({
   disabled = false,
+  modelId,
   name,
   model,
+  onUploadSuccess,
 }: {
   disabled?: boolean;
+  modelId?: number | string | null;
   name: string;
   model: string;
+  onUploadSuccess?: () => void;
 }) => {
-  const { register, watch, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const [newImage, setNewImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -34,11 +38,14 @@ const UploadImage = ({
       return;
     }
     try {
-      const response = await uploadImages(images, model);
+      const payload =
+        modelId != null && modelId !== '' ? { model, modelId } : model;
+      const response = await uploadImages(images, payload);
       if (response.status === 200) {
         setValue(name, response?.data?.url);
         setNewImage(true);
         toast.success(response?.data?.message?.text);
+        onUploadSuccess?.();
         return;
       }
     } catch (error: any) {
@@ -59,10 +66,14 @@ const UploadImage = ({
     }
   };
 
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <>
-      <label
-        htmlFor={name}
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        disabled={disabled}
         className={`w-full max-w-md bg-orange-50 hover:bg-orange-100 mx-auto rounded-md px-4 py-2 flex flex-row justify-center content-center gap-2 text-orange-400 select-none shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] transition-shadow ${
           !disabled
             ? 'opacity-100 cursor-pointer'
@@ -78,18 +89,18 @@ const UploadImage = ({
             </span>
           </>
         )}
+      </button>
 
-        <input
-          {...register(name)}
-          className="hidden"
-          type="file"
-          id={name}
-          name={name}
-          disabled={disabled}
-          onChange={uploadPostImages}
-        />
-      </label>
-      <Show condition={newImage}>
+      <input
+        ref={fileInputRef}
+        className="hidden"
+        type="file"
+        id={name}
+        name={name}
+        disabled={disabled}
+        onChange={uploadPostImages}
+      />
+      <Show when={newImage}>
         <Label htmlFor="image">Nueva Imagen</Label>
         <div className="relative w-full h-[280px]">
           <Image

@@ -1,25 +1,16 @@
 import { FC } from 'react';
 
-import {
-  A11y,
-  EffectFade,
-  Navigation,
-  Pagination,
-  Thumbs,
-  Virtual,
-} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
 import SerieCard from '@/components/modules/titles/components/SerieCard';
-import Loading from '@/components/ui/Loading';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { CarouselSkeleton } from '@/components/ui/carousel-skeleton';
 import { getBroadcastToday } from '@/services/home';
 import { useQuery } from '@tanstack/react-query';
 
-type BroadcastTodayProps = {
+type SeriesSoonProps = {
   broadcastData?: any;
 };
 
-const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
+const SeriesSoon: FC<SeriesSoonProps> = ({ broadcastData }) => {
   const { data: today, isLoading } = useQuery(['posts'], getBroadcastToday, {
     initialData: broadcastData,
   });
@@ -29,51 +20,14 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
 
   return (
     <>
-      {isLoading && (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
-          <Loading size={16} />
-        </div>
-      )}
+      {isLoading && <CarouselSkeleton items={6} />}
       {series.length > 0 && (
         <div className="broadcast-today px-4 xl:px-0">
-          <Swiper
-            modules={[
-              EffectFade,
-              Navigation,
-              Pagination,
-              A11y,
-              Thumbs,
-              Virtual,
-            ]}
-            loop={true}
-            autoplay={{
-              delay: 1000,
-            }}
-            navigation={true}
-            breakpoints={{
-              300: {
-                slidesPerView: 2,
-                spaceBetween: 5,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 5,
-              },
-              768: {
-                slidesPerView: 4,
-                spaceBetween: 16,
-              },
-              1024: {
-                slidesPerView: 6,
-                spaceBetween: 16,
-              },
-            }}>
-            {series?.map((serie: any, index: number) => (
-              <SwiperSlide key={index} virtualIndex={index}>
-                <SerieCard serie={serie} />
-              </SwiperSlide>
+          <HorizontalCarousel gap={16}>
+            {series.map((serie: any, index: number) => (
+              <SerieCard key={serie.id ?? index} serie={serie} />
             ))}
-          </Swiper>
+          </HorizontalCarousel>
         </div>
       )}
     </>
@@ -82,10 +36,7 @@ const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcastData }) => {
 
 export async function getServerSideProps() {
   const response = await getBroadcastToday();
-
-  const broadcastData = response;
-
-  return { props: { broadcastData } };
+  return { props: { broadcastData: response } };
 }
 
-export default BroadcastToday;
+export default SeriesSoon;

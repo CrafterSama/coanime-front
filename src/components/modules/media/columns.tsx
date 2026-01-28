@@ -31,7 +31,7 @@ export const createMediaColumns = (
     },
     cell: ({ row }) => {
       const media = row.original;
-      const imageUrl = media.thumb_url || media.url || DEFAULT_IMAGE;
+      const imageUrl = media.thumbUrl || media.url || DEFAULT_IMAGE;
       
       return (
         <div className="flex flex-row gap-4 w-96 py-2">
@@ -44,7 +44,7 @@ export const createMediaColumns = (
               fill
               unoptimized
             />
-            {media.is_placeholder && (
+            {media.isPlaceholder && (
               <div className="absolute inset-0 bg-yellow-500/20 flex items-center justify-center">
                 <PhotoIcon className="h-6 w-6 text-yellow-600" />
               </div>
@@ -66,9 +66,9 @@ export const createMediaColumns = (
               </button>
             </div>
             <p className="text-gray-600 text-xs line-clamp-1">
-              {media.file_name}
+              {media.fileName}
             </p>
-            {media.is_placeholder && (
+            {media.isPlaceholder && (
               <Badge variant="outline" className="mt-1 text-xs bg-yellow-50 text-yellow-700 border-yellow-300">
                 Placeholder
               </Badge>
@@ -81,11 +81,11 @@ export const createMediaColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: 'model_type',
+    accessorKey: 'modelType',
     header: 'Modelo',
     cell: ({ row }) => {
       const media = row.original;
-      if (!media.model_type || !media.model_id) {
+      if (!media.modelType || !media.modelId) {
         return <span className="text-gray-400 text-sm">N/A</span>;
       }
 
@@ -96,20 +96,20 @@ export const createMediaColumns = (
         Magazine: '/dashboard/magazine',
       };
 
-      const route = modelRoutes[media.model_type];
-      const href = route && media.model_id ? `${route}/${media.model_id}` : '#';
+      const route = modelRoutes[media.modelType];
+      const href = route && media.modelId ? `${route}/${media.modelId}` : '#';
 
       return (
         <div className="w-32">
           <div className="flex flex-col gap-1">
             <Badge variant="outline" className="text-xs w-fit">
-              {media.model_type}
+              {media.modelType}
             </Badge>
-            {media.model_title && (
+            {media.modelTitle && (
               <Link
                 href={href}
                 className="text-xs text-orange-600 hover:text-orange-700 hover:underline transition-colors line-clamp-1">
-                {strLimit(media.model_title, 30)}
+                {strLimit(media.modelTitle, 30)}
               </Link>
             )}
           </div>
@@ -119,7 +119,7 @@ export const createMediaColumns = (
     enableSorting: false,
   },
   {
-    accessorKey: 'collection_name',
+    accessorKey: 'collectionName',
     header: ({ column }) => {
       return (
         <Button
@@ -131,8 +131,8 @@ export const createMediaColumns = (
       );
     },
     cell: ({ row }) => {
-      const collection = row.original.collection_name;
-      if (!collection || collection === 'default') {
+      const collection = row.original.collectionName;
+      if (!collection) {
         return (
           <div className="w-32">
             <span className="text-gray-400 text-sm">-</span>
@@ -173,7 +173,7 @@ export const createMediaColumns = (
     enableSorting: true,
   },
   {
-    accessorKey: 'created_at',
+    accessorKey: 'createdAt',
     header: ({ column }) => {
       return (
         <Button
@@ -185,7 +185,7 @@ export const createMediaColumns = (
       );
     },
     cell: ({ row }) => {
-      const date = row.original.created_at;
+      const date = row.original.createdAt;
       return (
         <div className="w-32 text-sm text-gray-600">
           {date ? dayjs(date).format('DD/MM/YYYY') : 'N/A'}

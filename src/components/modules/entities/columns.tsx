@@ -41,34 +41,31 @@ export const createCompanyColumns = (): ColumnDef<Company>[] => [
     },
     cell: ({ row }) => {
       const company = row.original;
+      const imgSrc = company.image?.name
+        ? `https://api.coanime.net/storage/images/encyclopedia/companies/${company.image.name}`
+        : DEFAULT_IMAGE;
       return (
-        <div className="flex flex-row gap-2 w-96">
-          <div className="w-4/12 h-46">
-            <Link
-              href={`/dashboard/companies/${company.id}`}
-              className="relative flex h-[170px] w-full">
+        <div className="flex flex-row gap-4 w-96 py-2">
+          <div className="w-24 h-24 shrink-0 relative rounded-lg overflow-hidden shadow-md">
+            <Link href={`/dashboard/companies/${company.id}`}>
               <Image
-                unoptimized
-                className="rounded-lg object-scale-down bg-gray-200"
-                src={
-                  company.image?.name
-                    ? `https://api.coanime.net/storage/images/encyclopedia/companies/${company.image.name}`
-                    : DEFAULT_IMAGE
-                }
+                className="object-cover"
+                src={imgSrc}
                 alt={company.name}
                 loading="lazy"
                 fill
+                unoptimized
               />
             </Link>
           </div>
-          <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
+          <div className="flex-1 min-w-0">
             <Link
               href={`/dashboard/companies/${company.slug}`}
-              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{company.name}</h4>
+              className="text-orange-600 font-semibold text-sm hover:text-orange-700 hover:underline transition-colors line-clamp-1 block mb-1">
+              {company.name}
             </Link>
-            <p className="text-gray-600 text-xs">
-              {strLimit(extractText(company.about ?? '') || '', 150)}
+            <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
+              {strLimit(extractText(company.about ?? '') || '', 100)}
             </p>
           </div>
         </div>
@@ -79,13 +76,17 @@ export const createCompanyColumns = (): ColumnDef<Company>[] => [
   },
   {
     accessorKey: 'country',
-    header: 'Ciudad/Pais',
+    header: 'País',
     cell: ({ row }) => {
       const country = row.original.country;
-      const name = JSON.parse(country?.translations || '{}');
+      if (!country) return <div className="w-40">—</div>;
+      const name = JSON.parse(country.translations || '{}');
+      const label = `${country.emoji || ''} ${name['es'] || ''}`.trim();
       return (
-        <div className="w-40 flex flex-row gap-2 text-sm">
-          <span>{`${country?.emoji} ${name['es'] || ''}`}</span>
+        <div className="w-40">
+          <span className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition-colors">
+            {label || '—'}
+          </span>
         </div>
       );
     },
@@ -105,11 +106,14 @@ export const createCompanyColumns = (): ColumnDef<Company>[] => [
     },
     cell: ({ row }) => {
       const company = row.original;
+      const d = company.createdAt || company.updatedAt;
+      if (!d) return <div className="w-40">—</div>;
       return (
-        <div className="w-40 flex">
-          {company.createdAt
-            ? dayjs(company.createdAt).format('DD/MM/YYYY HH:mm a')
-            : dayjs(company.updatedAt).format('DD/MM/YYYY HH:mm a')}
+        <div className="w-40 flex flex-col gap-0.5">
+          <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
+            {dayjs(d).format('DD/MM/YYYY')}
+          </span>
+          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
         </div>
       );
     },

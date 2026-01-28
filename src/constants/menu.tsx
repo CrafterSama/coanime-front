@@ -7,6 +7,10 @@ import {
   PhotographIcon,
   UsersIcon,
 } from '@/components/icons';
+import {
+  ClipboardDocumentListIcon,
+  PhotoIcon,
+} from '@heroicons/react/24/outline';
 
 export const menu = [
   {
@@ -50,5 +54,17 @@ export const menu = [
     breadcrumb: 'events',
     icon: <LocationMarkerIcon className="w-6 h-6 fill-current text-gray-600" />,
     text: 'Events',
+  },
+  {
+    href: '/dashboard/media',
+    breadcrumb: 'media',
+    icon: <PhotoIcon className="w-6 h-6 text-gray-600" />,
+    text: 'Media',
+  },
+  {
+    href: '/dashboard/logs',
+    breadcrumb: 'logs',
+    icon: <ClipboardDocumentListIcon className="w-6 h-6 text-gray-600" />,
+    text: 'Logs',
   },
 ];
