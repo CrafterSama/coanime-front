@@ -45,29 +45,27 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
     cell: ({ row }) => {
       const event = row.original;
       return (
-        <div className="flex flex-row gap-2 w-96">
-          <div className="w-4/12 h-46">
-            <Link
-              href={`/dashboard/events/${event.slug}`}
-              className="relative flex h-[130px] w-full">
+        <div className="flex flex-row gap-4 w-96 py-2">
+          <div className="w-24 h-24 shrink-0 relative rounded-lg overflow-hidden shadow-md bg-gray-100">
+            <Link href={`/dashboard/events/${event.slug}`}>
               <Image
-                unoptimized
-                className="rounded-lg object-scale-down"
+                className="object-cover"
                 src={`https://coanime.net/images/events/${event.image}`}
                 alt={event.name}
                 loading="lazy"
                 fill
+                unoptimized
               />
             </Link>
           </div>
-          <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
+          <div className="flex-1 min-w-0">
             <Link
               href={`/dashboard/events/${event.slug}`}
-              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{event.name}</h4>
+              className="text-orange-600 font-semibold text-sm hover:text-orange-700 hover:underline transition-colors line-clamp-1 block mb-1">
+              {event.name}
             </Link>
-            <p className="text-gray-600 text-xs">
-              {strLimit(extractText(event.description ?? '') || '', 150)}
+            <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
+              {strLimit(extractText(event.description ?? '') || '', 100)}
             </p>
           </div>
         </div>
@@ -78,16 +76,22 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
   },
   {
     accessorKey: 'country',
-    header: 'Ciudad/Pais',
+    header: 'Ubicación',
     cell: ({ row }) => {
       const event = row.original;
+      if (!event.country && !event.address) return <div className="w-40">—</div>;
       const name = JSON.parse(event.country?.translations || '{}');
+      const location = [
+        event.address,
+        [event.country?.emoji, event.city?.name, name['es']].filter(Boolean).join(' '),
+      ]
+        .filter(Boolean)
+        .join(' · ');
       return (
-        <div className="w-40 flex flex-col gap-2 text-sm">
-          <span>{event.address}</span>
-          <span>{`${event.country?.emoji} ${event.city?.name}, ${
-            name['es'] || ''
-          }`}</span>
+        <div className="w-40">
+          <span className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition-colors line-clamp-2">
+            {location || '—'}
+          </span>
         </div>
       );
     },
@@ -100,7 +104,7 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Inicio/Termino
+          Inicio / Fin
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -108,10 +112,13 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
     cell: ({ row }) => {
       const event = row.original;
       return (
-        <div className="w-40 flex">
-          {`${dayjs(event.dateStart).format('DD/MM/YYYY HH:mm a')} al ${dayjs(
-            event.dateEnd
-          ).format('DD/MM/YYYY HH:mm a')}`}
+        <div className="w-40 flex flex-col gap-0.5">
+          <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
+            {dayjs(event.dateStart).format('DD/MM/YYYY')}
+          </span>
+          <span className="text-xs text-gray-500">
+            {dayjs(event.dateStart).format('HH:mm')} – {dayjs(event.dateEnd).format('HH:mm')}
+          </span>
         </div>
       );
     },
@@ -131,11 +138,14 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
     },
     cell: ({ row }) => {
       const event = row.original;
+      const d = event.createdAt || event.updatedAt;
+      if (!d) return <div className="w-40">—</div>;
       return (
-        <div className="w-40 flex">
-          {event.createdAt
-            ? dayjs(event.createdAt).format('DD/MM/YYYY HH:mm a')
-            : dayjs(event.updatedAt).format('DD/MM/YYYY HH:mm a')}
+        <div className="w-40 flex flex-col gap-0.5">
+          <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
+            {dayjs(d).format('DD/MM/YYYY')}
+          </span>
+          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
         </div>
       );
     },

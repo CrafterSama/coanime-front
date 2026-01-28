@@ -1,67 +1,29 @@
-import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import Image from 'next/image';
-import Link from 'next/link';
 
-import { DEFAULT_IMAGE } from '@/constants/common';
-import { ClockIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-
-import React from 'react';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import { Plus } from 'lucide-react';
+import { ArticleCard } from './article-card';
 
 const RecentPosts = ({ posts }: { posts?: any[] }) => (
-  <div className="recent-posts px-4 xl:px-0">
-    {posts?.map((post: any) => (
-      <div key={post.id} className="box">
-        <div className="box__item">
-          <figure className="item__image">
-            <Image
-              src={post.image ?? DEFAULT_IMAGE}
-              alt={`${post.title} - Coanime.net`}
-              className="object-cover object-center"
-              fill
-              quality={90}
-              unoptimized
-            />
-          </figure>
-          <div className="overlayer"></div>
-          <div className="item__info text-shadow bottom-attach flex flex-col gap-2">
-            <div className="categories">
-              <Link href={`/categorias/${post?.categories?.slug}`}>
-                {post?.categories?.name}
-              </Link>
-            </div>
-            <h2 className="info__news-title">
-              <Link href={`/posts/[slug]`} as={`/posts/${post?.slug}`}>
-                {post?.title}
-              </Link>
-            </h2>
-            <h4 className=" ">{post?.excerpt}</h4>
-            <p className="flex flex-row gap-4">
-              <span className="flex flex-row gap-2">
-                <UserCircleIcon className="w-6 h-6" />
-                <Link
-                  href={`/users/[slug]`}
-                  as={`/users/${post?.users?.slug}`}
-                  className="text-gray-300">
-                  {post?.users?.name}
-                </Link>
-              </span>
-              <span className="flex flex-row gap-2">
-                <ClockIcon className="w-6 h-6" />
-                <span className="text-gray-300">
-                  {dayjs(
-                    post?.postponedTo ? post?.postponedTo : post?.createdAt
-                  )
-                    .locale('es')
-                    .format('D MMMM, YYYY')}
-                </span>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
+  <Section withContainer>
+    <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {posts?.map((post: any, index: number) => (
+        <ArticleCard
+          key={Number(post?.id)}
+          post={post}
+          size={index === 0 ? 'large' : 'medium'}
+        />
+      ))}
+    </div>
+    <div className="w-full flex justify-end items-center mt-2 px-4">
+      <a className="flex flex-row items-center text-orange-500" href="#news">
+        <Plus className="w-6 h-6 text-orange-400" />
+        Mas Noticias
+      </a>
+    </div>
+  </Section>
 );
 
 export default RecentPosts;

@@ -64,12 +64,12 @@ const Titles = ({ titlesData }: TitlesProps) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={!data}>
+        <Show when={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={series}>
+        <Show when={series}>
           <Section withContainer>
             <div className="flex flex-row gap-4 justify-center">
               {tabs.map((item) => {
@@ -91,10 +91,10 @@ const Titles = ({ titlesData }: TitlesProps) => {
                 );
               })}
             </div>
-            <Show condition={activeTab === 'types'}>
+            <Show when={activeTab === 'types'}>
               <CloudLinks allLink="/ecma/titulos" links={types} />
             </Show>
-            <Show condition={activeTab === 'genres'}>
+            <Show when={activeTab === 'genres'}>
               <CloudLinks allLink="/ecma/generos" links={genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[90vh]">

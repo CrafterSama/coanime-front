@@ -16,6 +16,10 @@ import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
+  DataTablePaginationSkeleton,
+  DataTableRowsSkeleton,
+} from '@/components/ui/data-table-skeleton';
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -29,6 +33,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchKey?: string;
   searchPlaceholder?: string;
+  // Loading state
+  isLoading?: boolean;
   // Server-side pagination
   pagination?: {
     pageIndex: number;
@@ -53,6 +59,7 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   searchPlaceholder = 'Buscar...',
+  isLoading = false,
   pagination,
   onSortingChange,
   onSearchChange,
@@ -235,11 +242,11 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Tabla */}
-      <div className="rounded-md bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] overflow-hidden">
-        <div className="max-h-[31.25rem] overflow-auto">
+      <div className="rounded-md bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] overflow-hidden border border-gray-100">
+        <div className="max-h-141 overflow-auto">
           <div className="relative">
             <table className="w-full caption-bottom text-sm">
-              <thead className="sticky top-0 z-20 bg-gray-50 [&_tr]:shadow-sm">
+              <thead className="sticky top-0 z-20 bg-gray-50 [&_tr]:shadow-sm [&_tr]:border-b [&_tr]:border-gray-100">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id} className="hover:bg-transparent">
                     {headerGroup.headers.map((header) => {
@@ -259,8 +266,10 @@ export function DataTable<TData, TValue>({
                   </tr>
                 ))}
               </thead>
-              <tbody className="[&_tr:last-child]:border-0">
-                {table.getRowModel().rows?.length ? (
+              <tbody className="[&_tr:last-child]:border-0 [&_tr]:border-b [&_tr]:border-gray-100">
+                {isLoading ? (
+                  <DataTableRowsSkeleton rows={10} columns={columns.length} />
+                ) : table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <tr
                       key={row.id}
@@ -279,7 +288,7 @@ export function DataTable<TData, TValue>({
                     </tr>
                   ))
                 ) : (
-                  <tr className="hover:bg-transparent transition-colors hover:bg-orange-50/50 shadow-sm">
+                  <tr className="transition-colors hover:bg-orange-50/50 shadow-sm">
                     <td
                       colSpan={columns.length}
                       className="h-32 text-center p-4 align-middle">
@@ -301,84 +310,88 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Paginación */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
-        <div className="text-sm text-gray-600 font-medium">
-          {isServerSidePagination ? (
-            <>
-              Mostrando{' '}
-              <span className="text-gray-900 font-semibold">
-                {pagination?.total ?? 0}
-              </span>{' '}
-              resultado(s) en total
-            </>
-          ) : (
-            <>
-              Mostrando{' '}
-              <span className="text-gray-900 font-semibold">
-                {table.getFilteredRowModel().rows.length}
-              </span>{' '}
-              resultado(s) en total
-            </>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              if (isServerSidePagination && pagination) {
-                const newPage = pagination.currentPage - 1;
-                if (newPage >= 1) {
-                  pagination.onPageChange(newPage);
-                }
-              } else {
-                table.previousPage();
-              }
-            }}
-            disabled={
-              isServerSidePagination
-                ? pagination?.currentPage === 1
-                : !table.getCanPreviousPage() ||
-                  table.getState().pagination.pageIndex === 0
-            }
-            className="shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md">
-            Anterior
-          </Button>
-          <div className="px-3 py-1.5 text-sm text-gray-600 bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
-            Página{' '}
-            {isServerSidePagination
-              ? `${pagination?.currentPage ?? 1} de ${
-                  pagination?.lastPage && pagination.lastPage > 0
-                    ? pagination.lastPage
-                    : 1
-                }`
-              : `${(table.getState().pagination?.pageIndex ?? 0) + 1} de ${
-                  table.getPageCount() || 1
-                }`}
+      {isLoading ? (
+        <DataTablePaginationSkeleton />
+      ) : (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] border-t border-gray-100">
+          <div className="text-sm text-gray-600 font-medium">
+            {isServerSidePagination ? (
+              <>
+                Mostrando{' '}
+                <span className="text-gray-900 font-semibold">
+                  {pagination?.total ?? 0}
+                </span>{' '}
+                resultado(s) en total
+              </>
+            ) : (
+              <>
+                Mostrando{' '}
+                <span className="text-gray-900 font-semibold">
+                  {table.getFilteredRowModel().rows.length}
+                </span>{' '}
+                resultado(s) en total
+              </>
+            )}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              if (isServerSidePagination && pagination) {
-                const newPage = pagination.currentPage + 1;
-                if (newPage <= pagination.lastPage) {
-                  pagination.onPageChange(newPage);
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (isServerSidePagination && pagination) {
+                  const newPage = pagination.currentPage - 1;
+                  if (newPage >= 1) {
+                    pagination.onPageChange(newPage);
+                  }
+                } else {
+                  table.previousPage();
                 }
-              } else {
-                table.nextPage();
+              }}
+              disabled={
+                isServerSidePagination
+                  ? pagination?.currentPage === 1
+                  : !table.getCanPreviousPage() ||
+                    table.getState().pagination.pageIndex === 0
               }
-            }}
-            disabled={
-              isServerSidePagination
-                ? pagination?.currentPage === pagination?.lastPage
-                : !table.getCanNextPage()
-            }
-            className="shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md">
-            Siguiente
-          </Button>
+              className="shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md">
+              Anterior
+            </Button>
+            <div className="px-3 py-1.5 text-sm text-gray-600 bg-gray-50 rounded-md shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              Página{' '}
+              {isServerSidePagination
+                ? `${pagination?.currentPage ?? 1} de ${
+                    pagination?.lastPage && pagination.lastPage > 0
+                      ? pagination.lastPage
+                      : 1
+                  }`
+                : `${(table.getState().pagination?.pageIndex ?? 0) + 1} de ${
+                    table.getPageCount() || 1
+                  }`}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (isServerSidePagination && pagination) {
+                  const newPage = pagination.currentPage + 1;
+                  if (newPage <= pagination.lastPage) {
+                    pagination.onPageChange(newPage);
+                  }
+                } else {
+                  table.nextPage();
+                }
+              }}
+              disabled={
+                isServerSidePagination
+                  ? pagination?.currentPage === pagination?.lastPage
+                  : !table.getCanNextPage()
+              }
+              className="shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:bg-orange-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md">
+              Siguiente
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

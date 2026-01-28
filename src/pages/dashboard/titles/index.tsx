@@ -9,7 +9,6 @@ import AppLayout from '@/components/Layouts/AppLayout';
 import { createTitleColumns } from '@/components/modules/titles/columns';
 import { DataTable } from '@/components/ui/data-table';
 import { FilterSelect } from '@/components/ui/filter-select';
-import Loading from '@/components/ui/Loading';
 import { useTitles } from '@/hooks/titles';
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/24/outline';
 
@@ -49,7 +48,7 @@ const Titles = () => {
     ratingId: ratingId ? Number(ratingId) : undefined,
     genreId: genreId ? Number(genreId) : undefined,
   });
-  const { result, title, description, filters } = data;
+  const { result, filters } = data;
   const columns = React.useMemo(() => createTitleColumns(), []);
 
   // Helper para actualizar URL con todos los filtros
@@ -195,42 +194,38 @@ const Titles = () => {
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <title>Coanime.net - Lista de títulos</title>
       </Head>
       <AppLayout>
-        <div className="p-4">
+        <div className="p-4 md:p-6">
           <div className="w-full">
-            {/* Header Section */}
-            <div className="flex flex-row gap-4 justify-between items-center mb-4">
+            {/* Header Section - aligned with posts */}
+            <div className="flex flex-row flex-wrap gap-4 justify-between items-center mb-4">
               <div className="flex flex-row gap-4 items-center">
                 <Link
                   href="/dashboard"
-                  className="bg-gray-200 text-orange-400 rounded p-1 hover:bg-gray-300 transition-colors">
-                  <ChevronLeftIcon className="w-6 h-6" />
+                  className="rounded-md p-2 text-orange-500 bg-orange-50 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:bg-orange-100 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2"
+                  aria-label="Volver al dashboard">
+                  <ChevronLeftIcon className="w-5 h-5" />
                 </Link>
                 <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                  Lista de Titulos
+                  Lista de títulos
                 </h2>
               </div>
               <Link
-                href={`/dashboard/titles/create`}
-                className="font-semibold py-2 px-4 rounded-lg transition-colors text-orange-500 bg-orange-100 hover:bg-orange-200 shadow-sm hover:shadow-md flex flex-row justify-center items-center gap-2">
+                href="/dashboard/titles/create"
+                className="font-semibold py-2 px-4 rounded-md transition-all duration-200 text-orange-600 bg-orange-100 hover:bg-orange-200 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] flex flex-row justify-center items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2">
                 <PlusIcon className="h-4 w-4" />
                 Crear
               </Link>
             </div>
 
-            <div className="bg-white overflow-auto min-h-screen shadow-sm rounded-lg p-4">
-              {isLoading ? (
-                <div className="flex justify-center content-center min-h-screen">
-                  <Loading size={16} />
-                </div>
-              ) : (
-                <DataTable
-                  columns={columns}
-                  data={result?.data || []}
-                  searchPlaceholder="Buscar por nombre..."
+            <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">
+              <DataTable
+                columns={columns}
+                data={result?.data || []}
+                isLoading={isLoading}
+                searchPlaceholder="Buscar por nombre..."
                   pagination={
                     result
                       ? {
@@ -281,7 +276,6 @@ const Titles = () => {
                     </>
                   }
                 />
-              )}
             </div>
           </div>
         </div>

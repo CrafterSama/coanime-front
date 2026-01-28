@@ -110,7 +110,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           <div className="p-3 border-t border-gray-100">
             <input
               type="time"
-              className="w-full px-3 py-2 h-9 border border-gray-200 rounded-md shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] focus:outline-none focus:ring-1 focus:ring-orange-400 focus:shadow-[0_2px_6px_0_rgba(0,0,0,0.2)]"
+              className="w-full px-3 py-2 h-9 border border-gray-100 rounded-md shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] focus:outline-none focus:ring-1 focus:ring-orange-400 focus:shadow-[0_2px_6px_0_rgba(0,0,0,0.2)]"
               value={dayjs(date).format('HH:mm')}
               onChange={(e) => {
                 const [hours, minutes] = e.target.value.split(':');

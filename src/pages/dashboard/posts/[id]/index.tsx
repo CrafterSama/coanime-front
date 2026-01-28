@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import ReactSelect from 'react-select';
@@ -23,10 +23,10 @@ import {
   FormMessage,
   FormWithContext,
 } from '@/components/ui/form';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import FormHeader from '@/components/ui/FormHeader';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Loading from '@/components/ui/Loading';
 import SectionHeader from '@/components/ui/SectionHeader';
 import {
   Select,
@@ -142,8 +142,9 @@ const UpdatePost = () => {
   const onSubmit = (data: any) => {
     const id = post?.id;
     const postponedTo = data.postponedTo
-      ? dayjs(data.postponedTo).utc().format('YYYY-MM-DD HH:mm:ss')
-      : dayjs().utc().format('YYYY-MM-DD HH:mm:ss');
+      ? dayjs(data.postponedTo).format('YYYY-MM-DD HH:mm:ss')
+      : dayjs().format('YYYY-MM-DD HH:mm:ss');
+
     const params = {
       title: data.title,
       content: data.content,
@@ -185,11 +186,7 @@ const UpdatePost = () => {
         <title>Coanime.net - Update Post: {post?.title}</title>
       </Head>
       <article className="p-4">
-        {isLoading && (
-          <div className="flex justify-center content-center min-w-screen min-h-screen">
-            <Loading size={16} />
-          </div>
-        )}
+        {isLoading && <FormSkeleton fields={10} />}
         {post && (
           <FormWithContext methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <FormHeader
@@ -346,8 +343,10 @@ const UpdatePost = () => {
                   </div>
                   <UploadImage
                     disabled={!editMode}
+                    modelId={post?.id}
                     name="image"
                     model="posts"
+                    onUploadSuccess={() => refetch()}
                   />
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
@@ -364,7 +363,7 @@ const UpdatePost = () => {
                 </div>
                 <div className="mb-4 flex flex-col gap-2">
                   <Label htmlFor="title_id">Serie Relacionada</Label>
-                  <Show condition={post?.titles?.length > 0}>
+                  <Show when={post?.titles?.length > 0}>
                     <div className="flex flex-row gap-4">
                       <div className="relative w-20 h-32">
                         <Image
@@ -383,7 +382,7 @@ const UpdatePost = () => {
                       </div>
                     </div>
                   </Show>
-                  <Show condition={post?.titles?.length === 0}>
+                  <Show when={post?.titles?.length === 0}>
                     'No tiene Serie Relacionada'
                   </Show>
                   <ReactSelect

@@ -76,12 +76,12 @@ const Titles = ({ titlesData }: TitlesProps) => {
         <meta name="keywords" content={titlesData?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={!data}>
+        <Show when={!data}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={!!data as boolean}>
+        <Show when={!!data as boolean}>
           <Section withContainer>
             <div className="flex flex-row gap-4 justify-center">
               {tabs.map((item) => {
@@ -103,17 +103,17 @@ const Titles = ({ titlesData }: TitlesProps) => {
                 );
               })}
             </div>
-            <Show condition={activeTab === 'types'}>
+            <Show when={activeTab === 'types'}>
               <CloudLinks allLink="/ecma/titulos" links={data?.types} />
             </Show>
-            <Show condition={activeTab === 'genres'}>
+            <Show when={activeTab === 'genres'}>
               <CloudLinks allLink="/ecma/generos" links={data?.genres} />
             </Show>
             <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[70vh]">
               {data?.result?.data?.map((serie: any) => (
                 <SerieCard key={serie?.id} serie={serie} />
               ))}
-              <Show condition={data?.result?.data?.length < 1}>
+              <Show when={data?.result?.data?.length < 1}>
                 <div className="text-center text-gray-600">
                   No hay Series para mostrar en este apartado.
                 </div>

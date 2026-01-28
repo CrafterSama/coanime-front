@@ -1,31 +1,31 @@
 import { FC, Fragment } from 'react';
 
 type ShowProps = {
-  condition?: boolean | string | null | undefined;
+  when?: boolean;
   children: React.ReactNode | any;
 };
 
 type ShowAdvancedProps = {
-  condition?: boolean;
-  conditionTrue: React.ReactNode | any;
-  conditionFalse?: React.ReactNode | any;
+  when?: boolean;
+  whenIsTrue: React.ReactNode | any;
+  whenIsFalse?: React.ReactNode | any;
 };
 
-export const Show: FC<ShowProps> = ({ condition, children }) => {
-  if (condition) {
+export const Show: FC<ShowProps> = ({ when, children }) => {
+  if (when) {
     return <Fragment>{children}</Fragment>;
   }
   return null;
 };
 
 export const ShowAdvanced: FC<ShowAdvancedProps> = ({
-  condition,
-  conditionTrue,
-  conditionFalse = null,
+  when,
+  whenIsTrue,
+  whenIsFalse = null,
 }) => {
-  if (condition) {
-    return <Fragment>{conditionTrue}</Fragment>;
+  if (when) {
+    return <Fragment>{whenIsTrue}</Fragment>;
   } else {
-    return conditionFalse ? <Fragment>{conditionFalse}</Fragment> : null;
+    return whenIsFalse ? <Fragment>{whenIsFalse}</Fragment> : null;
   }
 };

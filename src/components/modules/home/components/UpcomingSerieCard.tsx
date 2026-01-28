@@ -1,11 +1,8 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { DEFAULT_IMAGE } from '@/constants/common';
-
-dayjs.extend(utc);
+import { formatLocaleDate } from '@/utils/date';
 
 import React from 'react';
 
@@ -43,7 +40,7 @@ const BroadcastSerieCard = ({ serie }: { serie: any }) => {
       </div>
       <div
         className={`absolute top-0 right-0 h-4 w-[68%] p-1 rounded-bl-xl bg-gray-900 bg-opacity-80 text-white flex justify-end items-center text-center text-xs`}>
-        Estreno: {dayjs(serie.broadTime).utc().format('MMM DD, YYYY')}
+        Estreno: {formatLocaleDate(serie.broadTime, true)}
       </div>
     </div>
   );

@@ -134,12 +134,12 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
         </Head>
       )}
       <WebLayout>
-        <Show condition={!titleData}>
+        <Show when={!titleData}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
             <Loading showFancySpiner size={20} />
           </div>
         </Show>
-        <Show condition={titleData}>
+        <Show when={titleData}>
           <div id="title">
             <Section>
               <div className="title-header">
@@ -377,7 +377,7 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
               </Section>
             </div>
             <Section withContainer>
-              <Show condition={titleData?.result?.posts?.length >= 1}>
+              <Show when={titleData?.result?.posts?.length >= 1}>
                 <FlexLayout gap={2}>
                   {tabs.map((item) => (
                     <TabsContent key={item.key} active={activeTab === item.key}>
@@ -386,7 +386,7 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
                   ))}
                 </FlexLayout>
               </Show>
-              <Show condition={titleData?.result?.posts?.length < 1}>
+              <Show when={titleData?.result?.posts?.length < 1}>
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-gray-400">
                     Sin Publicaciones

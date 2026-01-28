@@ -113,9 +113,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         {...props}>
-        {prefix && <span className="flex items-center">{prefix}</span>}
-        {children}
-        {suffix && <span className="flex items-center">{suffix}</span>}
+        {asChild ? (
+          children
+        ) : (
+          <>
+            {prefix && <span className="flex items-center">{prefix}</span>}
+            {children}
+            {suffix && <span className="flex items-center">{suffix}</span>}
+          </>
+        )}
       </Comp>
     );
   }

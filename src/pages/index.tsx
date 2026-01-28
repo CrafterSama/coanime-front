@@ -11,12 +11,13 @@ import RecentPosts from '@/components/modules/home/components/RecentPosts';
 import TopSlider from '@/components/modules/home/components/TopSlider';
 import UpcomingSeries from '@/components/modules/home/components/UpcomingSeries';
 import { Button } from '@/components/ui/button';
-import Loading from '@/components/ui/Loading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { ShowAdvanced } from '@/components/ui/Show';
+import { RecentArticlesSkeleton } from '@/components/ui/skeletons/recent-articles-skeleton';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';
-import { PlusSmallIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
@@ -123,18 +124,11 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
       <Section>
         <TopSlider relevants={homeDataSSR?.relevants} />
       </Section>
-      <Section withContainer>
-        <SectionTitle title="Recientes" subtitle="Noticias Recientes" />
-        <RecentPosts posts={homeDataSSR?.result} />
-        <div className="w-full flex justify-end items-center mt-2 px-4">
-          <a
-            className="flex flex-row items-center text-orange-500"
-            href="#news">
-            <PlusSmallIcon className="w-6 h-6 text-orange-400" />
-            Mas Noticias
-          </a>
-        </div>
-      </Section>
+      <ShowAdvanced
+        when={homeDataSSR?.result?.length > 0}
+        whenIsTrue={<RecentPosts posts={homeDataSSR?.result} />}
+        whenIsFalse={<RecentArticlesSkeleton />}
+      />
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
         <BroadcastToday broadcast={homeDataSSR?.broadcast} />
@@ -149,9 +143,7 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
         <UpcomingSeries upcoming={homeDataSSR?.upcoming} />
       </Section>
       {isLoading || articlesLoading || loadingJapan ? (
-        <div className="flex justify-center content-center min-w-screen min-h-screen">
-          <Loading showFancySpiner size={20} />
-        </div>
+        <PageSkeleton sections={3} />
       ) : (
         <>
           <Section className="bg-indigo-50 shadow-inner py-4">

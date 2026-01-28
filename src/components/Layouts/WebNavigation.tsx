@@ -101,7 +101,7 @@ const Navigation = ({ user }: { user: any }) => {
 
               {/* Login/Register Buttons or User Menu */}
               <div className="flex items-center gap-2">
-                <Show condition={user}>
+                <Show when={user}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button className="flex flex-row gap-2 text-sm font-semibold items-center text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-lg px-2 py-1.5 transition-colors">
@@ -172,7 +172,7 @@ const Navigation = ({ user }: { user: any }) => {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </Show>
-                <Show condition={!user}>
+                <Show when={!user}>
                   <Link href="/login">
                     <Button variant="link">Login</Button>
                   </Link>
@@ -189,10 +189,10 @@ const Navigation = ({ user }: { user: any }) => {
               <button
                 onClick={() => setOpen((open) => !open)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                <Show condition={open}>
+                <Show when={open}>
                   <XMarkIcon className="w-6 h-6" />
                 </Show>
-                <Show condition={!open}>
+                <Show when={!open}>
                   <Bars3Icon className="w-6 h-6" />
                 </Show>
               </button>

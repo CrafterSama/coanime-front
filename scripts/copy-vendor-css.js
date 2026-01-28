@@ -20,36 +20,6 @@ const vendorCss = [
     ),
     to: path.join(__dirname, '../src/styles/vendor/suneditor.css'),
   },
-  {
-    // Swiper puede tener diferentes rutas según la versión
-    from: [
-      path.join(__dirname, '../node_modules/swiper/css/swiper.min.css'),
-      path.join(__dirname, '../node_modules/swiper/css/swiper.css'),
-      path.join(__dirname, '../node_modules/swiper/swiper.min.css'),
-    ],
-    to: path.join(__dirname, '../src/styles/vendor/swiper.css'),
-  },
-  {
-    from: path.join(
-      __dirname,
-      '../node_modules/swiper/modules/navigation/navigation.min.css'
-    ),
-    to: path.join(__dirname, '../src/styles/vendor/swiper-navigation.css'),
-  },
-  {
-    from: path.join(
-      __dirname,
-      '../node_modules/swiper/modules/pagination/pagination.min.css'
-    ),
-    to: path.join(__dirname, '../src/styles/vendor/swiper-pagination.css'),
-  },
-  {
-    from: path.join(
-      __dirname,
-      '../node_modules/swiper/modules/scrollbar/scrollbar.min.css'
-    ),
-    to: path.join(__dirname, '../src/styles/vendor/swiper-scrollbar.css'),
-  },
 ];
 
 // Asegurar que el directorio existe

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import WebLayout from '@/components/Layouts/WebLayout';
 import SerieCard from '@/components/modules/titles/components/SerieCard';
 import FlexLayout from '@/components/ui/FlexLayout';
-import Loading from '@/components/ui/Loading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 import Paginator from '@/components/ui/Paginator';
 import Section from '@/components/ui/Section';
 import { Show } from '@/components/ui/Show';
@@ -68,12 +68,12 @@ const Titles = ({ titlesData }: TitlesProps) => {
         <meta name="keywords" content={response?.keywords} />
       </Head>
       <WebLayout>
-        <Show condition={loading}>
+        <Show when={loading}>
           <div className="flex justify-center content-center min-w-screen min-h-screen">
-            <Loading showFancySpiner size={20} />
+            <PageSkeleton sections={2} />
           </div>
         </Show>
-        <Show condition={data}>
+        <Show when={data}>
           <Section withContainer>
             <div className="relative flex flex-col gap-4 justify-start px-4 h-72 overflow-hidden rounded-b-xl">
               <Image
@@ -108,7 +108,7 @@ const Titles = ({ titlesData }: TitlesProps) => {
                     </Tabs>
                   ))}
                 </FlexLayout>
-                <Show condition={series?.length >= 1}>
+                <Show when={series?.length >= 1}>
                   <div className="flex flex-wrap gap-2 justify-center px-4 py-2 min-h-[40vh]">
                     {series?.map((serie) => (
                       <div
@@ -127,7 +127,7 @@ const Titles = ({ titlesData }: TitlesProps) => {
                     data={response?.results}
                   />
                 </Show>
-                <Show condition={series?.length === 0}>
+                <Show when={series?.length === 0}>
                   <div className="text-center py-4">
                     <h3 className="text-xl font-bold text-gray-400">
                       Sin Titulos

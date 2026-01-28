@@ -41,9 +41,47 @@ export const getTitlesUrl = (type: string | number, title: string | number) => {
   return `/ecma/titulos/${strToSlug(String(type))}/${strToSlug(String(title))}`;
 };
 
-export const getServerError = (error: any) => {
-  if (error?.response?.data?.message) {
-    return error.response.data.message.text;
+export const getServerError = (error: any): string => {
+  const data = error?.response?.data;
+  if (!data) return 'Error de conexión';
+
+  // Laravel validation errors: { errors: { "field": ["msg"] } }
+  const errors = data.errors;
+  if (errors && typeof errors === 'object' && Object.keys(errors).length > 0) {
+    const flatMessages = (Object.values(errors).flat().filter(Boolean) as string[]);
+    return flatMessages[0] ?? flatMessages.join(' ');
   }
-  return error?.response?.data?.message;
+
+  // API message: string or { text: string }
+  const message = data.message;
+  if (typeof message === 'string') return message;
+  if (message && typeof message === 'object' && 'text' in message) {
+    return typeof message.text === 'string' ? message.text : String(message.text);
+  }
+
+  return 'Error desconocido';
+};
+
+export const toSnakeCase = (str: string) =>
+  str
+    .replace(/([A-Z])/g, '_$1')
+    .toLowerCase()
+    .replace(/^_/, '');
+
+export const keysToSnakeCase = (obj: any): any => {
+  if (obj == null) {
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map((v) => keysToSnakeCase(v));
+  }
+  if (typeof obj === 'object' && obj.constructor === Object) {
+    // eslint-disable-next-line
+    return Object.keys(obj).reduce((result: any, key) => {
+      const newKey = toSnakeCase(key);
+      result[newKey] = keysToSnakeCase(obj[key]);
+      return result;
+    }, {});
+  }
+  return obj;
 };

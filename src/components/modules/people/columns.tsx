@@ -41,13 +41,11 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
     cell: ({ row }) => {
       const person = row.original;
       return (
-        <div className="flex flex-row gap-2 w-96">
-          <div className="w-4/12 h-46">
-            <Link
-              href={`/dashboard/people/${person.slug}`}
-              className="relative flex h-[170px] w-full">
+        <div className="flex flex-row gap-4 w-96 py-2">
+          <div className="w-24 h-24 shrink-0 relative rounded-lg overflow-hidden shadow-md">
+            <Link href={`/dashboard/people/${person.slug}`}>
               <Image
-                className="rounded-lg object-scale-down bg-gray-200"
+                className="object-cover"
                 src={`https://api.coanime.net/storage/images/encyclopedia/people/${person.image}`}
                 alt={person.name}
                 loading="lazy"
@@ -56,15 +54,17 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
               />
             </Link>
           </div>
-          <div className="w-9/12 text-orange-500 font-semibold flex flex-col gap-2">
+          <div className="flex-1 min-w-0">
             <Link
               href={`/dashboard/people/${person.slug}`}
-              className="whitespace-pre-wrap flex fex-row gap-4 text-sm underline underline-offset-3">
-              <h4 className="text-sm">{person.name}</h4>
+              className="text-orange-600 font-semibold text-sm hover:text-orange-700 hover:underline transition-colors line-clamp-1 block mb-0.5">
+              {person.name}
             </Link>
-            <p className="text-gray-500 text-xs">{person.japaneseName}</p>
-            <p className="text-gray-600 text-xs">
-              {strLimit(extractText(person.about ?? '') || '', 150)}
+            {person.japaneseName ? (
+              <p className="text-gray-500 text-xs mb-1">{person.japaneseName}</p>
+            ) : null}
+            <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
+              {strLimit(extractText(person.about ?? '') || '', 100)}
             </p>
           </div>
         </div>
@@ -75,11 +75,15 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
   },
   {
     accessorKey: 'areasSkillsHobbies',
-    header: 'Areas que trabaja/Hobbies',
+    header: 'Áreas / Hobbies',
     cell: ({ row }) => {
+      const text = row.original.areasSkillsHobbies;
+      if (!text) return <div className="w-60">—</div>;
       return (
-        <div className="w-60 flex justify-center items-center text-sm">
-          {row.original.areasSkillsHobbies}
+        <div className="w-60">
+          <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-md shadow-sm line-clamp-2">
+            {text}
+          </span>
         </div>
       );
     },
@@ -87,13 +91,17 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
   },
   {
     accessorKey: 'country',
-    header: 'Ciudad/Pais',
+    header: 'País',
     cell: ({ row }) => {
       const country = row.original.country;
-      const name = JSON.parse(country?.translations || '{}');
+      if (!country) return <div className="w-40">—</div>;
+      const name = JSON.parse(country.translations || '{}');
+      const label = `${country.emoji || ''} ${name['es'] || ''}`.trim();
       return (
-        <div className="w-40 flex flex-row gap-2 text-sm">
-          <span>{`${country?.emoji} ${name['es'] || ''}`}</span>
+        <div className="w-40">
+          <span className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition-colors">
+            {label || '—'}
+          </span>
         </div>
       );
     },
@@ -113,11 +121,14 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
     },
     cell: ({ row }) => {
       const person = row.original;
+      const d = person.createdAt || person.updatedAt;
+      if (!d) return <div className="w-40">—</div>;
       return (
-        <div className="w-40 flex">
-          {person.createdAt
-            ? dayjs(person.createdAt).format('DD/MM/YYYY HH:mm a')
-            : dayjs(person.updatedAt).format('DD/MM/YYYY HH:mm a')}
+        <div className="w-40 flex flex-col gap-0.5">
+          <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
+            {dayjs(d).format('DD/MM/YYYY')}
+          </span>
+          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
         </div>
       );
     },

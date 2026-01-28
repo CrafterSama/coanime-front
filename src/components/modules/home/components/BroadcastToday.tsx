@@ -1,76 +1,30 @@
 import { FC } from 'react';
 
-import {
-  A11y,
-  EffectFade,
-  Navigation,
-  Pagination,
-  Thumbs,
-  Virtual,
-} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
 import BroadcastSerieCard from '@/components/modules/home/components/BroadcastSerieCard';
-import Loading from '@/components/ui/Loading';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { CarouselSkeleton } from '@/components/ui/carousel-skeleton';
 
 type BroadcastTodayProps = {
   broadcast?: any[];
 };
 
 const BroadcastToday: FC<BroadcastTodayProps> = ({ broadcast = [] }) => {
-  /*const { data: today, isLoading } = useQuery(['posts'], getBroadcastToday, {
-    initialData: broadcastData,
-  });*/
-
   const series = broadcast?.filter((item) => item.approved === true) ?? [];
 
   return (
     <>
-      {!broadcast && (
-        <div className="flex content-center justify-center min-h-screen min-w-screen">
-          <Loading size={16} />
-        </div>
-      )}
-      {series?.length > 0 && (
-        <div className="px-4 broadcast-today xl:px-0">
-          <Swiper
-            className="flex"
-            modules={[
-              EffectFade,
-              Navigation,
-              Pagination,
-              A11y,
-              Thumbs,
-              Virtual,
-            ]}
-            autoplay={{
-              delay: 1000,
-            }}
-            navigation={true}
-            breakpoints={{
-              300: {
-                slidesPerView: 2,
-                spaceBetween: 5,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 5,
-              },
-              768: {
-                slidesPerView: 4,
-                spaceBetween: 16,
-              },
-              1024: {
-                slidesPerView: 6,
-                spaceBetween: 16,
-              },
-            }}>
-            {series?.map((serie, index) => (
-              <SwiperSlide key={index} virtualIndex={index}>
-                <BroadcastSerieCard serie={serie} position={index + 1} />
-              </SwiperSlide>
+      {!broadcast && <CarouselSkeleton items={6} />}
+      {series.length > 0 && (
+        <div className="px-4 xl:px-0">
+          <HorizontalCarousel className="broadcast-today" gap={16}>
+            {series.map((serie, index) => (
+              <BroadcastSerieCard
+                key={serie.id ?? index}
+                serie={serie}
+                position={index + 1}
+              />
             ))}
-          </Swiper>
+          </HorizontalCarousel>
         </div>
       )}
     </>

@@ -203,7 +203,7 @@ export const createPostColumns = (
       return (
         <div className="w-40">
           <Show
-            condition={
+            when={
               !!hasRole(authUser?.roles, 'administrator') ||
               !!hasRole(authUser?.roles, 'writer')
             }>

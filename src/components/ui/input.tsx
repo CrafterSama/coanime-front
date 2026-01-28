@@ -28,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'flex h-9 w-full rounded-md bg-white text-base shadow-[3px_0px_6px_0_rgba(0,0,0,0.15)] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-400 focus-visible:shadow-orange-400 focus-visible:shadow-[3px_0_6px_0_rgba(0,0,0,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50 md:text-sm',
+            'flex h-9 w-full rounded-md bg-white text-base border border-gray-100 shadow-[3px_0px_6px_0_rgba(0,0,0,0.15)] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-400 focus-visible:shadow-orange-400 focus-visible:shadow-[3px_0_6px_0_rgba(0,0,0,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50 md:text-sm',
             hasPrefix ? 'pl-10' : 'pl-3',
             hasSuffix ? 'pr-10' : 'pr-3',
             className

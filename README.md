@@ -4,9 +4,10 @@ Este proyecto es el panel de administración y frontend para CoAnime, construido
 
 ## 🛠 Tech Stack
 
-- **Framework:** [Next.js 13.5](https://nextjs.org/) (Pages Router)
+- **Framework:** [Next.js 15](https://nextjs.org/)
 - **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
-- **Estilos:** [Tailwind CSS 3.3](https://tailwindcss.com/)
+- **Estilos:** [Tailwind CSS 4.0](https://tailwindcss.com/)
+- **Librería UI:** [React 19](https://react.dev/)
 - **Estado & Data Fetching:**
   - [TanStack Query v4](https://tanstack.com/query/v4) (Principal)
   - [SWR](https://swr.vercel.app/) (Usado en autenticación)
