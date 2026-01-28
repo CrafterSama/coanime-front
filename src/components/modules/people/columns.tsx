@@ -61,7 +61,9 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
               {person.name}
             </Link>
             {person.japaneseName ? (
-              <p className="text-gray-500 text-xs mb-1">{person.japaneseName}</p>
+              <p className="text-gray-500 text-xs mb-1">
+                {person.japaneseName}
+              </p>
             ) : null}
             <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
               {strLimit(extractText(person.about ?? '') || '', 100)}
@@ -128,7 +130,9 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
           <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
             {dayjs(d).format('DD/MM/YYYY')}
           </span>
-          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
+          <span className="text-xs text-gray-500">
+            {dayjs(d).format('HH:mm')}
+          </span>
         </div>
       );
     },

@@ -226,56 +226,54 @@ const Titles = () => {
                 data={result?.data || []}
                 isLoading={isLoading}
                 searchPlaceholder="Buscar por nombre..."
-                  pagination={
-                    result
-                      ? {
-                          // Backend es fuente de verdad: httpClient transforma snake_case a camelCase
-                          pageIndex: (result.currentPage ?? 1) - 1,
-                          pageSize: result.perPage ?? 15,
-                          total: result.total ?? 0,
-                          // Calcular lastPage si no viene del backend
-                          lastPage:
-                            result.lastPage ??
-                            (Math.ceil(
-                              (result.total ?? 0) / (result.perPage ?? 15)
-                            ) ||
-                              1),
-                          currentPage: result.currentPage ?? 1,
-                          onPageChange, // Función directa que actualiza estado y URL
-                        }
-                      : undefined
-                  }
-                  onSearchChange={handleSearchChange}
-                  onSortingChange={handleSortingChange}
-                  initialSearch={name}
-                  initialSorting={
-                    sortBy
-                      ? [{ id: sortBy, desc: sortDirection === 'desc' }]
-                      : []
-                  }
-                  filters={
-                    <>
-                      <FilterSelect
-                        value={typeId}
-                        onChange={handleTypeChange}
-                        options={filters?.types || []}
-                        placeholder="Todos los tipos"
-                      />
-                      <FilterSelect
-                        value={ratingId}
-                        onChange={handleRatingChange}
-                        options={filters?.ratings || []}
-                        placeholder="Todas las clasificaciones"
-                      />
-                      <FilterSelect
-                        value={genreId}
-                        onChange={handleGenreChange}
-                        options={filters?.genres || []}
-                        placeholder="Todos los géneros"
-                      />
-                    </>
-                  }
-                />
+                pagination={
+                  result
+                    ? {
+                        // Backend es fuente de verdad: httpClient transforma snake_case a camelCase
+                        pageIndex: (result.currentPage ?? 1) - 1,
+                        pageSize: result.perPage ?? 15,
+                        total: result.total ?? 0,
+                        // Calcular lastPage si no viene del backend
+                        lastPage:
+                          result.lastPage ??
+                          (Math.ceil(
+                            (result.total ?? 0) / (result.perPage ?? 15)
+                          ) ||
+                            1),
+                        currentPage: result.currentPage ?? 1,
+                        onPageChange, // Función directa que actualiza estado y URL
+                      }
+                    : undefined
+                }
+                onSearchChange={handleSearchChange}
+                onSortingChange={handleSortingChange}
+                initialSearch={name}
+                initialSorting={
+                  sortBy ? [{ id: sortBy, desc: sortDirection === 'desc' }] : []
+                }
+                filters={
+                  <>
+                    <FilterSelect
+                      value={typeId}
+                      onChange={handleTypeChange}
+                      options={filters?.types || []}
+                      placeholder="Todos los tipos"
+                    />
+                    <FilterSelect
+                      value={ratingId}
+                      onChange={handleRatingChange}
+                      options={filters?.ratings || []}
+                      placeholder="Todas las clasificaciones"
+                    />
+                    <FilterSelect
+                      value={genreId}
+                      onChange={handleGenreChange}
+                      options={filters?.genres || []}
+                      placeholder="Todos los géneros"
+                    />
+                  </>
+                }
+              />
             </div>
           </div>
         </div>

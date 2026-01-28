@@ -18,10 +18,7 @@ const UpcomingSeries: FC<UpcomingSeriesProps> = ({ upcoming = [] }) => {
         <div className="broadcast-today px-4 xl:px-0">
           <HorizontalCarousel gap={16}>
             {series.map((serie, index) => (
-              <UpcomingSerieCard
-                key={serie.id ?? index}
-                serie={serie}
-              />
+              <UpcomingSerieCard key={serie.id ?? index} serie={serie} />
             ))}
           </HorizontalCarousel>
         </div>

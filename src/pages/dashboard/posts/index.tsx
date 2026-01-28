@@ -262,57 +262,55 @@ const Posts = () => {
                 isLoading={isLoading}
                 searchPlaceholder="Buscar por título..."
                 pagination={
-                    result
-                      ? {
-                          // Backend es fuente de verdad: httpClient transforma snake_case a camelCase
-                          pageIndex: (result.currentPage ?? 1) - 1,
-                          pageSize: result.perPage ?? 15,
-                          total: result.total ?? 0,
-                          // Calcular lastPage si no viene del backend
-                          lastPage:
-                            result.lastPage ??
-                            (Math.ceil(
-                              (result.total ?? 0) / (result.perPage ?? 15)
-                            ) ||
-                              1),
-                          currentPage: result.currentPage ?? 1,
-                          onPageChange, // Función directa que actualiza estado y URL
-                        }
-                      : undefined
-                  }
-                  onSearchChange={handleSearchChange}
-                  onSortingChange={handleSortingChange}
-                  initialSearch={name}
-                  initialSorting={
-                    sortBy
-                      ? [{ id: sortBy, desc: sortDirection === 'desc' }]
-                      : []
-                  }
-                  filters={
-                    <>
-                      <FilterSelect
-                        value={categoryId}
-                        onChange={(value) => {
-                          setCategoryId(value);
-                          setPage(1);
-                          updateURL({ categoryId: value, page: 1 });
-                        }}
-                        options={filters?.categories || []}
-                        placeholder="Todas las categorías"
-                      />
-                      <FilterSelect
-                        value={userId}
-                        onChange={(value) => {
-                          setUserId(value);
-                          setPage(1);
-                          updateURL({ userId: value, page: 1 });
-                        }}
-                        options={filters?.users || []}
-                        placeholder="Todos los autores"
-                      />
-                    </>
-                  }
-                />
+                  result
+                    ? {
+                        // Backend es fuente de verdad: httpClient transforma snake_case a camelCase
+                        pageIndex: (result.currentPage ?? 1) - 1,
+                        pageSize: result.perPage ?? 15,
+                        total: result.total ?? 0,
+                        // Calcular lastPage si no viene del backend
+                        lastPage:
+                          result.lastPage ??
+                          (Math.ceil(
+                            (result.total ?? 0) / (result.perPage ?? 15)
+                          ) ||
+                            1),
+                        currentPage: result.currentPage ?? 1,
+                        onPageChange, // Función directa que actualiza estado y URL
+                      }
+                    : undefined
+                }
+                onSearchChange={handleSearchChange}
+                onSortingChange={handleSortingChange}
+                initialSearch={name}
+                initialSorting={
+                  sortBy ? [{ id: sortBy, desc: sortDirection === 'desc' }] : []
+                }
+                filters={
+                  <>
+                    <FilterSelect
+                      value={categoryId}
+                      onChange={(value) => {
+                        setCategoryId(value);
+                        setPage(1);
+                        updateURL({ categoryId: value, page: 1 });
+                      }}
+                      options={filters?.categories || []}
+                      placeholder="Todas las categorías"
+                    />
+                    <FilterSelect
+                      value={userId}
+                      onChange={(value) => {
+                        setUserId(value);
+                        setPage(1);
+                        updateURL({ userId: value, page: 1 });
+                      }}
+                      options={filters?.users || []}
+                      placeholder="Todos los autores"
+                    />
+                  </>
+                }
+              />
             </div>
           </div>
         </div>

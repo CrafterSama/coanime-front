@@ -175,11 +175,11 @@ const Events = () => {
 
             <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">
               <DataTable
-              columns={columns}
-              data={result?.data || []}
-              isLoading={isLoading}
-              searchPlaceholder="Buscar por nombre..."
-              pagination={
+                columns={columns}
+                data={result?.data || []}
+                isLoading={isLoading}
+                searchPlaceholder="Buscar por nombre..."
+                pagination={
                   result
                     ? {
                         // Backend es fuente de verdad: httpClient transforma snake_case a camelCase

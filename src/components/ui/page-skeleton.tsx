@@ -14,7 +14,7 @@ export function PageSkeleton({ sections = 3 }: PageSkeletonProps) {
             <Skeleton className="h-8 w-48" />
             <Skeleton className="h-6 w-24" />
           </div>
-          
+
           {/* Content grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {Array.from({ length: 6 }).map((_, cardIndex) => (

@@ -180,10 +180,10 @@ const People = () => {
 
             <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">
               <DataTable
-              columns={columns}
-              data={result?.data || []}
-              isLoading={isLoading}
-              searchPlaceholder="Buscar por nombre..."
+                columns={columns}
+                data={result?.data || []}
+                isLoading={isLoading}
+                searchPlaceholder="Buscar por nombre..."
                 pagination={
                   result
                     ? {

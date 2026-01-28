@@ -77,16 +77,14 @@ const Entity = ({ entityData }: EntityProps) => {
                           title="Fundada el"
                           value={
                             <span className="post-date">
-                              <Show
-                                when={entityData?.result?.foundationDate}>
+                              <Show when={entityData?.result?.foundationDate}>
                                 {typeof entityData?.result?.foundationDate ===
                                   'string' &&
                                   dayjs(entityData?.result?.foundationDate)
                                     .locale('es')
                                     .format('DD MMMM, YYYY')}
                               </Show>
-                              <Show
-                                when={!entityData?.result?.foundationDate}>
+                              <Show when={!entityData?.result?.foundationDate}>
                                 'Sin Información'
                               </Show>
                             </span>

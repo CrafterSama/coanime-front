@@ -51,7 +51,7 @@ export const authOptions = {
 
           let res: Response | null = null;
           let data: any = null;
-          let lastError: any = null;
+          let lastError: any = null; // eslint-disable-line @typescript-eslint/no-unused-vars
 
           // Intentar cada endpoint hasta que uno funcione
           for (const endpoint of possibleEndpoints) {
@@ -97,7 +97,7 @@ export const authOptions = {
                 continue;
               }
               // Para otros errores, guardar y continuar
-              lastError = { error, endpoint };
+              lastError = { error, endpoint }; // eslint-disable-line @typescript-eslint/no-unused-vars
             }
           }
 

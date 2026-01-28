@@ -32,7 +32,7 @@ export const createMediaColumns = (
     cell: ({ row }) => {
       const media = row.original;
       const imageUrl = media.thumbUrl || media.url || DEFAULT_IMAGE;
-      
+
       return (
         <div className="flex flex-row gap-4 w-96 py-2">
           <div className="w-24 h-24 flex-shrink-0 relative rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
@@ -69,7 +69,9 @@ export const createMediaColumns = (
               {media.fileName}
             </p>
             {media.isPlaceholder && (
-              <Badge variant="outline" className="mt-1 text-xs bg-yellow-50 text-yellow-700 border-yellow-300">
+              <Badge
+                variant="outline"
+                className="mt-1 text-xs bg-yellow-50 text-yellow-700 border-yellow-300">
                 Placeholder
               </Badge>
             )}
