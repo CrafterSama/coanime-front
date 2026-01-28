@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Permissions } from '@/components/modules/common/Permissions';
 import Section from '@/components/ui/Section';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { formatLocaleDate } from '@/utils/date';
 import { ClockIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 import React from 'react';
@@ -43,13 +42,7 @@ const OtherNews = ({ articles }: { articles?: any[] }) => {
                 <div className="flex gap-2 justify-start items-center">
                   <span className="text-gray-200 flex flex-row gap-2 text-sm">
                     <ClockIcon className="w-6 h-6" />
-                    {dayjs(
-                      article.postponedTo
-                        ? article.postponedTo
-                        : article.createdAt
-                    )
-                      .locale('es')
-                      .format('DD MMMM, YYYY')}
+                    {formatLocaleDate(article.postponedTo ?? article.createdAt)}
                   </span>
                 </div>
               </div>

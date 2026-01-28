@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Post } from '@/types/posts';
+import { formatLocaleDate } from '@/utils/date';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -50,7 +51,7 @@ export function ArticleCard({ post, size }: ArticleCardProps) {
             <div className="flex items-center gap-2 text-xs text-gray-300">
               <span>{post?.users?.name}</span>
               <span>•</span>
-              <span>{new Date(post?.createdAt).toString()}</span>
+              <span>{formatLocaleDate(post?.createdAt)}</span>
             </div>
           </div>
         </div>

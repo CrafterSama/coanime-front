@@ -1,7 +1,5 @@
 'use client';
 
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DEFAULT_IMAGE } from '@/constants/common';
+import { formatLocaleDate } from '@/utils/date';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const AUTOPLAY_MS = 5000;
@@ -117,11 +116,9 @@ const TopSlider = ({ relevants }: { relevants?: any[] }) => {
                     slide.createdAt ??
                     slide.created_at) && (
                     <span>
-                      {dayjs(
+                      {formatLocaleDate(
                         slide.postponedTo ?? slide.createdAt ?? slide.created_at
-                      )
-                        .locale('es')
-                        .format('D MMMM, YYYY')}
+                      )}
                     </span>
                   )}
                 </div>

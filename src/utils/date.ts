@@ -1,3 +1,25 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/es';
+
+dayjs.extend(utc);
+
+/**
+ * Format date as "Octubre 3, 1979" (month, day, year in Spanish).
+ * @param useUtc - If true, interpret value as UTC before formatting (e.g. for broadTime).
+ */
+export function formatLocaleDate(
+  value: string | Date | number | null | undefined,
+  useUtc = false
+): string {
+  if (value == null) return '';
+  let d = dayjs(value).locale('es');
+  if (useUtc) d = d.utc();
+  if (!d.isValid()) return '';
+  const s = d.format('MMMM D, YYYY');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export const getDay = () => {
   const days = [
     'sunday',
