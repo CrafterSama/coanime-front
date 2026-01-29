@@ -146,10 +146,13 @@ export const useUpdateMedia = () => {
       id,
       name,
       file,
+      url,
     }: {
       id: number;
       name?: string;
       file?: File;
+      /** Image URL to replace media from (alternative to file upload) */
+      url?: string;
     }) => {
       const formData = new FormData();
       if (name) {
@@ -157,6 +160,9 @@ export const useUpdateMedia = () => {
       }
       if (file) {
         formData.append('file', file);
+      }
+      if (url && url.trim()) {
+        formData.append('url', url.trim());
       }
 
       const response = await httpClient.put(`media/${id}`, formData, {
