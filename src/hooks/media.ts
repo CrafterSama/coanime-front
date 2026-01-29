@@ -18,6 +18,8 @@ export interface MediaItem {
   modelId: number | null;
   modelTitle: string | null;
   modelSlug: string | null;
+  /** When model is Title: type name (e.g. TV, Manga, OVA) */
+  modelTitleType: string | null;
   createdAt: string;
   updatedAt: string;
 }

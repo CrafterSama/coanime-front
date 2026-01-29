@@ -17,6 +17,10 @@ export type Title = {
   slug: string;
   sinopsis: string;
   otherTitles: string;
+  /** Cover URL from Spatie media (camelCase from API) */
+  coverImageUrl?: string | null;
+  /** Cover URL snake_case (fallback for SSR/raw backend) */
+  cover_image_url?: string | null;
   images: {
     name: string;
   } | null;
@@ -60,7 +64,12 @@ export const createTitleColumns = (): ColumnDef<Title>[] => [
             <Link href={`/dashboard/titles/${title.id}`}>
               <Image
                 className="object-cover"
-                src={title.images?.name ?? DEFAULT_IMAGE}
+                src={
+                  title.coverImageUrl ??
+                  title.cover_image_url ??
+                  title.images?.name ??
+                  DEFAULT_IMAGE
+                }
                 alt={title.name}
                 loading="lazy"
                 fill

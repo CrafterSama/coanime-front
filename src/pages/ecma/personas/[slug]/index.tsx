@@ -40,11 +40,7 @@ const Person = ({ personData }: PersonProps) => {
                     className={`${
                       personData?.result?.image ? '' : 'blur'
                     } w-full h-full`}
-                    src={
-                      personData?.result?.image
-                        ? `https://api.coanime.net/storage/images/encyclopedia/people/${personData?.result?.image}`
-                        : DEFAULT_IMAGE
-                    }
+                    src={personData?.result?.image ?? DEFAULT_IMAGE}
                     alt={personData?.result?.name}
                     fill
                     unoptimized
@@ -60,11 +56,7 @@ const Person = ({ personData }: PersonProps) => {
                     <figure className="title-image overlap-banner relative rounded">
                       <Image
                         className="w-[300px] h-[380px] object-cover object-center mx-auto"
-                        src={
-                          personData?.result?.image
-                            ? `https://api.coanime.net/storage/images/encyclopedia/people/${personData?.result?.image}`
-                            : DEFAULT_IMAGE
-                        }
+                        src={personData?.result?.image ?? DEFAULT_IMAGE}
                         fill
                         alt={personData?.result?.name}
                         unoptimized

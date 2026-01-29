@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { Permissions } from '@/components/modules/common/Permissions';
 import SearchBox from '@/components/modules/common/SearchBox';
 import { CoanimeIcon } from '@/components/ui/ApplicationLogo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -60,7 +61,7 @@ const Navigation = ({ user }: { user: any }) => {
           <div className="flex justify-between h-16">
             <div className="flex gap-4">
               {/* Logo */}
-              <div className="flex-shrink-0 flex items-center">
+              <div className="shrink-0 flex items-center">
                 <Link
                   href="/"
                   className="relative flex flex-row items-center gap-2">
@@ -218,66 +219,70 @@ const Navigation = ({ user }: { user: any }) => {
           <SearchBox />
         </div>*/}
 
-          {/* Responsive Settings Options */}
-          <div className="pt-4 pb-1 shadow-[0_-1px_0_0_rgba(0,0,0,0.05)]">
+          {/* Responsive Settings Options - Mobile user block */}
+          <div className="pt-4 pb-4 px-4 shadow-[0_-1px_0_0_rgba(0,0,0,0.05)]">
             {user?.name ? (
               <>
-                <div className="flex items-center px-4">
-                  <div className="flex-shrink-0 relative w-12 h-12">
-                    {user?.name && (
-                      <Image
-                        src={
-                          user?.profilePhotoPath
-                            ? user?.profilePhotoPath
-                            : DEFAULT_IMAGE
-                        }
+                <div className="rounded-xl bg-gray-50 p-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-14 w-14 shrink-0 ring-2 ring-white shadow-sm">
+                      <AvatarImage
+                        src={user?.profilePhotoPath ?? user?.image ?? undefined}
                         alt={user?.name}
-                        className="rounded-full w-full h-full object-cover"
-                        fill
-                        unoptimized
+                        className="object-cover"
                       />
-                    )}
-                  </div>
-
-                  <div className="ml-3">
-                    <div className="font-medium text-base text-gray-800">
-                      {user?.name}
-                    </div>
-                    <div className="font-medium text-sm text-gray-500">
-                      {user?.email}
+                      <AvatarFallback className="bg-orange-100 text-orange-600 text-lg font-semibold">
+                        {user?.name
+                          ?.split(' ')
+                          .map((n: string) => n[0])
+                          .join('')
+                          .toUpperCase()
+                          .slice(0, 2) || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-gray-900 text-base truncate">
+                        {user?.name}
+                      </p>
+                      <p className="text-sm text-gray-500 truncate mt-0.5">
+                        {user?.email}
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-3 space-y-1">
-                  {/* Authentication */}
+                <nav className="space-y-0.5" aria-label="User menu">
                   <Permissions>
-                    <ResponsiveNavLink href="/dashboard">
-                      <span className="flex gap-2 justify-end items-center">
-                        <RectangleGroupIcon className="h-6 w-6 text-gray-700" />{' '}
-                        Dashboard
+                    <ResponsiveNavLink href="/dashboard" className="py-3">
+                      <span className="flex gap-3 items-center">
+                        <RectangleGroupIcon className="h-6 w-6 shrink-0 text-gray-600" />
+                        <span>Dashboard</span>
                       </span>
                     </ResponsiveNavLink>
                   </Permissions>
-                  <ResponsiveNavLink href={`/users/${user.slug}`}>
-                    <span className="flex gap-2 justify-end items-center">
-                      <UserCircleIcon className="h-6 w-6 text-gray-700" />{' '}
-                      Perfil
+                  <ResponsiveNavLink
+                    href={`/users/${user.slug}`}
+                    className="py-3">
+                    <span className="flex gap-3 items-center">
+                      <UserCircleIcon className="h-6 w-6 shrink-0 text-gray-600" />
+                      <span>Perfil</span>
                     </span>
                   </ResponsiveNavLink>
-                  <ResponsiveNavLink href="/mi-lista">
-                    <span className="flex gap-2 justify-end items-center">
-                      <QueueListIcon className="h-6 w-6 text-gray-700" /> Mi
-                      Lista
+                  <ResponsiveNavLink href="/mi-lista" className="py-3">
+                    <span className="flex gap-3 items-center">
+                      <QueueListIcon className="h-6 w-6 shrink-0 text-gray-600" />
+                      <span>Mi Lista</span>
                     </span>
                   </ResponsiveNavLink>
-                  <ResponsiveNavButton onClick={() => logout()}>
-                    <span className="flex gap-2 justify-end items-center">
-                      <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-700" />{' '}
-                      Logout
+                  <ResponsiveNavButton
+                    onClick={() => logout()}
+                    className="py-3 text-left w-full">
+                    <span className="flex gap-3 items-center">
+                      <ArrowLeftOnRectangleIcon className="h-6 w-6 shrink-0 text-gray-600" />
+                      <span>Logout</span>
                     </span>
                   </ResponsiveNavButton>
-                </div>
+                </nav>
               </>
             ) : (
               <div className="flex justify-end py-2 px-4">

@@ -104,9 +104,16 @@ export const createMediaColumns = (
       return (
         <div className="w-32">
           <div className="flex flex-col gap-1">
-            <Badge variant="outline" className="text-xs w-fit">
-              {media.modelType}
-            </Badge>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <Badge variant="outline" className="text-xs w-fit">
+                {media.modelType}
+              </Badge>
+              {media.modelType === 'Title' && media.modelTitleType && (
+                <Badge variant="secondary" className="text-xs w-fit">
+                  {media.modelTitleType}
+                </Badge>
+              )}
+            </div>
             {media.modelTitle && (
               <Link
                 href={href}

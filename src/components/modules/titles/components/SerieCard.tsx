@@ -6,13 +6,17 @@ import SerieGenres from '@/components/modules/titles/components/SerieGenres';
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
 
-import React from 'react';
-
 const SerieCard = ({ serie }: { serie: any }) => {
+  console.log(serie);
   return (
     <div className="title-item">
       <Image
-        src={serie?.images?.name ?? defaultImage}
+        src={
+          serie?.coverImageUrl ??
+          serie?.cover_image_url ??
+          serie?.images?.name ??
+          defaultImage
+        }
         alt={serie?.name}
         fill
         className={`object-scale-down ${

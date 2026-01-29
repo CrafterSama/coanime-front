@@ -15,6 +15,8 @@ export type Magazine = {
   name: string;
   slug: string;
   about: string;
+  coverImageUrl?: string;
+  cover_image_url?: string;
   image: {
     name: string;
   } | null;
@@ -47,9 +49,12 @@ export const createMagazineColumns = (): ColumnDef<Magazine>[] => [
     },
     cell: ({ row }) => {
       const magazine = row.original;
-      const imgSrc = magazine.image?.name
-        ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine.image.name}`
-        : DEFAULT_IMAGE;
+      const imgSrc =
+        magazine.coverImageUrl ??
+        magazine.cover_image_url ??
+        (magazine.image?.name
+          ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine.image.name}`
+          : DEFAULT_IMAGE);
       return (
         <div className="flex flex-row gap-4 w-96 py-2">
           <div className="w-24 h-24 shrink-0 relative rounded-lg overflow-hidden shadow-md bg-gray-100">

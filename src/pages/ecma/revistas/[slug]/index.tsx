@@ -40,12 +40,18 @@ const Magazine = ({ magazineData }: MagazineProps) => {
                 <figure className="title-header-image relative">
                   <Image
                     className={`${
-                      magazineData?.result?.images?.name ? '' : 'blur'
+                      magazineData?.result?.coverImageUrl ||
+                      magazineData?.result?.cover_image_url ||
+                      magazineData?.result?.image?.name
+                        ? ''
+                        : 'blur'
                     } w-full h-full`}
                     src={
-                      magazineData?.result?.image?.name
+                      magazineData?.result?.coverImageUrl ??
+                      magazineData?.result?.cover_image_url ??
+                      (magazineData?.result?.image?.name
                         ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
-                        : DEFAULT_IMAGE
+                        : DEFAULT_IMAGE)
                     }
                     alt={magazineData?.result?.name}
                     fill
@@ -63,9 +69,11 @@ const Magazine = ({ magazineData }: MagazineProps) => {
                       <Image
                         className="w-[300px] h-[380px] object-cover object-center mx-auto"
                         src={
-                          magazineData?.result?.image?.name
+                          magazineData?.result?.coverImageUrl ??
+                          magazineData?.result?.cover_image_url ??
+                          (magazineData?.result?.image?.name
                             ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazineData?.result?.image?.name}`
-                            : DEFAULT_IMAGE
+                            : DEFAULT_IMAGE)
                         }
                         fill
                         alt={magazineData?.result?.name}

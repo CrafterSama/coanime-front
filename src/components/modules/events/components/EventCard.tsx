@@ -13,11 +13,7 @@ const EventCard: FC<EventCardProps> = ({ event = [] }) => {
   return (
     <div className="title-item overflow-hidden py-4">
       <Image
-        src={
-          event?.image
-            ? `https://api.coanime.net/storage/images/events/${event?.image}`
-            : defaultImage
-        }
+        src={event?.image ?? defaultImage}
         alt={event?.name}
         fill
         className="object-scale-down bg-gray-200 rounded"

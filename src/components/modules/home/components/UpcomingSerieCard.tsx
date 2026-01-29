@@ -10,7 +10,12 @@ const BroadcastSerieCard = ({ serie }: { serie: any }) => {
   return (
     <div className="h-72 w-52 relative rounded overflow-hidden bg-gray-100 p-2">
       <Image
-        src={serie?.images?.name ? serie?.images?.name : DEFAULT_IMAGE}
+        src={
+          serie?.coverImageUrl ??
+          serie?.cover_image_url ??
+          serie?.images?.name ??
+          DEFAULT_IMAGE
+        }
         alt={serie?.name}
         className={`w-full h-full object-contain ${
           serie?.ratingId === 6 ? 'blur' : ''

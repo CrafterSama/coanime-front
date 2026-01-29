@@ -5,9 +5,10 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { DEFAULT_IMAGE } from '@/constants/common';
+import { Button } from '@/components/ui/button';
 import { extractText, strLimit } from '@/utils/string';
 import { ArrowUpDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export type Person = {
   id: string;
@@ -46,7 +47,7 @@ export const createPeopleColumns = (): ColumnDef<Person>[] => [
             <Link href={`/dashboard/people/${person.slug}`}>
               <Image
                 className="object-cover"
-                src={`https://api.coanime.net/storage/images/encyclopedia/people/${person.image}`}
+                src={person.image ?? DEFAULT_IMAGE}
                 alt={person.name}
                 loading="lazy"
                 fill

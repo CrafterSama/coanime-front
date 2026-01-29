@@ -21,14 +21,14 @@ import Loading from '@/components/ui/Loading';
 import Modal from '@/components/ui/Modal';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { Show } from '@/components/ui/Show';
 import { Tabs, TabsContent } from '@/components/ui/TabsWrapper';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import { useRandomImageByTitle } from '@/hooks/random-images';
-import { useCheckUserStatistics, useCheckUserRates } from '@/hooks/users';
+import { useCheckUserRates, useCheckUserStatistics } from '@/hooks/users';
 import { getTitle } from '@/services/titles';
 import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { Show } from '@/components/ui/Show';
 
 dayjs.extend(utc);
 
@@ -51,6 +51,7 @@ interface TitlesProps {
 }
 
 const Titles = ({ title, titleData, errors }: TitlesProps) => {
+  console.log('titleData', titleData);
   const [activeTab, setActiveTab] = useState('posts');
   const { user } = useAuth({ middleware: 'auth' });
   const [censored, setCensored] = useState(false);
@@ -151,6 +152,8 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
                       } object-cover`}
                       src={
                         randomImage?.url ??
+                        titleData?.result?.coverImageUrl ??
+                        titleData?.result?.cover_image_url ??
                         titleData?.result?.images?.name ??
                         DEFAULT_IMAGE
                       }
@@ -182,7 +185,12 @@ const Titles = ({ title, titleData, errors }: TitlesProps) => {
                           className={`object-scale-down ${
                             censored ? 'blur' : ''
                           }`}
-                          src={titleData?.result?.images?.name ?? DEFAULT_IMAGE}
+                          src={
+                            titleData?.result?.coverImageUrl ??
+                            titleData?.result?.cover_image_url ??
+                            titleData?.result?.images?.name ??
+                            DEFAULT_IMAGE
+                          }
                           fill
                           alt={titleData?.result?.name}
                           unoptimized
