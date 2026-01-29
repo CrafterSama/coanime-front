@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import Head from 'next/head';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
 
 import AppLayout from '@/components/Layouts/AppLayout';
@@ -23,10 +23,10 @@ const Media = () => {
   const [search, setSearch] = useState<string>(
     (router?.query?.search as string) || ''
   );
-  const [sortBy, setSortBy] = useState<string>(
+  const [sortBy, setSortBy] = useState<string>( // eslint-disable-line @typescript-eslint/no-unused-vars
     (router?.query?.sortBy as string) || 'created_at'
   );
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>( // eslint-disable-line @typescript-eslint/no-unused-vars
     (router?.query?.sortDirection as 'asc' | 'desc') || 'desc'
   );
   const [modelType, setModelType] = useState<string | undefined>(
@@ -56,9 +56,9 @@ const Media = () => {
     isPlaceholder,
   });
 
-  const result = data?.result || data;
-  const media = result?.data || data?.data || [];
-  const filters = data?.filters || {};
+  const result = (data as any)?.result || data;
+  const media = result?.data || (data as any)?.data || [];
+  const filters = (data as any)?.filters || {};
   const columns = React.useMemo(
     () => createMediaColumns(setMediaId, setOpenEditModal),
     [setMediaId, setOpenEditModal]
@@ -121,7 +121,16 @@ const Media = () => {
         { shallow: true }
       );
     },
-    [page, search, sortBy, sortDirection, modelType, collection, isPlaceholder, router]
+    [
+      page,
+      search,
+      sortBy,
+      sortDirection,
+      modelType,
+      collection,
+      isPlaceholder,
+      router,
+    ]
   );
 
   // Sincronizar URL → Estado
@@ -215,24 +224,29 @@ const Media = () => {
             {/* Tabla de media */}
             <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">
               <DataTable
-              columns={columns}
-              data={media}
-              isLoading={isLoading}
-              searchPlaceholder="Buscar por nombre, archivo o modelo..."
-              initialSearch={search}
-              onSearchChange={handleSearchChange}
-              pagination={{
-                  currentPage: result?.currentPage || page,
-                  lastPage: result?.lastPage || 1,
-                  perPage: result?.perPage || 15,
+                columns={columns}
+                data={media}
+                isLoading={isLoading}
+                searchPlaceholder="Buscar por nombre, archivo o modelo..."
+                initialSearch={search}
+                onSearchChange={handleSearchChange}
+                pagination={{
+                  pageIndex: (result?.currentPage || page) - 1,
+                  pageSize: result?.perPage || 15,
                   total: result?.total || 0,
+                  lastPage: result?.lastPage || 1,
+                  currentPage: result?.currentPage || page,
                   onPageChange,
                 }}
                 filters={
                   <>
                     <FilterSelect
                       value={modelType || ''}
-                      onChange={(value) => handleModelTypeChange(value || undefined)}
+                      onChange={(value) =>
+                        handleModelTypeChange(
+                          typeof value === 'string' ? value : undefined
+                        )
+                      }
                       options={[
                         { id: '', name: 'Todos los tipos' },
                         ...(filters?.model_types?.map((type: string) => ({
@@ -245,7 +259,11 @@ const Media = () => {
 
                     <FilterSelect
                       value={collection || ''}
-                      onChange={(value) => handleCollectionChange(value || undefined)}
+                      onChange={(value) =>
+                        handleCollectionChange(
+                          typeof value === 'string' ? value : undefined
+                        )
+                      }
                       options={[
                         { id: '', name: 'Todas las colecciones' },
                         ...(filters?.collections?.map((col: string) => ({

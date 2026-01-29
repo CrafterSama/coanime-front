@@ -42,11 +42,11 @@ const getInstance = (config?: AxiosRequestConfig) => {
       }
 
       const snakedData = keysToSnakeCase(data);
-      
+
       // Debug: log transformed data (always show)
       console.log('[HTTP Client] Original data:', data);
       console.log('[HTTP Client] Transformed data:', snakedData);
-      
+
       return snakedData;
     },
     ...(Array.isArray(axios.defaults.transformRequest)

@@ -113,7 +113,8 @@ const Titles = ({ titlesData }: TitlesProps) => {
 };
 
 export const getStaticProps = async (context: { params?: any }) => {
-  const resolvedParams = context?.params != null ? await context.params : undefined;
+  const resolvedParams =
+    context?.params != null ? await context.params : undefined;
   const page = resolvedParams?.page != null ? Number(resolvedParams.page) : 1;
   const safePage = Number.isFinite(page) && page >= 1 ? page : 1;
 

@@ -167,8 +167,8 @@ export const EditMediaModal = ({
                       Este es un placeholder
                     </h4>
                     <p className="text-sm text-yellow-700">
-                      El archivo original no está disponible. Puedes reemplazarlo
-                      subiendo una nueva imagen.
+                      El archivo original no está disponible. Puedes
+                      reemplazarlo subiendo una nueva imagen.
                     </p>
                     {media.originalUrl && (
                       <p className="text-xs text-yellow-600 mt-2">
@@ -220,13 +220,13 @@ export const EditMediaModal = ({
             {/* Reemplazar archivo */}
             <div>
               <Label htmlFor="file">
-                {isPlaceholder ? 'Subir Imagen' : 'Reemplazar Imagen (Opcional)'}
+                {isPlaceholder
+                  ? 'Subir Imagen'
+                  : 'Reemplazar Imagen (Opcional)'}
               </Label>
               <div className="mt-2">
                 <div className="flex items-center gap-4">
-                  <label
-                    htmlFor="file"
-                    className="flex-1 cursor-pointer">
+                  <label htmlFor="file" className="flex-1 cursor-pointer">
                     <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-100 rounded-lg hover:border-orange-400 hover:bg-orange-50 transition-colors">
                       <div className="text-center">
                         <PhotoIcon className="h-8 w-8 text-gray-400 mx-auto mb-2" />

@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import React, { useRef } from 'react';
 
 type HorizontalCarouselProps = {
@@ -43,13 +40,11 @@ export function HorizontalCarousel({
           gap,
           scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
-        }}
-      >
+        }}>
         {React.Children.map(children, (child) => (
           <div
             className="shrink-0 scroll-snap-align-start min-w-[calc(50%-6px)] sm:min-w-[calc(33.33%-6px)] md:min-w-[calc(25%-12px)] lg:min-w-[calc(16.666%-14px)]"
-            style={{ scrollSnapAlign: 'start' }}
-          >
+            style={{ scrollSnapAlign: 'start' }}>
             {child}
           </div>
         ))}
@@ -58,16 +53,14 @@ export function HorizontalCarousel({
         type="button"
         onClick={() => scroll('prev')}
         className="carousel-nav-prev absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white shadow-md transition hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-        aria-label="Anterior"
-      >
+        aria-label="Anterior">
         <ChevronLeftIcon className="h-6 w-6" />
       </button>
       <button
         type="button"
         onClick={() => scroll('next')}
         className="carousel-nav-next absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white shadow-md transition hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-        aria-label="Siguiente"
-      >
+        aria-label="Siguiente">
         <ChevronRightIcon className="h-6 w-6" />
       </button>
     </div>

@@ -8,17 +8,17 @@ export function ArticleSkeleton() {
         <Skeleton className="h-10 w-3/4" />
         <Skeleton className="h-6 w-1/2" />
       </div>
-      
+
       {/* Featured image */}
       <Skeleton className="h-96 w-full rounded-lg" />
-      
+
       {/* Content */}
       <div className="space-y-3">
         {Array.from({ length: 8 }).map((_, index) => (
           <Skeleton key={index} className="h-4 w-full" />
         ))}
       </div>
-      
+
       {/* Related content */}
       <div className="space-y-4 mt-8">
         <Skeleton className="h-6 w-48" />

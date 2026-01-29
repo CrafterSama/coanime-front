@@ -79,11 +79,14 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
     header: 'Ubicación',
     cell: ({ row }) => {
       const event = row.original;
-      if (!event.country && !event.address) return <div className="w-40">—</div>;
+      if (!event.country && !event.address)
+        return <div className="w-40">—</div>;
       const name = JSON.parse(event.country?.translations || '{}');
       const location = [
         event.address,
-        [event.country?.emoji, event.city?.name, name['es']].filter(Boolean).join(' '),
+        [event.country?.emoji, event.city?.name, name['es']]
+          .filter(Boolean)
+          .join(' '),
       ]
         .filter(Boolean)
         .join(' · ');
@@ -117,7 +120,8 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
             {dayjs(event.dateStart).format('DD/MM/YYYY')}
           </span>
           <span className="text-xs text-gray-500">
-            {dayjs(event.dateStart).format('HH:mm')} – {dayjs(event.dateEnd).format('HH:mm')}
+            {dayjs(event.dateStart).format('HH:mm')} –{' '}
+            {dayjs(event.dateEnd).format('HH:mm')}
           </span>
         </div>
       );
@@ -145,7 +149,9 @@ export const createEventColumns = (): ColumnDef<Event>[] => [
           <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
             {dayjs(d).format('DD/MM/YYYY')}
           </span>
-          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
+          <span className="text-xs text-gray-500">
+            {dayjs(d).format('HH:mm')}
+          </span>
         </div>
       );
     },

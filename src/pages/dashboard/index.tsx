@@ -118,8 +118,7 @@ const Dashboard = () => {
                       <Link
                         href="/dashboard/posts?page=1"
                         className="rounded-md p-2.5 text-white shadow-sm bg-orange-500 hover:bg-orange-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:shadow-[0_0_0_6px_rgba(249,115,22,0.45)] hover:ring-0 hover:ring-offset-0 hover:shadow-none transition-all duration-200"
-                        aria-label="Ver artículos"
-                      >
+                        aria-label="Ver artículos">
                         <NewspaperIcon className="h-5 w-5" />
                       </Link>
                     </div>
@@ -148,8 +147,7 @@ const Dashboard = () => {
                       <Link
                         href="/dashboard/titles?page=1"
                         className="rounded-md p-2.5 text-white shadow-sm bg-teal-500 hover:bg-teal-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:shadow-[0_0_0_6px_rgba(20,184,166,0.45)] hover:ring-0 hover:ring-offset-0 hover:shadow-none transition-all duration-200"
-                        aria-label="Ver títulos"
-                      >
+                        aria-label="Ver títulos">
                         <PhotoIcon className="h-5 w-5" />
                       </Link>
                     </div>
@@ -179,8 +177,7 @@ const Dashboard = () => {
                         <Link
                           href={`/posts/${data.mostVisitedPost.slug}`}
                           className="rounded-md p-2.5 text-white shadow-sm bg-violet-500 hover:bg-violet-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:shadow-[0_0_0_6px_rgba(139,92,246,0.45)] hover:ring-0 hover:ring-offset-0 hover:shadow-none transition-all duration-200"
-                          aria-label="Ver artículo más visitado"
-                        >
+                          aria-label="Ver artículo más visitado">
                           <NewspaperIcon className="h-5 w-5" />
                         </Link>
                       )}
@@ -211,8 +208,7 @@ const Dashboard = () => {
                         <Link
                           href={`/categorias/${data.mostPostsCategory.slug}`}
                           className="rounded-md p-2.5 text-white shadow-sm bg-blue-500 hover:bg-blue-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:shadow-[0_0_0_6px_rgba(59,130,246,0.45)] hover:ring-0 hover:ring-offset-0 hover:shadow-none transition-all duration-200"
-                          aria-label="Ver categoría"
-                        >
+                          aria-label="Ver categoría">
                           <TagIcon className="h-5 w-5" />
                         </Link>
                       )}
@@ -238,16 +234,14 @@ const Dashboard = () => {
             <section aria-labelledby="quick-actions-heading">
               <h2
                 id="quick-actions-heading"
-                className="mb-4 text-lg font-semibold text-gray-800"
-              >
+                className="mb-4 text-lg font-semibold text-gray-800">
                 Acciones rápidas
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/posts/create"
-                    className={`${QUICK_ACTION_BASE} ${focusOrange}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusOrange}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-orange-100 text-orange-600">
                       <NewspaperIcon className="h-5 w-5" />
                     </div>
@@ -266,8 +260,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/titles/create"
-                    className={`${QUICK_ACTION_BASE} ${focusTeal}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusTeal}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-teal-100 text-teal-600">
                       <PhotographIcon className="h-5 w-5" />
                     </div>
@@ -286,8 +279,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/profile"
-                    className={`${QUICK_ACTION_BASE} ${focusViolet}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusViolet}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-violet-100 text-violet-600">
                       <UserCircleIcon className="h-5 w-5" />
                     </div>
@@ -306,8 +298,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/media"
-                    className={`${QUICK_ACTION_BASE} ${focusBlue}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusBlue}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
                       <PhotoIcon className="h-5 w-5" />
                     </div>
@@ -326,8 +317,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/people"
-                    className={`${QUICK_ACTION_BASE} ${focusAmber}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusAmber}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-amber-100 text-amber-600">
                       <UsersIcon className="h-5 w-5" />
                     </div>
@@ -346,8 +336,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/magazine"
-                    className={`${QUICK_ACTION_BASE} ${focusEmerald}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusEmerald}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-emerald-100 text-emerald-600">
                       <BookOpenIcon className="h-5 w-5" />
                     </div>
@@ -366,8 +355,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/companies"
-                    className={`${QUICK_ACTION_BASE} ${focusSlate}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusSlate}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-600">
                       <OfficeBuildingIcon className="h-5 w-5" />
                     </div>
@@ -386,8 +374,7 @@ const Dashboard = () => {
                 <Card className="overflow-hidden rounded-md border border-gray-100 bg-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
                   <Link
                     href="/dashboard/events"
-                    className={`${QUICK_ACTION_BASE} ${focusRose}`}
-                  >
+                    className={`${QUICK_ACTION_BASE} ${focusRose}`}>
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-rose-100 text-rose-600">
                       <LocationMarkerIcon className="h-5 w-5" />
                     </div>

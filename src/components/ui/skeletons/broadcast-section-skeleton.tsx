@@ -1,5 +1,5 @@
-import { AnimeCardSkeleton } from "./anime-card-skeleton";
-import { SectionTitleSkeleton } from "./section-title-skeleton";
+import { AnimeCardSkeleton } from './anime-card-skeleton';
+import { SectionTitleSkeleton } from './section-title-skeleton';
 
 export function BroadcastSectionSkeleton() {
   return (

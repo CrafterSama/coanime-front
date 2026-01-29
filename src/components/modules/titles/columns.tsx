@@ -87,7 +87,9 @@ export const createTitleColumns = (): ColumnDef<Title>[] => [
               {strLimit(extractText(title.sinopsis ?? '') || '', 100)}
             </p>
             {title.otherTitles ? (
-              <p className="text-gray-500 text-xs truncate" title={title.otherTitles}>
+              <p
+                className="text-gray-500 text-xs truncate"
+                title={title.otherTitles}>
                 Otros títulos: {strLimit(title.otherTitles, 40)}
               </p>
             ) : null}
@@ -126,7 +128,9 @@ export const createTitleColumns = (): ColumnDef<Title>[] => [
             {rating.name}
           </span>
           {rating.description ? (
-            <span className="text-xs text-gray-500 line-clamp-1">{rating.description}</span>
+            <span className="text-xs text-gray-500 line-clamp-1">
+              {rating.description}
+            </span>
           ) : null}
         </div>
       );
@@ -205,7 +209,9 @@ export const createTitleColumns = (): ColumnDef<Title>[] => [
           <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
             {dayjs(d).format('DD/MM/YYYY')}
           </span>
-          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
+          <span className="text-xs text-gray-500">
+            {dayjs(d).format('HH:mm')}
+          </span>
         </div>
       );
     },

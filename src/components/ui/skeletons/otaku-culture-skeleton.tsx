@@ -1,5 +1,5 @@
-import { ArticleCardSkeleton } from "./article-card-skeleton";
-import { SectionTitleSkeleton } from "./section-title-skeleton";
+import { ArticleCardSkeleton } from './article-card-skeleton';
+import { SectionTitleSkeleton } from './section-title-skeleton';
 
 export function OtakuCultureSkeleton() {
   return (

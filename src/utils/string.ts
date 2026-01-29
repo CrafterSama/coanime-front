@@ -48,7 +48,9 @@ export const getServerError = (error: any): string => {
   // Laravel validation errors: { errors: { "field": ["msg"] } }
   const errors = data.errors;
   if (errors && typeof errors === 'object' && Object.keys(errors).length > 0) {
-    const flatMessages = (Object.values(errors).flat().filter(Boolean) as string[]);
+    const flatMessages = Object.values(errors)
+      .flat()
+      .filter(Boolean) as string[];
     return flatMessages[0] ?? flatMessages.join(' ');
   }
 
@@ -56,7 +58,9 @@ export const getServerError = (error: any): string => {
   const message = data.message;
   if (typeof message === 'string') return message;
   if (message && typeof message === 'object' && 'text' in message) {
-    return typeof message.text === 'string' ? message.text : String(message.text);
+    return typeof message.text === 'string'
+      ? message.text
+      : String(message.text);
   }
 
   return 'Error desconocido';

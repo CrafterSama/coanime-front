@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
 
@@ -342,7 +342,11 @@ const CreateTitle = () => {
                               <SelectTrigger>
                                 <SelectValue placeholder="Selecciona una clasificación">
                                   {field.value
-                                    ? `${field.value.label}${field.value.description ? ` (${field.value.description})` : ''}`
+                                    ? `${field.value.label}${
+                                        field.value.description
+                                          ? ` (${field.value.description})`
+                                          : ''
+                                      }`
                                     : ''}
                                 </SelectValue>
                               </SelectTrigger>
@@ -412,9 +416,7 @@ const CreateTitle = () => {
                     <div className="flex flex-row items-center gap-2 pt-1">
                       <ToggleCheckbox
                         name="justYear"
-                        onChange={(e) =>
-                          setValue('justYear', e.target.checked)
-                        }
+                        onChange={(e) => setValue('justYear', e.target.checked)}
                         checked={watch('justYear')}
                       />
                       <Label className="mb-0 cursor-pointer">
@@ -438,7 +440,9 @@ const CreateTitle = () => {
                           <FormLabel>Estatus</FormLabel>
                           <Select
                             value={
-                              field.value?.value?.toString() || field.value || ''
+                              field.value?.value?.toString() ||
+                              field.value ||
+                              ''
                             }
                             onValueChange={(value) => {
                               const selectedStatus = statusOptions?.find(

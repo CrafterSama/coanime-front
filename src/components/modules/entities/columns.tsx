@@ -113,7 +113,9 @@ export const createCompanyColumns = (): ColumnDef<Company>[] => [
           <span className="text-xs font-medium text-gray-900 bg-gray-50 px-2 py-1 rounded shadow-sm w-fit">
             {dayjs(d).format('DD/MM/YYYY')}
           </span>
-          <span className="text-xs text-gray-500">{dayjs(d).format('HH:mm')}</span>
+          <span className="text-xs text-gray-500">
+            {dayjs(d).format('HH:mm')}
+          </span>
         </div>
       );
     },
