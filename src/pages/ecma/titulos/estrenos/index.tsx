@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import SeriesList from '@/components/modules/titles/components/SeriesList';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import Section from '@/components/ui/Section';
+import WebLayout from '@/components/layouts/web-layout';
+import SeriesList from '@/components/modules/titles/components/series-list';
+import Loading from '@/components/ui/loading';
+import Paginator from '@/components/ui/paginator';
+import Section from '@/components/ui/section';
 import { getUpcomingTitles } from '@/services/titles';
-import { Show } from '@/components/ui/Show';
-import { withRetry } from '@/utils/getStaticPropsHelper';
+import { Show } from '@/components/ui/show';
+import { withRetry } from '@/utils/get-static-props-helper';
 
 type TitleData = {
   title: string;

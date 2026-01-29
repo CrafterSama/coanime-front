@@ -3,14 +3,14 @@ import 'dayjs/locale/es';
 import Head from 'next/head';
 import Image from 'next/image';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import ImageDetails from '@/components/ui/ImageDetails';
-import ItemInfo from '@/components/ui/ItemInfo';
-import Loading from '@/components/ui/Loading';
-import Section from '@/components/ui/Section';
+import WebLayout from '@/components/layouts/web-layout';
+import ImageDetails from '@/components/ui/image-details';
+import ItemInfo from '@/components/ui/item-info';
+import Loading from '@/components/ui/loading';
+import Section from '@/components/ui/section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { getEvent } from '@/services/events';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 
 interface EventProps {
   eventData: any;

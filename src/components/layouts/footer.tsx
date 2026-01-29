@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-import Section from '@/components/ui/Section';
+import Section from '@/components/ui/section';
 
 const Footer = () => {
   return (

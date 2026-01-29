@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { UserWithRoles } from '@/types/auth/user-with-roles.types';
 import { hasRole } from '@/utils/common';

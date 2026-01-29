@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Permissions } from '@/components/modules/common/Permissions';
-import SectionTitle from '@/components/ui/SectionTitle';
+import { Permissions } from '@/components/modules/common/permissions';
+import SectionTitle from '@/components/ui/section-title';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { PencilIcon } from '@heroicons/react/24/outline';
 

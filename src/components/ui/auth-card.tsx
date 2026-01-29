@@ -1,4 +1,4 @@
-import { Logotype } from '@/components/ui/ApplicationLogo';
+import { Logotype } from '@/components/ui/application-logo';
 import { useRandomImageByTitle } from '@/hooks/random-images';
 
 const ANIME_NAME = [

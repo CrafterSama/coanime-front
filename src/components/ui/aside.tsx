@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { CoanimeIcon, Logotype } from '@/components/ui/ApplicationLogo';
-import { Show } from './Show';
+import { CoanimeIcon, Logotype } from '@/components/ui/application-logo';
+import { Show } from './show';
 import {
   Sidebar,
   SidebarContent,

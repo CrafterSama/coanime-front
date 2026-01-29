@@ -4,14 +4,14 @@ import Head from 'next/head';
 
 import { useRouter } from 'next/router';
 
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { createMediaColumns } from '@/components/modules/media/columns';
 import { DataTable } from '@/components/ui/data-table';
 import { FilterSelect } from '@/components/ui/filter-select';
 import { useMedia } from '@/hooks/media';
 import { PhotoIcon } from '@heroicons/react/24/outline';
-import SectionHeader from '@/components/ui/SectionHeader';
-import { EditMediaModal } from '@/components/modules/media/EditMediaModal';
+import SectionHeader from '@/components/ui/section-header';
+import { EditMediaModal } from '@/components/modules/media/edit-media-modal';
 
 const Media = () => {
   const router = useRouter();

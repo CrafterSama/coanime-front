@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Permissions } from '@/components/modules/common/Permissions';
+import { Permissions } from '@/components/modules/common/permissions';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { PencilIcon } from '@heroicons/react/24/outline';
 

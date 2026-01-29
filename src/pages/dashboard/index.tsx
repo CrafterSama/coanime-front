@@ -8,8 +8,8 @@ import {
   OfficeBuildingIcon,
   PhotographIcon,
 } from '@/components/icons';
-import AppLayout from '@/components/Layouts/AppLayout';
-import SectionHeader from '@/components/ui/SectionHeader';
+import AppLayout from '@/components/layouts/app-layout';
+import SectionHeader from '@/components/ui/section-header';
 import {
   Card,
   CardContent,

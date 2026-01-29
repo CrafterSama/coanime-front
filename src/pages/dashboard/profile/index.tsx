@@ -12,13 +12,13 @@ import { FaTiktok, FaPinterest } from 'react-icons/fa';
 import Head from 'next/head';
 import Image from 'next/image';
 
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { FormWithContext } from '@/components/ui/form';
-import FormHeader from '@/components/ui/FormHeader';
+import FormHeader from '@/components/ui/form-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FormSkeleton } from '@/components/ui/form-skeleton';
-import TextEditor from '@/components/ui/TextEditor';
+import TextEditor from '@/components/ui/text-editor';
 import { uploadImages } from '@/hooks/images';
 import { useProfile, updateMe } from '@/hooks/users';
 import {

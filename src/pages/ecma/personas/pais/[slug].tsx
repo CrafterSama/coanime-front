@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import PersonCard from '@/components/modules/people/components/PersonCard';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import Section from '@/components/ui/Section';
+import WebLayout from '@/components/layouts/web-layout';
+import PersonCard from '@/components/modules/people/components/person-card';
+import Loading from '@/components/ui/loading';
+import Paginator from '@/components/ui/paginator';
+import Section from '@/components/ui/section';
 import { getPeopleByCountry } from '@/services/people';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 
 type PeopleData = {
   title: string;

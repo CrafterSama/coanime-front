@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
-import Footer from '@/components/Layouts/Footer';
-import Navigation from '@/components/Layouts/WebNavigation';
+import Footer from '@/components/layouts/footer';
+import Navigation from '@/components/layouts/web-navigation';
 import { useAuth } from '@/hooks/auth';
 
 type WebLayoutProps = {

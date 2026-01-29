@@ -9,7 +9,7 @@ import { CloudUploadIcon } from '@/components/icons';
 import { Label } from '@/components/ui/label';
 import { uploadImages } from '@/hooks/images';
 
-import { Show } from './Show';
+import { Show } from './show';
 
 const UploadImage = ({
   disabled = false,

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import cn from 'classnames';
-import Icon from '@/components/ui/Icon';
+import Icon from '@/components/ui/icon';
 
 export interface AlertProps {
   variant?: 'positive' | 'negative' | 'caution' | 'info';

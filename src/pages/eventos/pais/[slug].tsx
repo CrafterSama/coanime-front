@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import EventCard from '@/components/modules/events/components/EventCard';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import Section from '@/components/ui/Section';
+import WebLayout from '@/components/layouts/web-layout';
+import EventCard from '@/components/modules/events/components/event-card';
+import Loading from '@/components/ui/loading';
+import Paginator from '@/components/ui/paginator';
+import Section from '@/components/ui/section';
 import { getEventsByCountry } from '@/services/events';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 
 type eventsData = {
   title: string;

@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import WebLayout from '@/components/Layouts/WebLayout';
+import WebLayout from '@/components/layouts/web-layout';
 
 const IMAGES_404 = [
   {

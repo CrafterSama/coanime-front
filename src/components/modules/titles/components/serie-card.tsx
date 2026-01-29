@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import SerieGenres from '@/components/modules/titles/components/SerieGenres';
+import SerieGenres from '@/components/modules/titles/components/serie-genres';
 
 const defaultImage =
   'https://coanime.s3.us-east-2.amazonaws.com/default-not-found.svg';
