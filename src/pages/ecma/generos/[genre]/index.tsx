@@ -4,14 +4,14 @@ import cn from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import SerieCard from '@/components/modules/titles/components/SerieCard';
-import CloudLinks from '@/components/ui/CloudLinks';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import Section from '@/components/ui/Section';
+import WebLayout from '@/components/layouts/web-layout';
+import SerieCard from '@/components/modules/titles/components/serie-card';
+import CloudLinks from '@/components/ui/cloud-links';
+import Loading from '@/components/ui/loading';
+import Paginator from '@/components/ui/paginator';
+import Section from '@/components/ui/section';
 import { getTitlesByGenre } from '@/services/titles';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 
 type TitleData = {
   title: string;

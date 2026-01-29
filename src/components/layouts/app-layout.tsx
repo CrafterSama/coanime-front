@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import Aside from '@/components/ui/Aside';
+import Aside from '@/components/ui/aside';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 import {
   SidebarInset,
   SidebarProvider,

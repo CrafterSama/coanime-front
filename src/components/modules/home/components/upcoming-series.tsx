@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import UpcomingSerieCard from '@/components/modules/home/components/UpcomingSerieCard';
+import UpcomingSerieCard from '@/components/modules/home/components/upcoming-serie-card';
 import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
 import { CarouselSkeleton } from '@/components/ui/carousel-skeleton';
 

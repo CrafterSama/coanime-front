@@ -4,11 +4,11 @@ import { CgSpinner } from 'react-icons/cg';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import OtherNews from '@/components/modules/home/components/OtherNews';
+import WebLayout from '@/components/layouts/web-layout';
+import OtherNews from '@/components/modules/home/components/other-news';
 import { Button } from '@/components/ui/button';
-import Section from '@/components/ui/Section';
-import SectionTitle from '@/components/ui/SectionTitle';
+import Section from '@/components/ui/section';
+import SectionTitle from '@/components/ui/section-title';
 import { getArticlesData } from '@/services/posts';
 
 type ArticlesProps = {

@@ -4,12 +4,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { createPostColumns } from '@/components/modules/posts/columns';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { FilterSelect } from '@/components/ui/filter-select';
-import Modal from '@/components/ui/Modal';
+import Modal from '@/components/ui/modal';
 import { useAuth } from '@/hooks/auth';
 import { usePosts } from '@/hooks/posts';
 import { postDelete } from '@/services/posts';

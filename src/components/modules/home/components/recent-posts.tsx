@@ -1,7 +1,7 @@
 import 'dayjs/locale/es';
 
-import Section from '@/components/ui/Section';
-import SectionTitle from '@/components/ui/SectionTitle';
+import Section from '@/components/ui/section';
+import SectionTitle from '@/components/ui/section-title';
 import { Plus } from 'lucide-react';
 import { ArticleCard } from './article-card';
 

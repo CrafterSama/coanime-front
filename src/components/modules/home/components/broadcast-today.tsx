@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import BroadcastSerieCard from '@/components/modules/home/components/BroadcastSerieCard';
+import BroadcastSerieCard from '@/components/modules/home/components/broadcast-serie-card';
 import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
 import { CarouselSkeleton } from '@/components/ui/carousel-skeleton';
 

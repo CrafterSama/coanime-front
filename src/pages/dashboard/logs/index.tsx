@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { SortingState } from '@tanstack/react-table';
 
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import {
   createActivityLogColumns,
   type ActivityLogRow,

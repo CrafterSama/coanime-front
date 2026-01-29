@@ -3,10 +3,10 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import GuestLayout from '@/components/Layouts/GuestLayout';
-import { ApplicationLogo } from '@/components/ui/ApplicationLogo';
-import AuthCard from '@/components/ui/AuthCard';
-import AuthValidationErrors from '@/components/ui/AuthValidationErrors';
+import GuestLayout from '@/components/layouts/guest-layout';
+import { ApplicationLogo } from '@/components/ui/application-logo';
+import AuthCard from '@/components/ui/auth-card';
+import AuthValidationErrors from '@/components/ui/auth-validation-errors';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

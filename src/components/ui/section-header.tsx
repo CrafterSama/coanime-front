@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import Link from 'next/link';
 
-import Errors from '@/components/ui/Errors';
+import Errors from '@/components/ui/errors';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 type SectionHeaderProps = {

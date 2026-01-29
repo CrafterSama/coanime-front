@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Permissions } from '@/components/modules/common/Permissions';
-import Section from '@/components/ui/Section';
+import { Permissions } from '@/components/modules/common/permissions';
+import Section from '@/components/ui/section';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { formatLocaleDate } from '@/utils/date';
 import { ClockIcon, PencilIcon } from '@heroicons/react/24/outline';

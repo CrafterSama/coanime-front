@@ -7,9 +7,9 @@ import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import NextNProgress from 'nextjs-progressbar';
 import { Toaster } from 'react-hot-toast';
 
-import ErrorBoundary from '@/components/ErrorBoundary';
+import ErrorBoundary from '@/components/error-boundary';
 import { GA_TRACKING_ID, pageview } from '../lib/gtag';
-import { getQueryClient } from '../lib/queryClient';
+import { getQueryClient } from '../lib/query-client';
 
 import '@/styles/app.css';
 

@@ -6,7 +6,7 @@ import { DEFAULT_IMAGE } from '@/constants/common';
 import { extractText, strLimit } from '@/utils/string';
 import { EyeIcon, LinkIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { hasRole } from '@/utils/common';
-import { Show } from '@/components/ui/Show';
+import { Show } from '@/components/ui/show';
 import { Button } from '@/components/ui/button';
 
 export const usePostsSettings = ({

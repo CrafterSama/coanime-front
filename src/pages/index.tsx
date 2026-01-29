@@ -4,17 +4,17 @@ import { CgSpinner } from 'react-icons/cg';
 
 import Head from 'next/head';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import BroadcastToday from '@/components/modules/home/components/BroadcastToday';
-import OtherNews from '@/components/modules/home/components/OtherNews';
-import RecentPosts from '@/components/modules/home/components/RecentPosts';
-import TopSlider from '@/components/modules/home/components/TopSlider';
-import UpcomingSeries from '@/components/modules/home/components/UpcomingSeries';
+import WebLayout from '@/components/layouts/web-layout';
+import BroadcastToday from '@/components/modules/home/components/broadcast-today';
+import OtherNews from '@/components/modules/home/components/other-news';
+import RecentPosts from '@/components/modules/home/components/recent-posts';
+import TopSlider from '@/components/modules/home/components/top-slider';
+import UpcomingSeries from '@/components/modules/home/components/upcoming-series';
 import { Button } from '@/components/ui/button';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
-import Section from '@/components/ui/Section';
-import SectionTitle from '@/components/ui/SectionTitle';
-import { ShowAdvanced } from '@/components/ui/Show';
+import Section from '@/components/ui/section';
+import SectionTitle from '@/components/ui/section-title';
+import { ShowAdvanced } from '@/components/ui/show';
 import { RecentArticlesSkeleton } from '@/components/ui/skeletons/recent-articles-skeleton';
 import { getHomeData } from '@/services/home';
 import { getArticlesData, getArticlesJapan } from '@/services/posts';

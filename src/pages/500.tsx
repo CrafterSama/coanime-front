@@ -1,4 +1,4 @@
-import Error from '@/components/modules/common/Error';
+import Error from '@/components/modules/common/error';
 
 const ServerError = () => {
   return (

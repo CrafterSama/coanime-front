@@ -13,7 +13,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next/types';
 
-import WebLayout from '@/components/Layouts/WebLayout';
+import WebLayout from '@/components/layouts/web-layout';
 import {
   FormControl,
   FormDescription,
@@ -23,13 +23,13 @@ import {
   FormMessage,
   FormWithContext,
 } from '@/components/ui/form';
-import FormHeader from '@/components/ui/FormHeader';
+import FormHeader from '@/components/ui/form-header';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
 import { FormSkeleton } from '@/components/ui/form-skeleton';
-import Section from '@/components/ui/Section';
-import TextEditor from '@/components/ui/TextEditor';
+import Section from '@/components/ui/section';
+import TextEditor from '@/components/ui/text-editor';
 import { uploadImages } from '@/hooks/images';
 import { useProfile, updateMe } from '@/hooks/users';
 import {

@@ -9,9 +9,9 @@ import utc from 'dayjs/plugin/utc';
 import Head from 'next/head';
 import Image from 'next/image';
 
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { Titles } from '@/components/modules/titles/interfaces/titles';
-import { titleSchema } from '@/components/modules/titles/schemas/titleSchema';
+import { titleSchema } from '@/components/modules/titles/schemas/title-schema';
 import {
   FormControl,
   FormDescription,
@@ -21,11 +21,11 @@ import {
   FormMessage,
   FormWithContext,
 } from '@/components/ui/form';
-import FormHeader from '@/components/ui/FormHeader';
+import FormHeader from '@/components/ui/form-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FormSkeleton } from '@/components/ui/form-skeleton';
-import SectionHeader from '@/components/ui/SectionHeader';
+import SectionHeader from '@/components/ui/section-header';
 import {
   Select,
   SelectContent,
@@ -33,9 +33,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import TextEditor from '@/components/ui/TextEditor';
-import ToggleCheckbox from '@/components/ui/ToggleCheckbox';
-import UploadImage from '@/components/ui/UploadImage';
+import TextEditor from '@/components/ui/text-editor';
+import ToggleCheckbox from '@/components/ui/toggle-checkbox';
+import UploadImage from '@/components/ui/upload-image';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useTitle } from '@/hooks/titles';
 import { titleUpdate } from '@/services/titles';

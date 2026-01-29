@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import SectionTitle from '@/components/ui/SectionTitle';
+import SectionTitle from '@/components/ui/section-title';
 import { DEFAULT_IMAGE } from '@/constants/common';
 
 import React from 'react';

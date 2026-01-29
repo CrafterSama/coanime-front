@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Permissions } from '@/components/modules/common/Permissions';
-import SearchBox from '@/components/modules/common/SearchBox';
-import { CoanimeIcon } from '@/components/ui/ApplicationLogo';
+import { Permissions } from '@/components/modules/common/permissions';
+import SearchBox from '@/components/modules/common/search-box';
+import { CoanimeIcon } from '@/components/ui/application-logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,11 +17,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import NavLink from '@/components/ui/NavLink';
+import NavLink from '@/components/ui/nav-link';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
-} from '@/components/ui/ResponsiveNavLink';
-import { Show } from '@/components/ui/Show';
+} from '@/components/ui/responsive-nav-link';
+import { Show } from '@/components/ui/show';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import {

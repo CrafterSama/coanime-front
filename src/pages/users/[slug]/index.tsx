@@ -12,15 +12,15 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import WebLayout from '@/components/Layouts/WebLayout';
-import OtherArticles from '@/components/modules/posts/components/OtherArticles';
-import SeriesList from '@/components/modules/titles/components/SeriesList';
-import FlexLayout from '@/components/ui/FlexLayout';
-import Loading from '@/components/ui/Loading';
-import Paginator from '@/components/ui/Paginator';
-import Section from '@/components/ui/Section';
-import SectionTitle from '@/components/ui/SectionTitle';
-import { Tabs, TabsContent } from '@/components/ui/TabsWrapper';
+import WebLayout from '@/components/layouts/web-layout';
+import OtherArticles from '@/components/modules/posts/components/other-articles';
+import SeriesList from '@/components/modules/titles/components/series-list';
+import FlexLayout from '@/components/ui/flex-layout';
+import Loading from '@/components/ui/loading';
+import Paginator from '@/components/ui/paginator';
+import Section from '@/components/ui/section';
+import SectionTitle from '@/components/ui/section-title';
+import { Tabs, TabsContent } from '@/components/ui/tabs-wrapper';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
 import {

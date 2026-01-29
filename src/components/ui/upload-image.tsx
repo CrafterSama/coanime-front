@@ -9,7 +9,7 @@ import { CloudUploadIcon } from '@/components/icons';
 import { Label } from '@/components/ui/label';
 import { uploadImages } from '@/hooks/images';
 
-import { Show } from './Show';
+import { Show } from './show';
 
 const UploadImage = ({
   disabled = false,
@@ -17,16 +17,20 @@ const UploadImage = ({
   name,
   model,
   onUploadSuccess,
+  showUrlOption = true,
 }: {
   disabled?: boolean;
   modelId?: number | string | null;
   name: string;
   model: string;
   onUploadSuccess?: () => void;
+  /** Show "Or paste image URL" option (for create/edit post and title forms) */
+  showUrlOption?: boolean;
 }) => {
   const { watch, setValue } = useFormContext();
   const [newImage, setNewImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [imageUrlInput, setImageUrlInput] = useState<string>('');
 
   const uploadPostImages = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -44,6 +48,7 @@ const UploadImage = ({
       if (response.status === 200) {
         setValue(name, response?.data?.url);
         setNewImage(true);
+        setImageUrlInput('');
         toast.success(response?.data?.message?.text);
         onUploadSuccess?.();
         return;
@@ -100,12 +105,61 @@ const UploadImage = ({
         disabled={disabled}
         onChange={uploadPostImages}
       />
-      <Show when={newImage}>
-        <Label htmlFor="image">Nueva Imagen</Label>
-        <div className="relative w-full h-[280px]">
+
+      {showUrlOption && (
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <Label htmlFor={`${name}-url`} className="text-gray-600 text-sm">
+            O pega la URL de la imagen
+          </Label>
+          <div className="mt-2 flex gap-2">
+            <input
+              id={`${name}-url`}
+              type="url"
+              value={imageUrlInput}
+              onChange={(e) => setImageUrlInput(e.target.value)}
+              onBlur={() => {
+                const url = imageUrlInput.trim();
+                if (url) {
+                  setValue(name, url);
+                  setNewImage(true);
+                }
+              }}
+              placeholder="https://ejemplo.com/imagen.jpg"
+              disabled={disabled}
+              className="flex-1 rounded-md border border-gray-200 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const url = imageUrlInput.trim();
+                if (url) {
+                  setValue(name, url);
+                  setNewImage(true);
+                  toast.success(
+                    'URL asignada. Guarda el formulario para aplicar.'
+                  );
+                  onUploadSuccess?.();
+                }
+              }}
+              disabled={disabled || !imageUrlInput.trim()}
+              className="shrink-0 rounded-md bg-orange-100 px-3 py-2 text-sm font-medium text-orange-700 hover:bg-orange-200 disabled:opacity-50 disabled:cursor-not-allowed">
+              Usar URL
+            </button>
+          </div>
+          <p className="mt-1 text-xs text-gray-500">
+            La imagen se descargará al guardar (posts/títulos).
+          </p>
+        </div>
+      )}
+
+      <Show when={newImage && watch(name)}>
+        <Label htmlFor="image" className="mt-4 block">
+          Vista previa
+        </Label>
+        <div className="relative mt-2 w-full h-[280px]">
           <Image
             src={watch(name)}
-            alt="New image"
+            alt="Preview"
             className="rounded-lg object-scale-down bg-gray-200"
             fill
             unoptimized

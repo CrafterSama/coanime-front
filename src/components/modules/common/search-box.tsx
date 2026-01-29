@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 import { Input } from '@/components/ui/input';
-import SectionTitle from '@/components/ui/SectionTitle';
+import SectionTitle from '@/components/ui/section-title';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { useSearchPosts } from '@/hooks/posts';
 import { useSearchTitle } from '@/hooks/titles';

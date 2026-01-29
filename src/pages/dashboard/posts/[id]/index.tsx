@@ -12,9 +12,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { CalendarIcon, XIcon } from '@/components/icons';
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
-import { postSchema } from '@/components/modules/posts/schemas/postSchema';
+import { postSchema } from '@/components/modules/posts/schemas/post-schema';
 import {
   FormControl,
   FormField,
@@ -24,10 +24,10 @@ import {
   FormWithContext,
 } from '@/components/ui/form';
 import { FormSkeleton } from '@/components/ui/form-skeleton';
-import FormHeader from '@/components/ui/FormHeader';
+import FormHeader from '@/components/ui/form-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SectionHeader from '@/components/ui/SectionHeader';
+import SectionHeader from '@/components/ui/section-header';
 import {
   Select,
   SelectContent,
@@ -35,9 +35,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Show } from '@/components/ui/Show';
-import TextEditor from '@/components/ui/TextEditor';
-import UploadImage from '@/components/ui/UploadImage';
+import { Show } from '@/components/ui/show';
+import TextEditor from '@/components/ui/text-editor';
+import UploadImage from '@/components/ui/upload-image';
 import { DEFAULT_IMAGE } from '@/constants/common';
 import { usePost } from '@/hooks/posts';
 import { useSearchTitle } from '@/hooks/titles';

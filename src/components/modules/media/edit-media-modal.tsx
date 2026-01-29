@@ -33,21 +33,23 @@ export const EditMediaModal = ({
   const updateMedia = useUpdateMedia();
   const [name, setName] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
   const [preview, setPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const media = data?.data;
 
-  // Cargar datos del media cuando se abre el modal
+  // Load media data when modal opens
   useEffect(() => {
     if (media) {
       setName(media.name || '');
       setPreview(null);
       setFile(null);
+      setImageUrl('');
     }
   }, [media]);
 
-  // Generar preview cuando se selecciona un archivo
+  // Preview: file (data URL) or imageUrl if valid
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
@@ -55,30 +57,39 @@ export const EditMediaModal = ({
         setPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
+    } else if (imageUrl.trim()) {
+      setPreview(imageUrl.trim());
     } else {
       setPreview(null);
     }
-  }, [file]);
+  }, [file, imageUrl]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      // Validar tipo de archivo
       if (!selectedFile.type.startsWith('image/')) {
         toast.error('Por favor selecciona un archivo de imagen');
         return;
       }
-      // Validar tamaño (10MB)
       if (selectedFile.size > 10 * 1024 * 1024) {
         toast.error('El archivo no debe exceder 10MB');
         return;
       }
       setFile(selectedFile);
+      setImageUrl('');
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!file && !imageUrl.trim() && !name) {
+      toast.error('Indica un nombre, sube un archivo o pega una URL');
+      return;
+    }
+    if (file && imageUrl.trim()) {
+      toast.error('Usa solo archivo o solo URL, no ambos');
+      return;
+    }
     setIsSubmitting(true);
 
     try {
@@ -86,6 +97,7 @@ export const EditMediaModal = ({
         id: mediaId,
         name: name || undefined,
         file: file || undefined,
+        url: imageUrl.trim() || undefined,
       });
       toast.success('Media actualizado correctamente');
       onClose();
@@ -98,7 +110,7 @@ export const EditMediaModal = ({
     }
   };
 
-  const imageUrl = preview || media?.thumbUrl || media?.url || DEFAULT_IMAGE;
+  const displayUrl = preview || media?.thumbUrl || media?.url || DEFAULT_IMAGE;
   const isPlaceholder = media?.isPlaceholder;
 
   return (
@@ -193,7 +205,7 @@ export const EditMediaModal = ({
               <Label>Vista Previa</Label>
               <div className="mt-2 relative w-full h-64 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
                 <Image
-                  src={imageUrl}
+                  src={displayUrl}
                   alt={media.name || 'Media preview'}
                   fill
                   className="object-contain"
@@ -271,6 +283,37 @@ export const EditMediaModal = ({
                     Quitar archivo
                   </Button>
                 )}
+
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Label htmlFor="image-url" className="text-gray-600">
+                    O bien, pega la URL de la imagen
+                  </Label>
+                  <Input
+                    id="image-url"
+                    type="url"
+                    value={imageUrl}
+                    onChange={(e) => {
+                      setImageUrl(e.target.value);
+                      if (e.target.value.trim()) setFile(null);
+                    }}
+                    placeholder="https://ejemplo.com/imagen.jpg"
+                    className="mt-2"
+                  />
+                  {imageUrl.trim() && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setImageUrl('');
+                        setPreview(null);
+                      }}
+                      className="mt-2">
+                      <XMarkIcon className="h-4 w-4 mr-1" />
+                      Quitar URL
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -315,7 +358,7 @@ export const EditMediaModal = ({
               <Button
                 type="submit"
                 variant="solid-orange"
-                disabled={isSubmitting || (!name && !file)}>
+                disabled={isSubmitting || (!name && !file && !imageUrl.trim())}>
                 {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
               </Button>
             </div>

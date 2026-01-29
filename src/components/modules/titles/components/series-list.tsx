@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import SerieCard from '@/components/modules/titles/components/SerieCard';
+import SerieCard from '@/components/modules/titles/components/serie-card';
 
 type SeriesListProps = {
   series: any[];

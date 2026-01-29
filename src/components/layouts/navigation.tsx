@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import ResponsiveNavLink, {
   ResponsiveNavButton,
-} from '@/components/ui/ResponsiveNavLink';
-import { Show } from '@/components/ui/Show';
+} from '@/components/ui/responsive-nav-link';
+import { Show } from '@/components/ui/show';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Sheet,

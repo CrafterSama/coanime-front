@@ -10,9 +10,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { CalendarIcon, XIcon } from '@/components/icons';
-import AppLayout from '@/components/Layouts/AppLayout';
+import AppLayout from '@/components/layouts/app-layout';
 import { Posts } from '@/components/modules/posts/interfaces/posts';
-import { postSchema } from '@/components/modules/posts/schemas/postSchema';
+import { postSchema } from '@/components/modules/posts/schemas/post-schema';
 import {
   FormControl,
   FormDescription,
@@ -22,10 +22,10 @@ import {
   FormMessage,
   FormWithContext,
 } from '@/components/ui/form';
-import FormHeader from '@/components/ui/FormHeader';
+import FormHeader from '@/components/ui/form-header';
 import { Input } from '@/components/ui/input';
 import { SearchableSelect } from '@/components/ui/searchable-select';
-import SectionHeader from '@/components/ui/SectionHeader';
+import SectionHeader from '@/components/ui/section-header';
 import {
   Select,
   SelectContent,
@@ -33,8 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import TextEditor from '@/components/ui/TextEditor';
-import UploadImage from '@/components/ui/UploadImage';
+import TextEditor from '@/components/ui/text-editor';
+import UploadImage from '@/components/ui/upload-image';
 import { useCategoriesList } from '@/hooks/categories';
 import { useSearchTitle } from '@/hooks/titles';
 import { postCreate } from '@/services/posts';

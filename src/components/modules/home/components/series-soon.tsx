@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import SerieCard from '@/components/modules/titles/components/SerieCard';
+import SerieCard from '@/components/modules/titles/components/serie-card';
 import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
 import { CarouselSkeleton } from '@/components/ui/carousel-skeleton';
 import { getBroadcastToday } from '@/services/home';
