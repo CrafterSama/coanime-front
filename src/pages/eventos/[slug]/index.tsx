@@ -41,11 +41,7 @@ const Event = ({ eventData }: EventProps) => {
                     className={`${
                       eventData?.result?.image ? '' : 'blur'
                     } w-full h-full`}
-                    src={
-                      eventData?.result?.image
-                        ? `https://api.coanime.net/storage/images/events/${eventData?.result?.image}`
-                        : DEFAULT_IMAGE
-                    }
+                    src={eventData?.result?.image ?? DEFAULT_IMAGE}
                     alt={eventData?.result?.name}
                     fill
                     unoptimized
@@ -59,11 +55,7 @@ const Event = ({ eventData }: EventProps) => {
                 <div className="title-info container px-8 md:p-4">
                   <div className="title-top-box overlap-banner">
                     <ImageDetails
-                      src={
-                        eventData?.result?.image
-                          ? `https://api.coanime.net/storage/images/events/${eventData?.result?.image}`
-                          : DEFAULT_IMAGE
-                      }
+                      src={eventData?.result?.image ?? DEFAULT_IMAGE}
                     />
                     <div className="title-info-box">
                       <div className="title-name-box">

@@ -139,6 +139,14 @@ export const EditMediaModal = ({
                     <span className="text-gray-500">Tipo:</span>{' '}
                     <span className="font-medium">{media.modelType}</span>
                   </div>
+                  {media.modelType === 'Title' && media.modelTitleType && (
+                    <div>
+                      <span className="text-gray-500">Tipo de título:</span>{' '}
+                      <span className="font-medium">
+                        {media.modelTitleType}
+                      </span>
+                    </div>
+                  )}
                   {media.modelTitle && (
                     <div>
                       <span className="text-gray-500">Título:</span>{' '}

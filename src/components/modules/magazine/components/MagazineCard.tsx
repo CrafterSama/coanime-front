@@ -10,9 +10,11 @@ const MagazineCard = ({ magazine }: { magazine: any }) => (
   <div className="title-item overflow-hidden py-4">
     <Image
       src={
-        magazine?.image?.name
+        magazine?.coverImageUrl ??
+        magazine?.cover_image_url ??
+        (magazine?.image?.name
           ? `https://api.coanime.net/storage/images/encyclopedia/magazine/${magazine?.image?.name}`
-          : defaultImage
+          : defaultImage)
       }
       alt={magazine?.name}
       fill

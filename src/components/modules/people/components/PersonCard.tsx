@@ -9,11 +9,7 @@ import React from 'react';
 const PersonCard = ({ person }: { person: any }) => (
   <div className="title-item overflow-hidden py-4">
     <Image
-      src={
-        person?.image
-          ? `https://api.coanime.net/storage/images/encyclopedia/people/${person?.image}`
-          : defaultImage
-      }
+      src={person?.image ?? defaultImage}
       alt={person?.name}
       fill
       className="object-cover object-center"

@@ -4,6 +4,8 @@ import { User } from './users';
 export interface Title {
   broadFinish: string | null;
   broadTime: string | null;
+  coverImageUrl?: string | null;
+  cover_image_url?: string | null;
   createdAt: string | null;
   deletedAt: string | null;
   editedBy: number | null;
