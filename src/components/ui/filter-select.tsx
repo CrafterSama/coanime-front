@@ -31,8 +31,10 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
       onChange={handleChange}
       className={`px-3 py-2 bg-white rounded-md border border-gray-100 shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] focus:ring-2 focus:ring-orange-500 focus:shadow-[0_2px_6px_0_rgba(0,0,0,0.2)] text-sm transition-colors hover:bg-gray-50 ${className}`}>
       <option value="">{placeholder}</option>
-      {options.map((option) => (
-        <option key={option.id} value={option.id}>
+      {options.map((option, index) => (
+        <option
+          key={`filter-opt-${String(option.id)}-${index}`}
+          value={option.id}>
           {option.name}
         </option>
       ))}

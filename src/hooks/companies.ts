@@ -1,4 +1,5 @@
 import httpClient from '@/lib/http';
+import { getCompaniesFormFilters } from '@/services/companies-dashboard';
 import { useQuery } from '@tanstack/react-query';
 
 export const useCompanies = ({
@@ -62,12 +63,24 @@ export const useCompanies = ({
   });
 };
 
-export const useCompany = (id: string | number) => {
+export const useCompany = (
+  idOrSlug: string | number,
+  options?: { enabled?: boolean }
+) => {
   return useQuery({
-    queryKey: ['company', id],
+    queryKey: ['company', idOrSlug],
     queryFn: async () => {
-      const response = await httpClient.get(`companies/${id}`);
+      const response = await httpClient.get(`companies/${idOrSlug}`);
       return response.data;
     },
+    enabled: options?.enabled !== false && !!idOrSlug,
+  });
+};
+
+/** Form filters (countries) for companies create/edit */
+export const useCompaniesFormFilters = () => {
+  return useQuery({
+    queryKey: ['companies-form-filters'],
+    queryFn: getCompaniesFormFilters,
   });
 };

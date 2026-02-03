@@ -28,7 +28,6 @@ const UploadImage = ({
   showUrlOption?: boolean;
 }) => {
   const { watch, setValue } = useFormContext();
-  const [newImage, setNewImage] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [imageUrlInput, setImageUrlInput] = useState<string>('');
 
@@ -47,7 +46,6 @@ const UploadImage = ({
       const response = await uploadImages(images, payload);
       if (response.status === 200) {
         setValue(name, response?.data?.url);
-        setNewImage(true);
         setImageUrlInput('');
         toast.success(response?.data?.message?.text);
         onUploadSuccess?.();
@@ -119,10 +117,7 @@ const UploadImage = ({
               onChange={(e) => setImageUrlInput(e.target.value)}
               onBlur={() => {
                 const url = imageUrlInput.trim();
-                if (url) {
-                  setValue(name, url);
-                  setNewImage(true);
-                }
+                if (url) setValue(name, url);
               }}
               placeholder="https://ejemplo.com/imagen.jpg"
               disabled={disabled}
@@ -134,7 +129,6 @@ const UploadImage = ({
                 const url = imageUrlInput.trim();
                 if (url) {
                   setValue(name, url);
-                  setNewImage(true);
                   toast.success(
                     'URL asignada. Guarda el formulario para aplicar.'
                   );
@@ -152,7 +146,7 @@ const UploadImage = ({
         </div>
       )}
 
-      <Show when={newImage && watch(name)}>
+      <Show when={watch(name)}>
         <Label htmlFor="image" className="mt-4 block">
           Vista previa
         </Label>

@@ -2,6 +2,7 @@ import { CgSpinner } from 'react-icons/cg';
 
 import { PencilIcon } from '@/components/icons';
 import { Button } from '@/components/ui/button';
+import Errors from '@/components/ui/errors';
 import { RoundedButton } from '@/components/ui/rounded-button';
 
 type FormHeaderProps = {
@@ -14,6 +15,8 @@ type FormHeaderProps = {
   secondaryActionText?: string;
   isSaving?: boolean;
   overAll?: boolean;
+  errors?: any;
+  errorsKey?: string;
 };
 
 const FormHeader = ({
@@ -30,6 +33,7 @@ const FormHeader = ({
   secondaryActionText = 'Cancelar',
   isSaving = false,
   overAll = true,
+  errors = {},
 }: FormHeaderProps) => {
   return (
     <header
@@ -39,6 +43,7 @@ const FormHeader = ({
       <h3 className="w-full md:w-3/4 text-xl font-semibold text-gray-400 leading-tight m-0 flex justify-center md:justify-start items-center mb-4 md:mb-0">
         {title} {subtitle && `| ${subtitle}`}
       </h3>
+      <Errors errors={errors} />
       <div className="action-buttons w-full md:w-1/4 flex flex-row gap-4 justify-end">
         {isSaving && (
           <CgSpinner className="w-5 h-5 animate-spin" color="gray" size={20} />

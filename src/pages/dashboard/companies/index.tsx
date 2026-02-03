@@ -10,7 +10,7 @@ import { createCompanyColumns } from '@/components/modules/entities/columns';
 import { DataTable } from '@/components/ui/data-table';
 import { FilterSelect } from '@/components/ui/filter-select';
 import { useCompanies } from '@/hooks/companies';
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Companies = () => {
   const router = useRouter();
@@ -171,6 +171,12 @@ const Companies = () => {
                   Empresas
                 </h2>
               </div>
+              <Link
+                href="/dashboard/companies/create"
+                className="font-semibold py-2 px-4 rounded-md transition-all duration-200 text-orange-600 bg-orange-100 hover:bg-orange-200 border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] flex flex-row justify-center items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2">
+                <PlusIcon className="h-4 w-4" />
+                Crear
+              </Link>
             </div>
 
             <div className="bg-white overflow-hidden rounded-md border border-gray-100 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-4">

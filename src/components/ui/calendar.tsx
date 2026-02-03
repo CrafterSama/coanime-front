@@ -13,11 +13,16 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  captionLayout = 'dropdown',
   ...props
 }: CalendarProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      captionLayout={captionLayout}
+      defaultMonth={new Date()}
+      fromDate={new Date(1900, 1)}
+      toDate={new Date(2100, 12)}
       className={cn('p-3', className)}
       classNames={{
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',

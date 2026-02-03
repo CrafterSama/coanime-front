@@ -1,4 +1,5 @@
 import httpClient from '@/lib/http';
+import { getPeopleFormFilters } from '@/services/people';
 import { useQuery } from '@tanstack/react-query';
 
 export const usePeople = ({
@@ -62,12 +63,21 @@ export const usePeople = ({
   });
 };
 
-export const usePerson = (slug: string) => {
+export const usePerson = (slug: string, options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: ['person', slug],
     queryFn: async () => {
       const response = await httpClient.get(`people/${slug}`);
       return response.data;
     },
+    enabled: options?.enabled !== false && !!slug,
+  });
+};
+
+/** Form filters (countries, cities) for people create/edit */
+export const usePeopleFormFilters = () => {
+  return useQuery({
+    queryKey: ['people-form-filters'],
+    queryFn: getPeopleFormFilters,
   });
 };

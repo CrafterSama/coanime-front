@@ -38,6 +38,7 @@ import UploadImage from '@/components/ui/upload-image';
 import { useCategoriesList } from '@/hooks/categories';
 import { useSearchTitle } from '@/hooks/titles';
 import { postCreate } from '@/services/posts';
+import { getServerError } from '@/utils/string';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 
@@ -92,9 +93,6 @@ const CreatePost = () => {
     formState: { errors },
   } = methods;
 
-  // Log errors whenever they change
-  console.log('[CREATE POST] Form errors:', errors);
-
   const resetPostInfo = () => {
     register('title');
     register('content');
@@ -126,13 +124,9 @@ const CreatePost = () => {
   );
 
   const onSubmit = (data: any) => {
-    console.log('[CREATE POST] Form data received:', data);
-
     const postponed = data.postponedTo
       ? dayjs(data.postponedTo).format('YYYY-MM-DD HH:mm:ss')
       : dayjs().format('YYYY-MM-DD HH:mm:ss');
-
-    console.log('[CREATE POST] Postponed date:', postponed);
 
     const params = {
       title: data.title,
@@ -145,17 +139,14 @@ const CreatePost = () => {
       postponedTo: postponed,
     };
 
-    console.log('[CREATE POST] Params to send:', params);
-
     createPost(
       { params },
       {
         onSuccess: (response) => {
           onSavedSuccess(response);
         },
-        onError: (message) => {
-          console.error('[CREATE POST] Error:', message);
-          toast.error(`Error: ${message}`);
+        onError: (error) => {
+          toast.error(getServerError(error) as string);
         },
       }
     );

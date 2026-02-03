@@ -140,7 +140,7 @@ export const SearchableSelect = React.forwardRef<
                     : 'No se encontraron resultados'}
                 </div>
               ) : (
-                options.map((option) => {
+                options.map((option, index) => {
                   const optionLabel = getOptionLabel
                     ? getOptionLabel(option)
                     : option.type
@@ -150,7 +150,7 @@ export const SearchableSelect = React.forwardRef<
 
                   return (
                     <div
-                      key={option.value}
+                      key={`sel-${String(option.value)}-${index}`}
                       onClick={() => handleSelect(option)}
                       className={cn(
                         'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CgSpinner } from 'react-icons/cg';
 
@@ -22,6 +22,8 @@ import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
   const [page, setPage] = useState(1);
+  const lastAppendedPageRef = useRef<number>(0);
+
   const { isLoading, error }: any = useQuery(['homeData'], getHomeData);
   const {
     data: articlesData,
@@ -29,9 +31,9 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
     error: errorArticles,
   } = useQuery(['articlesData', page], () => getArticlesData({ page }), {
     retry: false,
-    onError: (error: any) => {
-      if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
-        console.error('Error de red al cargar artículos:', error);
+    onError: (err: any) => {
+      if (err?.code === 'ERR_NETWORK' || err?.message === 'Network Error') {
+        console.error('Error de red al cargar artículos:', err);
       }
     },
   });
@@ -40,60 +42,62 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
     isLoading: loadingJapan,
     error: errorJapan,
   } = useQuery(['japanData', page], () => getArticlesJapan({ page }));
+
   const [articles, setArticles] = useState<any[]>([]);
-  const [loadArticles, setLoadArticles] = useState(false);
 
   useEffect(() => {
-    if (articlesData && page) {
-      setArticles([...articles, ...articlesData.data.data]);
+    if (articlesLoading) return;
+    const data = articlesData?.data?.data;
+    if (!data || !Array.isArray(data)) return;
+
+    if (page === 1) {
+      setArticles(data);
+      lastAppendedPageRef.current = 1;
+      return;
     }
+    if (page > lastAppendedPageRef.current) {
+      setArticles((prev) => [...prev, ...data]);
+      lastAppendedPageRef.current = page;
+    }
+  }, [articlesData, page, articlesLoading]);
+
+  useEffect(() => {
+    if (page !== 1) return;
+    lastAppendedPageRef.current = 0;
+  }, [page]);
+
+  useEffect(() => {
     if (error) {
-      const errorMessage =
+      const msg =
         error?.message ||
-        error?.response?.data?.message ||
+        (error as any)?.response?.data?.message ||
         'Error al cargar datos';
-      toast.error(errorMessage);
+      toast.error(msg);
     }
+  }, [error]);
+
+  useEffect(() => {
     if (errorArticles) {
-      const errorMessage =
+      const msg =
         errorArticles?.message ||
-        errorArticles?.response?.data?.message ||
+        (errorArticles as any)?.response?.data?.message ||
         'Error al cargar artículos';
-      toast.error(errorMessage);
+      toast.error(msg);
     }
+  }, [errorArticles]);
+
+  useEffect(() => {
     if (errorJapan) {
-      const errorMessage =
+      const msg =
         (errorJapan as any)?.message ||
         (errorJapan as any)?.response?.data?.message ||
         'Error al cargar artículos de Japón';
-      toast.error(errorMessage);
+      toast.error(msg);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, errorArticles, errorJapan, articlesData, page]);
+  }, [errorJapan]);
 
-  const moreArticles = async () => {
-    setLoadArticles(true);
-    try {
-      const response = await getArticlesData({ page });
-      const oldArticles: any[] = articles;
-      const newArticles: any[] = response?.data?.data;
-      setArticles([...oldArticles, ...newArticles]);
-    } catch (error: any) {
-      console.error('Error loading articles:', error);
-      if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
-        toast.error('Error de conexión. Verifica que la API esté disponible.');
-      } else {
-        toast.error('Error al cargar artículos. Intenta de nuevo.');
-      }
-    } finally {
-      setLoadArticles(false);
-    }
-  };
-
-  useEffect(() => {
-    moreArticles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  const loadMore = () => setPage((p) => p + 1);
+  const loadArticles = articlesLoading && page > 1;
 
   return (
     <WebLayout>
@@ -160,7 +164,7 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
             <SectionTitle title="News" subtitle="Otras Noticias" />
             <OtherNews articles={articles} />
             <div className="flex justify-center">
-              <Button onClick={() => setPage(page + 1)}>
+              <Button onClick={loadMore}>
                 {loadArticles ? (
                   <CgSpinner className="animate-spin" />
                 ) : (

@@ -135,7 +135,7 @@ const UpdatePost = () => {
     toast.success(response.data.message.text);
   };
 
-  const { mutate: updatePost } = useMutation(
+  const { mutate: updatePost, isLoading: savingLoading } = useMutation(
     ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
   );
 
@@ -164,9 +164,6 @@ const UpdatePost = () => {
           queryClient.invalidateQueries(['post']);
         },
         onError: (error) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.error('[Update Post Error]', getServerError(error));
-          }
           toast.error(getServerError(error) as string);
         },
       }
@@ -195,6 +192,7 @@ const UpdatePost = () => {
               cancelAction={() => setEditMode(false)}
               editAction={() => setEditMode(true)}
               disabled={!editMode}
+              isSaving={savingLoading}
             />
             <div className="p-4 flex flex-col md:flex-row gap-4 rounded-b-lg">
               <div className="w-full md:w-8/12">

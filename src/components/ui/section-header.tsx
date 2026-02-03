@@ -2,20 +2,17 @@ import { FC } from 'react';
 
 import Link from 'next/link';
 
-import Errors from '@/components/ui/errors';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 type SectionHeaderProps = {
   backlink: string;
   text: string;
-  errors?: any;
   rightElement?: React.ReactElement | string;
 };
 
 const SectionHeader: FC<SectionHeaderProps> = ({
   backlink,
   text,
-  errors = {},
   rightElement = null,
 }) => (
   <div className="flex flex-row gap-4 justify-between items-center">
@@ -30,7 +27,6 @@ const SectionHeader: FC<SectionHeaderProps> = ({
           {text}
         </h2>
       </div>
-      <Errors errors={Object.values(errors)} />
     </div>
     {rightElement}
   </div>
