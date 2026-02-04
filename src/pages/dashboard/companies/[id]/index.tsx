@@ -198,11 +198,7 @@ const UpdateCompany = () => {
   return (
     <AppLayout
       header={
-        <SectionHeader
-          backlink="/dashboard/companies"
-          text="Editar entidad"
-          errors={errors}
-        />
+        <SectionHeader backlink="/dashboard/companies" text="Editar entidad" />
       }>
       <Head>
         <title>

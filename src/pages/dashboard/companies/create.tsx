@@ -126,11 +126,7 @@ const CreateCompany = () => {
   return (
     <AppLayout
       header={
-        <SectionHeader
-          backlink="/dashboard/companies"
-          text="Crear entidad"
-          errors={errors}
-        />
+        <SectionHeader backlink="/dashboard/companies" text="Crear entidad" />
       }>
       <Head>
         <title>Coanime.net - Crear entidad</title>

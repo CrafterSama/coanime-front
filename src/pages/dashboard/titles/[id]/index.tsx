@@ -181,11 +181,7 @@ const UpdateTitle = ({ id }: { id: string }) => {
   return (
     <AppLayout
       header={
-        <SectionHeader
-          backlink="/dashboard/titles"
-          text="Edición de título"
-          errors={errors}
-        />
+        <SectionHeader backlink="/dashboard/titles" text="Edición de título" />
       }>
       <Head>
         <title>Coanime.net - Edición: {title?.name ?? 'Título'}</title>

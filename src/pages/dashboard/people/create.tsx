@@ -137,7 +137,6 @@ const CreatePeople = () => {
         <SectionHeader
           backlink="/dashboard/people"
           text="Creación de persona"
-          errors={errors}
         />
       }>
       <Head>

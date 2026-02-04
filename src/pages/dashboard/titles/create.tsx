@@ -145,7 +145,6 @@ const CreateTitle = () => {
         <SectionHeader
           backlink="/dashboard/titles"
           text="Creación de títulos"
-          errors={errors}
         />
       }>
       <Head>

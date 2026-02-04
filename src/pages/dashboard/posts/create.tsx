@@ -158,7 +158,6 @@ const CreatePost = () => {
         <SectionHeader
           backlink="/dashboard/posts"
           text="Creación de Articulo"
-          errors={errors}
         />
       }>
       <Head>

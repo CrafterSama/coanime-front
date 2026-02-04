@@ -173,11 +173,7 @@ const UpdatePost = () => {
   return (
     <AppLayout
       header={
-        <SectionHeader
-          backlink="/dashboard/posts"
-          text="Edición de Articulo"
-          errors={errors}
-        />
+        <SectionHeader backlink="/dashboard/posts" text="Edición de Articulo" />
       }>
       <Head>
         <title>Coanime.net - Update Post: {post?.title}</title>
