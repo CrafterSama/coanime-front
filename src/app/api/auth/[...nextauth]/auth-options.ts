@@ -49,11 +49,7 @@ export const authOptions = {
             return null;
           }
 
-          const possibleEndpoints = [
-            '/api/auth/login',
-            '/api/login',
-            '/login',
-          ];
+          const possibleEndpoints = ['/api/auth/login', '/api/login', '/login'];
 
           let res: Response | null = null;
           let data: any = null;
