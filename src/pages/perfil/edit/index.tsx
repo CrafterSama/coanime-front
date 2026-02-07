@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import {
+  AiOutlineFacebook,
   AiOutlineInstagram,
   AiOutlineTwitter,
-  AiOutlineFacebook,
   AiOutlineYoutube,
 } from 'react-icons/ai';
-import { FaTiktok, FaPinterest } from 'react-icons/fa';
+import { FaPinterest, FaTiktok } from 'react-icons/fa';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -24,23 +24,24 @@ import {
   FormWithContext,
 } from '@/components/ui/form';
 import FormHeader from '@/components/ui/form-header';
-import { Input } from '@/components/ui/input';
-import { PasswordInput } from '@/components/ui/password-input';
-import { Label } from '@/components/ui/label';
 import { FormSkeleton } from '@/components/ui/form-skeleton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import Section from '@/components/ui/section';
 import TextEditor from '@/components/ui/text-editor';
 import { uploadImages } from '@/hooks/images';
-import { useProfile, updateMe } from '@/hooks/users';
+import { updateMe, useProfile } from '@/hooks/users';
+import { getServerError } from '@/utils/string';
 import {
-  LinkIcon,
-  UserIcon,
   CameraIcon,
+  EnvelopeIcon,
+  LinkIcon,
+  LockClosedIcon,
+  PencilIcon,
   PhotoIcon,
   UserCircleIcon,
-  EnvelopeIcon,
-  PencilIcon,
-  LockClosedIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -121,9 +122,17 @@ const Profile = () => {
     }
   }, [result, resetProfileData]);
 
-  const { mutate: updateProfile, isLoading: isSaving } = useMutation(
-    ({ params }: { params: any }) => updateMe(params)
-  );
+  const { mutate: updateProfile, isPending: isSaving } = useMutation({
+    mutationFn: ({ params }: { params: any }) => updateMe(params),
+    onSuccess: (response) => {
+      toast.success(response.data.message.text);
+      setEditMode(false);
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    },
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onHandleError = (error: any) => {
     if (
@@ -154,7 +163,7 @@ const Profile = () => {
         onSuccess: (response) => {
           toast.success(response.data.message.text);
           setEditMode(false);
-          queryClient.invalidateQueries(['profile']);
+          queryClient.invalidateQueries({ queryKey: ['profile'] });
         },
         onError: (error) => {
           onHandleError(error);

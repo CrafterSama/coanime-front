@@ -14,8 +14,8 @@ import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import Section from '@/components/ui/section';
 import SectionTitle from '@/components/ui/section-title';
+import { useTags } from '@/hooks/tags';
 import { getArticlesByTags, getTags } from '@/services/tags';
-import { useQuery } from '@tanstack/react-query';
 
 interface TagsProps {
   tag: string;
@@ -25,13 +25,8 @@ interface TagsProps {
 }
 
 const Tags = ({ tag, tagData, articlesData, errors }: TagsProps) => {
-  const { data = {}, isLoading } = useQuery(
-    ['tags', tagData],
-    () => getTags(tag),
-    {
-      initialData: tagData,
-    }
-  );
+  const { data = {}, isLoading } = useTags(tag, tagData);
+
   const [articles, setArticles] = useState<any[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);

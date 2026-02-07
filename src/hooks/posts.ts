@@ -98,13 +98,15 @@ export const usePost = (slug: string) => {
   });
 };
 
-export const useGetArticle = (slug: string) => {
+export const useGetArticle = (slug: string, initialData?: any) => {
   return useQuery({
     queryKey: ['useArticle', slug],
     queryFn: async () => {
       const response = await httpClientExternal.get(`articles/${slug}`);
       return response.data;
     },
+    initialData: initialData,
+    enabled: !!slug,
   });
 };
 

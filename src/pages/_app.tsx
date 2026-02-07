@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import { HydrationBoundary, QueryClientProvider } from '@tanstack/react-query';
 import NextNProgress from 'nextjs-progressbar';
 import { Toaster } from 'react-hot-toast';
 
@@ -43,7 +43,7 @@ const App = ({
     <ErrorBoundary>
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
+          <HydrationBoundary state={pageProps.dehydratedState}>
             <NextNProgress color="#ff7b00" />
             <Toaster
               position="top-right"
@@ -75,7 +75,7 @@ const App = ({
               }}
             />
             <Component {...pageProps} />
-          </Hydrate>
+          </HydrationBoundary>
         </QueryClientProvider>
       </SessionProvider>
     </ErrorBoundary>

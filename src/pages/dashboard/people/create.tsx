@@ -101,7 +101,7 @@ const CreatePeople = () => {
     toast.success(msg);
   };
 
-  const { mutate: createPerson, isLoading: savingLoading } = useMutation({
+  const { mutate: createPerson, isPending: savingLoading } = useMutation({
     mutationFn: (params: Record<string, any>) => personCreate(params),
     onSuccess: onSavedSuccess,
     onError: (error: any) => {

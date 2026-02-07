@@ -1,4 +1,5 @@
 import { httpClientExternal } from '@/lib/http';
+import { getCategory } from '@/services/categories';
 import { useQuery } from '@tanstack/react-query';
 
 export const useCategoriesList = () => {
@@ -11,7 +12,16 @@ export const useCategoriesList = () => {
   });
 };
 
-export const useCategory = (category: string) => {
+export const useCategory = (category: string, initialData?: any) => {
+  return useQuery({
+    queryKey: ['categories', category],
+    queryFn: () => getCategory(category),
+    initialData: initialData,
+    enabled: !!category,
+  });
+};
+
+export const useCategoryData = (category: string) => {
   return useQuery({
     queryKey: ['category', category],
     queryFn: async () => {

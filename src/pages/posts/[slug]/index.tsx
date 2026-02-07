@@ -20,9 +20,9 @@ import { ArticleSkeleton } from '@/components/ui/article-skeleton';
 import Section from '@/components/ui/section';
 import SectionTitle from '@/components/ui/section-title';
 import { Show } from '@/components/ui/show';
+import { useGetArticle } from '@/hooks/posts';
 import { getArticleData } from '@/services/posts';
 import { PencilIcon } from '@heroicons/react/24/outline';
-import { useQuery } from '@tanstack/react-query';
 
 interface ShowArticleProps {
   slug: string;
@@ -33,13 +33,7 @@ interface ShowArticleProps {
 const ShowArticle = ({ slug, articleData, errors }: ShowArticleProps) => {
   const router = useRouter();
   const [fetching, setFetching] = useState(false);
-  const { data = {} } = useQuery(
-    ['viewArticles', slug],
-    () => getArticleData(slug),
-    {
-      initialData: articleData,
-    }
-  );
+  const { data = {} } = useGetArticle(slug, articleData);
   const {
     title,
     description,

@@ -23,8 +23,8 @@ import {
   FormMessage,
   FormWithContext,
 } from '@/components/ui/form';
-import { FormSkeleton } from '@/components/ui/form-skeleton';
 import FormHeader from '@/components/ui/form-header';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SectionHeader from '@/components/ui/section-header';
@@ -135,9 +135,14 @@ const UpdatePost = () => {
     toast.success(response.data.message.text);
   };
 
-  const { mutate: updatePost, isLoading: savingLoading } = useMutation(
-    ({ id, params }: { id: string; params: any }) => postUpdate(id, params)
-  );
+  const { mutate: updatePost, isPending: savingLoading } = useMutation({
+    mutationFn: ({ id, params }: { id: string; params: any }) =>
+      postUpdate(id, params),
+    onSuccess: onSavedSuccess,
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onSubmit = (data: any) => {
     const id = post?.id;
@@ -161,7 +166,7 @@ const UpdatePost = () => {
       {
         onSuccess: (response) => {
           onSavedSuccess(response);
-          queryClient.invalidateQueries(['post']);
+          queryClient.invalidateQueries({ queryKey: ['post'] });
         },
         onError: (error) => {
           toast.error(getServerError(error) as string);

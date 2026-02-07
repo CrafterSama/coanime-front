@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -22,9 +22,9 @@ import {
   FormWithContext,
 } from '@/components/ui/form';
 import FormHeader from '@/components/ui/form-header';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { FormSkeleton } from '@/components/ui/form-skeleton';
 import SectionHeader from '@/components/ui/section-header';
 import {
   Select,
@@ -147,9 +147,14 @@ const UpdateTitle = ({ id }: { id: string }) => {
     toast.success(response.data.message.text);
   };
 
-  const { mutate: updateTitle, isLoading: savingLoading } = useMutation(
-    ({ id, params }: { id: string; params: any }) => titleUpdate(id, params)
-  );
+  const { mutate: updateTitle, isPending: savingLoading } = useMutation({
+    mutationFn: ({ id, params }: { id: string; params: any }) =>
+      titleUpdate(id, params),
+    onSuccess: onSavedSuccess,
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onSubmit = (data: any) => {
     const params = {
@@ -169,7 +174,7 @@ const UpdateTitle = ({ id }: { id: string }) => {
       {
         onSuccess: (response) => {
           onSavedSuccess(response);
-          queryClient.invalidateQueries(['title']);
+          queryClient.invalidateQueries({ queryKey: ['title'] });
         },
         onError: (error: any) => {
           toast.error(getServerError(error) as string);

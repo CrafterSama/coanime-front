@@ -162,7 +162,7 @@ const UpdateCompany = () => {
     toast.success(msg);
   };
 
-  const { mutate: updateCompany, isLoading: savingLoading } = useMutation({
+  const { mutate: updateCompany, isPending: savingLoading } = useMutation({
     mutationFn: ({
       id,
       params,

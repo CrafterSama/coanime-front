@@ -162,7 +162,7 @@ const UpdatePeople = () => {
     router.push(`/dashboard/people`);
   };
 
-  const { mutate: updatePerson, isLoading: savingLoading } = useMutation({
+  const { mutate: updatePerson, isPending: savingLoading } = useMutation({
     mutationFn: ({
       id,
       params,

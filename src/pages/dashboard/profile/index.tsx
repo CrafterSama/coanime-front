@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import {
+  AiOutlineFacebook,
   AiOutlineInstagram,
   AiOutlineTwitter,
-  AiOutlineFacebook,
   AiOutlineYoutube,
 } from 'react-icons/ai';
-import { FaTiktok, FaPinterest } from 'react-icons/fa';
+import { FaPinterest, FaTiktok } from 'react-icons/fa';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -15,20 +15,21 @@ import Image from 'next/image';
 import AppLayout from '@/components/layouts/app-layout';
 import { FormWithContext } from '@/components/ui/form';
 import FormHeader from '@/components/ui/form-header';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { FormSkeleton } from '@/components/ui/form-skeleton';
 import TextEditor from '@/components/ui/text-editor';
 import { uploadImages } from '@/hooks/images';
-import { useProfile, updateMe } from '@/hooks/users';
+import { updateMe, useProfile } from '@/hooks/users';
+import { getServerError } from '@/utils/string';
 import {
-  LinkIcon,
-  UserIcon,
   CameraIcon,
+  EnvelopeIcon,
+  LinkIcon,
+  PencilIcon,
   PhotoIcon,
   UserCircleIcon,
-  EnvelopeIcon,
-  PencilIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -111,9 +112,17 @@ const Profile = () => {
     }
   }, [result, resetProfileData]);
 
-  const { mutate: updateProfile, isLoading: isSaving } = useMutation(
-    ({ params }: { params: any }) => updateMe(params)
-  );
+  const { mutate: updateProfile, isPending: isSaving } = useMutation({
+    mutationFn: ({ params }: { params: any }) => updateMe(params),
+    onSuccess: (response) => {
+      toast.success(response.data.message.text);
+      setEditMode(false);
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    },
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onSubmit = (data: any) => {
     if (data.avatar && !data.profilePhotoPath) {
@@ -129,10 +138,10 @@ const Profile = () => {
         onSuccess: (response) => {
           toast.success(response.data.message.text);
           setEditMode(false);
-          queryClient.invalidateQueries(['profile']);
+          queryClient.invalidateQueries({ queryKey: ['profile'] });
         },
-        onError: (error) => {
-          toast.error(error as string);
+        onError: (error: any) => {
+          toast.error(getServerError(error) as string);
         },
       }
     );

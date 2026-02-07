@@ -100,7 +100,7 @@ const CreateCompany = () => {
     toast.success(msg);
   };
 
-  const { mutate: createCompany, isLoading: savingLoading } = useMutation({
+  const { mutate: createCompany, isPending: savingLoading } = useMutation({
     mutationFn: (params: Record<string, any>) => companyCreate(params),
     onSuccess: onSavedSuccess,
     onError: (error: any) => {

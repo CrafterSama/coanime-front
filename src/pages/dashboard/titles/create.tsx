@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { DatePicker } from '@/components/ui/date-picker';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import MultiSelect from 'react-widgets/Multiselect';
@@ -22,9 +22,9 @@ import {
   FormWithContext,
 } from '@/components/ui/form';
 import FormHeader from '@/components/ui/form-header';
+import { FormSkeleton } from '@/components/ui/form-skeleton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { FormSkeleton } from '@/components/ui/form-skeleton';
 import SectionHeader from '@/components/ui/section-header';
 import {
   Select,
@@ -107,13 +107,17 @@ const CreateTitle = () => {
   }));
 
   const onSavedSuccess = (response: any) => {
-    router.push('/dashboard/titles');
     toast.success(response.data.message.text);
+    router.push('/dashboard/titles');
   };
 
-  const { mutate: createTitle, isLoading: savingLoading } = useMutation(
-    ({ params }: { params: any }) => titleCreate(params)
-  );
+  const { mutate: createTitle, isPending: savingLoading } = useMutation({
+    mutationFn: ({ params }: { params: any }) => titleCreate(params),
+    onSuccess: onSavedSuccess,
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onSubmit = (data: any) => {
     const params = {

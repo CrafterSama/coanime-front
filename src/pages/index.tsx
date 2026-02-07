@@ -16,32 +16,26 @@ import Section from '@/components/ui/section';
 import SectionTitle from '@/components/ui/section-title';
 import { ShowAdvanced } from '@/components/ui/show';
 import { RecentArticlesSkeleton } from '@/components/ui/skeletons/recent-articles-skeleton';
+import { useArticlesData, useArticlesJapan, useHomeData } from '@/hooks/home';
 import { getHomeData } from '@/services/home';
-import { getArticlesData, getArticlesJapan } from '@/services/posts';
-import { useQuery } from '@tanstack/react-query';
 
 const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
   const [page, setPage] = useState(1);
   const lastAppendedPageRef = useRef<number>(0);
 
-  const { isLoading, error }: any = useQuery(['homeData'], getHomeData);
+  const { data, isLoading, error } = useHomeData(homeDataSSR);
+
   const {
     data: articlesData,
     isLoading: articlesLoading,
     error: errorArticles,
-  } = useQuery(['articlesData', page], () => getArticlesData({ page }), {
-    retry: false,
-    onError: (err: any) => {
-      if (err?.code === 'ERR_NETWORK' || err?.message === 'Network Error') {
-        console.error('Error de red al cargar artículos:', err);
-      }
-    },
-  });
+  } = useArticlesData(page);
+
   const {
     data: articlesJapan,
     isLoading: loadingJapan,
     error: errorJapan,
-  } = useQuery(['japanData', page], () => getArticlesJapan({ page }));
+  } = useArticlesJapan(page);
 
   const [articles, setArticles] = useState<any[]>([]);
 
@@ -102,23 +96,23 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
   return (
     <WebLayout>
       <Head>
-        <title>{homeDataSSR?.title}</title>
-        <meta name="title" content={homeDataSSR?.title} />
-        <meta name="description" content={homeDataSSR?.description} />
-        <meta name="keywords" content={homeDataSSR?.keywords} />
+        <title>{data?.title}</title>
+        <meta name="title" content={data?.title} />
+        <meta name="description" content={data?.description} />
+        <meta name="keywords" content={data?.keywords} />
         <meta name="author" content="@coanime" />
-        <meta property="og:title" content={homeDataSSR?.title} />
-        <meta property="og:description" content={homeDataSSR?.description} />
+        <meta property="og:title" content={data?.title} />
+        <meta property="og:description" content={data?.description} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:site_name" content="Coanime" />
         <meta property="og:url" content="https://coanime.net" />
-        <meta property="og:image" content={homeDataSSR?.image} />
-        <meta property="og:image:secure_url" content={homeDataSSR?.image} />
+        <meta property="og:image" content={data?.image} />
+        <meta property="og:image:secure_url" content={data?.image} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={homeDataSSR?.title} />
-        <meta name="twitter:description" content={homeDataSSR?.description} />
+        <meta name="twitter:title" content={data?.title} />
+        <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:site" content="@coanime" />
-        <meta name="twitter:image:src" content={homeDataSSR?.image} />
+        <meta name="twitter:image:src" content={data?.image} />
         <meta name="twitter:creator" content="@coanime" />
         <meta name="referrer" content="default" />
         <meta property="fb:pages" content="127729317274121" />
@@ -126,16 +120,16 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
       </Head>
 
       <Section>
-        <TopSlider relevants={homeDataSSR?.relevants} />
+        <TopSlider relevants={data?.relevants} />
       </Section>
       <ShowAdvanced
-        when={homeDataSSR?.result?.length > 0}
-        whenIsTrue={<RecentPosts posts={homeDataSSR?.result} />}
+        when={data?.result?.length > 0}
+        whenIsTrue={<RecentPosts posts={data?.result} />}
         whenIsFalse={<RecentArticlesSkeleton />}
       />
       <Section withContainer>
         <SectionTitle title="Broadcast" subtitle="Animes En Emisión hoy" />
-        <BroadcastToday broadcast={homeDataSSR?.broadcast} />
+        <BroadcastToday broadcast={data?.broadcast} />
       </Section>
       <Section withContainer>
         <SectionTitle
@@ -144,7 +138,7 @@ const Home = ({ homeDataSSR }: { homeDataSSR: any }) => {
           actionLink="/ecma/titulos/estrenos"
           justify="justify-between"
         />
-        <UpcomingSeries upcoming={homeDataSSR?.upcoming} />
+        <UpcomingSeries upcoming={data?.upcoming} />
       </Section>
       {isLoading || articlesLoading || loadingJapan ? (
         <PageSkeleton sections={3} />

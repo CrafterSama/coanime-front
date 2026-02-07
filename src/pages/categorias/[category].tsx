@@ -14,9 +14,9 @@ import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import Section from '@/components/ui/section';
 import SectionTitle from '@/components/ui/section-title';
-import { getArticlesByCategories, getCategory } from '@/services/categories';
-import { useQuery } from '@tanstack/react-query';
+import { useCategory } from '@/hooks/categories';
 import { Article } from '@/interface/articles';
+import { getArticlesByCategories, getCategory } from '@/services/categories';
 
 interface CategoriesProps {
   category: string;
@@ -26,11 +26,7 @@ interface CategoriesProps {
 }
 
 const Categories = ({ category, data, articles, errors }: CategoriesProps) => {
-  const { data: categories = {}, isLoading } = useQuery(
-    ['categories', category],
-    () => getCategory(category),
-    { initialData: data, enabled: !!data }
-  );
+  const { data: categories = {}, isLoading } = useCategory(category, data);
   const [news, setNews] = useState<Article[]>([]);
   const [loadArticles, setLoadArticles] = useState(false);
   const [page, setPage] = useState(1);

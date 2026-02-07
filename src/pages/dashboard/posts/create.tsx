@@ -119,9 +119,13 @@ const CreatePost = () => {
     router.push('/dashboard/posts');
   };
 
-  const { mutate: createPost, isLoading: savingLoading } = useMutation(
-    ({ params }: { params: any }) => postCreate(params)
-  );
+  const { mutate: createPost, isPending: savingLoading } = useMutation({
+    mutationFn: (params: Record<string, any>) => postCreate(params),
+    onSuccess: onSavedSuccess,
+    onError: (error: any) => {
+      toast.error(getServerError(error) as string);
+    },
+  });
 
   const onSubmit = (data: any) => {
     const postponed = data.postponedTo
