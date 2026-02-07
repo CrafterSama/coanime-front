@@ -1,4 +1,3 @@
-import { requireEnv } from '@/lib/env';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 interface User {
@@ -33,37 +32,39 @@ export const authOptions = {
           return null;
         }
 
+        const LOGIN_TIMEOUT_MS = 15000; // 15s para evitar 502 por timeout
+
         try {
-          // Obtener la URL del backend
-          const apiUrl = requireEnv('NEXT_PUBLIC_BACKEND_URL');
+          const apiUrl =
+            process.env.NEXT_PUBLIC_BACKEND_URL ||
+            (process.env.NODE_ENV === 'production'
+              ? 'https://api.coanime.net'
+              : '');
           const serverApiUrl =
             process.env.NODE_ENV === 'production'
               ? 'https://api.coanime.net'
-              : apiUrl;
+              : apiUrl || 'https://api.coanime.net';
 
-          // Intentar diferentes endpoints posibles para login
-          // Laravel puede tener la ruta en diferentes ubicaciones según la configuración
+          if (!serverApiUrl) {
+            return null;
+          }
+
           const possibleEndpoints = [
-            '/api/auth/login', // Ruta común con prefijo auth
-            '/api/login', // Ruta directa (según JWT_INSTALLATION.md)
-            '/login', // Ruta sin prefijo api
+            '/api/auth/login',
+            '/api/login',
+            '/login',
           ];
 
           let res: Response | null = null;
           let data: any = null;
-          let lastError: any = null; // eslint-disable-line @typescript-eslint/no-unused-vars
 
-          // Intentar cada endpoint hasta que uno funcione
           for (const endpoint of possibleEndpoints) {
             const fullUrl = `${serverApiUrl}${endpoint}`;
-
-            // Debug disabled
-            // if (process.env.NODE_ENV === 'development') {
-            //   console.log('[NextAuth] Intentando login con JWT a Laravel:', {
-            //     url: fullUrl,
-            //     endpoint,
-            //   });
-            // }
+            const controller = new AbortController();
+            const timeoutId = setTimeout(
+              () => controller.abort(),
+              LOGIN_TIMEOUT_MS
+            );
 
             try {
               res = await fetch(fullUrl, {
@@ -76,28 +77,29 @@ export const authOptions = {
                   email: credentials.email,
                   password: credentials.password,
                 }),
+                signal: controller.signal,
               });
+              clearTimeout(timeoutId);
 
-              data = await res.json();
-
-              // Si la respuesta es exitosa (200-299), usar este endpoint
-              if (res.ok && data?.access_token) {
-                // Debug disabled
-                break; // Salir del loop si encontramos un endpoint que funciona
+              const text = await res.text();
+              try {
+                data = text ? JSON.parse(text) : null;
+              } catch {
+                data = null;
               }
 
-              // Si no es exitoso pero no es 404, guardar el error
+              if (res.ok && data?.access_token) {
+                break;
+              }
               if (res.status !== 404) {
-                lastError = { status: res.status, data, endpoint };
+                data = data ?? null;
               }
             } catch (error: any) {
-              // Si es un error de red o 404, continuar con el siguiente endpoint
-              if (error?.message?.includes('fetch') || res?.status === 404) {
-                // Debug disabled
+              clearTimeout(timeoutId);
+              if (error?.name === 'AbortError') {
                 continue;
               }
-              // Para otros errores, guardar y continuar
-              lastError = { error, endpoint }; // eslint-disable-line @typescript-eslint/no-unused-vars
+              continue;
             }
           }
 
