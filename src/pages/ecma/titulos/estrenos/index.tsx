@@ -87,13 +87,15 @@ export const getStaticProps = async ({ params }: { params?: any }) => {
       getUpcomingTitles({ page: Number(resolvedParams?.page) ?? 1 })
     );
 
-    if (response?.data?.code === 404) {
-      return {
-        notFound: true,
-      };
-    }
-
-    const titlesData = response.data;
+    // El backend devuelve 404 cuando no hay estrenos, pero incluye title, description, result: [].
+    // No usar notFound: true aquí: "sin estrenos" es un estado válido, la página debe mostrarse.
+    const titlesData =
+      response?.data?.code === 404
+        ? {
+            ...response.data,
+            result: { data: [], current_page: 1, last_page: 1, total: 0 },
+          }
+        : response.data;
 
     return {
       props: {
@@ -101,11 +103,28 @@ export const getStaticProps = async ({ params }: { params?: any }) => {
         revalidate: 5 * 60,
       },
     };
-  } catch (error) {
-    // Si falla después de los reintentos, retornar notFound para permitir regeneración con ISR
-    console.error('[getStaticProps] Error al obtener títulos próximos:', error);
+  } catch (error: any) {
+    // 404 = backend devuelve "no hay estrenos"; otros = fallo de red/servidor.
+    // En todos los casos devolvemos props para que la ruta exista (no notFound).
+    const errData = error?.response?.data;
+    const is404 = error?.response?.status === 404;
     return {
-      notFound: true,
+      props: {
+        titlesData: {
+          title:
+            errData?.title ??
+            'Coanime.net - Titulos - Próximos Estrenos',
+          description: errData?.descripcion ?? errData?.description ?? '',
+          keywords: errData?.keywords ?? '',
+          result: {
+            data: [],
+            current_page: 1,
+            last_page: 1,
+            total: 0,
+          },
+        },
+        revalidate: is404 ? 5 * 60 : 60,
+      },
     };
   }
 };
