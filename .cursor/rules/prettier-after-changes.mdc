@@ -1,0 +1,28 @@
+---
+description: Run Prettier on modified frontend files after making changes to avoid deploy failures.
+globs: "**/*.ts","**/*.tsx","**/*.js","**/*.jsx"
+alwaysApply: false
+---
+
+# Prettier After Frontend Changes
+
+After editing any file in the frontend, **always run Prettier** on the modified files. Unformatted code often causes the deploy pipeline to fail.
+
+## What to do
+
+1. After creating or modifying frontend files, run Prettier on those files before finishing the task.
+2. From the **frontend** directory you can:
+   - Format only the files you changed:  
+     `npx prettier --write <file1> <file2> ...`
+   - Or format the whole project:  
+     `npm run format`
+
+## Example
+
+If you edited `src/pages/ecma/titulos/estrenos/index.tsx`, run:
+
+```bash
+cd frontend && npx prettier --write src/pages/ecma/titulos/estrenos/index.tsx
+```
+
+Do not skip this step; deploy checks typically run Prettier and fail when files are not formatted.

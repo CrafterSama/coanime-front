@@ -111,9 +111,7 @@ export const getStaticProps = async ({ params }: { params?: any }) => {
     return {
       props: {
         titlesData: {
-          title:
-            errData?.title ??
-            'Coanime.net - Titulos - Próximos Estrenos',
+          title: errData?.title ?? 'Coanime.net - Titulos - Próximos Estrenos',
           description: errData?.descripcion ?? errData?.description ?? '',
           keywords: errData?.keywords ?? '',
           result: {
