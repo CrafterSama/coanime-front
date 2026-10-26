@@ -1455,7 +1455,8 @@ ul.info__article-tags a:hover {
   transition: box-shadow 0.15s ease-in-out;
 }
 
-.texteditor-box .sun-editor.se-focused {
+.texteditor-box .sun-editor.se-focused,
+.texteditor-box .sun-editor:focus-within {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   outline: none;
 }
@@ -1477,7 +1478,7 @@ ul.info__article-tags a:hover {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.texteditor-box .sun-editor .se-resizing-bar {
+.texteditor-box .sun-editor .se-status-bar {
   display: flex;
   width: auto;
   height: auto;
@@ -1499,9 +1500,14 @@ ul.info__article-tags a:hover {
   color: rgb(253 130 100);
 }
 
-.texteditor-box .sun-editor .se-dialog .se-dialog-inner .se-dialog-content,
+.texteditor-box .sun-editor-editable {
+  font-family: 'Red Hat Text', sans-serif;
+  font-size: 16px;
+}
+
+.texteditor-box .sun-editor .se-modal-area .se-modal-inner .se-modal-content,
 .texteditor-box .sun-editor button,
-.texteditor-box .sun-editor .se-resizing-bar {
+.texteditor-box .sun-editor .se-status-bar {
   font-family: 'Red Hat Text', sans-serif;
 }
 

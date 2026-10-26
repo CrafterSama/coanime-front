@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import type { Session } from 'next-auth';
+import { getSession, signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
+import { DASHBOARD_FORBIDDEN_MESSAGE } from '@/constants/common';
 import axios from '@/lib/axios';
+import { canAccessDashboard, isDashboardPath } from '@/utils/common';
 
 type useAuthProps = {
   middleware?: 'auth' | 'guest';
@@ -18,17 +22,7 @@ export const useAuth = ({
   const { data: session, status } = useSession();
   const user = session?.user as any;
 
-  const securePaths = [
-    'dashboard',
-    'dashboard/posts',
-    'dashboard/titles',
-    'dashboard/events',
-    'dashboard/companies',
-    'dashboard/users',
-    'dashboard/people',
-    'perfil',
-    'mi-lista',
-  ];
+  const securePaths = ['perfil', 'mi-lista'];
 
   const pathname = router.pathname.split('/')[1];
 
@@ -76,9 +70,17 @@ export const useAuth = ({
 
       // Redirigir después de un login exitoso
       if (result?.ok) {
-        // Clear the saved redirect from sessionStorage
         if (typeof window !== 'undefined' && savedRedirect) {
           sessionStorage.removeItem('redirectAfterLogin');
+        }
+
+        const nextSession = (await getSession()) as Session | null;
+        const canEnter = canAccessDashboard(nextSession?.user?.roles);
+
+        if (isDashboardPath(finalRedirect) && !canEnter) {
+          toast.error(DASHBOARD_FORBIDDEN_MESSAGE);
+          router.push('/');
+          return;
         }
 
         router.push(finalRedirect);

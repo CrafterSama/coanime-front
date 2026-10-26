@@ -1,33 +1,31 @@
-import { SunEditorOptions } from 'suneditor/src/options';
+import type {} from 'suneditor';
 
-export const sunEditorOptions: SunEditorOptions = {
+export const sunEditorOptions: Pick<SunEditor.InitOptions, 'buttonList'> = {
   buttonList: [
     [
       'undo',
       'redo',
       'fontSize',
-      'formatBlock',
+      'blockStyle',
       'blockquote',
       'bold',
       'underline',
       'italic',
       'strike',
       'fontColor',
-      'hiliteColor',
+      'backgroundColor',
       'textStyle',
       'removeFormat',
       'outdent',
       'indent',
       'align',
-      'horizontalRule',
+      'hr',
       'list',
       'lineHeight',
       'link',
       'image',
       'video',
-      /*'imageGallery',*/
       'showBlocks',
     ],
   ],
-  /*imageUploadUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/upload-images`,*/
 };

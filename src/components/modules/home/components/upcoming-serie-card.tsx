@@ -43,8 +43,7 @@ const BroadcastSerieCard = ({ serie }: { serie: any }) => {
           {serie?.name}
         </Link>
       </div>
-      <div
-        className={`absolute top-0 right-0 h-4 w-[68%] p-1 rounded-bl-xl bg-gray-900 bg-opacity-80 text-white flex justify-end items-center text-center text-xs`}>
+      <div className="absolute top-0 right-0 w-fit max-w-full h-auto whitespace-nowrap px-2 py-0.5 rounded-bl-xl bg-gray-900/80 text-white text-xs">
         Estreno: {formatLocaleDate(serie.broadTime, true)}
       </div>
     </div>

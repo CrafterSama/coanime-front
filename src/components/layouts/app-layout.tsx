@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 
 import Head from 'next/head';
@@ -21,9 +21,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { DEFAULT_IMAGE } from '@/constants/common';
+import {
+  DASHBOARD_FORBIDDEN_MESSAGE,
+  DEFAULT_IMAGE,
+  LOGIN_ROUTE,
+} from '@/constants/common';
 import { useAuth } from '@/hooks/auth';
-import { hasRole } from '@/utils/common';
+import { canAccessDashboard } from '@/utils/common';
 import {
   ArrowLeftOnRectangleIcon,
   ChevronDownIcon,
@@ -39,15 +43,33 @@ interface AppLayoutProps {
 
 const AppLayout = ({ header, children }: AppLayoutProps) => {
   const router = useRouter();
-  const { user, logout } = useAuth({ middleware: 'auth' });
+  const { user, status, logout } = useAuth();
+  const canEnter = canAccessDashboard(user?.roles);
+  const redirected = useRef(false);
 
   useEffect(() => {
-    if (user && user?.roles?.length === 1 && hasRole(user?.roles, 'user')) {
-      toast.error('You do not have permission to access this page');
-      router.push('/');
+    if (status === 'loading' || redirected.current) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    if (status === 'unauthenticated') {
+      redirected.current = true;
+      router.replace(
+        `${LOGIN_ROUTE}?redirect=${encodeURIComponent(router.asPath)}`
+      );
+      return;
+    }
+
+    if (!canEnter) {
+      redirected.current = true;
+      toast.error(DASHBOARD_FORBIDDEN_MESSAGE);
+      router.replace('/');
+    }
+  }, [status, canEnter, router]);
+
+  if (status === 'loading' || status === 'unauthenticated' || !canEnter) {
+    return null;
+  }
 
   return (
     <>

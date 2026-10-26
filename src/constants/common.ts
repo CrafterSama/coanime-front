@@ -11,6 +11,13 @@ export const API_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dev.coanime.net';
 
 export const DASHBOARD_ROUTE = '/dashboard';
+export const DASHBOARD_ROLES = [
+  'administrator',
+  'moderator',
+  'writer',
+] as const;
+export const DASHBOARD_FORBIDDEN_MESSAGE =
+  'No tienes permisos para acceder al dashboard';
 
 // Cookies
 export const AUTH_COOKIE_NAME = 'auth_user';

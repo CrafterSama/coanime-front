@@ -15,7 +15,6 @@ import '@/styles/app.css';
 
 // CSS de librerías de terceros - copiados localmente para evitar problemas de transpilado con Sucrase
 import '@/styles/vendor/react-widgets.css';
-import '@/styles/vendor/suneditor.css';
 
 import { AppProps } from 'next/app';
 

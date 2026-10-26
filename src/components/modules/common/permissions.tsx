@@ -1,16 +1,11 @@
 import React from 'react';
 
 import { useAuth } from '@/hooks/auth';
-import { hasRole } from '@/utils/common';
+import { canAccessDashboard } from '@/utils/common';
 
 export const Permissions = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth({ middleware: 'auth' });
+  const { user } = useAuth();
   return (
-    <>
-      {user &&
-        (hasRole(user?.roles, 'administrator') ||
-          hasRole(user?.roles, 'moderator') ||
-          hasRole(user?.roles, 'writer')) && <>{children}</>}
-    </>
+    <>{user && canAccessDashboard(user?.roles) && <>{children}</>}</>
   );
 };

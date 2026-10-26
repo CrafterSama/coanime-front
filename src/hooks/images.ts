@@ -6,7 +6,7 @@ export type UploadImagesOptions = {
 };
 
 export const uploadImages = async (
-  files: FileList,
+  files: ArrayLike<File>,
   modelOrOptions: string | UploadImagesOptions
 ) => {
   const model =

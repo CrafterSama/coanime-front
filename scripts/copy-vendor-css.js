@@ -13,13 +13,6 @@ const vendorCss = [
     from: path.join(__dirname, '../node_modules/react-widgets/styles.css'),
     to: path.join(__dirname, '../src/styles/vendor/react-widgets.css'),
   },
-  {
-    from: path.join(
-      __dirname,
-      '../node_modules/suneditor/dist/css/suneditor.min.css'
-    ),
-    to: path.join(__dirname, '../src/styles/vendor/suneditor.css'),
-  },
 ];
 
 // Asegurar que el directorio existe

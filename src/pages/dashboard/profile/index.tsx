@@ -203,7 +203,7 @@ const Profile = () => {
                                           src={result?.profilePhotoPath}
                                           fill
                                           alt="avatar"
-                                          className="rounded-full w-full h-full"
+                                          className="rounded-full object-cover object-center"
                                           unoptimized
                                         />
                                       )}
@@ -267,12 +267,12 @@ const Profile = () => {
                                 </Label>
                                 {result?.profileCoverPath ? (
                                   <label htmlFor="cover">
-                                    <div className="mt-1 flex justify-center min-h-[180px] rounded-md overflow-hidden relative">
+                                    <div className="mt-1 flex justify-center h-48 rounded-md overflow-hidden relative">
                                       <Image
                                         src={result?.profileCoverPath}
-                                        className="w-full h-full"
                                         fill
                                         alt="cover"
+                                        className="object-cover object-center"
                                         unoptimized
                                       />
                                       <span className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0 bg-transparent hover:bg-slate-800 hover:bg-opacity-25 transition-all text-white text-opacity-70 opacity-0 hover:opacity-90 cursor-pointer">
